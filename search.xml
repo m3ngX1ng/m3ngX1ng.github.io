@@ -4,19 +4,6 @@
   
     
     <entry>
-      <title>Hello World</title>
-      <link href="/posts/4a17b156.html"/>
-      <url>/posts/4a17b156.html</url>
-      
-        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start">Quick Start</h2><h3 id="Create-a-new-post">Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server">Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files">Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites">Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
-      
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>test</title>
       <link href="/posts/d87f7e0c.html"/>
       <url>/posts/d87f7e0c.html</url>
@@ -49,19 +36,6 @@
             <tag> 其他姿势 </tag>
             
         </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>使用方法</title>
-      <link href="/posts/46becb75.html"/>
-      <url>/posts/46becb75.html</url>
-      
-        <content type="html"><![CDATA[<p>三、编辑个人博客<br>1、当前hexo/blog文件中，选中’Git Bash Here‘，打开git命令窗口</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/19ea8969657c486800af29cc338d0b6b.jpeg" alt="请添加图片描述"></p><p>2、git命令窗口输入，hexo new “文章标题”</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/19ea8969657c486800af29cc338d0b6b.jpeg" alt=""></p><p>3、查看文章地址：\hexo\blog\source_posts</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/a5e24917ef59d1af778733a3a726ba81.jpeg" alt="请添加图片描述"></p><p>4、打开文章，并编辑内容</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/47f8dc4b9424e8bdfef0123ff6fdb49d.jpeg" alt="请添加图片描述"></p><p>5、运行 hexo g 生成网页<br>6、运行 hexo s 运行博客</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/f3f2796ba86ab5e4d8900da52dd82b60.jpeg" alt="请添加图片描述"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/08e8a1e8545132416c225e84674cca10.jpeg" alt="请添加图片描述"></p>]]></content>
-      
-      
       
     </entry>
     
