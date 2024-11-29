@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://example.com/posts/5a47ecbe.html</loc>
+    <loc>https://example.com/posts/169f5f8e.html</loc>
     
     <lastmod>2024-11-29</lastmod>
     
@@ -11,7 +11,7 @@
   </url>
   
   <url>
-    <loc>https://example.com/posts/169f5f8e.html</loc>
+    <loc>https://example.com/posts/5a47ecbe.html</loc>
     
     <lastmod>2024-11-29</lastmod>
     
@@ -65,7 +65,7 @@
   </url>
   
   <url>
-    <loc>https://example.com/box/animation/index.html</loc>
+    <loc>https://example.com/tags/index.html</loc>
     
     <lastmod>2023-03-22</lastmod>
     
@@ -83,7 +83,7 @@
   </url>
   
   <url>
-    <loc>https://example.com/tags/index.html</loc>
+    <loc>https://example.com/box/animation/index.html</loc>
     
     <lastmod>2023-03-22</lastmod>
     
@@ -101,25 +101,7 @@
   </url>
   
   <url>
-    <loc>https://example.com/personal/bb/index.html</loc>
-    
-    <lastmod>2023-03-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://example.com/box/nav/index.html</loc>
-    
-    <lastmod>2023-03-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://example.com/personal/love/index.html</loc>
     
     <lastmod>2023-03-22</lastmod>
     
@@ -137,6 +119,15 @@
   </url>
   
   <url>
+    <loc>https://example.com/life/games/index.html</loc>
+    
+    <lastmod>2023-03-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://example.com/life/movies/index.html</loc>
     
     <lastmod>2023-03-22</lastmod>
@@ -146,7 +137,7 @@
   </url>
   
   <url>
-    <loc>https://example.com/life/games/index.html</loc>
+    <loc>https://example.com/personal/bb/index.html</loc>
     
     <lastmod>2023-03-22</lastmod>
     
@@ -164,9 +155,9 @@
   </url>
   
   <url>
-    <loc>https://example.com/posts/2013454d.html</loc>
+    <loc>https://example.com/personal/love/index.html</loc>
     
-    <lastmod>2022-10-23</lastmod>
+    <lastmod>2023-03-22</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -204,31 +195,10 @@
     <priority>0.2</priority>
   </url>
   
-  <url>
-    <loc>https://example.com/tags/Markdown/</loc>
-    <lastmod>2024-11-29</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://example.com/tags/%E5%A4%96%E6%8C%82%E6%A0%87%E7%AD%BE/</loc>
-    <lastmod>2024-11-29</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
 
   
   <url>
     <loc>https://example.com/categories/CTF/</loc>
-    <lastmod>2024-11-29</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://example.com/categories/%E6%BC%94%E7%A4%BA/</loc>
     <lastmod>2024-11-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
