@@ -1704,31 +1704,6 @@
     
     
     <entry>
-      <title>刷题2024.7.24</title>
-      <link href="/posts/e4f115d7.html"/>
-      <url>/posts/e4f115d7.html</url>
-      
-        <content type="html"><![CDATA[<h2 id="你会异或吗">你会异或吗</h2><p>将文件下载解压放进010editor，发现格式不对，根据题目提示“你会异或吗”和“0x50”，在010editor中对每个字节与0x50进行异或运算，得到完整图片。</p><h2 id="flag一分为二">flag一分为二</h2><p>解压文件是一张png图片，放进010editor，运行模板中的png，在模板结果中找到宽高并修改。之后再用隐形水印工具提取盲水印。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240724183731995.png" alt="image-20240724183731995"></p><h2 id="you-and-me">you_and_me</h2><p>两张图，猜测you.png是原图，you_and_me是加了盲水印的图，需要原图的提取盲水印想到blind watermark。（watermark解不出来）</p><h2 id="黑丝白丝还有什么丝">黑丝白丝还有什么丝</h2><p>视频里按照黑丝白丝出现的顺序和转场变化，依次记录，（白黑黑、白白白白黑、黑白、黑、黑、黑黑黑黑黑、黑白白白、白白白黑黑、黑黑、黑黑黑、白黑白、白、黑白黑白、白白黑、黑、白、白白。最后两个白白应该是拜拜的意思）然后放进</p><p>摩斯密码解密。（多来点这种题（手动滑稽））</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240724224604185.png" alt="image-20240724224604185"></p>]]></content>
-      
-      
-      <categories>
-          
-          <category> CTF </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> misc-wp </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>volayility工具的使用方法</title>
       <link href="/posts/bf034aea.html"/>
       <url>/posts/bf034aea.html</url>
@@ -1746,6 +1721,31 @@
         <tags>
             
             <tag> misc姿势 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>刷题2024.7.24</title>
+      <link href="/posts/e4f115d7.html"/>
+      <url>/posts/e4f115d7.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="你会异或吗">你会异或吗</h2><p>将文件下载解压放进010editor，发现格式不对，根据题目提示“你会异或吗”和“0x50”，在010editor中对每个字节与0x50进行异或运算，得到完整图片。</p><h2 id="flag一分为二">flag一分为二</h2><p>解压文件是一张png图片，放进010editor，运行模板中的png，在模板结果中找到宽高并修改。之后再用隐形水印工具提取盲水印。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240724183731995.png" alt="image-20240724183731995"></p><h2 id="you-and-me">you_and_me</h2><p>两张图，猜测you.png是原图，you_and_me是加了盲水印的图，需要原图的提取盲水印想到blind watermark。（watermark解不出来）</p><h2 id="黑丝白丝还有什么丝">黑丝白丝还有什么丝</h2><p>视频里按照黑丝白丝出现的顺序和转场变化，依次记录，（白黑黑、白白白白黑、黑白、黑、黑、黑黑黑黑黑、黑白白白、白白白黑黑、黑黑、黑黑黑、白黑白、白、黑白黑白、白白黑、黑、白、白白。最后两个白白应该是拜拜的意思）然后放进</p><p>摩斯密码解密。（多来点这种题（手动滑稽））</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240724224604185.png" alt="image-20240724224604185"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> CTF </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> misc-wp </tag>
             
         </tags>
       
