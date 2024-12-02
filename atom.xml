@@ -269,27 +269,6 @@
   </entry>
   
   <entry>
-    <title>第八届强网杯青少赛wp</title>
-    <link href="https://m3ngx1ng.github.io/posts/2cd096fe.html"/>
-    <id>https://m3ngx1ng.github.io/posts/2cd096fe.html</id>
-    <published>2024-11-23T16:00:00.000Z</published>
-    <updated>2024-12-02T09:26:18.622Z</updated>
-    
-    <content type="html"><![CDATA[<p>[TOC]</p><h1>第八届强网杯青少赛wp</h1><h2 id="misc">misc</h2><h4 id="签到漫画">签到漫画</h4><blockquote><p>每个漫画的最后一张都是二维码的一部分，全部保存，然后拼在一起，扫描二维码出flag.。</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241124155544679.png" alt="image-20241124155544679"></p><blockquote><p>flag{youthful_and_upward}</p></blockquote><h4 id="whitepic">whitepic</h4><blockquote><p>考点：gif图像</p></blockquote><blockquote><p>下载文件，没有后缀名，能用010editor打开</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241124155848111.png" alt="image-20241124155848111"></p><blockquote><p>根据文件头GIF89a，可以看出是个gif文件。直接使用gifsplitter分离帧数，在其中一帧找到flag</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241124160011013.png" alt="image-20241124160011013"></p><h4 id="问卷">问卷</h4><blockquote><p>你懂的</p></blockquote><h2 id="web">web</h2><h4 id="ezGetFlag">ezGetFlag</h4><blockquote><p>考点：http请求方式</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241124160230507.png" alt=""></p><blockquote><p>点击10次会出现提示</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241124160307890.png" alt="image-20241124160307890"></p><blockquote><p>直接抓包，修改请求方式，把GET改成POST就行了。</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241124160446998.png" alt="image-20241124160446998"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241124160500182.png" alt="image-20241124160500182"></p><blockquote><p>flag{4efb5300-7885-40a9-bf2a-31bbd8ebef86}</p></blockquote><h4 id="ezFindShell">ezFindShell</h4><blockquote><p>考点：代码审计</p></blockquote><p>这题是赛后复现，所以可能不全</p><p>首先拿到一堆php文件，用seay审计</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241130223303421.png" alt="image-20241130223303421"></p><p>非常相似，当时比赛没找到漏洞，现在复现，全局搜索一下post</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241130223557289.png" alt="image-20241130223557289"></p><p>发现可用漏洞</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241130223624296.png" alt="image-20241130223624296"></p><p>array_filter() 函数用回调函数过滤数组中的元素。</p><p>该函数把输入数组中的每个键值传给回调函数。如果回调函数返回 true，则把输入数组中的当前键值返回给结果数组。数组键名保持不变。</p><p>将代码进行base64编码传上去应该就可利用该漏洞。</p>]]></content>
-    
-    
-    <summary type="html">🥧第八届强网杯青少赛wp</summary>
-    
-    
-    
-    <category term="CTF" scheme="https://m3ngx1ng.github.io/categories/CTF/"/>
-    
-    
-    <category term="比赛wp" scheme="https://m3ngx1ng.github.io/tags/%E6%AF%94%E8%B5%9Bwp/"/>
-    
-  </entry>
-  
-  <entry>
     <title>docker保存和打包镜像</title>
     <link href="https://m3ngx1ng.github.io/posts/5721bfe4.html"/>
     <id>https://m3ngx1ng.github.io/posts/5721bfe4.html</id>
@@ -307,6 +286,27 @@
     
     
     <category term="其他姿势" scheme="https://m3ngx1ng.github.io/tags/%E5%85%B6%E4%BB%96%E5%A7%BF%E5%8A%BF/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>第八届强网杯青少赛wp</title>
+    <link href="https://m3ngx1ng.github.io/posts/2cd096fe.html"/>
+    <id>https://m3ngx1ng.github.io/posts/2cd096fe.html</id>
+    <published>2024-11-23T16:00:00.000Z</published>
+    <updated>2024-12-02T09:26:18.622Z</updated>
+    
+    <content type="html"><![CDATA[<p>[TOC]</p><h1>第八届强网杯青少赛wp</h1><h2 id="misc">misc</h2><h4 id="签到漫画">签到漫画</h4><blockquote><p>每个漫画的最后一张都是二维码的一部分，全部保存，然后拼在一起，扫描二维码出flag.。</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241124155544679.png" alt="image-20241124155544679"></p><blockquote><p>flag{youthful_and_upward}</p></blockquote><h4 id="whitepic">whitepic</h4><blockquote><p>考点：gif图像</p></blockquote><blockquote><p>下载文件，没有后缀名，能用010editor打开</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241124155848111.png" alt="image-20241124155848111"></p><blockquote><p>根据文件头GIF89a，可以看出是个gif文件。直接使用gifsplitter分离帧数，在其中一帧找到flag</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241124160011013.png" alt="image-20241124160011013"></p><h4 id="问卷">问卷</h4><blockquote><p>你懂的</p></blockquote><h2 id="web">web</h2><h4 id="ezGetFlag">ezGetFlag</h4><blockquote><p>考点：http请求方式</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241124160230507.png" alt=""></p><blockquote><p>点击10次会出现提示</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241124160307890.png" alt="image-20241124160307890"></p><blockquote><p>直接抓包，修改请求方式，把GET改成POST就行了。</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241124160446998.png" alt="image-20241124160446998"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241124160500182.png" alt="image-20241124160500182"></p><blockquote><p>flag{4efb5300-7885-40a9-bf2a-31bbd8ebef86}</p></blockquote><h4 id="ezFindShell">ezFindShell</h4><blockquote><p>考点：代码审计</p></blockquote><p>这题是赛后复现，所以可能不全</p><p>首先拿到一堆php文件，用seay审计</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241130223303421.png" alt="image-20241130223303421"></p><p>非常相似，当时比赛没找到漏洞，现在复现，全局搜索一下post</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241130223557289.png" alt="image-20241130223557289"></p><p>发现可用漏洞</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241130223624296.png" alt="image-20241130223624296"></p><p>array_filter() 函数用回调函数过滤数组中的元素。</p><p>该函数把输入数组中的每个键值传给回调函数。如果回调函数返回 true，则把输入数组中的当前键值返回给结果数组。数组键名保持不变。</p><p>将代码进行base64编码传上去应该就可利用该漏洞。</p>]]></content>
+    
+    
+    <summary type="html">🥧第八届强网杯青少赛wp</summary>
+    
+    
+    
+    <category term="CTF" scheme="https://m3ngx1ng.github.io/categories/CTF/"/>
+    
+    
+    <category term="比赛wp" scheme="https://m3ngx1ng.github.io/tags/%E6%AF%94%E8%B5%9Bwp/"/>
     
   </entry>
   
@@ -374,27 +374,6 @@
   </entry>
   
   <entry>
-    <title>免杀木马+文件捆绑+权限伪装</title>
-    <link href="https://m3ngx1ng.github.io/posts/1bec3970.html"/>
-    <id>https://m3ngx1ng.github.io/posts/1bec3970.html</id>
-    <published>2024-11-17T16:00:00.000Z</published>
-    <updated>2024-12-02T09:27:47.018Z</updated>
-    
-    <content type="html"><![CDATA[<h1>免杀木马+文件捆绑+权限伪装</h1><ul><li><p><strong>文章前言</strong></p><p>通过学习使用Cobalt Strike来制作木马，使用摧日对其进行免杀覆盖，使用GoFilebinder对其进行免杀捆绑，最后利用Restorator对其进行图标修改。</p></li><li><p><strong>环境和软件准备</strong></p><p>\1. 一台windows系统的电脑作为攻击机</p><p>2.一台靶机</p><p>3.Cobalt Strike</p><p>4.摧日</p><p>5.GoFilebinder</p><p>6.Restorator</p></li><li><p><strong>工具介绍</strong></p><p>摧日：一款红队专用免杀木马生成器，基于shellcode生成绕过所有杀软的木马主要支持C语言的shellcode和纯十六进制的shellcode<br>GoFileBinder：golang免杀捆绑器<br>Restorator：一款修改exe执行程序图标的小工具</p></li><li><p><strong>正文开始</strong></p><p>选用cs中的c格式shellcode，用cs生成一个c语言的相关东西，同时勾选上x64</p></li></ul><p><img src="https://mmbiz.qpic.cn/mmbiz_png/pK1OeDqnaO2ztzeC0ibzlic0YY2zJpEDcGTurmQDUUoIkwBgIUztkiayF20PQOFDEGIDPwCsExIlZMoXWZtqhbHUQ/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="图片"><img src="https://mmbiz.qpic.cn/mmbiz_png/pK1OeDqnaO2ztzeC0ibzlic0YY2zJpEDcGPsqAbCOyCY0LR1zGsKphmjGtM7UdiarEu9KtVXqAiaJqUXDe5fkibo8HQ/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="图片"></p><p>完成以上步骤后，接下来便开始对其进行免杀操作，用到的工具摧日对其进行免杀处理</p><p><img src="https://mmbiz.qpic.cn/mmbiz_png/pK1OeDqnaO2ztzeC0ibzlic0YY2zJpEDcGWGKt2ibzRFhNE3XWAQ4SNIDDgcx9iasydQDQ76s0lDdwIoL6lz3QSJnQ/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="图片"></p><p>使用前请先获取相关工具，并确保已经安装工具所需要的的go环境，至于go环境安装请各位自行查阅本文不在做出相关介绍，安装完毕后进行下一步操作。复制上一步中生成的c文件的中的相关字符，将其另存为一个新的文档，并将该文档与摧日工具的exe文件放在一个目录之中，并运行工具，运行成功后将会得到免杀后的文件hoshino.exe。用相关管家进行查杀后，都可以正常通过。</p><p><img src="https://mmbiz.qpic.cn/mmbiz_png/pK1OeDqnaO2ztzeC0ibzlic0YY2zJpEDcGe2AiaWzWQRTVAaDMS4PdZJB2OwscrU2Od3UElHEbaB4alWSVxILs1ww/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="图片"></p><p><img src="https://mmbiz.qpic.cn/mmbiz_png/pK1OeDqnaO2ztzeC0ibzlic0YY2zJpEDcGLFv5IbhM97F127XqH2teAoYrFOK0Aia24fdlAPrVrl1fdd364prbZ6w/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="图片"></p><p>然后进行的操作是将这个马和正常的东西捆绑在一起，这个东西可以是可执行文件exe，也可以是文本txt，也可以是文档doc，任何你想的东西都可以进行捆绑。<br>最后实现的效果是：目标用户点击你发送的恶意文件之后会在你的CS客户端上上线，而且目标用户打开的文件可以正常的使用，并且你的木马文件会自动迁移到C:\Users\Public<br>下面将木马和一个txt文本文件进行捆绑：</p><p><img src="https://mmbiz.qpic.cn/mmbiz_png/pK1OeDqnaO2ztzeC0ibzlic0YY2zJpEDcGR4x3GXibUMMPPmiaD0gDe0FXbg4KGzwKb8rMEI8y18Iga8ic9YcyqORXg/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="图片"></p><p>将木马和txt文本文件还有GoFileBinder放在同级目录下，运行后得到如下结果，其中新出现的bilibili.exe就是我们要得到的文件</p><p><img src="https://mmbiz.qpic.cn/mmbiz_png/pK1OeDqnaO2ztzeC0ibzlic0YY2zJpEDcGGRG2ibtmIjhvOkPhxzToHfPmVSH88PDGicKjLERicaxtQcsphHztxHg6g/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="图片"></p><p>进行相关测试，将得到的文件双击后，该文件便会消失，在桌面上打开的便是我们所预设的ceshi.txt，并且我们的原文间将会自动一直到public目录下，cs也显示主机已经上线，至此所有工作已全部完成。</p><p><img src="https://mmbiz.qpic.cn/mmbiz_png/pK1OeDqnaO2ztzeC0ibzlic0YY2zJpEDcG1F5yKYmDyIqj4H7s2ibdN7w5tPWFIm6hDrVsjlCyDSeWYx28IWgcI1w/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="图片"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/640" alt="图片"></p><p>最后一步，权限维持，如果不进行权限维持的话，目标用户在进行电脑重启后便会让改文件关闭，因此便需要用对其增加开机自启的相关操作，其后续路径因为程序会自动移动到public目录下便很好就能设置，</p><ul><li></li></ul><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">shell</span> <span class="keyword">reg</span> <span class="built_in">add</span> HKLM\SOFTWARE\Microsoft\Windows\</span><br></pre></td></tr></table></figure><p><img src="https://mmbiz.qpic.cn/mmbiz_jpg/pK1OeDqnaO2ztzeC0ibzlic0YY2zJpEDcGPjicPN7J7OvoS4UJvyzEkic3qlqUYl4Nby6ImRM2YopEtia00jpm7Zv3w/640?wx_fmt=jpeg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="图片"></p><p>最后利用Restorator工具对该文件进行图标美化操作，可以将其伪装成一些较为常见的进程图标，该工具的使用较为方便，本文在这里便不再进行相关的阐述，请自行理解！</p>]]></content>
-    
-    
-    <summary type="html">🥧免杀木马+文件捆绑+权限伪装</summary>
-    
-    
-    
-    <category term="web渗透" scheme="https://m3ngx1ng.github.io/categories/web%E6%B8%97%E9%80%8F/"/>
-    
-    
-    <category term="笔记" scheme="https://m3ngx1ng.github.io/tags/%E7%AC%94%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
     <title>Restorator常见使用方法</title>
     <link href="https://m3ngx1ng.github.io/posts/1586e22.html"/>
     <id>https://m3ngx1ng.github.io/posts/1586e22.html</id>
@@ -412,6 +391,27 @@
     
     
     <category term="工具使用" scheme="https://m3ngx1ng.github.io/tags/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>免杀木马+文件捆绑+权限伪装</title>
+    <link href="https://m3ngx1ng.github.io/posts/1bec3970.html"/>
+    <id>https://m3ngx1ng.github.io/posts/1bec3970.html</id>
+    <published>2024-11-17T16:00:00.000Z</published>
+    <updated>2024-12-02T09:27:47.018Z</updated>
+    
+    <content type="html"><![CDATA[<h1>免杀木马+文件捆绑+权限伪装</h1><ul><li><p><strong>文章前言</strong></p><p>通过学习使用Cobalt Strike来制作木马，使用摧日对其进行免杀覆盖，使用GoFilebinder对其进行免杀捆绑，最后利用Restorator对其进行图标修改。</p></li><li><p><strong>环境和软件准备</strong></p><p>\1. 一台windows系统的电脑作为攻击机</p><p>2.一台靶机</p><p>3.Cobalt Strike</p><p>4.摧日</p><p>5.GoFilebinder</p><p>6.Restorator</p></li><li><p><strong>工具介绍</strong></p><p>摧日：一款红队专用免杀木马生成器，基于shellcode生成绕过所有杀软的木马主要支持C语言的shellcode和纯十六进制的shellcode<br>GoFileBinder：golang免杀捆绑器<br>Restorator：一款修改exe执行程序图标的小工具</p></li><li><p><strong>正文开始</strong></p><p>选用cs中的c格式shellcode，用cs生成一个c语言的相关东西，同时勾选上x64</p></li></ul><p><img src="https://mmbiz.qpic.cn/mmbiz_png/pK1OeDqnaO2ztzeC0ibzlic0YY2zJpEDcGTurmQDUUoIkwBgIUztkiayF20PQOFDEGIDPwCsExIlZMoXWZtqhbHUQ/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="图片"><img src="https://mmbiz.qpic.cn/mmbiz_png/pK1OeDqnaO2ztzeC0ibzlic0YY2zJpEDcGPsqAbCOyCY0LR1zGsKphmjGtM7UdiarEu9KtVXqAiaJqUXDe5fkibo8HQ/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="图片"></p><p>完成以上步骤后，接下来便开始对其进行免杀操作，用到的工具摧日对其进行免杀处理</p><p><img src="https://mmbiz.qpic.cn/mmbiz_png/pK1OeDqnaO2ztzeC0ibzlic0YY2zJpEDcGWGKt2ibzRFhNE3XWAQ4SNIDDgcx9iasydQDQ76s0lDdwIoL6lz3QSJnQ/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="图片"></p><p>使用前请先获取相关工具，并确保已经安装工具所需要的的go环境，至于go环境安装请各位自行查阅本文不在做出相关介绍，安装完毕后进行下一步操作。复制上一步中生成的c文件的中的相关字符，将其另存为一个新的文档，并将该文档与摧日工具的exe文件放在一个目录之中，并运行工具，运行成功后将会得到免杀后的文件hoshino.exe。用相关管家进行查杀后，都可以正常通过。</p><p><img src="https://mmbiz.qpic.cn/mmbiz_png/pK1OeDqnaO2ztzeC0ibzlic0YY2zJpEDcGe2AiaWzWQRTVAaDMS4PdZJB2OwscrU2Od3UElHEbaB4alWSVxILs1ww/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="图片"></p><p><img src="https://mmbiz.qpic.cn/mmbiz_png/pK1OeDqnaO2ztzeC0ibzlic0YY2zJpEDcGLFv5IbhM97F127XqH2teAoYrFOK0Aia24fdlAPrVrl1fdd364prbZ6w/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="图片"></p><p>然后进行的操作是将这个马和正常的东西捆绑在一起，这个东西可以是可执行文件exe，也可以是文本txt，也可以是文档doc，任何你想的东西都可以进行捆绑。<br>最后实现的效果是：目标用户点击你发送的恶意文件之后会在你的CS客户端上上线，而且目标用户打开的文件可以正常的使用，并且你的木马文件会自动迁移到C:\Users\Public<br>下面将木马和一个txt文本文件进行捆绑：</p><p><img src="https://mmbiz.qpic.cn/mmbiz_png/pK1OeDqnaO2ztzeC0ibzlic0YY2zJpEDcGR4x3GXibUMMPPmiaD0gDe0FXbg4KGzwKb8rMEI8y18Iga8ic9YcyqORXg/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="图片"></p><p>将木马和txt文本文件还有GoFileBinder放在同级目录下，运行后得到如下结果，其中新出现的bilibili.exe就是我们要得到的文件</p><p><img src="https://mmbiz.qpic.cn/mmbiz_png/pK1OeDqnaO2ztzeC0ibzlic0YY2zJpEDcGGRG2ibtmIjhvOkPhxzToHfPmVSH88PDGicKjLERicaxtQcsphHztxHg6g/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="图片"></p><p>进行相关测试，将得到的文件双击后，该文件便会消失，在桌面上打开的便是我们所预设的ceshi.txt，并且我们的原文间将会自动一直到public目录下，cs也显示主机已经上线，至此所有工作已全部完成。</p><p><img src="https://mmbiz.qpic.cn/mmbiz_png/pK1OeDqnaO2ztzeC0ibzlic0YY2zJpEDcG1F5yKYmDyIqj4H7s2ibdN7w5tPWFIm6hDrVsjlCyDSeWYx28IWgcI1w/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="图片"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/640" alt="图片"></p><p>最后一步，权限维持，如果不进行权限维持的话，目标用户在进行电脑重启后便会让改文件关闭，因此便需要用对其增加开机自启的相关操作，其后续路径因为程序会自动移动到public目录下便很好就能设置，</p><ul><li></li></ul><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">shell</span> <span class="keyword">reg</span> <span class="built_in">add</span> HKLM\SOFTWARE\Microsoft\Windows\</span><br></pre></td></tr></table></figure><p><img src="https://mmbiz.qpic.cn/mmbiz_jpg/pK1OeDqnaO2ztzeC0ibzlic0YY2zJpEDcGPjicPN7J7OvoS4UJvyzEkic3qlqUYl4Nby6ImRM2YopEtia00jpm7Zv3w/640?wx_fmt=jpeg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt="图片"></p><p>最后利用Restorator工具对该文件进行图标美化操作，可以将其伪装成一些较为常见的进程图标，该工具的使用较为方便，本文在这里便不再进行相关的阐述，请自行理解！</p>]]></content>
+    
+    
+    <summary type="html">🥧免杀木马+文件捆绑+权限伪装</summary>
+    
+    
+    
+    <category term="web渗透" scheme="https://m3ngx1ng.github.io/categories/web%E6%B8%97%E9%80%8F/"/>
+    
+    
+    <category term="笔记" scheme="https://m3ngx1ng.github.io/tags/%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
