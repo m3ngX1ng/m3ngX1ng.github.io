@@ -1658,6 +1658,31 @@
       <link href="/posts/93f62541.html"/>
       <url>/posts/93f62541.html</url>
       
+        <content type="html"><![CDATA[<h2 id="我吐了你随意">我吐了你随意</h2><p>0宽隐写，使用在线工具，将文本复制进去直接得到flag</p><h2 id="迅疾响应">迅疾响应</h2><p>二维码，先用toolfxs里的工具，发现扫不出来，然后用qrazybox在线工具解出。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725112855565.png" alt="image-20240725112855565"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725112922997.png" alt="image-20240725112922997"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725112946131.png" alt="image-20240725112946131"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725113009662.png" alt="image-20240725113009662"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725113030144.png" alt="image-20240725113030144"></p><h2 id="打不开的图片">打不开的图片</h2><p>图片损坏，扔进010editor看看。发现png格式前缀不对，用工具里的求反，然后保存，图片就恢复正常了。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> CTF </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> misc-wp </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>刷题2024.7.25</title>
+      <link href="/posts/93f62541.html"/>
+      <url>/posts/93f62541.html</url>
+      
         <content type="html"><![CDATA[<p>[TOC]</p><h2 id="web签到">web签到</h2><p>考点：代码审计，http请求</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725125048233.png" alt="image-20240725125048233"></p><p>先传Cookie,即</p><figure class="highlight cos"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CTFshow-QQ<span class="built_in">%E</span>7<span class="built_in">%BE</span><span class="built_in">%A</span>4:=a </span><br></pre></td></tr></table></figure><p>​       (中文要进行url编码)</p><p>接下来传post[‘a’]，即a=b</p><p>然后传get[‘b’]，即?b=c</p><p>最后的request，传GET或者POST方法都可以，即</p><figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&amp;c[<span class="number">6</span>][<span class="number">0</span>][<span class="number">7</span>][<span class="number">5</span>][<span class="number">8</span>][<span class="number">0</span>][<span class="number">9</span>][<span class="number">4</span>][<span class="number">4</span>]=system(<span class="string">&#x27;cat /f*&#x27;</span>);</span><br></pre></td></tr></table></figure><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725125819297.png" alt="image-20240725125819297"></p><h2 id="web2-c0me-t0-s1gn">web2 c0me_t0_s1gn</h2><p>考点：查看源代码，使用控制台</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725133817711.png" alt="image-20240725133817711"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725133847780.png" alt="image-20240725133847780"></p><h2 id="我的眼里只有￥">我的眼里只有￥</h2><p>考点：代码审计，脚本利用</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725192622896.png" alt="image-20240725192622896"></p><p>_=a,即$__=a,后面就是$a，$a=b,就变成$b，以此类推，用python脚本连续传参可解。</p><h2 id="抽老婆">抽老婆</h2><p>考点：查看源代码，代码审计，flask中的session构造</p><p>打开链接，发现可以下载“老婆“。查看代码，发现一串下载的可以代码。（/download?file=a）</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725220105916.png" alt="image-20240725220105916"></p><p>用GET方法下载一个文件，发现不成功，页面跳转。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725220228045.png" alt="image-20240725220228045"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725220311186.png" alt="image-20240725220311186"></p><p>发现”flag“，怀疑/app/app.py文件。下载此文件。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725220413846.png" alt="image-20240725220413846"></p><p>报错，仔细分析，发现可以用…/退级，改为 …/…/app.py，成功下载。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># !/usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*-coding:utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string"># File       : app.py</span></span><br><span class="line"><span class="string"># Time       ：2022/11/07 09:16</span></span><br><span class="line"><span class="string"># Author     ：g4_simon</span></span><br><span class="line"><span class="string"># version    ：python 3.9.7</span></span><br><span class="line"><span class="string"># Description：抽老婆，哇偶~</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> * <span class="comment"># type: ignore</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">from</span> flag <span class="keyword">import</span> flag</span><br><span class="line"></span><br><span class="line"><span class="comment">#初始化全局变量</span></span><br><span class="line">app = Flask(__name__)</span><br><span class="line">app.config[<span class="string">&#x27;SECRET_KEY&#x27;</span>] = <span class="string">&#x27;tanji_is_A_boy_Yooooooooooooooooooooo!&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/&#x27;</span>, methods=[<span class="string">&#x27;GET&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():  </span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&#x27;index.html&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/getwifi&#x27;</span>, methods=[<span class="string">&#x27;GET&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">getwifi</span>():</span><br><span class="line">    session[<span class="string">&#x27;isadmin&#x27;</span>]=<span class="literal">False</span></span><br><span class="line">    wifi=random.choice(os.listdir(<span class="string">&#x27;static/img&#x27;</span>))</span><br><span class="line">    session[<span class="string">&#x27;current_wifi&#x27;</span>]=wifi</span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&#x27;getwifi.html&#x27;</span>,wifi=wifi)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/download&#x27;</span>, methods=[<span class="string">&#x27;GET&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">source</span>(): </span><br><span class="line">    filename=request.args.get(<span class="string">&#x27;file&#x27;</span>)</span><br><span class="line">    <span class="keyword">if</span> <span class="string">&#x27;flag&#x27;</span> <span class="keyword">in</span> filename:</span><br><span class="line">        <span class="keyword">return</span> jsonify(&#123;<span class="string">&quot;msg&quot;</span>:<span class="string">&quot;你想干什么？&quot;</span>&#125;)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> send_file(<span class="string">&#x27;static/img/&#x27;</span>+filename,as_attachment=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/secret_path_U_never_know&#x27;</span>,methods=[<span class="string">&#x27;GET&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">getflag</span>():</span><br><span class="line">    <span class="keyword">if</span> session[<span class="string">&#x27;isadmin&#x27;</span>]:</span><br><span class="line">        <span class="keyword">return</span> jsonify(&#123;<span class="string">&quot;msg&quot;</span>:flag&#125;)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> jsonify(&#123;<span class="string">&quot;msg&quot;</span>:<span class="string">&quot;你怎么知道这个路径的？不过还好我有身份验证&quot;</span>&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run(host=<span class="string">&#x27;0.0.0.0&#x27;</span>,port=<span class="number">80</span>,debug=<span class="literal">True</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure><p>分析发现，它会根据不同/而调用不同的函数，我们需要使用getflag()函数，输入/secret_path_U_never_know。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725220748150.png" alt="image-20240725220748150"></p><p>不行，还要使session[‘isadmin’]为真。（笔记关键词：session）</p><p>用kali机上的flask_session_cookie_manager，先将原session解码，再将isadmin改为True，再编码，替换原session，得到flag。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725221139596.png" alt="image-20240725221139596"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725221627896.png" alt="image-20240725221627896"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725221646423.png" alt="image-20240725221646423"></p>]]></content>
       
       
@@ -1679,11 +1704,11 @@
     
     
     <entry>
-      <title>刷题2024.7.25</title>
-      <link href="/posts/93f62541.html"/>
-      <url>/posts/93f62541.html</url>
+      <title>刷题2024.7.24</title>
+      <link href="/posts/e4f115d7.html"/>
+      <url>/posts/e4f115d7.html</url>
       
-        <content type="html"><![CDATA[<h2 id="我吐了你随意">我吐了你随意</h2><p>0宽隐写，使用在线工具，将文本复制进去直接得到flag</p><h2 id="迅疾响应">迅疾响应</h2><p>二维码，先用toolfxs里的工具，发现扫不出来，然后用qrazybox在线工具解出。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725112855565.png" alt="image-20240725112855565"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725112922997.png" alt="image-20240725112922997"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725112946131.png" alt="image-20240725112946131"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725113009662.png" alt="image-20240725113009662"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725113030144.png" alt="image-20240725113030144"></p><h2 id="打不开的图片">打不开的图片</h2><p>图片损坏，扔进010editor看看。发现png格式前缀不对，用工具里的求反，然后保存，图片就恢复正常了。</p>]]></content>
+        <content type="html"><![CDATA[<h2 id="你会异或吗">你会异或吗</h2><p>将文件下载解压放进010editor，发现格式不对，根据题目提示“你会异或吗”和“0x50”，在010editor中对每个字节与0x50进行异或运算，得到完整图片。</p><h2 id="flag一分为二">flag一分为二</h2><p>解压文件是一张png图片，放进010editor，运行模板中的png，在模板结果中找到宽高并修改。之后再用隐形水印工具提取盲水印。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240724183731995.png" alt="image-20240724183731995"></p><h2 id="you-and-me">you_and_me</h2><p>两张图，猜测you.png是原图，you_and_me是加了盲水印的图，需要原图的提取盲水印想到blind watermark。（watermark解不出来）</p><h2 id="黑丝白丝还有什么丝">黑丝白丝还有什么丝</h2><p>视频里按照黑丝白丝出现的顺序和转场变化，依次记录，（白黑黑、白白白白黑、黑白、黑、黑、黑黑黑黑黑、黑白白白、白白白黑黑、黑黑、黑黑黑、白黑白、白、黑白黑白、白白黑、黑、白、白白。最后两个白白应该是拜拜的意思）然后放进</p><p>摩斯密码解密。（多来点这种题（手动滑稽））</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240724224604185.png" alt="image-20240724224604185"></p>]]></content>
       
       
       <categories>
@@ -1721,31 +1746,6 @@
         <tags>
             
             <tag> misc姿势 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>刷题2024.7.24</title>
-      <link href="/posts/e4f115d7.html"/>
-      <url>/posts/e4f115d7.html</url>
-      
-        <content type="html"><![CDATA[<h2 id="你会异或吗">你会异或吗</h2><p>将文件下载解压放进010editor，发现格式不对，根据题目提示“你会异或吗”和“0x50”，在010editor中对每个字节与0x50进行异或运算，得到完整图片。</p><h2 id="flag一分为二">flag一分为二</h2><p>解压文件是一张png图片，放进010editor，运行模板中的png，在模板结果中找到宽高并修改。之后再用隐形水印工具提取盲水印。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240724183731995.png" alt="image-20240724183731995"></p><h2 id="you-and-me">you_and_me</h2><p>两张图，猜测you.png是原图，you_and_me是加了盲水印的图，需要原图的提取盲水印想到blind watermark。（watermark解不出来）</p><h2 id="黑丝白丝还有什么丝">黑丝白丝还有什么丝</h2><p>视频里按照黑丝白丝出现的顺序和转场变化，依次记录，（白黑黑、白白白白黑、黑白、黑、黑、黑黑黑黑黑、黑白白白、白白白黑黑、黑黑、黑黑黑、白黑白、白、黑白黑白、白白黑、黑、白、白白。最后两个白白应该是拜拜的意思）然后放进</p><p>摩斯密码解密。（多来点这种题（手动滑稽））</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240724224604185.png" alt="image-20240724224604185"></p>]]></content>
-      
-      
-      <categories>
-          
-          <category> CTF </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> misc-wp </tag>
             
         </tags>
       
