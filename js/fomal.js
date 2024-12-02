@@ -54,7 +54,7 @@ function tonav() {
     position = scroll;
   });
   //修复没有弄右键菜单的童鞋无法回顶部的问题
-  document.getElementById("page-name").innerText = document.title.split(" | Fomalhaut🥝")[0];
+  document.getElementById("page-name").innerText = document.title.split(" | 梦~醒🥝")[0];
 }
 
 function scrollToTop() {
@@ -1119,7 +1119,7 @@ function createtime1() {
   var dnum = Math.floor(days);
 
   var ascll = [
-    `欢迎来到Fomalhaut🥝の小家!`,
+    `欢迎来到 梦~醒🥝の小家!`,
     `Future is now 🍭🍭🍭`,
     `
         
@@ -1133,7 +1133,7 @@ function createtime1() {
     "小站已经苟活",
     dnum,
     "天啦!",
-    "©2022 By Fomalhaut",
+    "©2022 By 梦~醒🥝",
   ];
 
   setTimeout(
@@ -1172,7 +1172,7 @@ function createtime2() {
   setTimeout(
     console.warn.bind(
       console,
-      "%c ⚡ Powered by Fomalhaut🥝 %c 你正在访问Fomalhaut🥝の小家",
+      "%c ⚡ Powered by 梦~醒🥝 %c 你正在访问 梦~醒🥝の小家",
       "color:white; background-color:#f0ad4e",
       ""
     )
@@ -1283,7 +1283,7 @@ function share_() {
     // 截取标题
     var title = document.title;
     var subTitle = title.endsWith("| Fomalhaut🥝") ? title.substring(0, title.length - 14) : title;
-    navigator.clipboard.writeText('Fomalhaut🥝的站内分享\n标题：' + subTitle + '\n链接：' + url + '\n欢迎来访！🍭🍭🍭');
+    navigator.clipboard.writeText('梦~醒🥝的站内分享\n标题：' + subTitle + '\n链接：' + url + '\n欢迎来访！🍭🍭🍭');
     new Vue({
       data: function () {
         this.$notify({

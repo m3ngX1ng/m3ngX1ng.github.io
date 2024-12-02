@@ -429,31 +429,6 @@
     
     
     <entry>
-      <title>Restorator常见使用方法</title>
-      <link href="/posts/1586e22.html"/>
-      <url>/posts/1586e22.html</url>
-      
-        <content type="html"><![CDATA[<h2 id="Restorator常见使用方法有哪些？">Restorator常见使用方法有哪些？</h2><h3 id="案例一：解决WinRAR弹出广告">案例一：解决WinRAR弹出广告</h3><h4 id="1、导出rc文件">1、导出rc文件</h4><p>WinRAR安装完成后，用Restorator 2018打开安装目录WinRAR.exe。点开“打开”对话框后，通过WinRAR的安装路径，找到这个exe程序，然后点击“打开”。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132703168905322378488.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第2张"></p><p>Restorator 2018界面主要分为左右两个区，左边是资源树，我们点击“字符串”左边的加号，在展开的项目中，右键点击“中文”，然后选择“导出”→“导出为.rc”，保存到桌面：</p><p><img src="https://www.lw50.com/zb_users/upload/2023/07/20230711132703168905322323484.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第3张"></p><h4 id="2、打开rc文件">2、打开rc文件</h4><p>上一步会导出一个.rc后缀的文件到指定位置。这一步我们去找到这个文件。如下图所示，我将导出的文件命名为“WinRAR导出分析-中文(简体，中-国).rc”，找到它，右键点开菜单后选择“打开方式”，然后用记事本的方式打开它也可以用文本编辑工具（<a href="https://www.lw50.com/post/notepadv85.html">notepad++</a>）修改：</p><p><img src="https://www.lw50.com/zb_users/upload/2023/07/20230711132704168905322441114.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第4张"></p><p>注意选择用记事本打开这个.rc文件时，不要勾选“始终用此应用打开.rc文件”。</p><p><img src="https://www.lw50.com/zb_users/upload/2023/07/20230711132704168905322414576.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第5张"></p><h4 id="3、定位弹广代码">3、定位弹广代码</h4><p>这一步很关键。下图就是用记事本打开.rc文件的样子，可以看到每一行都有个序数，后面引号里是一个可执行操作的名字。我们需要找到有关弹窗广告的代码，并用合适的方式覆盖它。</p><p><img src="https://www.lw50.com/zb_users/upload/2023/07/20230711132704168905322461116.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第6张"></p><p>由于WinRAR在不停的更新中，所有新老版本的WinRAR将会有区别。我的WinRAR版本为中文版6.02，涉及弹窗的代码在第1277行。如果你用的WinRAR是其他版本，有可能不是第1277行，但是大致也跑不了1000~1300之间，特征是前后都一、两条网址。由于这个代码行，相对于其他中文还是很明显的，仔细找一下并不是很麻烦。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132704168905322468893.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第7张"></p><h4 id="4、覆盖弹广代码">4、覆盖弹广代码</h4><p>找到弹窗代码后删除，改为</p><blockquote><p>“Reminder dialog information”</p></blockquote><p>注意：要保留引号，逗号等等，格式要与之前保持一致，避免马虎。改好之后，左上菜单选择“文件”→“另存为”，将这个.rc文件保存。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132705168905322511535.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第8张"></p><h4 id="5、导入已保存的-rc文件">5、导入已保存的.rc文件</h4><p>这一步，我们把刚才已保存的.rc文件导入到Restorator 2018。操作与之前类似，先在左侧资源树点“+”展开“字符串”，然后右键点击“中文(xxx)”，菜单中选择“导入”→“导入…”。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132705168905322575625.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第9张"></p><p>打开刚才保存的.rc文件：</p><p><img src="https://www.lw50.com/zb_users/upload/2023/07/20230711132705168905322566301.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第10张"></p><p>此时可以看到Restorator 2018右侧的查看器内，已经是之前.rc的新内容（第1277行代码已经被覆盖），接下来选择“文件”→“另存为”，</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132706168905322653221.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第11张"></p><p>另存为一个新的exe文件：</p><p><img src="https://www.lw50.com/zb_users/upload/2023/07/20230711132706168905322642506.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第12张"></p><h4 id="6、覆盖源WinRAR-exe文件">6、覆盖源WinRAR.exe文件</h4><p>接下来，我们把这个新WinRAR.exe，粘贴到WinRAR目录，覆盖原安装目录exe同名程序即可大功告成！</p><p><img src="https://www.lw50.com/zb_users/upload/2023/07/20230711132706168905322630189.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第13张"></p><p>好啦，现在你再启动WinRAR！再也没有弹窗广告了！</p><h3 id="案例二：修改软件标题">案例二：修改软件标题</h3><p>1、首先载入我们需要修改的软件：</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132708168905322863622.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第14张"></p><p>2、先更改成“编辑模式”。方法：单机“查看器”——“编辑模式”即可：</p><p><img src="https://www.lw50.com/zb_users/upload/2023/07/20230711132709168905322970763.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第15张"></p><p>3、在“资源树”里找到“对话框”——“101”，在右侧“标题”修改你希望看到的软件标题栏显示内容。中间的“资源查看器”会有预览。效果图如下：</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132715168905323546042.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第16张"></p><p>4、然后在“资源树”里找到“对话框”——“112”这一项。我们只需单击我们想改的文字，在右侧“标题”下方修改即可：</p><p><img src="https://www.lw50.com/zb_users/upload/2023/07/20230711132717168905323752094.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第17张"></p><p>5、修改完成后的效果如下：</p><p><img src="https://www.lw50.com/zb_users/upload/2023/07/20230711132725168905324596468.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第18张"></p><p>6、然后就是修改图标。这里拿logo来演示！ico图标分辨率为32x32：</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132726168905324639140.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第19张"></p><p>7、“资源树”——“图标”——“105”，右击“105”——“导入”——“导入到”，把ZOL导入；接着用同样的方法把图标导入到“108”中：</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132731168905325163742.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第20张"></p><p>8、单击查看效果如何：</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132733168905325316894.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第21张"></p><p>9、在“资源树”里找到“版本”项：</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132735168905325574811.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第22张"></p><p>10、右下方就是我们要修改的内容了。可以把自己的个人信息都写进去：</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132737168905325796822.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第23张"></p><h3 id="案例三：修改软件图标">案例三：修改软件图标</h3><p>1、进去主界面后，如果需要填写注册码，打开“汉化说明”这个文本特别信息中的就是注册码。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132741168905326172413.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第24张"></p><p>2、打开你要修改的文件。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132742168905326273146.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第25张"></p><p>3、打开文件后，左侧资源树点击（红1）小三角拉开，把图标项也拉开（红2），现在看到（红3）的是该文件的包含的所有ICON，选中后可以看到图标的信息。</p><p><img src="https://www.lw50.com/zb_users/upload/2023/07/20230711132744168905326485900.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第26张"></p><p>4、选中图标_5000，可以在资源查看器看到ICON的信息（红1），可以看出来这个文件的图标格式是比较多的，往下拉（红2）就可以看到RGB/A的图像信息，目前看到的是16色信息。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132745168905326538644.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第27张"></p><p>5、256<em>128</em>96<em>64</em>48<em>32</em>24<em>16-RGB/A、256</em>128<em>96</em>64<em>48</em>32<em>24</em>16-256色、256<em>128</em>96<em>64</em>48<em>32</em>24*16-16色以上是图标项-5000图像信息，替换新的ICON进来时请确保图标信息要和原来的格式/数量一致！</p><p>6、为了达到安全稳定的使用效果，请逐个检查你将要选择替换的ICON项的格式和数量，确保替换一致。</p><p>7、请将你要替换的ico全部放到同一个文件夹里面，并对应图标在应用文件里面的编号（红1），比如：5000对应的是安全，5004对应的是防火墙……（红2）这里是文件游览器，方便我们查看要替换用的ICON。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132746168905326653562.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第28张"></p><p>8、将你要替换的图标整理到同一个文件夹下，然后用文件游览器找到并进入（红2），直到看到所有已经编号好的图标（红1）。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132748168905326864697.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第29张"></p><p>9、如果你的准备工作做好了，我们就要开始批量替换图标了。</p><p>10、右键左边资源树的图标项（文件夹图标），选择导入(O)，点击自动导入所有&quot;图标&quot;类型(Z)</p><p>11、导入完后，直接按F12另存为，保存完成了！</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> web渗透 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 工具使用 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>免杀木马+文件捆绑+权限伪装</title>
       <link href="/posts/1bec3970.html"/>
       <url>/posts/1bec3970.html</url>
@@ -471,6 +446,31 @@
         <tags>
             
             <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Restorator常见使用方法</title>
+      <link href="/posts/1586e22.html"/>
+      <url>/posts/1586e22.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="Restorator常见使用方法有哪些？">Restorator常见使用方法有哪些？</h2><h3 id="案例一：解决WinRAR弹出广告">案例一：解决WinRAR弹出广告</h3><h4 id="1、导出rc文件">1、导出rc文件</h4><p>WinRAR安装完成后，用Restorator 2018打开安装目录WinRAR.exe。点开“打开”对话框后，通过WinRAR的安装路径，找到这个exe程序，然后点击“打开”。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132703168905322378488.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第2张"></p><p>Restorator 2018界面主要分为左右两个区，左边是资源树，我们点击“字符串”左边的加号，在展开的项目中，右键点击“中文”，然后选择“导出”→“导出为.rc”，保存到桌面：</p><p><img src="https://www.lw50.com/zb_users/upload/2023/07/20230711132703168905322323484.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第3张"></p><h4 id="2、打开rc文件">2、打开rc文件</h4><p>上一步会导出一个.rc后缀的文件到指定位置。这一步我们去找到这个文件。如下图所示，我将导出的文件命名为“WinRAR导出分析-中文(简体，中-国).rc”，找到它，右键点开菜单后选择“打开方式”，然后用记事本的方式打开它也可以用文本编辑工具（<a href="https://www.lw50.com/post/notepadv85.html">notepad++</a>）修改：</p><p><img src="https://www.lw50.com/zb_users/upload/2023/07/20230711132704168905322441114.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第4张"></p><p>注意选择用记事本打开这个.rc文件时，不要勾选“始终用此应用打开.rc文件”。</p><p><img src="https://www.lw50.com/zb_users/upload/2023/07/20230711132704168905322414576.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第5张"></p><h4 id="3、定位弹广代码">3、定位弹广代码</h4><p>这一步很关键。下图就是用记事本打开.rc文件的样子，可以看到每一行都有个序数，后面引号里是一个可执行操作的名字。我们需要找到有关弹窗广告的代码，并用合适的方式覆盖它。</p><p><img src="https://www.lw50.com/zb_users/upload/2023/07/20230711132704168905322461116.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第6张"></p><p>由于WinRAR在不停的更新中，所有新老版本的WinRAR将会有区别。我的WinRAR版本为中文版6.02，涉及弹窗的代码在第1277行。如果你用的WinRAR是其他版本，有可能不是第1277行，但是大致也跑不了1000~1300之间，特征是前后都一、两条网址。由于这个代码行，相对于其他中文还是很明显的，仔细找一下并不是很麻烦。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132704168905322468893.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第7张"></p><h4 id="4、覆盖弹广代码">4、覆盖弹广代码</h4><p>找到弹窗代码后删除，改为</p><blockquote><p>“Reminder dialog information”</p></blockquote><p>注意：要保留引号，逗号等等，格式要与之前保持一致，避免马虎。改好之后，左上菜单选择“文件”→“另存为”，将这个.rc文件保存。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132705168905322511535.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第8张"></p><h4 id="5、导入已保存的-rc文件">5、导入已保存的.rc文件</h4><p>这一步，我们把刚才已保存的.rc文件导入到Restorator 2018。操作与之前类似，先在左侧资源树点“+”展开“字符串”，然后右键点击“中文(xxx)”，菜单中选择“导入”→“导入…”。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132705168905322575625.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第9张"></p><p>打开刚才保存的.rc文件：</p><p><img src="https://www.lw50.com/zb_users/upload/2023/07/20230711132705168905322566301.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第10张"></p><p>此时可以看到Restorator 2018右侧的查看器内，已经是之前.rc的新内容（第1277行代码已经被覆盖），接下来选择“文件”→“另存为”，</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132706168905322653221.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第11张"></p><p>另存为一个新的exe文件：</p><p><img src="https://www.lw50.com/zb_users/upload/2023/07/20230711132706168905322642506.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第12张"></p><h4 id="6、覆盖源WinRAR-exe文件">6、覆盖源WinRAR.exe文件</h4><p>接下来，我们把这个新WinRAR.exe，粘贴到WinRAR目录，覆盖原安装目录exe同名程序即可大功告成！</p><p><img src="https://www.lw50.com/zb_users/upload/2023/07/20230711132706168905322630189.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第13张"></p><p>好啦，现在你再启动WinRAR！再也没有弹窗广告了！</p><h3 id="案例二：修改软件标题">案例二：修改软件标题</h3><p>1、首先载入我们需要修改的软件：</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132708168905322863622.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第14张"></p><p>2、先更改成“编辑模式”。方法：单机“查看器”——“编辑模式”即可：</p><p><img src="https://www.lw50.com/zb_users/upload/2023/07/20230711132709168905322970763.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第15张"></p><p>3、在“资源树”里找到“对话框”——“101”，在右侧“标题”修改你希望看到的软件标题栏显示内容。中间的“资源查看器”会有预览。效果图如下：</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132715168905323546042.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第16张"></p><p>4、然后在“资源树”里找到“对话框”——“112”这一项。我们只需单击我们想改的文字，在右侧“标题”下方修改即可：</p><p><img src="https://www.lw50.com/zb_users/upload/2023/07/20230711132717168905323752094.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第17张"></p><p>5、修改完成后的效果如下：</p><p><img src="https://www.lw50.com/zb_users/upload/2023/07/20230711132725168905324596468.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第18张"></p><p>6、然后就是修改图标。这里拿logo来演示！ico图标分辨率为32x32：</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132726168905324639140.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第19张"></p><p>7、“资源树”——“图标”——“105”，右击“105”——“导入”——“导入到”，把ZOL导入；接着用同样的方法把图标导入到“108”中：</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132731168905325163742.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第20张"></p><p>8、单击查看效果如何：</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132733168905325316894.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第21张"></p><p>9、在“资源树”里找到“版本”项：</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132735168905325574811.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第22张"></p><p>10、右下方就是我们要修改的内容了。可以把自己的个人信息都写进去：</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132737168905325796822.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第23张"></p><h3 id="案例三：修改软件图标">案例三：修改软件图标</h3><p>1、进去主界面后，如果需要填写注册码，打开“汉化说明”这个文本特别信息中的就是注册码。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132741168905326172413.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第24张"></p><p>2、打开你要修改的文件。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132742168905326273146.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第25张"></p><p>3、打开文件后，左侧资源树点击（红1）小三角拉开，把图标项也拉开（红2），现在看到（红3）的是该文件的包含的所有ICON，选中后可以看到图标的信息。</p><p><img src="https://www.lw50.com/zb_users/upload/2023/07/20230711132744168905326485900.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第26张"></p><p>4、选中图标_5000，可以在资源查看器看到ICON的信息（红1），可以看出来这个文件的图标格式是比较多的，往下拉（红2）就可以看到RGB/A的图像信息，目前看到的是16色信息。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132745168905326538644.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第27张"></p><p>5、256<em>128</em>96<em>64</em>48<em>32</em>24<em>16-RGB/A、256</em>128<em>96</em>64<em>48</em>32<em>24</em>16-256色、256<em>128</em>96<em>64</em>48<em>32</em>24*16-16色以上是图标项-5000图像信息，替换新的ICON进来时请确保图标信息要和原来的格式/数量一致！</p><p>6、为了达到安全稳定的使用效果，请逐个检查你将要选择替换的ICON项的格式和数量，确保替换一致。</p><p>7、请将你要替换的ico全部放到同一个文件夹里面，并对应图标在应用文件里面的编号（红1），比如：5000对应的是安全，5004对应的是防火墙……（红2）这里是文件游览器，方便我们查看要替换用的ICON。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132746168905326653562.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第28张"></p><p>8、将你要替换的图标整理到同一个文件夹下，然后用文件游览器找到并进入（红2），直到看到所有已经编号好的图标（红1）。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132748168905326864697.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第29张"></p><p>9、如果你的准备工作做好了，我们就要开始批量替换图标了。</p><p>10、右键左边资源树的图标项（文件夹图标），选择导入(O)，点击自动导入所有&quot;图标&quot;类型(Z)</p><p>11、导入完后，直接按F12另存为，保存完成了！</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> web渗透 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 工具使用 </tag>
             
         </tags>
       
@@ -979,31 +979,6 @@
     
     
     <entry>
-      <title>文件上传绕过</title>
-      <link href="/posts/c2e822dd.html"/>
-      <url>/posts/c2e822dd.html</url>
-      
-        <content type="html"><![CDATA[<h1>文件上传绕过</h1><h2 id="1-文件头检查绕过">1.文件头检查绕过</h2><p>这类题进行文件头检查一般是检查concent-type的内容，需要修改成允许的文件类型就行,如 image/jpg<br>然后一句话木马前还要加上对应文件类型的前缀，如GIF89a<br>做这类题时可以先找到允许的文件类型，然后放进010editor看看标识符，然后修改</p><h2 id="MIME及绕过">MIME及绕过</h2><p>1. 什么是MIME：<br>MIME(Multipurpose Internet Mail Extensions)多用途互联网邮件扩展类型。是设定某种扩展名的文件用一种应用程序来打开的方式类型，当该扩展名文件被访问的时候，浏览器会自动使用指定应用程序来打开。</p><p>2. 常见的MIME类型:<br>text/plain （纯文本）<br>text/html （HTML文档）<br>text/javascript （js代码）<br>application/xhtml+xml （XHTML文档）<br>image/gif （GIF图像）<br>image/jpeg （JPEG图像）<br>image/png （PNG图像）<br>video/mpeg （MPEG动画）<br>application/octet-stream （二进制数据）<br>application/pdf （PDF文档）</p><p>3. 检测方式：<br>在文件上传过程中，服务端会针对我们的上传的文件生成一个数组，这个数组其中有一项就是这个文件的类型file_type；服务端对文件进行检测时，就是通过检测脚本中的黑白名单和这个数组中的file_type进行对比，如果符合要求就允许上传这个文件。</p><p>4. MIME绕过的原理：<br>部分Web应用系统判定文件类型是通过content-type字段，黑客可以通过抓包，将content-type字段改为常见的图片类型，如image/gif，从而绕过校验。</p><h2 id="htaccess绕过">.htaccess绕过</h2><blockquote><p>知识：htaccess文件是Apache服务器中的一个配置文件，它负责相关目录下的网页配置。通过htaccess文件，可以帮我们实现：网页301重定向、自定义404错误页面、改变文件扩展名、允许/阻止特定的用户或者目录的访问、禁止目录列表、配置默认文档等功能</p></blockquote><blockquote><p>介绍：hatccess文件，.htaccess是Apache的又一特色。<br>● 一般来说，配置文件的作用范围都是全局的，但Apache提供了一种很方便的、可作用于当前目录及其子目录的配置文件——.htaccess（分布式配置文件），<br>● 提供了针对目录改变配置的方法， 即，在一个特定的文档目录中放置一个包含一个或多个指令的文件， 以作用于此目录及其所有子目录。<br>● 作为用户，所能使用的命令受到限制。<br>● 简单来说，就是我上传了一个.htaccess文件到服务器，那么服务器之后就会将特定格式的文件以php格式解析。</p></blockquote><p>常用内容：</p><figure class="highlight gml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span> AddType application/<span class="variable language_">x</span>-httpd-php .png  <span class="comment">//.png文件当作php文件解析</span></span><br><span class="line"></span><br><span class="line"><span class="number">2.</span> <span class="comment">//只要文件名中包含pass777，就会被Apache解析为php文件。</span></span><br><span class="line">   &lt;FilesMatch <span class="string">&quot;pass777&quot;</span>&gt;</span><br><span class="line">   SetHandler application/<span class="variable language_">x</span>-httpd-php</span><br><span class="line">   &lt;/FilesMatch&gt;</span><br></pre></td></tr></table></figure>]]></content>
-      
-      
-      <categories>
-          
-          <category> CTF </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> web姿势 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>kali中metasploit使用</title>
       <link href="/posts/9375d9ee.html"/>
       <url>/posts/9375d9ee.html</url>
@@ -1021,6 +996,31 @@
         <tags>
             
             <tag> 工具使用 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>文件上传绕过</title>
+      <link href="/posts/c2e822dd.html"/>
+      <url>/posts/c2e822dd.html</url>
+      
+        <content type="html"><![CDATA[<h1>文件上传绕过</h1><h2 id="1-文件头检查绕过">1.文件头检查绕过</h2><p>这类题进行文件头检查一般是检查concent-type的内容，需要修改成允许的文件类型就行,如 image/jpg<br>然后一句话木马前还要加上对应文件类型的前缀，如GIF89a<br>做这类题时可以先找到允许的文件类型，然后放进010editor看看标识符，然后修改</p><h2 id="MIME及绕过">MIME及绕过</h2><p>1. 什么是MIME：<br>MIME(Multipurpose Internet Mail Extensions)多用途互联网邮件扩展类型。是设定某种扩展名的文件用一种应用程序来打开的方式类型，当该扩展名文件被访问的时候，浏览器会自动使用指定应用程序来打开。</p><p>2. 常见的MIME类型:<br>text/plain （纯文本）<br>text/html （HTML文档）<br>text/javascript （js代码）<br>application/xhtml+xml （XHTML文档）<br>image/gif （GIF图像）<br>image/jpeg （JPEG图像）<br>image/png （PNG图像）<br>video/mpeg （MPEG动画）<br>application/octet-stream （二进制数据）<br>application/pdf （PDF文档）</p><p>3. 检测方式：<br>在文件上传过程中，服务端会针对我们的上传的文件生成一个数组，这个数组其中有一项就是这个文件的类型file_type；服务端对文件进行检测时，就是通过检测脚本中的黑白名单和这个数组中的file_type进行对比，如果符合要求就允许上传这个文件。</p><p>4. MIME绕过的原理：<br>部分Web应用系统判定文件类型是通过content-type字段，黑客可以通过抓包，将content-type字段改为常见的图片类型，如image/gif，从而绕过校验。</p><h2 id="htaccess绕过">.htaccess绕过</h2><blockquote><p>知识：htaccess文件是Apache服务器中的一个配置文件，它负责相关目录下的网页配置。通过htaccess文件，可以帮我们实现：网页301重定向、自定义404错误页面、改变文件扩展名、允许/阻止特定的用户或者目录的访问、禁止目录列表、配置默认文档等功能</p></blockquote><blockquote><p>介绍：hatccess文件，.htaccess是Apache的又一特色。<br>● 一般来说，配置文件的作用范围都是全局的，但Apache提供了一种很方便的、可作用于当前目录及其子目录的配置文件——.htaccess（分布式配置文件），<br>● 提供了针对目录改变配置的方法， 即，在一个特定的文档目录中放置一个包含一个或多个指令的文件， 以作用于此目录及其所有子目录。<br>● 作为用户，所能使用的命令受到限制。<br>● 简单来说，就是我上传了一个.htaccess文件到服务器，那么服务器之后就会将特定格式的文件以php格式解析。</p></blockquote><p>常用内容：</p><figure class="highlight gml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span> AddType application/<span class="variable language_">x</span>-httpd-php .png  <span class="comment">//.png文件当作php文件解析</span></span><br><span class="line"></span><br><span class="line"><span class="number">2.</span> <span class="comment">//只要文件名中包含pass777，就会被Apache解析为php文件。</span></span><br><span class="line">   &lt;FilesMatch <span class="string">&quot;pass777&quot;</span>&gt;</span><br><span class="line">   SetHandler application/<span class="variable language_">x</span>-httpd-php</span><br><span class="line">   &lt;/FilesMatch&gt;</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> CTF </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> web姿势 </tag>
             
         </tags>
       
@@ -1533,31 +1533,6 @@
       <link href="/posts/93f62541.html"/>
       <url>/posts/93f62541.html</url>
       
-        <content type="html"><![CDATA[<h2 id="我吐了你随意">我吐了你随意</h2><p>0宽隐写，使用在线工具，将文本复制进去直接得到flag</p><h2 id="迅疾响应">迅疾响应</h2><p>二维码，先用toolfxs里的工具，发现扫不出来，然后用qrazybox在线工具解出。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725112855565.png" alt="image-20240725112855565"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725112922997.png" alt="image-20240725112922997"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725112946131.png" alt="image-20240725112946131"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725113009662.png" alt="image-20240725113009662"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725113030144.png" alt="image-20240725113030144"></p><h2 id="打不开的图片">打不开的图片</h2><p>图片损坏，扔进010editor看看。发现png格式前缀不对，用工具里的求反，然后保存，图片就恢复正常了。</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> CTF </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> misc-wp </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>刷题2024.7.25</title>
-      <link href="/posts/93f62541.html"/>
-      <url>/posts/93f62541.html</url>
-      
         <content type="html"><![CDATA[<p>[TOC]</p><h2 id="web签到">web签到</h2><p>考点：代码审计，http请求</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725125048233.png" alt="image-20240725125048233"></p><p>先传Cookie,即</p><figure class="highlight cos"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CTFshow-QQ<span class="built_in">%E</span>7<span class="built_in">%BE</span><span class="built_in">%A</span>4:=a </span><br></pre></td></tr></table></figure><p>​       (中文要进行url编码)</p><p>接下来传post[‘a’]，即a=b</p><p>然后传get[‘b’]，即?b=c</p><p>最后的request，传GET或者POST方法都可以，即</p><figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&amp;c[<span class="number">6</span>][<span class="number">0</span>][<span class="number">7</span>][<span class="number">5</span>][<span class="number">8</span>][<span class="number">0</span>][<span class="number">9</span>][<span class="number">4</span>][<span class="number">4</span>]=system(<span class="string">&#x27;cat /f*&#x27;</span>);</span><br></pre></td></tr></table></figure><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725125819297.png" alt="image-20240725125819297"></p><h2 id="web2-c0me-t0-s1gn">web2 c0me_t0_s1gn</h2><p>考点：查看源代码，使用控制台</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725133817711.png" alt="image-20240725133817711"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725133847780.png" alt="image-20240725133847780"></p><h2 id="我的眼里只有￥">我的眼里只有￥</h2><p>考点：代码审计，脚本利用</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725192622896.png" alt="image-20240725192622896"></p><p>_=a,即$__=a,后面就是$a，$a=b,就变成$b，以此类推，用python脚本连续传参可解。</p><h2 id="抽老婆">抽老婆</h2><p>考点：查看源代码，代码审计，flask中的session构造</p><p>打开链接，发现可以下载“老婆“。查看代码，发现一串下载的可以代码。（/download?file=a）</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725220105916.png" alt="image-20240725220105916"></p><p>用GET方法下载一个文件，发现不成功，页面跳转。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725220228045.png" alt="image-20240725220228045"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725220311186.png" alt="image-20240725220311186"></p><p>发现”flag“，怀疑/app/app.py文件。下载此文件。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725220413846.png" alt="image-20240725220413846"></p><p>报错，仔细分析，发现可以用…/退级，改为 …/…/app.py，成功下载。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># !/usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*-coding:utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string"># File       : app.py</span></span><br><span class="line"><span class="string"># Time       ：2022/11/07 09:16</span></span><br><span class="line"><span class="string"># Author     ：g4_simon</span></span><br><span class="line"><span class="string"># version    ：python 3.9.7</span></span><br><span class="line"><span class="string"># Description：抽老婆，哇偶~</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> * <span class="comment"># type: ignore</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">from</span> flag <span class="keyword">import</span> flag</span><br><span class="line"></span><br><span class="line"><span class="comment">#初始化全局变量</span></span><br><span class="line">app = Flask(__name__)</span><br><span class="line">app.config[<span class="string">&#x27;SECRET_KEY&#x27;</span>] = <span class="string">&#x27;tanji_is_A_boy_Yooooooooooooooooooooo!&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/&#x27;</span>, methods=[<span class="string">&#x27;GET&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():  </span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&#x27;index.html&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/getwifi&#x27;</span>, methods=[<span class="string">&#x27;GET&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">getwifi</span>():</span><br><span class="line">    session[<span class="string">&#x27;isadmin&#x27;</span>]=<span class="literal">False</span></span><br><span class="line">    wifi=random.choice(os.listdir(<span class="string">&#x27;static/img&#x27;</span>))</span><br><span class="line">    session[<span class="string">&#x27;current_wifi&#x27;</span>]=wifi</span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&#x27;getwifi.html&#x27;</span>,wifi=wifi)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/download&#x27;</span>, methods=[<span class="string">&#x27;GET&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">source</span>(): </span><br><span class="line">    filename=request.args.get(<span class="string">&#x27;file&#x27;</span>)</span><br><span class="line">    <span class="keyword">if</span> <span class="string">&#x27;flag&#x27;</span> <span class="keyword">in</span> filename:</span><br><span class="line">        <span class="keyword">return</span> jsonify(&#123;<span class="string">&quot;msg&quot;</span>:<span class="string">&quot;你想干什么？&quot;</span>&#125;)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> send_file(<span class="string">&#x27;static/img/&#x27;</span>+filename,as_attachment=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/secret_path_U_never_know&#x27;</span>,methods=[<span class="string">&#x27;GET&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">getflag</span>():</span><br><span class="line">    <span class="keyword">if</span> session[<span class="string">&#x27;isadmin&#x27;</span>]:</span><br><span class="line">        <span class="keyword">return</span> jsonify(&#123;<span class="string">&quot;msg&quot;</span>:flag&#125;)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> jsonify(&#123;<span class="string">&quot;msg&quot;</span>:<span class="string">&quot;你怎么知道这个路径的？不过还好我有身份验证&quot;</span>&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run(host=<span class="string">&#x27;0.0.0.0&#x27;</span>,port=<span class="number">80</span>,debug=<span class="literal">True</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure><p>分析发现，它会根据不同/而调用不同的函数，我们需要使用getflag()函数，输入/secret_path_U_never_know。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725220748150.png" alt="image-20240725220748150"></p><p>不行，还要使session[‘isadmin’]为真。（笔记关键词：session）</p><p>用kali机上的flask_session_cookie_manager，先将原session解码，再将isadmin改为True，再编码，替换原session，得到flag。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725221139596.png" alt="image-20240725221139596"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725221627896.png" alt="image-20240725221627896"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725221646423.png" alt="image-20240725221646423"></p>]]></content>
       
       
@@ -1571,6 +1546,31 @@
         <tags>
             
             <tag> web-wp </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>刷题2024.7.25</title>
+      <link href="/posts/93f62541.html"/>
+      <url>/posts/93f62541.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="我吐了你随意">我吐了你随意</h2><p>0宽隐写，使用在线工具，将文本复制进去直接得到flag</p><h2 id="迅疾响应">迅疾响应</h2><p>二维码，先用toolfxs里的工具，发现扫不出来，然后用qrazybox在线工具解出。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725112855565.png" alt="image-20240725112855565"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725112922997.png" alt="image-20240725112922997"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725112946131.png" alt="image-20240725112946131"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725113009662.png" alt="image-20240725113009662"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725113030144.png" alt="image-20240725113030144"></p><h2 id="打不开的图片">打不开的图片</h2><p>图片损坏，扔进010editor看看。发现png格式前缀不对，用工具里的求反，然后保存，图片就恢复正常了。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> CTF </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> misc-wp </tag>
             
         </tags>
       
@@ -1629,31 +1629,6 @@
     
     
     <entry>
-      <title>刷题2024.7.24</title>
-      <link href="/posts/e4f115d7.html"/>
-      <url>/posts/e4f115d7.html</url>
-      
-        <content type="html"><![CDATA[<h2 id="你会异或吗">你会异或吗</h2><p>将文件下载解压放进010editor，发现格式不对，根据题目提示“你会异或吗”和“0x50”，在010editor中对每个字节与0x50进行异或运算，得到完整图片。</p><h2 id="flag一分为二">flag一分为二</h2><p>解压文件是一张png图片，放进010editor，运行模板中的png，在模板结果中找到宽高并修改。之后再用隐形水印工具提取盲水印。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240724183731995.png" alt="image-20240724183731995"></p><h2 id="you-and-me">you_and_me</h2><p>两张图，猜测you.png是原图，you_and_me是加了盲水印的图，需要原图的提取盲水印想到blind watermark。（watermark解不出来）</p><h2 id="黑丝白丝还有什么丝">黑丝白丝还有什么丝</h2><p>视频里按照黑丝白丝出现的顺序和转场变化，依次记录，（白黑黑、白白白白黑、黑白、黑、黑、黑黑黑黑黑、黑白白白、白白白黑黑、黑黑、黑黑黑、白黑白、白、黑白黑白、白白黑、黑、白、白白。最后两个白白应该是拜拜的意思）然后放进</p><p>摩斯密码解密。（多来点这种题（手动滑稽））</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240724224604185.png" alt="image-20240724224604185"></p>]]></content>
-      
-      
-      <categories>
-          
-          <category> CTF </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> misc-wp </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>volayility工具的使用方法</title>
       <link href="/posts/bf034aea.html"/>
       <url>/posts/bf034aea.html</url>
@@ -1671,6 +1646,31 @@
         <tags>
             
             <tag> misc姿势 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>刷题2024.7.24</title>
+      <link href="/posts/e4f115d7.html"/>
+      <url>/posts/e4f115d7.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="你会异或吗">你会异或吗</h2><p>将文件下载解压放进010editor，发现格式不对，根据题目提示“你会异或吗”和“0x50”，在010editor中对每个字节与0x50进行异或运算，得到完整图片。</p><h2 id="flag一分为二">flag一分为二</h2><p>解压文件是一张png图片，放进010editor，运行模板中的png，在模板结果中找到宽高并修改。之后再用隐形水印工具提取盲水印。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240724183731995.png" alt="image-20240724183731995"></p><h2 id="you-and-me">you_and_me</h2><p>两张图，猜测you.png是原图，you_and_me是加了盲水印的图，需要原图的提取盲水印想到blind watermark。（watermark解不出来）</p><h2 id="黑丝白丝还有什么丝">黑丝白丝还有什么丝</h2><p>视频里按照黑丝白丝出现的顺序和转场变化，依次记录，（白黑黑、白白白白黑、黑白、黑、黑、黑黑黑黑黑、黑白白白、白白白黑黑、黑黑、黑黑黑、白黑白、白、黑白黑白、白白黑、黑、白、白白。最后两个白白应该是拜拜的意思）然后放进</p><p>摩斯密码解密。（多来点这种题（手动滑稽））</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240724224604185.png" alt="image-20240724224604185"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> CTF </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> misc-wp </tag>
             
         </tags>
       
