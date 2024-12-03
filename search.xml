@@ -304,31 +304,6 @@
     
     
     <entry>
-      <title>第八届强网杯青少赛wp</title>
-      <link href="/posts/2cd096fe.html"/>
-      <url>/posts/2cd096fe.html</url>
-      
-        <content type="html"><![CDATA[<p>[TOC]</p><h1>第八届强网杯青少赛wp</h1><h2 id="misc">misc</h2><h4 id="签到漫画">签到漫画</h4><blockquote><p>每个漫画的最后一张都是二维码的一部分，全部保存，然后拼在一起，扫描二维码出flag.。</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241124155544679.png" alt="image-20241124155544679"></p><blockquote><p>flag{youthful_and_upward}</p></blockquote><h4 id="whitepic">whitepic</h4><blockquote><p>考点：gif图像</p></blockquote><blockquote><p>下载文件，没有后缀名，能用010editor打开</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241124155848111.png" alt="image-20241124155848111"></p><blockquote><p>根据文件头GIF89a，可以看出是个gif文件。直接使用gifsplitter分离帧数，在其中一帧找到flag</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241124160011013.png" alt="image-20241124160011013"></p><h4 id="问卷">问卷</h4><blockquote><p>你懂的</p></blockquote><h2 id="web">web</h2><h4 id="ezGetFlag">ezGetFlag</h4><blockquote><p>考点：http请求方式</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241124160230507.png" alt=""></p><blockquote><p>点击10次会出现提示</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241124160307890.png" alt="image-20241124160307890"></p><blockquote><p>直接抓包，修改请求方式，把GET改成POST就行了。</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241124160446998.png" alt="image-20241124160446998"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241124160500182.png" alt="image-20241124160500182"></p><blockquote><p>flag{4efb5300-7885-40a9-bf2a-31bbd8ebef86}</p></blockquote><h4 id="ezFindShell">ezFindShell</h4><blockquote><p>考点：代码审计</p></blockquote><p>这题是赛后复现，所以可能不全</p><p>首先拿到一堆php文件，用seay审计</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241130223303421.png" alt="image-20241130223303421"></p><p>非常相似，当时比赛没找到漏洞，现在复现，全局搜索一下post</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241130223557289.png" alt="image-20241130223557289"></p><p>发现可用漏洞</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241130223624296.png" alt="image-20241130223624296"></p><p>array_filter() 函数用回调函数过滤数组中的元素。</p><p>该函数把输入数组中的每个键值传给回调函数。如果回调函数返回 true，则把输入数组中的当前键值返回给结果数组。数组键名保持不变。</p><p>将代码进行base64编码传上去应该就可利用该漏洞。</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> CTF </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 比赛wp </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>docker保存和打包镜像</title>
       <link href="/posts/5721bfe4.html"/>
       <url>/posts/5721bfe4.html</url>
@@ -346,6 +321,31 @@
         <tags>
             
             <tag> 其他姿势 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>第八届强网杯青少赛wp</title>
+      <link href="/posts/2cd096fe.html"/>
+      <url>/posts/2cd096fe.html</url>
+      
+        <content type="html"><![CDATA[<p>[TOC]</p><h1>第八届强网杯青少赛wp</h1><h2 id="misc">misc</h2><h4 id="签到漫画">签到漫画</h4><blockquote><p>每个漫画的最后一张都是二维码的一部分，全部保存，然后拼在一起，扫描二维码出flag.。</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241124155544679.png" alt="image-20241124155544679"></p><blockquote><p>flag{youthful_and_upward}</p></blockquote><h4 id="whitepic">whitepic</h4><blockquote><p>考点：gif图像</p></blockquote><blockquote><p>下载文件，没有后缀名，能用010editor打开</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241124155848111.png" alt="image-20241124155848111"></p><blockquote><p>根据文件头GIF89a，可以看出是个gif文件。直接使用gifsplitter分离帧数，在其中一帧找到flag</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241124160011013.png" alt="image-20241124160011013"></p><h4 id="问卷">问卷</h4><blockquote><p>你懂的</p></blockquote><h2 id="web">web</h2><h4 id="ezGetFlag">ezGetFlag</h4><blockquote><p>考点：http请求方式</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241124160230507.png" alt=""></p><blockquote><p>点击10次会出现提示</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241124160307890.png" alt="image-20241124160307890"></p><blockquote><p>直接抓包，修改请求方式，把GET改成POST就行了。</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241124160446998.png" alt="image-20241124160446998"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241124160500182.png" alt="image-20241124160500182"></p><blockquote><p>flag{4efb5300-7885-40a9-bf2a-31bbd8ebef86}</p></blockquote><h4 id="ezFindShell">ezFindShell</h4><blockquote><p>考点：代码审计</p></blockquote><p>这题是赛后复现，所以可能不全</p><p>首先拿到一堆php文件，用seay审计</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241130223303421.png" alt="image-20241130223303421"></p><p>非常相似，当时比赛没找到漏洞，现在复现，全局搜索一下post</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241130223557289.png" alt="image-20241130223557289"></p><p>发现可用漏洞</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241130223624296.png" alt="image-20241130223624296"></p><p>array_filter() 函数用回调函数过滤数组中的元素。</p><p>该函数把输入数组中的每个键值传给回调函数。如果回调函数返回 true，则把输入数组中的当前键值返回给结果数组。数组键名保持不变。</p><p>将代码进行base64编码传上去应该就可利用该漏洞。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> CTF </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 比赛wp </tag>
             
         </tags>
       
@@ -579,6 +579,31 @@
     
     
     <entry>
+      <title>Windows 子系统 WSL使用系统代理</title>
+      <link href="/posts/f5bf104a.html"/>
+      <url>/posts/f5bf104a.html</url>
+      
+        <content type="html"><![CDATA[<p>[TOC]</p><h1>[WSL] Windows 子系统 WSL使用系统代理</h1><h2 id="以Ubuntu-Clash为例">以Ubuntu + Clash为例</h2><p>由Jeza Chen 发表于 June 3, 2020</p><p>最近使用WSL发现无法访问github相关的网站，基本都是Connection Refused，即便Windows系统使用了Clash也不能访问，按照网上一些教程，需要在WSL上进行一些配置才能用到系统的代理。</p><p>下面的操作基于WSL下的Ubuntu 20.04 LTS，主机代理软件为<a href="https://github.com/Dreamacro/clash">Clash</a>。</p><ol><li><p>在Clash软件找到HTTP代理端口(即软件里面的Port)，如下图的7890。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/clash-screenshot.png" alt="Clash截图"></p></li><li><p>在c盘的用户文件中创建.wslconfig文件，复制以下代码</p><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">   <span class="section">[experimental]</span></span><br><span class="line">   <span class="attr">autoMemoryReclaim</span>=gradual</span><br><span class="line"><span class="attr">networkingMode</span>=mirrored</span><br><span class="line">   <span class="attr">dnsTunneling</span>=<span class="literal">true</span></span><br><span class="line">   <span class="attr">firewall</span>=<span class="literal">true</span></span><br><span class="line">   <span class="attr">autoProxy</span>=<span class="literal">true</span></span><br></pre></td></tr></table></figure></li><li><p>在WSL的终端上输入</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.bashrc</span><br></pre></td></tr></table></figure><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">，在末行写入</span><br><span class="line"><span class="built_in">export</span> <span class="attribute">http_proxy</span>=127.0.0.1:7890</span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> <span class="attribute">https_proxy</span>=127.0.0.1:7890</span><br></pre></td></tr></table></figure><p><strong>注意这里的7890是上图Clash的HTTP代理端口号，请替换成自己本机的端口。</strong></p></li><li><p>关闭终端重新打开，此时输入<code>wget google.com</code>看看代理能不能正常工作。</p></li></ol><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/wsl-wget-google.png" alt="Wget谷歌官网截图"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> CTF </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 其他姿势 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>ctfshow单身杯2024wp</title>
       <link href="/posts/b37bd168.html"/>
       <url>/posts/b37bd168.html</url>
@@ -621,31 +646,6 @@
         <tags>
             
             <tag> 比赛wp </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Windows 子系统 WSL使用系统代理</title>
-      <link href="/posts/f5bf104a.html"/>
-      <url>/posts/f5bf104a.html</url>
-      
-        <content type="html"><![CDATA[<p>[TOC]</p><h1>[WSL] Windows 子系统 WSL使用系统代理</h1><h2 id="以Ubuntu-Clash为例">以Ubuntu + Clash为例</h2><p>由Jeza Chen 发表于 June 3, 2020</p><p>最近使用WSL发现无法访问github相关的网站，基本都是Connection Refused，即便Windows系统使用了Clash也不能访问，按照网上一些教程，需要在WSL上进行一些配置才能用到系统的代理。</p><p>下面的操作基于WSL下的Ubuntu 20.04 LTS，主机代理软件为<a href="https://github.com/Dreamacro/clash">Clash</a>。</p><ol><li><p>在Clash软件找到HTTP代理端口(即软件里面的Port)，如下图的7890。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/clash-screenshot.png" alt="Clash截图"></p></li><li><p>在c盘的用户文件中创建.wslconfig文件，复制以下代码</p><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">   <span class="section">[experimental]</span></span><br><span class="line">   <span class="attr">autoMemoryReclaim</span>=gradual</span><br><span class="line"><span class="attr">networkingMode</span>=mirrored</span><br><span class="line">   <span class="attr">dnsTunneling</span>=<span class="literal">true</span></span><br><span class="line">   <span class="attr">firewall</span>=<span class="literal">true</span></span><br><span class="line">   <span class="attr">autoProxy</span>=<span class="literal">true</span></span><br></pre></td></tr></table></figure></li><li><p>在WSL的终端上输入</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.bashrc</span><br></pre></td></tr></table></figure><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">，在末行写入</span><br><span class="line"><span class="built_in">export</span> <span class="attribute">http_proxy</span>=127.0.0.1:7890</span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> <span class="attribute">https_proxy</span>=127.0.0.1:7890</span><br></pre></td></tr></table></figure><p><strong>注意这里的7890是上图Clash的HTTP代理端口号，请替换成自己本机的端口。</strong></p></li><li><p>关闭终端重新打开，此时输入<code>wget google.com</code>看看代理能不能正常工作。</p></li></ol><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/wsl-wget-google.png" alt="Wget谷歌官网截图"></p>]]></content>
-      
-      
-      <categories>
-          
-          <category> CTF </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 其他姿势 </tag>
             
         </tags>
       
@@ -979,31 +979,6 @@
     
     
     <entry>
-      <title>kali中metasploit使用</title>
-      <link href="/posts/9375d9ee.html"/>
-      <url>/posts/9375d9ee.html</url>
-      
-        <content type="html"><![CDATA[<h1>kali中metasploit使用</h1><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/1e872c4cd10f79a63d862c2e8076cf90.jpg" alt=""></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/62577fd08549538e7954aa69fc08e8c5.jpg" alt=""></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/4a4f354e8700b71e6a64bbacf835665f.jpg" alt=""></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/03c79ac5eb64fafc8039b2073510fe97.jpg" alt=""></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/22fb34311121e723024aef8d4770b853.jpg" alt=""></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/0bd2074ec17321ee3ff23e228b564694.jpg" alt=""></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/8fd0c7c69790abc63539f79b0f4fa84c.jpg" alt=""></p><blockquote><p>shell命令会开启目标机的cmd控制台，打开了这个就相当于可以执行任何命令。</p></blockquote><p><strong>打进去后，进行远程桌面连接的注意事项：</strong></p><p><strong>1.创建用户：net user username password /add</strong></p><p><strong>2.赋予用户管理员权限：net localgroup group_name UserLoginName /add</strong></p><p><strong>3.没有赋予管理员权限远程桌面连接是会失败的。</strong></p><p><strong>4.win7不能同时登陆一个账户，比如目标机登录了一个账户，攻击者在进行远程登录桌面时会把目标机顶下去。</strong></p><p><strong>一些注意事项：</strong></p><p><strong>1.run后报错Host does NOT appear vulnerable.：说明靶机打了补丁的，修复了永恒之蓝漏洞（补丁：KB4474419），删除就可以了。</strong></p><p><strong>2.run getgui -e报错：换成 run post/windows/manage/enable_rdp即可</strong></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/8b320bd4fb77b7538bc5d6fab277b5fc.jpg" alt=""></p>]]></content>
-      
-      
-      <categories>
-          
-          <category> web渗透 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 工具使用 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>文件上传绕过</title>
       <link href="/posts/c2e822dd.html"/>
       <url>/posts/c2e822dd.html</url>
@@ -1021,6 +996,31 @@
         <tags>
             
             <tag> web姿势 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>kali中metasploit使用</title>
+      <link href="/posts/9375d9ee.html"/>
+      <url>/posts/9375d9ee.html</url>
+      
+        <content type="html"><![CDATA[<h1>kali中metasploit使用</h1><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/1e872c4cd10f79a63d862c2e8076cf90.jpg" alt=""></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/62577fd08549538e7954aa69fc08e8c5.jpg" alt=""></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/4a4f354e8700b71e6a64bbacf835665f.jpg" alt=""></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/03c79ac5eb64fafc8039b2073510fe97.jpg" alt=""></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/22fb34311121e723024aef8d4770b853.jpg" alt=""></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/0bd2074ec17321ee3ff23e228b564694.jpg" alt=""></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/8fd0c7c69790abc63539f79b0f4fa84c.jpg" alt=""></p><blockquote><p>shell命令会开启目标机的cmd控制台，打开了这个就相当于可以执行任何命令。</p></blockquote><p><strong>打进去后，进行远程桌面连接的注意事项：</strong></p><p><strong>1.创建用户：net user username password /add</strong></p><p><strong>2.赋予用户管理员权限：net localgroup group_name UserLoginName /add</strong></p><p><strong>3.没有赋予管理员权限远程桌面连接是会失败的。</strong></p><p><strong>4.win7不能同时登陆一个账户，比如目标机登录了一个账户，攻击者在进行远程登录桌面时会把目标机顶下去。</strong></p><p><strong>一些注意事项：</strong></p><p><strong>1.run后报错Host does NOT appear vulnerable.：说明靶机打了补丁的，修复了永恒之蓝漏洞（补丁：KB4474419），删除就可以了。</strong></p><p><strong>2.run getgui -e报错：换成 run post/windows/manage/enable_rdp即可</strong></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/8b320bd4fb77b7538bc5d6fab277b5fc.jpg" alt=""></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> web渗透 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 工具使用 </tag>
             
         </tags>
       
