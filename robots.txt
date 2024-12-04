@@ -4,4 +4,6 @@ Allow: /
 
 Sitemap: https://m3x1.cn/sitemap.xml
 Sitemap: https://m3x1.cn/baidusitemap.xml
+Sitemap: https://m3x1.fun/sitemap.xml
+Sitemap: https://m3x1.fun/baidusitemap.xml
 
