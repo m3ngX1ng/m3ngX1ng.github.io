@@ -7176,8 +7176,8 @@ h6::before {
   position: relative;
   width: 90%;
   height: auto;
-  padding-bottom: 75%;
-  margin: 3% auto;
+  padding-bottom: 50%;
+  margin: 0.5% auto;
   text-align: center;
 }
 .aspect-ratio iframe {
