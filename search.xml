@@ -429,31 +429,6 @@
     
     
     <entry>
-      <title>Restorator常见使用方法</title>
-      <link href="/posts/1586e22.html"/>
-      <url>/posts/1586e22.html</url>
-      
-        <content type="html"><![CDATA[<h2 id="Restorator常见使用方法有哪些？">Restorator常见使用方法有哪些？</h2><h3 id="案例一：解决WinRAR弹出广告">案例一：解决WinRAR弹出广告</h3><h4 id="1、导出rc文件">1、导出rc文件</h4><p>WinRAR安装完成后，用Restorator 2018打开安装目录WinRAR.exe。点开“打开”对话框后，通过WinRAR的安装路径，找到这个exe程序，然后点击“打开”。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132703168905322378488.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第2张"></p><p>Restorator 2018界面主要分为左右两个区，左边是资源树，我们点击“字符串”左边的加号，在展开的项目中，右键点击“中文”，然后选择“导出”→“导出为.rc”，保存到桌面：</p><p><img src="https://www.lw50.com/zb_users/upload/2023/07/20230711132703168905322323484.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第3张"></p><h4 id="2、打开rc文件">2、打开rc文件</h4><p>上一步会导出一个.rc后缀的文件到指定位置。这一步我们去找到这个文件。如下图所示，我将导出的文件命名为“WinRAR导出分析-中文(简体，中-国).rc”，找到它，右键点开菜单后选择“打开方式”，然后用记事本的方式打开它也可以用文本编辑工具（<a href="https://www.lw50.com/post/notepadv85.html">notepad++</a>）修改：</p><p><img src="https://www.lw50.com/zb_users/upload/2023/07/20230711132704168905322441114.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第4张"></p><p>注意选择用记事本打开这个.rc文件时，不要勾选“始终用此应用打开.rc文件”。</p><p><img src="https://www.lw50.com/zb_users/upload/2023/07/20230711132704168905322414576.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第5张"></p><h4 id="3、定位弹广代码">3、定位弹广代码</h4><p>这一步很关键。下图就是用记事本打开.rc文件的样子，可以看到每一行都有个序数，后面引号里是一个可执行操作的名字。我们需要找到有关弹窗广告的代码，并用合适的方式覆盖它。</p><p><img src="https://www.lw50.com/zb_users/upload/2023/07/20230711132704168905322461116.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第6张"></p><p>由于WinRAR在不停的更新中，所有新老版本的WinRAR将会有区别。我的WinRAR版本为中文版6.02，涉及弹窗的代码在第1277行。如果你用的WinRAR是其他版本，有可能不是第1277行，但是大致也跑不了1000~1300之间，特征是前后都一、两条网址。由于这个代码行，相对于其他中文还是很明显的，仔细找一下并不是很麻烦。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132704168905322468893.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第7张"></p><h4 id="4、覆盖弹广代码">4、覆盖弹广代码</h4><p>找到弹窗代码后删除，改为</p><blockquote><p>“Reminder dialog information”</p></blockquote><p>注意：要保留引号，逗号等等，格式要与之前保持一致，避免马虎。改好之后，左上菜单选择“文件”→“另存为”，将这个.rc文件保存。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132705168905322511535.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第8张"></p><h4 id="5、导入已保存的-rc文件">5、导入已保存的.rc文件</h4><p>这一步，我们把刚才已保存的.rc文件导入到Restorator 2018。操作与之前类似，先在左侧资源树点“+”展开“字符串”，然后右键点击“中文(xxx)”，菜单中选择“导入”→“导入…”。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132705168905322575625.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第9张"></p><p>打开刚才保存的.rc文件：</p><p><img src="https://www.lw50.com/zb_users/upload/2023/07/20230711132705168905322566301.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第10张"></p><p>此时可以看到Restorator 2018右侧的查看器内，已经是之前.rc的新内容（第1277行代码已经被覆盖），接下来选择“文件”→“另存为”，</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132706168905322653221.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第11张"></p><p>另存为一个新的exe文件：</p><p><img src="https://www.lw50.com/zb_users/upload/2023/07/20230711132706168905322642506.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第12张"></p><h4 id="6、覆盖源WinRAR-exe文件">6、覆盖源WinRAR.exe文件</h4><p>接下来，我们把这个新WinRAR.exe，粘贴到WinRAR目录，覆盖原安装目录exe同名程序即可大功告成！</p><p><img src="https://www.lw50.com/zb_users/upload/2023/07/20230711132706168905322630189.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第13张"></p><p>好啦，现在你再启动WinRAR！再也没有弹窗广告了！</p><h3 id="案例二：修改软件标题">案例二：修改软件标题</h3><p>1、首先载入我们需要修改的软件：</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132708168905322863622.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第14张"></p><p>2、先更改成“编辑模式”。方法：单机“查看器”——“编辑模式”即可：</p><p><img src="https://www.lw50.com/zb_users/upload/2023/07/20230711132709168905322970763.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第15张"></p><p>3、在“资源树”里找到“对话框”——“101”，在右侧“标题”修改你希望看到的软件标题栏显示内容。中间的“资源查看器”会有预览。效果图如下：</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132715168905323546042.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第16张"></p><p>4、然后在“资源树”里找到“对话框”——“112”这一项。我们只需单击我们想改的文字，在右侧“标题”下方修改即可：</p><p><img src="https://www.lw50.com/zb_users/upload/2023/07/20230711132717168905323752094.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第17张"></p><p>5、修改完成后的效果如下：</p><p><img src="https://www.lw50.com/zb_users/upload/2023/07/20230711132725168905324596468.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第18张"></p><p>6、然后就是修改图标。这里拿logo来演示！ico图标分辨率为32x32：</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132726168905324639140.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第19张"></p><p>7、“资源树”——“图标”——“105”，右击“105”——“导入”——“导入到”，把ZOL导入；接着用同样的方法把图标导入到“108”中：</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132731168905325163742.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第20张"></p><p>8、单击查看效果如何：</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132733168905325316894.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第21张"></p><p>9、在“资源树”里找到“版本”项：</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132735168905325574811.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第22张"></p><p>10、右下方就是我们要修改的内容了。可以把自己的个人信息都写进去：</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132737168905325796822.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第23张"></p><h3 id="案例三：修改软件图标">案例三：修改软件图标</h3><p>1、进去主界面后，如果需要填写注册码，打开“汉化说明”这个文本特别信息中的就是注册码。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132741168905326172413.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第24张"></p><p>2、打开你要修改的文件。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132742168905326273146.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第25张"></p><p>3、打开文件后，左侧资源树点击（红1）小三角拉开，把图标项也拉开（红2），现在看到（红3）的是该文件的包含的所有ICON，选中后可以看到图标的信息。</p><p><img src="https://www.lw50.com/zb_users/upload/2023/07/20230711132744168905326485900.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第26张"></p><p>4、选中图标_5000，可以在资源查看器看到ICON的信息（红1），可以看出来这个文件的图标格式是比较多的，往下拉（红2）就可以看到RGB/A的图像信息，目前看到的是16色信息。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132745168905326538644.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第27张"></p><p>5、256<em>128</em>96<em>64</em>48<em>32</em>24<em>16-RGB/A、256</em>128<em>96</em>64<em>48</em>32<em>24</em>16-256色、256<em>128</em>96<em>64</em>48<em>32</em>24*16-16色以上是图标项-5000图像信息，替换新的ICON进来时请确保图标信息要和原来的格式/数量一致！</p><p>6、为了达到安全稳定的使用效果，请逐个检查你将要选择替换的ICON项的格式和数量，确保替换一致。</p><p>7、请将你要替换的ico全部放到同一个文件夹里面，并对应图标在应用文件里面的编号（红1），比如：5000对应的是安全，5004对应的是防火墙……（红2）这里是文件游览器，方便我们查看要替换用的ICON。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132746168905326653562.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第28张"></p><p>8、将你要替换的图标整理到同一个文件夹下，然后用文件游览器找到并进入（红2），直到看到所有已经编号好的图标（红1）。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132748168905326864697.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第29张"></p><p>9、如果你的准备工作做好了，我们就要开始批量替换图标了。</p><p>10、右键左边资源树的图标项（文件夹图标），选择导入(O)，点击自动导入所有&quot;图标&quot;类型(Z)</p><p>11、导入完后，直接按F12另存为，保存完成了！</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> web渗透 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 工具使用 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>免杀木马+文件捆绑+权限伪装</title>
       <link href="/posts/1bec3970.html"/>
       <url>/posts/1bec3970.html</url>
@@ -471,6 +446,31 @@
         <tags>
             
             <tag> 笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Restorator常见使用方法</title>
+      <link href="/posts/1586e22.html"/>
+      <url>/posts/1586e22.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="Restorator常见使用方法有哪些？">Restorator常见使用方法有哪些？</h2><h3 id="案例一：解决WinRAR弹出广告">案例一：解决WinRAR弹出广告</h3><h4 id="1、导出rc文件">1、导出rc文件</h4><p>WinRAR安装完成后，用Restorator 2018打开安装目录WinRAR.exe。点开“打开”对话框后，通过WinRAR的安装路径，找到这个exe程序，然后点击“打开”。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132703168905322378488.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第2张"></p><p>Restorator 2018界面主要分为左右两个区，左边是资源树，我们点击“字符串”左边的加号，在展开的项目中，右键点击“中文”，然后选择“导出”→“导出为.rc”，保存到桌面：</p><p><img src="https://www.lw50.com/zb_users/upload/2023/07/20230711132703168905322323484.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第3张"></p><h4 id="2、打开rc文件">2、打开rc文件</h4><p>上一步会导出一个.rc后缀的文件到指定位置。这一步我们去找到这个文件。如下图所示，我将导出的文件命名为“WinRAR导出分析-中文(简体，中-国).rc”，找到它，右键点开菜单后选择“打开方式”，然后用记事本的方式打开它也可以用文本编辑工具（<a href="https://www.lw50.com/post/notepadv85.html">notepad++</a>）修改：</p><p><img src="https://www.lw50.com/zb_users/upload/2023/07/20230711132704168905322441114.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第4张"></p><p>注意选择用记事本打开这个.rc文件时，不要勾选“始终用此应用打开.rc文件”。</p><p><img src="https://www.lw50.com/zb_users/upload/2023/07/20230711132704168905322414576.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第5张"></p><h4 id="3、定位弹广代码">3、定位弹广代码</h4><p>这一步很关键。下图就是用记事本打开.rc文件的样子，可以看到每一行都有个序数，后面引号里是一个可执行操作的名字。我们需要找到有关弹窗广告的代码，并用合适的方式覆盖它。</p><p><img src="https://www.lw50.com/zb_users/upload/2023/07/20230711132704168905322461116.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第6张"></p><p>由于WinRAR在不停的更新中，所有新老版本的WinRAR将会有区别。我的WinRAR版本为中文版6.02，涉及弹窗的代码在第1277行。如果你用的WinRAR是其他版本，有可能不是第1277行，但是大致也跑不了1000~1300之间，特征是前后都一、两条网址。由于这个代码行，相对于其他中文还是很明显的，仔细找一下并不是很麻烦。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132704168905322468893.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第7张"></p><h4 id="4、覆盖弹广代码">4、覆盖弹广代码</h4><p>找到弹窗代码后删除，改为</p><blockquote><p>“Reminder dialog information”</p></blockquote><p>注意：要保留引号，逗号等等，格式要与之前保持一致，避免马虎。改好之后，左上菜单选择“文件”→“另存为”，将这个.rc文件保存。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132705168905322511535.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第8张"></p><h4 id="5、导入已保存的-rc文件">5、导入已保存的.rc文件</h4><p>这一步，我们把刚才已保存的.rc文件导入到Restorator 2018。操作与之前类似，先在左侧资源树点“+”展开“字符串”，然后右键点击“中文(xxx)”，菜单中选择“导入”→“导入…”。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132705168905322575625.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第9张"></p><p>打开刚才保存的.rc文件：</p><p><img src="https://www.lw50.com/zb_users/upload/2023/07/20230711132705168905322566301.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第10张"></p><p>此时可以看到Restorator 2018右侧的查看器内，已经是之前.rc的新内容（第1277行代码已经被覆盖），接下来选择“文件”→“另存为”，</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132706168905322653221.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第11张"></p><p>另存为一个新的exe文件：</p><p><img src="https://www.lw50.com/zb_users/upload/2023/07/20230711132706168905322642506.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第12张"></p><h4 id="6、覆盖源WinRAR-exe文件">6、覆盖源WinRAR.exe文件</h4><p>接下来，我们把这个新WinRAR.exe，粘贴到WinRAR目录，覆盖原安装目录exe同名程序即可大功告成！</p><p><img src="https://www.lw50.com/zb_users/upload/2023/07/20230711132706168905322630189.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第13张"></p><p>好啦，现在你再启动WinRAR！再也没有弹窗广告了！</p><h3 id="案例二：修改软件标题">案例二：修改软件标题</h3><p>1、首先载入我们需要修改的软件：</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132708168905322863622.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第14张"></p><p>2、先更改成“编辑模式”。方法：单机“查看器”——“编辑模式”即可：</p><p><img src="https://www.lw50.com/zb_users/upload/2023/07/20230711132709168905322970763.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第15张"></p><p>3、在“资源树”里找到“对话框”——“101”，在右侧“标题”修改你希望看到的软件标题栏显示内容。中间的“资源查看器”会有预览。效果图如下：</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132715168905323546042.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第16张"></p><p>4、然后在“资源树”里找到“对话框”——“112”这一项。我们只需单击我们想改的文字，在右侧“标题”下方修改即可：</p><p><img src="https://www.lw50.com/zb_users/upload/2023/07/20230711132717168905323752094.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第17张"></p><p>5、修改完成后的效果如下：</p><p><img src="https://www.lw50.com/zb_users/upload/2023/07/20230711132725168905324596468.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第18张"></p><p>6、然后就是修改图标。这里拿logo来演示！ico图标分辨率为32x32：</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132726168905324639140.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第19张"></p><p>7、“资源树”——“图标”——“105”，右击“105”——“导入”——“导入到”，把ZOL导入；接着用同样的方法把图标导入到“108”中：</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132731168905325163742.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第20张"></p><p>8、单击查看效果如何：</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132733168905325316894.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第21张"></p><p>9、在“资源树”里找到“版本”项：</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132735168905325574811.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第22张"></p><p>10、右下方就是我们要修改的内容了。可以把自己的个人信息都写进去：</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132737168905325796822.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第23张"></p><h3 id="案例三：修改软件图标">案例三：修改软件图标</h3><p>1、进去主界面后，如果需要填写注册码，打开“汉化说明”这个文本特别信息中的就是注册码。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132741168905326172413.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第24张"></p><p>2、打开你要修改的文件。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132742168905326273146.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第25张"></p><p>3、打开文件后，左侧资源树点击（红1）小三角拉开，把图标项也拉开（红2），现在看到（红3）的是该文件的包含的所有ICON，选中后可以看到图标的信息。</p><p><img src="https://www.lw50.com/zb_users/upload/2023/07/20230711132744168905326485900.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第26张"></p><p>4、选中图标_5000，可以在资源查看器看到ICON的信息（红1），可以看出来这个文件的图标格式是比较多的，往下拉（红2）就可以看到RGB/A的图像信息，目前看到的是16色信息。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132745168905326538644.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第27张"></p><p>5、256<em>128</em>96<em>64</em>48<em>32</em>24<em>16-RGB/A、256</em>128<em>96</em>64<em>48</em>32<em>24</em>16-256色、256<em>128</em>96<em>64</em>48<em>32</em>24*16-16色以上是图标项-5000图像信息，替换新的ICON进来时请确保图标信息要和原来的格式/数量一致！</p><p>6、为了达到安全稳定的使用效果，请逐个检查你将要选择替换的ICON项的格式和数量，确保替换一致。</p><p>7、请将你要替换的ico全部放到同一个文件夹里面，并对应图标在应用文件里面的编号（红1），比如：5000对应的是安全，5004对应的是防火墙……（红2）这里是文件游览器，方便我们查看要替换用的ICON。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132746168905326653562.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第28张"></p><p>8、将你要替换的图标整理到同一个文件夹下，然后用文件游览器找到并进入（红2），直到看到所有已经编号好的图标（红1）。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20230711132748168905326864697.jpeg" alt="Restorator 2018汉化版附注册码及使用方法  第29张"></p><p>9、如果你的准备工作做好了，我们就要开始批量替换图标了。</p><p>10、右键左边资源树的图标项（文件夹图标），选择导入(O)，点击自动导入所有&quot;图标&quot;类型(Z)</p><p>11、导入完后，直接按F12另存为，保存完成了！</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> web渗透 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 工具使用 </tag>
             
         </tags>
       
@@ -979,31 +979,6 @@
     
     
     <entry>
-      <title>文件上传绕过</title>
-      <link href="/posts/c2e822dd.html"/>
-      <url>/posts/c2e822dd.html</url>
-      
-        <content type="html"><![CDATA[<h1>文件上传绕过</h1><h2 id="1-文件头检查绕过">1.文件头检查绕过</h2><p>这类题进行文件头检查一般是检查concent-type的内容，需要修改成允许的文件类型就行,如 image/jpg<br>然后一句话木马前还要加上对应文件类型的前缀，如GIF89a<br>做这类题时可以先找到允许的文件类型，然后放进010editor看看标识符，然后修改</p><h2 id="MIME及绕过">MIME及绕过</h2><p>1. 什么是MIME：<br>MIME(Multipurpose Internet Mail Extensions)多用途互联网邮件扩展类型。是设定某种扩展名的文件用一种应用程序来打开的方式类型，当该扩展名文件被访问的时候，浏览器会自动使用指定应用程序来打开。</p><p>2. 常见的MIME类型:<br>text/plain （纯文本）<br>text/html （HTML文档）<br>text/javascript （js代码）<br>application/xhtml+xml （XHTML文档）<br>image/gif （GIF图像）<br>image/jpeg （JPEG图像）<br>image/png （PNG图像）<br>video/mpeg （MPEG动画）<br>application/octet-stream （二进制数据）<br>application/pdf （PDF文档）</p><p>3. 检测方式：<br>在文件上传过程中，服务端会针对我们的上传的文件生成一个数组，这个数组其中有一项就是这个文件的类型file_type；服务端对文件进行检测时，就是通过检测脚本中的黑白名单和这个数组中的file_type进行对比，如果符合要求就允许上传这个文件。</p><p>4. MIME绕过的原理：<br>部分Web应用系统判定文件类型是通过content-type字段，黑客可以通过抓包，将content-type字段改为常见的图片类型，如image/gif，从而绕过校验。</p><h2 id="htaccess绕过">.htaccess绕过</h2><blockquote><p>知识：htaccess文件是Apache服务器中的一个配置文件，它负责相关目录下的网页配置。通过htaccess文件，可以帮我们实现：网页301重定向、自定义404错误页面、改变文件扩展名、允许/阻止特定的用户或者目录的访问、禁止目录列表、配置默认文档等功能</p></blockquote><blockquote><p>介绍：hatccess文件，.htaccess是Apache的又一特色。<br>● 一般来说，配置文件的作用范围都是全局的，但Apache提供了一种很方便的、可作用于当前目录及其子目录的配置文件——.htaccess（分布式配置文件），<br>● 提供了针对目录改变配置的方法， 即，在一个特定的文档目录中放置一个包含一个或多个指令的文件， 以作用于此目录及其所有子目录。<br>● 作为用户，所能使用的命令受到限制。<br>● 简单来说，就是我上传了一个.htaccess文件到服务器，那么服务器之后就会将特定格式的文件以php格式解析。</p></blockquote><p>常用内容：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1. AddType application/x-httpd-php .png  //.png文件当作php文件解析</span><br><span class="line"></span><br><span class="line">2. //只要文件名中包含pass777，就会被Apache解析为php文件。</span><br><span class="line">   &lt;FilesMatch &quot;pass777&quot;&gt;</span><br><span class="line">   SetHandler application/x-httpd-php</span><br><span class="line">   &lt;/FilesMatch&gt;</span><br></pre></td></tr></table></figure>]]></content>
-      
-      
-      <categories>
-          
-          <category> CTF </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> web姿势 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>kali中metasploit使用</title>
       <link href="/posts/9375d9ee.html"/>
       <url>/posts/9375d9ee.html</url>
@@ -1021,6 +996,31 @@
         <tags>
             
             <tag> 工具使用 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>文件上传绕过</title>
+      <link href="/posts/c2e822dd.html"/>
+      <url>/posts/c2e822dd.html</url>
+      
+        <content type="html"><![CDATA[<h1>文件上传绕过</h1><h2 id="1-文件头检查绕过">1.文件头检查绕过</h2><p>这类题进行文件头检查一般是检查concent-type的内容，需要修改成允许的文件类型就行,如 image/jpg<br>然后一句话木马前还要加上对应文件类型的前缀，如GIF89a<br>做这类题时可以先找到允许的文件类型，然后放进010editor看看标识符，然后修改</p><h2 id="MIME及绕过">MIME及绕过</h2><p>1. 什么是MIME：<br>MIME(Multipurpose Internet Mail Extensions)多用途互联网邮件扩展类型。是设定某种扩展名的文件用一种应用程序来打开的方式类型，当该扩展名文件被访问的时候，浏览器会自动使用指定应用程序来打开。</p><p>2. 常见的MIME类型:<br>text/plain （纯文本）<br>text/html （HTML文档）<br>text/javascript （js代码）<br>application/xhtml+xml （XHTML文档）<br>image/gif （GIF图像）<br>image/jpeg （JPEG图像）<br>image/png （PNG图像）<br>video/mpeg （MPEG动画）<br>application/octet-stream （二进制数据）<br>application/pdf （PDF文档）</p><p>3. 检测方式：<br>在文件上传过程中，服务端会针对我们的上传的文件生成一个数组，这个数组其中有一项就是这个文件的类型file_type；服务端对文件进行检测时，就是通过检测脚本中的黑白名单和这个数组中的file_type进行对比，如果符合要求就允许上传这个文件。</p><p>4. MIME绕过的原理：<br>部分Web应用系统判定文件类型是通过content-type字段，黑客可以通过抓包，将content-type字段改为常见的图片类型，如image/gif，从而绕过校验。</p><h2 id="htaccess绕过">.htaccess绕过</h2><blockquote><p>知识：htaccess文件是Apache服务器中的一个配置文件，它负责相关目录下的网页配置。通过htaccess文件，可以帮我们实现：网页301重定向、自定义404错误页面、改变文件扩展名、允许/阻止特定的用户或者目录的访问、禁止目录列表、配置默认文档等功能</p></blockquote><blockquote><p>介绍：hatccess文件，.htaccess是Apache的又一特色。<br>● 一般来说，配置文件的作用范围都是全局的，但Apache提供了一种很方便的、可作用于当前目录及其子目录的配置文件——.htaccess（分布式配置文件），<br>● 提供了针对目录改变配置的方法， 即，在一个特定的文档目录中放置一个包含一个或多个指令的文件， 以作用于此目录及其所有子目录。<br>● 作为用户，所能使用的命令受到限制。<br>● 简单来说，就是我上传了一个.htaccess文件到服务器，那么服务器之后就会将特定格式的文件以php格式解析。</p></blockquote><p>常用内容：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1. AddType application/x-httpd-php .png  //.png文件当作php文件解析</span><br><span class="line"></span><br><span class="line">2. //只要文件名中包含pass777，就会被Apache解析为php文件。</span><br><span class="line">   &lt;FilesMatch &quot;pass777&quot;&gt;</span><br><span class="line">   SetHandler application/x-httpd-php</span><br><span class="line">   &lt;/FilesMatch&gt;</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> CTF </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> web姿势 </tag>
             
         </tags>
       
@@ -1758,6 +1758,17 @@
     
     <entry>
       <title></title>
+      <link href="/css/kslink.css"/>
+      <url>/css/kslink.css</url>
+      
+        <content type="html"><![CDATA[/* 添加友链按钮 *//* 快速填写格式 */.addBtn {    display: flex;    justify-content: center;    flex-wrap: wrap;}.addBtn button {    transition: .2s;    display: flex;    margin: 5px auto;    color: var(--global-bg);    padding: 15px;    border-radius: 40px;    background: var(--search-result-title);    align-items: center;}button {    padding: 0;    outline: 0;    border: none;    background: 0 0;    cursor: pointer;    touch-action: manipulation;}.fa-solid, .fas {    font-family: "Font Awesome 6 Free";    font-weight: 900;}.addBtn i {    font-size: 1.3rem;    margin-right: 10px;}.addBtn button:hover {    background: var(--theme-color);    color: #fff;}]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title></title>
       <link href="/css/coin.css"/>
       <url>/css/coin.css</url>
       
@@ -1780,32 +1791,10 @@
     
     <entry>
       <title></title>
-      <link href="/css/kslink.css"/>
-      <url>/css/kslink.css</url>
-      
-        <content type="html"><![CDATA[/* 添加友链按钮 *//* 快速填写格式 */.addBtn {    display: flex;    justify-content: center;    flex-wrap: wrap;}.addBtn button {    transition: .2s;    display: flex;    margin: 5px auto;    color: var(--global-bg);    padding: 15px;    border-radius: 40px;    background: var(--search-result-title);    align-items: center;}button {    padding: 0;    outline: 0;    border: none;    background: 0 0;    cursor: pointer;    touch-action: manipulation;}.fa-solid, .fas {    font-family: "Font Awesome 6 Free";    font-weight: 900;}.addBtn i {    font-size: 1.3rem;    margin-right: 10px;}.addBtn button:hover {    background: var(--theme-color);    color: #fff;}]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title></title>
       <link href="/js/bibi.js"/>
       <url>/js/bibi.js</url>
       
         <content type="html"><![CDATA[let svg = '<svg  viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" class="is-badge"><path  d="m512 268c0 17.9-4.3 34.5-12.9 49.7s-20.1 27.1-34.6 35.4c.4 2.7.6 6.9.6 12.6 0 27.1-9.1 50.1-27.1 69.1-18.1 19.1-39.9 28.6-65.4 28.6-11.4 0-22.3-2.1-32.6-6.3-8 16.4-19.5 29.6-34.6 39.7-15 10.2-31.5 15.2-49.4 15.2-18.3 0-34.9-4.9-49.7-14.9-14.9-9.9-26.3-23.2-34.3-40-10.3 4.2-21.1 6.3-32.6 6.3-25.5 0-47.4-9.5-65.7-28.6-18.3-19-27.4-42.1-27.4-69.1 0-3 .4-7.2 1.1-12.6-14.5-8.4-26-20.2-34.6-35.4-8.5-15.2-12.8-31.8-12.8-49.7 0-19 4.8-36.5 14.3-52.3s22.3-27.5 38.3-35.1c-4.2-11.4-6.3-22.9-6.3-34.3 0-27 9.1-50.1 27.4-69.1s40.2-28.6 65.7-28.6c11.4 0 22.3 2.1 32.6 6.3 8-16.4 19.5-29.6 34.6-39.7 15-10.1 31.5-15.2 49.4-15.2s34.4 5.1 49.4 15.1c15 10.1 26.6 23.3 34.6 39.7 10.3-4.2 21.1-6.3 32.6-6.3 25.5 0 47.3 9.5 65.4 28.6s27.1 42.1 27.1 69.1c0 12.6-1.9 24-5.7 34.3 16 7.6 28.8 19.3 38.3 35.1 9.5 15.9 14.3 33.4 14.3 52.4zm-266.9 77.1 105.7-158.3c2.7-4.2 3.5-8.8 2.6-13.7-1-4.9-3.5-8.8-7.7-11.4-4.2-2.7-8.8-3.6-13.7-2.9-5 .8-9 3.2-12 7.4l-93.1 140-42.9-42.8c-3.8-3.8-8.2-5.6-13.1-5.4-5 .2-9.3 2-13.1 5.4-3.4 3.4-5.1 7.7-5.1 12.9 0 5.1 1.7 9.4 5.1 12.9l58.9 58.9 2.9 2.3c3.4 2.3 6.9 3.4 10.3 3.4 6.7-.1 11.8-2.9 15.2-8.7z" fill="#1da1f2"></path></svg>'let total = 0let nowNum = 0let items = []let page = 1let Url = '' // 记住替换为你的API链接window.addEventListener('DOMContentLoaded', () => {    getNew();});// 获取数据function getNew() {    let bibi = document.getElementById('bibi');    try {        bibi.removeChild(document.getElementById('more'))    } catch (error) { }    bibi.innerHTML += '<div id="bb_loading"><img src="/assets/loading3.gif" alt="bb_loading"></div>' // bb_loading图片可以f12在我网站源码下载，也可以使用其他图片。    fetch(Url + page).then(res => res.json()).then((res) => {        total = res.data.total        items = res.data.items        nowNum += items.length        if (page == 1) {            document.querySelector('.bb-info').innerHTML = '<svg style="width:1.20em;height:1.20em;top:5px;fill:currentColor;overflow:hidden;position:relative"><use xlink:href="#icon-chat"></svg> 站长的唠叨(' + total + ')'        }        page += 1    }).then(() => {        bb();        if (nowNum < total) {            document.getElementById('bibi').innerHTML += '<button id="more" onclick="getNew()">再翻翻</button>'        }        document.getElementById('bibi').removeChild(document.getElementById('bb_loading'))    })}// 渲染数据function bb() {    let bb = document.getElementById('bb-main')    items.forEach((item) => {        let time = item.createdAt.substring(0, 10);        let div = document.createElement('div')        item.content = contentFormat(item.content)        div.className = 'bb-card'        div.innerHTML = '<div class="card-header"><div class="avatar"><img class="nofancybox"src="' + item.author.avatar + '"></div><div class="name">' + item.author.nickName + '</div>' + svg + '<div class="card-time">' + time + '</div></div><div class="card-content">' + item.content + '</div><div class="card-footer"><div data-v-185689ea=""class="card-label"style="background: ' + item.tag.bgColor + '; color: white;">' + item.tag.name + '</div></div>'        bb.appendChild(div)    })}// content格式化function contentFormat(s) {    let br = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;    let re_forimg = /<img(.*?)src=[\"|\']?(.*?)[\"|\']?(.*?)>|!\[(.*?)\]\((.*?)\)/g;    let getImgUrl = /(http(.*).[jpg|png|gif])/g;    let ls = s.match(getImgUrl)    s = s.replace(re_forimg, '')    s = s.replace(br, '')    let html = '<br>'    if (ls) {        ls.forEach((e) => {            html += '<a href="' + e + '" target="_blank" data-fancybox="group" class="fancybox"><img src="' + e + '"></a>'        })    }    s += html    return s}]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title></title>
-      <link href="/js/coin.js"/>
-      <url>/js/coin.js</url>
-      
-        <content type="html"><![CDATA[var tipButtons = document.querySelectorAll('.tip-button')function coinAudio() {    var coinAudio = document.getElementById("coinAudio");    if (coinAudio) {        coinAudio.play();//有音频时播放    }}// Loop through all buttons (allows for multiple buttons on page)tipButtons.forEach((button) => {    var coin = button.querySelector('.coin')    // The larger the number, the slower the animation    coin.maxMoveLoopCount = 90    button.addEventListener('click', () => {        if (/Android|webOS|BlackBerry/i.test(navigator.userAgent)) return true; //媒体选择        if (button.clicked) return        button.classList.add('clicked')        // Wait to start flipping th coin because of the button tilt animation        setTimeout(() => {            // Randomize the flipping speeds just for fun            coin.sideRotationCount = Math.floor(Math.random() * 5) * 90            coin.maxFlipAngle = (Math.floor(Math.random() * 4) + 3) * Math.PI            button.clicked = true            flipCoin()            coinAudio()        }, 50)    })    var flipCoin = () => {        coin.moveLoopCount = 0        flipCoinLoop()    }    var resetCoin = () => {        coin.style.setProperty('--coin-x-multiplier', 0)        coin.style.setProperty('--coin-scale-multiplier', 0)        coin.style.setProperty('--coin-rotation-multiplier', 0)        coin.style.setProperty('--shine-opacity-multiplier', 0.4)        coin.style.setProperty('--shine-bg-multiplier', '50%')        coin.style.setProperty('opacity', 1)        // Delay to give the reset animation some time before you can click again        setTimeout(() => {            button.clicked = false        }, 300)    }    var flipCoinLoop = () => {        coin.moveLoopCount++        var percentageCompleted = coin.moveLoopCount / coin.maxMoveLoopCount        coin.angle = -coin.maxFlipAngle * Math.pow((percentageCompleted - 1), 2) + coin.maxFlipAngle        // Calculate the scale and position of the coin moving through the air        coin.style.setProperty('--coin-y-multiplier', -11 * Math.pow(percentageCompleted * 2 - 1, 4) + 11)        coin.style.setProperty('--coin-x-multiplier', percentageCompleted)        coin.style.setProperty('--coin-scale-multiplier', percentageCompleted * 0.6)        coin.style.setProperty('--coin-rotation-multiplier', percentageCompleted * coin.sideRotationCount)        // Calculate the scale and position values for the different coin faces        // The math uses sin/cos wave functions to similate the circular motion of 3D spin        coin.style.setProperty('--front-scale-multiplier', Math.max(Math.cos(coin.angle), 0))        coin.style.setProperty('--front-y-multiplier', Math.sin(coin.angle))        coin.style.setProperty('--middle-scale-multiplier', Math.abs(Math.cos(coin.angle), 0))        coin.style.setProperty('--middle-y-multiplier', Math.cos((coin.angle + Math.PI / 2) % Math.PI))        coin.style.setProperty('--back-scale-multiplier', Math.max(Math.cos(coin.angle - Math.PI), 0))        coin.style.setProperty('--back-y-multiplier', Math.sin(coin.angle - Math.PI))        coin.style.setProperty('--shine-opacity-multiplier', 4 * Math.sin((coin.angle + Math.PI / 2) % Math.PI) - 3.2)        coin.style.setProperty('--shine-bg-multiplier', -40 * (Math.cos((coin.angle + Math.PI / 2) % Math.PI) - 0.5) + '%')        // Repeat animation loop        if (coin.moveLoopCount < coin.maxMoveLoopCount) {            if (coin.moveLoopCount === coin.maxMoveLoopCount - 6) button.classList.add('shrink-landing')            window.requestAnimationFrame(flipCoinLoop)        } else {            button.classList.add('coin-landed')            coin.style.setProperty('opacity', 0)            setTimeout(() => {                button.classList.remove('clicked', 'shrink-landing', 'coin-landed')                setTimeout(() => {                    resetCoin()                }, 300)            }, 1500)        }    }})]]></content>
       
     </entry>
     
@@ -1824,10 +1813,21 @@
     
     <entry>
       <title></title>
-      <link href="/js/kslink.js"/>
-      <url>/js/kslink.js</url>
+      <link href="/js/coin.js"/>
+      <url>/js/coin.js</url>
       
-        <content type="html"><![CDATA[var leonus = {    linkCom: e => {        var t = document.querySelector(".el-textarea__inner");        "bf" == e ? (t.value = "```yml\n", t.value += "- name: \n  link: \n  avatar: \n  descr: \n  siteshot: ", t.value += "\n```", t.setSelectionRange(15, 15)) : (t.value = "站点名称：\n站点地址：\n头像链接：\n站点描述：\n站点截图：", t.setSelectionRange(5, 5)), t.focus()    },    owoBig: () => {        if (!document.getElementById("post-comment") || document.body.clientWidth < 768) return;        let e = 1,            t = "",            o = document.createElement("div"),            n = document.querySelector("body");        o.id = "owo-big", n.appendChild(o), new MutationObserver((l => {            for (let a = 0; a < l.length; a++) {                let i = l[a].addedNodes,                    s = "";                if (2 == i.length && "OwO-body" == i[1].className) s = i[1];                else {                    if (1 != i.length || "tk-comment" != i[0].className) continue;                    s = i[0]                }                s.onmouseover = l => {                    e && ("OwO-body" == s.className && "IMG" == l.target.tagName || "tk-owo-emotion" == l.target.className) && (e = 0, t = setTimeout((() => {                        let e = 3 * l.path[0].clientHeight,                            t = 3 * l.path[0].clientWidth,                            a = l.x - l.offsetX - (t - l.path[0].clientWidth) / 2,                            i = l.y - l.offsetY;                        a + t > n.clientWidth && (a -= a + t - n.clientWidth + 10), a < 0 && (a = 10), o.style.cssText = `display:flex; height:${e}px; width:${t}px; left:${a}px; top:${i}px;`, o.innerHTML = `<img src="${l.target.src}">`                    }), 300))                }, s.onmouseout = () => {                    o.style.display = "none", e = 1, clearTimeout(t)                }            }        })).observe(document.getElementById("post-comment"), {            subtree: !0,            childList: !0        })    },};]]></content>
+        <content type="html"><![CDATA[var tipButtons = document.querySelectorAll('.tip-button')function coinAudio() {    var coinAudio = document.getElementById("coinAudio");    if (coinAudio) {        coinAudio.play();//有音频时播放    }}// Loop through all buttons (allows for multiple buttons on page)tipButtons.forEach((button) => {    var coin = button.querySelector('.coin')    // The larger the number, the slower the animation    coin.maxMoveLoopCount = 90    button.addEventListener('click', () => {        if (/Android|webOS|BlackBerry/i.test(navigator.userAgent)) return true; //媒体选择        if (button.clicked) return        button.classList.add('clicked')        // Wait to start flipping th coin because of the button tilt animation        setTimeout(() => {            // Randomize the flipping speeds just for fun            coin.sideRotationCount = Math.floor(Math.random() * 5) * 90            coin.maxFlipAngle = (Math.floor(Math.random() * 4) + 3) * Math.PI            button.clicked = true            flipCoin()            coinAudio()        }, 50)    })    var flipCoin = () => {        coin.moveLoopCount = 0        flipCoinLoop()    }    var resetCoin = () => {        coin.style.setProperty('--coin-x-multiplier', 0)        coin.style.setProperty('--coin-scale-multiplier', 0)        coin.style.setProperty('--coin-rotation-multiplier', 0)        coin.style.setProperty('--shine-opacity-multiplier', 0.4)        coin.style.setProperty('--shine-bg-multiplier', '50%')        coin.style.setProperty('opacity', 1)        // Delay to give the reset animation some time before you can click again        setTimeout(() => {            button.clicked = false        }, 300)    }    var flipCoinLoop = () => {        coin.moveLoopCount++        var percentageCompleted = coin.moveLoopCount / coin.maxMoveLoopCount        coin.angle = -coin.maxFlipAngle * Math.pow((percentageCompleted - 1), 2) + coin.maxFlipAngle        // Calculate the scale and position of the coin moving through the air        coin.style.setProperty('--coin-y-multiplier', -11 * Math.pow(percentageCompleted * 2 - 1, 4) + 11)        coin.style.setProperty('--coin-x-multiplier', percentageCompleted)        coin.style.setProperty('--coin-scale-multiplier', percentageCompleted * 0.6)        coin.style.setProperty('--coin-rotation-multiplier', percentageCompleted * coin.sideRotationCount)        // Calculate the scale and position values for the different coin faces        // The math uses sin/cos wave functions to similate the circular motion of 3D spin        coin.style.setProperty('--front-scale-multiplier', Math.max(Math.cos(coin.angle), 0))        coin.style.setProperty('--front-y-multiplier', Math.sin(coin.angle))        coin.style.setProperty('--middle-scale-multiplier', Math.abs(Math.cos(coin.angle), 0))        coin.style.setProperty('--middle-y-multiplier', Math.cos((coin.angle + Math.PI / 2) % Math.PI))        coin.style.setProperty('--back-scale-multiplier', Math.max(Math.cos(coin.angle - Math.PI), 0))        coin.style.setProperty('--back-y-multiplier', Math.sin(coin.angle - Math.PI))        coin.style.setProperty('--shine-opacity-multiplier', 4 * Math.sin((coin.angle + Math.PI / 2) % Math.PI) - 3.2)        coin.style.setProperty('--shine-bg-multiplier', -40 * (Math.cos((coin.angle + Math.PI / 2) % Math.PI) - 0.5) + '%')        // Repeat animation loop        if (coin.moveLoopCount < coin.maxMoveLoopCount) {            if (coin.moveLoopCount === coin.maxMoveLoopCount - 6) button.classList.add('shrink-landing')            window.requestAnimationFrame(flipCoinLoop)        } else {            button.classList.add('coin-landed')            coin.style.setProperty('opacity', 0)            setTimeout(() => {                button.classList.remove('clicked', 'shrink-landing', 'coin-landed')                setTimeout(() => {                    resetCoin()                }, 300)            }, 1500)        }    }})]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title></title>
+      <link href="/js/txmap.js"/>
+      <url>/js/txmap.js</url>
+      
+        <content type="html"><![CDATA[/* 欢迎信息 start *///get请求$.ajax({    type: 'get',    url: 'https://apis.map.qq.com/ws/location/v1/ip',    data: {      key: '3IPBZ-CIUWM-E5O6O-6Z6RI-TZGWV-6SBG5',  // 这里要写你的KEY!!!      output: 'jsonp',    },    dataType: 'jsonp',    success: function (res) {      ipLoacation = res;    }  })  function getDistance(e1, n1, e2, n2) {    const R = 6371    const { sin, cos, asin, PI, hypot } = Math    let getPoint = (e, n) => {      e *= PI / 180      n *= PI / 180      return { x: cos(n) * cos(e), y: cos(n) * sin(e), z: sin(n) }    }      let a = getPoint(e1, n1)    let b = getPoint(e2, n2)    let c = hypot(a.x - b.x, a.y - b.y, a.z - b.z)    let r = asin(c / 2) * 2 * R    return Math.round(r);  }    function showWelcome() {      let dist = getDistance(113.34499552, 23.15537143, ipLoacation.result.location.lng, ipLoacation.result.location.lat); //这里换成自己的经纬度    let pos = ipLoacation.result.ad_info.nation;    let ip;    let posdesc;    //根据国家、省份、城市信息自定义欢迎语    switch (ipLoacation.result.ad_info.nation) {      case "日本":        posdesc = "よろしく，一起去看樱花吗";        break;      case "美国":        posdesc = "Let us live in peace!";        break;      case "英国":        posdesc = "想同你一起夜乘伦敦眼";        break;      case "俄罗斯":        posdesc = "干了这瓶伏特加！";        break;      case "法国":        posdesc = "C'est La Vie";        break;      case "德国":        posdesc = "Die Zeit verging im Fluge.";        break;      case "澳大利亚":        posdesc = "一起去大堡礁吧！";        break;      case "加拿大":        posdesc = "拾起一片枫叶赠予你";        break;      case "中国":        pos = ipLoacation.result.ad_info.province + " " + ipLoacation.result.ad_info.city + " " + ipLoacation.result.ad_info.district;        ip = ipLoacation.result.ip;        switch (ipLoacation.result.ad_info.province) {          case "北京市":            posdesc = "北——京——欢迎你~~~";            break;          case "天津市":            posdesc = "讲段相声吧。";            break;          case "河北省":            posdesc = "山势巍巍成壁垒，天下雄关。铁马金戈由此向，无限江山。";            break;          case "山西省":            posdesc = "展开坐具长三尺，已占山河五百余。";            break;          case "内蒙古自治区":            posdesc = "天苍苍，野茫茫，风吹草低见牛羊。";            break;          case "辽宁省":            posdesc = "我想吃烤鸡架！";            break;          case "吉林省":            posdesc = "状元阁就是东北烧烤之王。";            break;          case "黑龙江省":            posdesc = "很喜欢哈尔滨大剧院。";            break;          case "上海市":            posdesc = "众所周知，中国只有两个城市。";            break;          case "江苏省":            switch (ipLoacation.result.ad_info.city) {              case "南京市":                posdesc = "这是我挺想去的城市啦。";                break;              case "苏州市":                posdesc = "上有天堂，下有苏杭。";                break;              default:                posdesc = "散装是必须要散装的。";                break;            }            break;          case "浙江省":            posdesc = "东风渐绿西湖柳，雁已还人未南归。";            break;          case "河南省":            switch (ipLoacation.result.ad_info.city) {              case "郑州市":                posdesc = "豫州之域，天地之中。";                break;              case "南阳市":                posdesc = "臣本布衣，躬耕于南阳。此南阳非彼南阳！";                break;              case "驻马店市":                posdesc = "峰峰有奇石，石石挟仙气。嵖岈山的花很美哦！";                break;              case "开封市":                posdesc = "刚正不阿包青天。";                break;              case "洛阳市":                posdesc = "洛阳牡丹甲天下。";                break;              default:                posdesc = "可否带我品尝河南烩面啦？";                break;            }            break;          case "安徽省":            posdesc = "蚌埠住了，芜湖起飞。";            break;          case "福建省":            posdesc = "井邑白云间，岩城远带山。";            break;          case "江西省":            posdesc = "落霞与孤鹜齐飞，秋水共长天一色。";            break;          case "山东省":            posdesc = "遥望齐州九点烟，一泓海水杯中泻。";            break;          case "湖北省":            posdesc = "来碗热干面！";            break;          case "湖南省":            posdesc = "74751，长沙斯塔克。";            break;          case "广东省":            posdesc = "老板来两斤福建人。";            break;          case "广西壮族自治区":            posdesc = "桂林山水甲天下。";            break;          case "海南省":            posdesc = "朝观日出逐白浪，夕看云起收霞光。";            break;          case "四川省":            posdesc = "康康川妹子。";            break;          case "贵州省":            posdesc = "茅台，学生，再塞200。";            break;          case "云南省":            posdesc = "玉龙飞舞云缠绕，万仞冰川直耸天。";            break;          case "西藏自治区":            posdesc = "躺在茫茫草原上，仰望蓝天。";            break;          case "陕西省":            posdesc = "来份臊子面加馍。";            break;          case "甘肃省":            posdesc = "羌笛何须怨杨柳，春风不度玉门关。";            break;          case "青海省":            posdesc = "牛肉干和老酸奶都好好吃。";            break;          case "宁夏回族自治区":            posdesc = "大漠孤烟直，长河落日圆。";            break;          case "新疆维吾尔自治区":            posdesc = "驼铃古道丝绸路，胡马犹闻唐汉风。";            break;          case "台湾省":            posdesc = "我在这头，大陆在那头。";            break;          case "香港特别行政区":            posdesc = "永定贼有残留地鬼嚎，迎击光非岁玉。";            break;          case "澳门特别行政区":            posdesc = "性感荷官，在线发牌。";            break;          default:            posdesc = "带我去你的城市逛逛吧！";            break;        }        break;      default:        posdesc = "带我去你的国家逛逛吧。";        break;    }      //根据本地时间切换欢迎语    let timeChange;    let date = new Date();    if (date.getHours() >= 5 && date.getHours() < 11) timeChange = "<span>上午好</span>，一日之计在于晨！";    else if (date.getHours() >= 11 && date.getHours() < 13) timeChange = "<span>中午好</span>，该摸鱼吃午饭了。";    else if (date.getHours() >= 13 && date.getHours() < 15) timeChange = "<span>下午好</span>，懒懒地睡个午觉吧！";    else if (date.getHours() >= 15 && date.getHours() < 16) timeChange = "<span>三点几啦</span>，一起饮茶呀！";    else if (date.getHours() >= 16 && date.getHours() < 19) timeChange = "<span>夕阳无限好！</span>";    else if (date.getHours() >= 19 && date.getHours() < 24) timeChange = "<span>晚上好</span>，夜生活嗨起来！";    else timeChange = "夜深了，早点休息，少熬夜。";      try {      //自定义文本和需要放的位置      document.getElementById("welcome-info").innerHTML =        `<b><center>🎉 欢迎信息 🎉</center>&emsp;&emsp;欢迎来自 <span style="color:var(--theme-color)">${pos}</span> 的小伙伴，${timeChange}您现在距离站长约 <span style="color:var(--theme-color)">${dist}</span> 公里，当前的IP地址为： <span style="color:var(--theme-color)">${ip}</span>， ${posdesc}</b>`;    } catch (err) {      console.log("虽然不知道你是哪里人，但同在一个地球，欢迎欢迎🎉🎉🎉")    }  }  window.onload = showWelcome;  // 如果使用了pjax在加上下面这行代码  document.addEventListener('pjax:complete', showWelcome);    /* 欢迎信息 end */  ]]></content>
       
     </entry>
     
@@ -1837,6 +1837,28 @@
       <title>标签</title>
       <link href="/tags/index.html"/>
       <url>/tags/index.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>网址导航</title>
+      <link href="/box/nav/index.html"/>
+      <url>/box/nav/index.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>画廊</title>
+      <link href="/box/gallery/index.html"/>
+      <url>/box/gallery/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
@@ -1856,11 +1878,22 @@
     
     
     <entry>
-      <title>画廊</title>
-      <link href="/box/gallery/index.html"/>
-      <url>/box/gallery/index.html</url>
+      <title>影院</title>
+      <link href="/life/movies/index.html"/>
+      <url>/life/movies/index.html</url>
       
-        <content type="html"><![CDATA[]]></content>
+        <content type="html"><![CDATA[<main class="layout" id="content-inner">    <div id="page">        <div id="article-container">            <span class="p center logo h2 blue">                <b>( ＾∀＾）／欢迎光临影院，切换黑夜模式食用效果更佳哦~!＼( ＾∀＾）</b>            </span>    <br>    <br></main>    <details class="folding-tag" blue>    <summary>哔哩哔哩放映厅</summary>        <div class="content">            <div class="tabs" id="room_1">                <ul class="nav-tabs">                    <li class="tab active">                        <button type="button" data-href="#room_1-1">1号厅</button>                    </li>                    <li class="tab">                        <button type="button" data-href="#room_1-2">2号厅</button>                    </li>                    <li class="tab">                        <button type="button" data-href="#room_1-3">3号厅</button>                    </li>                </ul>                <div class="tab-contents">                    <div class="tab-item-content active" id="room_1-1">                        <h3 id="您当前正处于-1-号厅，当前放映的是《冲破黑暗 Out of Darkness》">您当前正处于 1 号厅，当前放映的是《冲破黑暗 Out of Darkness》</h3>                        <div align="center" class="aspect-ratio">                            <iframe src="//player.bilibili.com/player.html?isOutside=true&aid=714997425&bvid=BV1hX4y1g7pp&cid=321134107&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>                        </div>                        <button type="button" class="tab-to-top" aria-label="scroll to top">                            <i class="fas fa-arrow-up"></i>                        </button>                    </div>                    <div class="tab-item-content" id="room_1-2">                        <h3 id="您当前正处于-2-号厅，当前放映的是《记忆管理局》">您当前正处于 2 号厅，当前放映的是《记忆管理局》</h3>                        <div align="center" class="aspect-ratio">                            <iframe src="//player.bilibili.com/player.html?isOutside=true&aid=884758835&bvid=BV1iK4y187Th&cid=240382860&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>                        </div>                        <button type="button" class="tab-to-top" aria-label="scroll to top">                            <i class="fas fa-arrow-up"></i>                        </button>                    </div>                    <div class="tab-item-content" id="room_1-3">                        <h3 id="您当前正处于-3-号厅，当前放映的是《黑盒》">您当前正处于 3 号厅，当前放映的是《黑盒》</h3>                        <div align="center" class="aspect-ratio">                            <iframe src="//player.bilibili.com/player.html?isOutside=true&aid=58854830&bvid=BV1Pt411L7Uo&cid=102606378&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>                        </div>                        <button type="button" class="tab-to-top" aria-label="scroll to top">                            <i class="fas fa-arrow-up"></i>                        </button>                    </div>                    </div>                      </div>        </div></details>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title></title>
+      <link href="/js/kslink.js"/>
+      <url>/js/kslink.js</url>
+      
+        <content type="html"><![CDATA[var leonus = {    linkCom: e => {        var t = document.querySelector(".el-textarea__inner");        "bf" == e ? (t.value = "```yml\n", t.value += "- name: \n  link: \n  avatar: \n  descr: \n  siteshot: ", t.value += "\n```", t.setSelectionRange(15, 15)) : (t.value = "站点名称：\n站点地址：\n头像链接：\n站点描述：\n站点截图：", t.setSelectionRange(5, 5)), t.focus()    },    owoBig: () => {        if (!document.getElementById("post-comment") || document.body.clientWidth < 768) return;        let e = 1,            t = "",            o = document.createElement("div"),            n = document.querySelector("body");        o.id = "owo-big", n.appendChild(o), new MutationObserver((l => {            for (let a = 0; a < l.length; a++) {                let i = l[a].addedNodes,                    s = "";                if (2 == i.length && "OwO-body" == i[1].className) s = i[1];                else {                    if (1 != i.length || "tk-comment" != i[0].className) continue;                    s = i[0]                }                s.onmouseover = l => {                    e && ("OwO-body" == s.className && "IMG" == l.target.tagName || "tk-owo-emotion" == l.target.className) && (e = 0, t = setTimeout((() => {                        let e = 3 * l.path[0].clientHeight,                            t = 3 * l.path[0].clientWidth,                            a = l.x - l.offsetX - (t - l.path[0].clientWidth) / 2,                            i = l.y - l.offsetY;                        a + t > n.clientWidth && (a -= a + t - n.clientWidth + 10), a < 0 && (a = 10), o.style.cssText = `display:flex; height:${e}px; width:${t}px; left:${a}px; top:${i}px;`, o.innerHTML = `<img src="${l.target.src}">`                    }), 300))                }, s.onmouseout = () => {                    o.style.display = "none", e = 1, clearTimeout(t)                }            }        })).observe(document.getElementById("post-comment"), {            subtree: !0,            childList: !0        })    },};]]></content>
       
     </entry>
     
@@ -1889,44 +1922,11 @@
     
     
     <entry>
-      <title>影院</title>
-      <link href="/life/movies/index.html"/>
-      <url>/life/movies/index.html</url>
+      <title>唠叨</title>
+      <link href="/personal/bb/index.html"/>
+      <url>/personal/bb/index.html</url>
       
-        <content type="html"><![CDATA[<main class="layout" id="content-inner">    <div id="page">        <div id="article-container">            <span class="p center logo h2 blue">                <b>( ＾∀＾）／欢迎光临影院，切换黑夜模式食用效果更佳哦~!＼( ＾∀＾）</b>            </span>    <br>    <br></main>    <details class="folding-tag" blue>    <summary>哔哩哔哩放映厅</summary>        <div class="content">            <div class="tabs" id="room_1">                <ul class="nav-tabs">                    <li class="tab active">                        <button type="button" data-href="#room_1-1">1号厅</button>                    </li>                    <li class="tab">                        <button type="button" data-href="#room_1-2">2号厅</button>                    </li>                    <li class="tab">                        <button type="button" data-href="#room_1-3">3号厅</button>                    </li>                </ul>                <div class="tab-contents">                    <div class="tab-item-content active" id="room_1-1">                        <h3 id="您当前正处于-1-号厅，当前放映的是《冲破黑暗 Out of Darkness》">您当前正处于 1 号厅，当前放映的是《冲破黑暗 Out of Darkness》</h3>                        <div align="center" class="aspect-ratio">                            <iframe src="//player.bilibili.com/player.html?isOutside=true&aid=714997425&bvid=BV1hX4y1g7pp&cid=321134107&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>                        </div>                        <button type="button" class="tab-to-top" aria-label="scroll to top">                            <i class="fas fa-arrow-up"></i>                        </button>                    </div>                    <div class="tab-item-content" id="room_1-2">                        <h3 id="您当前正处于-2-号厅，当前放映的是《记忆管理局》">您当前正处于 2 号厅，当前放映的是《记忆管理局》</h3>                        <div align="center" class="aspect-ratio">                            <iframe src="//player.bilibili.com/player.html?isOutside=true&aid=884758835&bvid=BV1iK4y187Th&cid=240382860&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>                        </div>                        <button type="button" class="tab-to-top" aria-label="scroll to top">                            <i class="fas fa-arrow-up"></i>                        </button>                    </div>                    <div class="tab-item-content" id="room_1-3">                        <h3 id="您当前正处于-3-号厅，当前放映的是《黑盒》">您当前正处于 3 号厅，当前放映的是《黑盒》</h3>                        <div align="center" class="aspect-ratio">                            <iframe src="//player.bilibili.com/player.html?isOutside=true&aid=58854830&bvid=BV1Pt411L7Uo&cid=102606378&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>                        </div>                        <button type="button" class="tab-to-top" aria-label="scroll to top">                            <i class="fas fa-arrow-up"></i>                        </button>                    </div>                    </div>                      </div>        </div></details>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title></title>
-      <link href="/js/txmap.js"/>
-      <url>/js/txmap.js</url>
-      
-        <content type="html"><![CDATA[/* 欢迎信息 start *///get请求$.ajax({    type: 'get',    url: 'https://apis.map.qq.com/ws/location/v1/ip',    data: {      key: '3IPBZ-CIUWM-E5O6O-6Z6RI-TZGWV-6SBG5',  // 这里要写你的KEY!!!      output: 'jsonp',    },    dataType: 'jsonp',    success: function (res) {      ipLoacation = res;    }  })  function getDistance(e1, n1, e2, n2) {    const R = 6371    const { sin, cos, asin, PI, hypot } = Math    let getPoint = (e, n) => {      e *= PI / 180      n *= PI / 180      return { x: cos(n) * cos(e), y: cos(n) * sin(e), z: sin(n) }    }      let a = getPoint(e1, n1)    let b = getPoint(e2, n2)    let c = hypot(a.x - b.x, a.y - b.y, a.z - b.z)    let r = asin(c / 2) * 2 * R    return Math.round(r);  }    function showWelcome() {      let dist = getDistance(113.34499552, 23.15537143, ipLoacation.result.location.lng, ipLoacation.result.location.lat); //这里换成自己的经纬度    let pos = ipLoacation.result.ad_info.nation;    let ip;    let posdesc;    //根据国家、省份、城市信息自定义欢迎语    switch (ipLoacation.result.ad_info.nation) {      case "日本":        posdesc = "よろしく，一起去看樱花吗";        break;      case "美国":        posdesc = "Let us live in peace!";        break;      case "英国":        posdesc = "想同你一起夜乘伦敦眼";        break;      case "俄罗斯":        posdesc = "干了这瓶伏特加！";        break;      case "法国":        posdesc = "C'est La Vie";        break;      case "德国":        posdesc = "Die Zeit verging im Fluge.";        break;      case "澳大利亚":        posdesc = "一起去大堡礁吧！";        break;      case "加拿大":        posdesc = "拾起一片枫叶赠予你";        break;      case "中国":        pos = ipLoacation.result.ad_info.province + " " + ipLoacation.result.ad_info.city + " " + ipLoacation.result.ad_info.district;        ip = ipLoacation.result.ip;        switch (ipLoacation.result.ad_info.province) {          case "北京市":            posdesc = "北——京——欢迎你~~~";            break;          case "天津市":            posdesc = "讲段相声吧。";            break;          case "河北省":            posdesc = "山势巍巍成壁垒，天下雄关。铁马金戈由此向，无限江山。";            break;          case "山西省":            posdesc = "展开坐具长三尺，已占山河五百余。";            break;          case "内蒙古自治区":            posdesc = "天苍苍，野茫茫，风吹草低见牛羊。";            break;          case "辽宁省":            posdesc = "我想吃烤鸡架！";            break;          case "吉林省":            posdesc = "状元阁就是东北烧烤之王。";            break;          case "黑龙江省":            posdesc = "很喜欢哈尔滨大剧院。";            break;          case "上海市":            posdesc = "众所周知，中国只有两个城市。";            break;          case "江苏省":            switch (ipLoacation.result.ad_info.city) {              case "南京市":                posdesc = "这是我挺想去的城市啦。";                break;              case "苏州市":                posdesc = "上有天堂，下有苏杭。";                break;              default:                posdesc = "散装是必须要散装的。";                break;            }            break;          case "浙江省":            posdesc = "东风渐绿西湖柳，雁已还人未南归。";            break;          case "河南省":            switch (ipLoacation.result.ad_info.city) {              case "郑州市":                posdesc = "豫州之域，天地之中。";                break;              case "南阳市":                posdesc = "臣本布衣，躬耕于南阳。此南阳非彼南阳！";                break;              case "驻马店市":                posdesc = "峰峰有奇石，石石挟仙气。嵖岈山的花很美哦！";                break;              case "开封市":                posdesc = "刚正不阿包青天。";                break;              case "洛阳市":                posdesc = "洛阳牡丹甲天下。";                break;              default:                posdesc = "可否带我品尝河南烩面啦？";                break;            }            break;          case "安徽省":            posdesc = "蚌埠住了，芜湖起飞。";            break;          case "福建省":            posdesc = "井邑白云间，岩城远带山。";            break;          case "江西省":            posdesc = "落霞与孤鹜齐飞，秋水共长天一色。";            break;          case "山东省":            posdesc = "遥望齐州九点烟，一泓海水杯中泻。";            break;          case "湖北省":            posdesc = "来碗热干面！";            break;          case "湖南省":            posdesc = "74751，长沙斯塔克。";            break;          case "广东省":            posdesc = "老板来两斤福建人。";            break;          case "广西壮族自治区":            posdesc = "桂林山水甲天下。";            break;          case "海南省":            posdesc = "朝观日出逐白浪，夕看云起收霞光。";            break;          case "四川省":            posdesc = "康康川妹子。";            break;          case "贵州省":            posdesc = "茅台，学生，再塞200。";            break;          case "云南省":            posdesc = "玉龙飞舞云缠绕，万仞冰川直耸天。";            break;          case "西藏自治区":            posdesc = "躺在茫茫草原上，仰望蓝天。";            break;          case "陕西省":            posdesc = "来份臊子面加馍。";            break;          case "甘肃省":            posdesc = "羌笛何须怨杨柳，春风不度玉门关。";            break;          case "青海省":            posdesc = "牛肉干和老酸奶都好好吃。";            break;          case "宁夏回族自治区":            posdesc = "大漠孤烟直，长河落日圆。";            break;          case "新疆维吾尔自治区":            posdesc = "驼铃古道丝绸路，胡马犹闻唐汉风。";            break;          case "台湾省":            posdesc = "我在这头，大陆在那头。";            break;          case "香港特别行政区":            posdesc = "永定贼有残留地鬼嚎，迎击光非岁玉。";            break;          case "澳门特别行政区":            posdesc = "性感荷官，在线发牌。";            break;          default:            posdesc = "带我去你的城市逛逛吧！";            break;        }        break;      default:        posdesc = "带我去你的国家逛逛吧。";        break;    }      //根据本地时间切换欢迎语    let timeChange;    let date = new Date();    if (date.getHours() >= 5 && date.getHours() < 11) timeChange = "<span>上午好</span>，一日之计在于晨！";    else if (date.getHours() >= 11 && date.getHours() < 13) timeChange = "<span>中午好</span>，该摸鱼吃午饭了。";    else if (date.getHours() >= 13 && date.getHours() < 15) timeChange = "<span>下午好</span>，懒懒地睡个午觉吧！";    else if (date.getHours() >= 15 && date.getHours() < 16) timeChange = "<span>三点几啦</span>，一起饮茶呀！";    else if (date.getHours() >= 16 && date.getHours() < 19) timeChange = "<span>夕阳无限好！</span>";    else if (date.getHours() >= 19 && date.getHours() < 24) timeChange = "<span>晚上好</span>，夜生活嗨起来！";    else timeChange = "夜深了，早点休息，少熬夜。";      try {      //自定义文本和需要放的位置      document.getElementById("welcome-info").innerHTML =        `<b><center>🎉 欢迎信息 🎉</center>&emsp;&emsp;欢迎来自 <span style="color:var(--theme-color)">${pos}</span> 的小伙伴，${timeChange}您现在距离站长约 <span style="color:var(--theme-color)">${dist}</span> 公里，当前的IP地址为： <span style="color:var(--theme-color)">${ip}</span>， ${posdesc}</b>`;    } catch (err) {      console.log("虽然不知道你是哪里人，但同在一个地球，欢迎欢迎🎉🎉🎉")    }  }  window.onload = showWelcome;  // 如果使用了pjax在加上下面这行代码  document.addEventListener('pjax:complete', showWelcome);    /* 欢迎信息 end */  ]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>八音盒</title>
-      <link href="/life/music/index.html"/>
-      <url>/life/music/index.html</url>
-      
-        <content type="html"><![CDATA[<main class="layout" id="content-inner">    <div id="page">        <div id="article-container">            <span class="p center logo h2 blue">                <b>( ＾∀＾）／欢迎光临八音盒，希望舒缓的音乐能带走你一天的疲劳~!＼( ＾∀＾）</b>            </span>    <br>    <br></main>    <blockquote><p>来源：网易云音乐</p></blockquote>    <div id="aplayer-gHvWPkrU" class="aplayer aplayer-tag-marker meting-tag-marker"         data-id="3778678" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="false" data-listmaxheight="400px" data-preload="none" data-theme="#ad7a86"    ></div><!-- <iframe  frameborder="no" border="0"  marginwidth="0" marginheight="0"  width=530 height=310  src="//activity.kugou.com/share/v-a00a45b0/index.html?u=1045443904&h1=240987975537390846260097417101362365343&h2=483a904874cd4093b4e2381eaea94080&specialid=-2147483648&global_specialid=collection_3_1045443904_16_0&cType=0"></iframe> -->]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>朋友圈</title>
-      <link href="/social/fcircle/index.html"/>
-      <url>/social/fcircle/index.html</url>
-      
-        <content type="html"><![CDATA[<style>  #cf-container {    background: transparent !important;  }  .cf-article .cf-article-title:hover {    color: #f4f4f4 !important;  }  .cf-img-avatar {    opacity: .4 !important;  }  .cf-article-author:hover {    background: var(--theme-color) !important;  }  #cf-more:hover {    background: var(--theme-color) !important;  }  .cf-overshow p a:hover {    color: #f4f4f4 !important;  }  .cf-article {    transition: transform linear 0.3s;  }  .cf-article:hover {    transform: scale(1.05);    box-shadow: 0 5px 10px 8px #07111b29;  }  .cf-article {    border-radius: 15px !important;    border: 1px solid #a5a5a5ee !important;  }  ::selection {  background: var(--theme-color) !important;  color: #f4f4f4 !important;  }</style><!-- <div id="hexo-circle-of-friends-root"></div><script>    let UserConfig = {        // 替换为你的API!!!        private_api_url: '',        // 点击加载更多时，一次最多加载几篇文章，默认10        page_turning_number: 12,        // 头像加载失败时，默认头像地址        error_img: '/assets/r1.jpg',        // 进入页面时第一次的排序规则        sort_rule: 'created'    }</script> -->]]></content>
+        <content type="html"><![CDATA[<style>/* 哔哔页面 */#bibi button {  color: #fff;  border: 0;  margin: 20px auto;  border-radius: 0.3125rem;  display: block;  padding: 0 1rem;  height: 40px;  font-weight: 500;  text-align: center;  transition: all 0.5s ease-out;  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);  background-size: 1000% 1000%;  animation: Gradient 60s linear infinite;  outline: 0;}#bibi .bb-info {  font-weight: 700;  font-size: 22px;}#bibi .bb-card {  padding: 15px;  border-radius: 10px;  background: rgba(255, 255, 255, 0.1);  border: 1px solid #a5a5a5ee;  margin-top: 20px;  transition: all 0.25s;  user-select: none;  width: calc(48% - 7px);  margin: 10px;}@media screen and (max-width: 800px) {  #bibi .bb-card {  width: 100%;  }}#bibi .bb-card:hover {  box-shadow: 0 5px 10px 8px #07111b29;  transform: translateY(-3px);}#bibi .card-header {  display: flex;  align-items: center;}#bibi .card-header .avatar {  width: 32px;  height: 32px;  border-radius: 50%;  margin-right: 10px;  border-radius: 20px;  overflow: hidden;}#bibi .card-header svg {  height: 20px;  width: 20px;  margin-left: 5px;}#bibi .card-header .card-time {  font-size: 12px;  text-shadow: #d9d9d9 0 0 1px, #fffffb 0 0 1px, #fffffb 0 0 2px;  margin-left: 10px;}#bibi .card-content {  padding: 10px 0;  white-space: pre-wrap;}#bibi .card-footer {  display: flex;  padding-bottom: 10px;}#bibi .card-footer .card-label {  border-radius: 5px;  padding: 0 5px;  font-weight: 550;  border-radius: 5px;  box-shadow: inset 0 -1px 0 rgb(27 31 35 / 12%);  font-size: 14px;  user-select: none;  margin-right: 10px;}div#bb_loading img{  border-radius: 15px;}#bb-main {  display: flex;  flex-direction: row;  flex-wrap: wrap;  justify-content: flex-start;}</style><script src="/js/bibi.js"></script><div id="bibi"><div class="bb-info"></div><div id="bb-main"></div></div>]]></content>
       
     </entry>
     
@@ -1936,28 +1936,6 @@
       <title>关于</title>
       <link href="/personal/about/index.html"/>
       <url>/personal/about/index.html</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>友人帐</title>
-      <link href="/social/link/index.html"/>
-      <url>/social/link/index.html</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>网址导航</title>
-      <link href="/box/nav/index.html"/>
-      <url>/box/nav/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
@@ -1977,17 +1955,6 @@
     
     
     <entry>
-      <title>唠叨</title>
-      <link href="/personal/bb/index.html"/>
-      <url>/personal/bb/index.html</url>
-      
-        <content type="html"><![CDATA[<style>/* 哔哔页面 */#bibi button {  color: #fff;  border: 0;  margin: 20px auto;  border-radius: 0.3125rem;  display: block;  padding: 0 1rem;  height: 40px;  font-weight: 500;  text-align: center;  transition: all 0.5s ease-out;  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);  background-size: 1000% 1000%;  animation: Gradient 60s linear infinite;  outline: 0;}#bibi .bb-info {  font-weight: 700;  font-size: 22px;}#bibi .bb-card {  padding: 15px;  border-radius: 10px;  background: rgba(255, 255, 255, 0.1);  border: 1px solid #a5a5a5ee;  margin-top: 20px;  transition: all 0.25s;  user-select: none;  width: calc(48% - 7px);  margin: 10px;}@media screen and (max-width: 800px) {  #bibi .bb-card {  width: 100%;  }}#bibi .bb-card:hover {  box-shadow: 0 5px 10px 8px #07111b29;  transform: translateY(-3px);}#bibi .card-header {  display: flex;  align-items: center;}#bibi .card-header .avatar {  width: 32px;  height: 32px;  border-radius: 50%;  margin-right: 10px;  border-radius: 20px;  overflow: hidden;}#bibi .card-header svg {  height: 20px;  width: 20px;  margin-left: 5px;}#bibi .card-header .card-time {  font-size: 12px;  text-shadow: #d9d9d9 0 0 1px, #fffffb 0 0 1px, #fffffb 0 0 2px;  margin-left: 10px;}#bibi .card-content {  padding: 10px 0;  white-space: pre-wrap;}#bibi .card-footer {  display: flex;  padding-bottom: 10px;}#bibi .card-footer .card-label {  border-radius: 5px;  padding: 0 5px;  font-weight: 550;  border-radius: 5px;  box-shadow: inset 0 -1px 0 rgb(27 31 35 / 12%);  font-size: 14px;  user-select: none;  margin-right: 10px;}div#bb_loading img{  border-radius: 15px;}#bb-main {  display: flex;  flex-direction: row;  flex-wrap: wrap;  justify-content: flex-start;}</style><script src="/js/bibi.js"></script><div id="bibi"><div class="bb-info"></div><div id="bb-main"></div></div>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>网站统计</title>
       <link href="/site/census/index.html"/>
       <url>/site/census/index.html</url>
@@ -1999,22 +1966,55 @@
     
     
     <entry>
-      <title>文章统计</title>
-      <link href="/site/echarts/index.html"/>
-      <url>/site/echarts/index.html</url>
+      <title>旧时光</title>
+      <link href="/site/time/index.html"/>
+      <url>/site/time/index.html</url>
       
-        <content type="html"><![CDATA[<script src="https://npm.elemecdn.com/echarts@4.9.0/dist/echarts.min.js"></script><!-- 文章发布时间统计图 --><div id="posts-chart" data-start="2021-01" style="border-radius: 8px; height: 300px; padding: 10px;"></div><!-- 文章标签统计图 --><div id="tags-chart" data-length="10" style="border-radius: 8px; height: 300px; padding: 10px;"></div><!-- 文章分类统计图 --><div id="categories-chart" data-parent="true" style="border-radius: 8px; height: 300px; padding: 10px;"></div>]]></content>
+        <content type="html"><![CDATA[]]></content>
       
     </entry>
     
     
     
     <entry>
-      <title>旧时光</title>
-      <link href="/site/time/index.html"/>
-      <url>/site/time/index.html</url>
+      <title>友人帐</title>
+      <link href="/social/link/index.html"/>
+      <url>/social/link/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>朋友圈</title>
+      <link href="/social/fcircle/index.html"/>
+      <url>/social/fcircle/index.html</url>
+      
+        <content type="html"><![CDATA[<style>  #cf-container {    background: transparent !important;  }  .cf-article .cf-article-title:hover {    color: #f4f4f4 !important;  }  .cf-img-avatar {    opacity: .4 !important;  }  .cf-article-author:hover {    background: var(--theme-color) !important;  }  #cf-more:hover {    background: var(--theme-color) !important;  }  .cf-overshow p a:hover {    color: #f4f4f4 !important;  }  .cf-article {    transition: transform linear 0.3s;  }  .cf-article:hover {    transform: scale(1.05);    box-shadow: 0 5px 10px 8px #07111b29;  }  .cf-article {    border-radius: 15px !important;    border: 1px solid #a5a5a5ee !important;  }  ::selection {  background: var(--theme-color) !important;  color: #f4f4f4 !important;  }</style><!-- <div id="hexo-circle-of-friends-root"></div><script>    let UserConfig = {        // 替换为你的API!!!        private_api_url: '',        // 点击加载更多时，一次最多加载几篇文章，默认10        page_turning_number: 12,        // 头像加载失败时，默认头像地址        error_img: '/assets/r1.jpg',        // 进入页面时第一次的排序规则        sort_rule: 'created'    }</script> -->]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>八音盒</title>
+      <link href="/life/music/index.html"/>
+      <url>/life/music/index.html</url>
+      
+        <content type="html"><![CDATA[<main class="layout" id="content-inner">    <div id="page">        <div id="article-container">            <span class="p center logo h2 blue">                <b>( ＾∀＾）／欢迎光临八音盒，希望舒缓的音乐能带走你一天的疲劳~!＼( ＾∀＾）</b>            </span>    <br>    <br></main>    <blockquote><p>来源：网易云音乐</p></blockquote>    <div id="aplayer-XRyTWntP" class="aplayer aplayer-tag-marker meting-tag-marker"         data-id="3778678" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="false" data-listmaxheight="400px" data-preload="none" data-theme="#ad7a86"    ></div><!-- <iframe  frameborder="no" border="0"  marginwidth="0" marginheight="0"  width=530 height=310  src="//activity.kugou.com/share/v-a00a45b0/index.html?u=1045443904&h1=240987975537390846260097417101362365343&h2=483a904874cd4093b4e2381eaea94080&specialid=-2147483648&global_specialid=collection_3_1045443904_16_0&cType=0"></iframe> -->]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>文章统计</title>
+      <link href="/site/echarts/index.html"/>
+      <url>/site/echarts/index.html</url>
+      
+        <content type="html"><![CDATA[<script src="https://npm.elemecdn.com/echarts@4.9.0/dist/echarts.min.js"></script><!-- 文章发布时间统计图 --><div id="posts-chart" data-start="2021-01" style="border-radius: 8px; height: 300px; padding: 10px;"></div><!-- 文章标签统计图 --><div id="tags-chart" data-length="10" style="border-radius: 8px; height: 300px; padding: 10px;"></div><!-- 文章分类统计图 --><div id="categories-chart" data-parent="true" style="border-radius: 8px; height: 300px; padding: 10px;"></div>]]></content>
       
     </entry>
     
