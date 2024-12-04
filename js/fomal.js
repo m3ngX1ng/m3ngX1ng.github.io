@@ -3041,7 +3041,7 @@ function toggleRightside() {
 
 // 透明度调节滑块
 if (localStorage.getItem("transNum") == undefined) {
-  localStorage.setItem("transNum", 95);
+  localStorage.setItem("transNum", 50);
 }
 var curTransNum = localStorage.getItem("transNum");
 var curTransMini = curTransNum * 0.95;
@@ -3082,7 +3082,7 @@ function setBlurNum() {
 
 // 模糊效果开关
 if (localStorage.getItem("blur") == undefined) {
-  localStorage.setItem("blur", 0);
+  localStorage.setItem("blur", 1);
 }
 if (localStorage.getItem("blur") == 0) {
   document.getElementById("settingStyle").innerText = `:root{--backdrop-filter: none}`;
