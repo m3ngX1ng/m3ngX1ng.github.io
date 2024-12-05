@@ -675,7 +675,7 @@ if (document.body.clientWidth > 992) {
         borderRadius: 5 + 'px',
         right: 55.6 + 'px',
         nekoImg: "https://bu.dusays.com/2022/07/20/62d812db74be9.png",
-        hoverMsg: "春天啦~",
+        hoverMsg: "冬天啦~",
         color: "var(--theme-color)",
         during: 500,
         blog_body: "body",
@@ -769,8 +769,8 @@ if (document.body.clientWidth > 992) {
     
     // $("#myscoll").nekoScroll({
     //     nekoname:'neko1', //nekoname，相当于id
-    //     nekoImg:'img/猫咪.png', //neko的背景图片
-    //     scImg:"img/绳1.png", //绳子的背景图片
+        // nekoImg:'img/猫咪.png', //neko的背景图片
+        // scImg:"img/绳1.png", //绳子的背景图片
     //     bgcolor:'#1e90ff', //背景颜色，没有绳子背景图片时有效
     //     zoom:0.9, //绳子长度的缩放值
     //     hoverMsg:'你好~喵', //鼠标浮动到neko上方的对话框信息
