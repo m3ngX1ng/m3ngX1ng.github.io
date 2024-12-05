@@ -722,15 +722,6 @@
   </url>
   
   <url>
-    <loc>https://m3x1.cn/box/animation/index.html</loc>
-    
-    <lastmod>2023-03-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://m3x1.cn/box/gallery/index.html</loc>
     
     <lastmod>2023-03-22</lastmod>
@@ -749,7 +740,7 @@
   </url>
   
   <url>
-    <loc>https://m3x1.cn/life/games/index.html</loc>
+    <loc>https://m3x1.cn/box/animation/index.html</loc>
     
     <lastmod>2023-03-22</lastmod>
     
@@ -776,6 +767,15 @@
   </url>
   
   <url>
+    <loc>https://m3x1.cn/life/games/index.html</loc>
+    
+    <lastmod>2023-03-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://m3x1.cn/site/echarts/index.html</loc>
     
     <lastmod>2022-09-10</lastmod>
@@ -794,21 +794,21 @@
 
   
   <url>
-    <loc>https://m3x1.cn/tags/misc-wp/</loc>
-    <lastmod>2024-12-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://m3x1.cn/tags/web%E5%A7%BF%E5%8A%BF/</loc>
-    <lastmod>2024-12-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://m3x1.cn/tags/misc%E5%A7%BF%E5%8A%BF/</loc>
+    <lastmod>2024-12-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://m3x1.cn/tags/web-wp/</loc>
+    <lastmod>2024-12-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://m3x1.cn/tags/misc-wp/</loc>
     <lastmod>2024-12-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -822,14 +822,14 @@
   </url>
   
   <url>
-    <loc>https://m3x1.cn/tags/%E6%AF%94%E8%B5%9Bwp/</loc>
+    <loc>https://m3x1.cn/tags/web%E5%A7%BF%E5%8A%BF/</loc>
     <lastmod>2024-12-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://m3x1.cn/tags/web-wp/</loc>
+    <loc>https://m3x1.cn/tags/%E6%AF%94%E8%B5%9Bwp/</loc>
     <lastmod>2024-12-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
