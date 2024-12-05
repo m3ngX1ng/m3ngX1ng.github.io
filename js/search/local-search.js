@@ -14,7 +14,6 @@ window.addEventListener('load', () => {
       search()
       loadFlag = true
     }
-    // shortcut: ESC
     document.addEventListener('keydown', function f (event) {
       if (event.code === 'Escape') {
         closeSearch()
@@ -41,7 +40,6 @@ window.addEventListener('load', () => {
     if (GLOBAL_CONFIG.localSearch.preload) dataObj = fetchData(GLOBAL_CONFIG.localSearch.path)
   }
 
-  // check url is json or not
   const isJson = url => {
     const reg = /\.json$/
     return reg.test(url)
@@ -89,7 +87,6 @@ window.addEventListener('load', () => {
       let str = '<div class="search-result-list">'
       if (keywords.length <= 0) return
       let count = 0
-      // perform local searching
       dataObj.then(data => {
         data.forEach(data => {
           let isMatch = true
@@ -99,7 +96,6 @@ window.addEventListener('load', () => {
           let indexTitle = -1
           let indexContent = -1
           let firstOccur = -1
-          // only match articles with not empty titles and contents
           if (dataTitle !== '' || dataContent !== '') {
             keywords.forEach((keyword, i) => {
               indexTitle = dataTitle.indexOf(keyword)
@@ -118,8 +114,6 @@ window.addEventListener('load', () => {
           } else {
             isMatch = false
           }
-
-          // show search results
           if (isMatch) {
             if (firstOccur >= 0) {
               // cut out 130 characters
@@ -148,7 +142,6 @@ window.addEventListener('load', () => {
 
               let matchContent = dataContent.substring(start, end)
 
-              // highlight all keywords
               keywords.forEach(keyword => {
                 const regS = new RegExp(keyword, 'gi')
                 matchContent = matchContent.replace(regS, '<span class="search-keyword">' + keyword + '</span>')
@@ -180,7 +173,6 @@ window.addEventListener('load', () => {
   searchClickFn()
   searchClickFnOnce()
 
-  // pjax
   window.addEventListener('pjax:complete', () => {
     !btf.isHidden($searchMask) && closeSearch()
     searchClickFn()

@@ -15,9 +15,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     let hideMenuIndex = ''
     if (window.innerWidth <= 800) hideMenuIndex = true
-    // 这行会引起缩放异常，删掉
-    // else hideMenuIndex = blogNameWidth + menusWidth + searchWidth > $nav.offsetWidth - 120
-
     if (hideMenuIndex) {
       $nav.classList.add('hide-menu')
     } else {
@@ -25,13 +22,11 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  // 初始化header
   const initAdjust = () => {
     adjustMenu(true)
     $nav.classList.add('show')
   }
 
-  // sidebar menus
   const sidebarFn = {
     open: () => {
       btf.sidebarPaddingR()
@@ -50,9 +45,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  /**
-   * 首頁top_img底下的箭頭
-   */
   const scrollDownInIndex = () => {
     const $scrollDownEle = document.getElementById('scroll-down')
     $scrollDownEle && $scrollDownEle.addEventListener('click', function () {
@@ -60,10 +52,6 @@ document.addEventListener('DOMContentLoaded', function () {
     })
   }
 
-  /**
-   * 代碼
-   * 只適用於Hexo默認的代碼渲染
-   */
   const addHighlightTool = function () {
     const highLight = GLOBAL_CONFIG.highlight
     if (!highLight) return
@@ -111,7 +99,6 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     }
 
-    // click events
     const highlightCopyFn = (ele) => {
       const $buttonParent = ele.parentNode
       $buttonParent.classList.add('copy-true')
@@ -203,9 +190,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  /**
-   * PhotoFigcaption
-   */
   function addPhotoFigcaption () {
     document.querySelectorAll('#article-container img').forEach(function (item) {
       const parentEle = item.parentNode
@@ -219,16 +203,11 @@ document.addEventListener('DOMContentLoaded', function () {
     })
   }
 
-  /**
-   * Lightbox
-   */
+
   const runLightbox = () => {
     btf.loadLightbox(document.querySelectorAll('#article-container img:not(.no-lightbox)'))
   }
 
-  /**
-   * justified-gallery 圖庫排版
-   */
   const runJustifiedGallery = function (ele) {
     ele.forEach(item => {
       const $imgList = item.querySelectorAll('img')
@@ -252,22 +231,18 @@ document.addEventListener('DOMContentLoaded', function () {
     getScript(`${GLOBAL_CONFIG.source.justifiedGallery.js}`).then(() => { btf.initJustifiedGallery(ele) })
   }
 
-  /**
-   * 滾動處理
-   */
+
   const scrollFn = function () {
     const $rightside = document.getElementById('rightside')
     const innerHeight = window.innerHeight + 56
 
-    // 當滾動條小于 56 的時候
     if (document.body.scrollHeight <= innerHeight) {
       $rightside.style.cssText = 'opacity: 1; transform: translateX(-58px)'
       return
     }
 
-    // find the scroll direction
     function scrollDirection (currentTop) {
-      const result = currentTop > initTop // true is down & false is up
+      const result = currentTop > initTop 
       initTop = currentTop
       return result
     }
@@ -316,9 +291,6 @@ document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('scroll', scrollCollect)
   }
 
-  /**
-  * toc,anchor
-  */
   const scrollFnToDo = function () {
     const isToc = GLOBAL_CONFIG_SITE.isToc
     const isAnchor = GLOBAL_CONFIG.isAnchor
@@ -359,7 +331,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       }
 
-      // toc元素點擊
       $cardToc.addEventListener('click', e => {
         e.preventDefault()
         const target = e.target.classList
@@ -385,7 +356,6 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     }
 
-    // find head position & add active class
     const list = $article.querySelectorAll('h1,h2,h3,h4,h5,h6')
     let detectItem = ''
     const findHeadPosition = function (top) {
@@ -433,7 +403,6 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     }
 
-    // main of scroll
     window.tocScrollFn = function () {
       return btf.throttle(function () {
         const currentTop = window.scrollY || document.documentElement.scrollTop
@@ -444,11 +413,8 @@ document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('scroll', tocScrollFn)
   }
 
-  /**
-   * Rightside
-   */
   const rightSideFn = {
-    switchReadMode: () => { // read-mode
+    switchReadMode: () => { 
       const $body = document.body
       $body.classList.add('read-mode')
       const newEle = document.createElement('button')
@@ -464,24 +430,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
       newEle.addEventListener('click', clickFn)
     },
-    switchDarkMode: () => { // Switch Between Light And Dark Mode
+    switchDarkMode: () => {
       const nowMode = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light'
       if (nowMode === 'light') {
         activateDarkMode()
         saveToLocal.set('theme', 'dark', 2)
-        // GLOBAL_CONFIG.Snackbar !== undefined && btf.snackbarShow(GLOBAL_CONFIG.Snackbar.day_to_night)
       } else {
         activateLightMode()
         saveToLocal.set('theme', 'light', 2)
-        // GLOBAL_CONFIG.Snackbar !== undefined && btf.snackbarShow(GLOBAL_CONFIG.Snackbar.night_to_day)
+
       }
-      // handle some cases
+
       typeof utterancesTheme === 'function' && utterancesTheme()
       typeof changeGiscusTheme === 'function' && changeGiscusTheme()
       typeof FB === 'object' && window.loadFBComment()
       typeof runMermaid === 'function' && window.runMermaid()
     },
-    showOrHideBtn: (e) => { // rightside 點擊設置 按鈕 展開
+    showOrHideBtn: (e) => { 
       const rightsideHideClassList = document.getElementById('rightside-config-hide').classList
       rightsideHideClassList.toggle('show')
       if (e.classList.contains('show')) {
@@ -492,10 +457,10 @@ document.addEventListener('DOMContentLoaded', function () {
       }
       e.classList.toggle('show')
     },
-    scrollToTop: () => { // Back to top
+    scrollToTop: () => {
       btf.scrollToDest(0, 500)
     },
-    hideAsideBtn: () => { // Hide aside
+    hideAsideBtn: () => { 
       const $htmlDom = document.documentElement.classList
       $htmlDom.contains('hide-aside')
         ? saveToLocal.set('aside-status', 'show', 2)
@@ -535,10 +500,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   })
 
-  /**
-   * menu
-   * 側邊欄sub-menu 展開/收縮
-   */
   const clickFnOfSubMenu = () => {
     document.querySelectorAll('#sidebar-menus .site-page.group').forEach(function (item) {
       item.addEventListener('click', function () {
@@ -547,9 +508,6 @@ document.addEventListener('DOMContentLoaded', function () {
     })
   }
 
-  /**
-   * 複製時加上版權信息
-   */
   const addCopyright = () => {
     const copyright = GLOBAL_CONFIG.copyright
     document.body.oncopy = (e) => {
@@ -572,9 +530,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  /**
-   * 網頁運行時間
-   */
   const addRuntime = () => {
     const $runtimeCount = document.getElementById('runtimeshow')
     if ($runtimeCount) {
@@ -582,10 +537,6 @@ document.addEventListener('DOMContentLoaded', function () {
       $runtimeCount.innerText = btf.diffDate(publishDate) + ' ' + GLOBAL_CONFIG.runtime
     }
   }
-
-  /**
-   * 最後一次更新時間
-   */
   const addLastPushDate = () => {
     const $lastPushDateItem = document.getElementById('last-push-date')
     if ($lastPushDateItem) {
@@ -594,9 +545,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  /**
-   * table overflow
-   */
   const addTableWrap = () => {
     const $table = document.querySelectorAll('#article-container :not(.highlight) > table, #article-container > table')
     if ($table.length) {
@@ -606,9 +554,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  /**
-   * tag-hide
-   */
   const clickFnOfTagHide = function () {
     const $hideInline = document.querySelectorAll('#article-container .hide-button')
     if ($hideInline.length) {

@@ -1,14 +1,13 @@
-/* 阅读进度 start */
+
 document.addEventListener('pjax:complete', function () {
   window.onscroll = percent;
 });
 document.addEventListener('DOMContentLoaded', function () {
   window.onscroll = percent;
 });
-// 页面百分比
+
 function percent() {
 
-  // 先让菜单栏消失
   try {
     rmf.showRightMenu(false);
     $('.rmMask').attr('style', 'display: none');
@@ -16,29 +15,23 @@ function percent() {
 
   }
 
-  let a = document.documentElement.scrollTop, // 卷去高度
+  let a = document.documentElement.scrollTop,
     b = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight, document.body.offsetHeight, document.documentElement.offsetHeight, document.body.clientHeight, document.documentElement.clientHeight) - document.documentElement.clientHeight, // 整个网页高度 减去 可视高度
-    result = Math.round(a / b * 100), // 计算百分比
-    btn = document.querySelector("#go-up"); // 获取按钮
+    result = Math.round(a / b * 100),
+    btn = document.querySelector("#go-up"); 
 
-  if (result < 95) { // 如果阅读进度小于95% 就显示百分比
+  if (result < 95) {
     btn.childNodes[0].style.display = 'none'
     btn.childNodes[1].style.display = 'block'
     btn.childNodes[1].innerHTML = result + '<span>%</span>';
-  } else { // 如果大于95%就显示回到顶部图标
+  } else {
     btn.childNodes[1].style.display = 'none'
     btn.childNodes[0].style.display = 'block'
   }
 }
-/* 阅读进度 end */
-
-//----------------------------------------------------------------
-
-/* 导航栏显示标题 start */
 
 document.addEventListener('pjax:complete', tonav);
 document.addEventListener('DOMContentLoaded', tonav);
-//响应pjax
 function tonav() {
   document.getElementById("name-container").setAttribute("style", "display:none");
   var position = $(window).scrollTop();
@@ -53,7 +46,6 @@ function tonav() {
     }
     position = scroll;
   });
-  //修复没有弄右键菜单的童鞋无法回顶部的问题
   document.getElementById("page-name").innerText = document.title.split(" | 梦~醒🥝")[0];
 }
 
@@ -63,17 +55,11 @@ function scrollToTop() {
   btf.scrollToDest(0, 500);
 }
 
-/* 导航栏显示标题 end */
-
-//----------------------------------------------------------------
-
-/* 欢迎信息 start */
-//get请求
 $.ajax({
   type: 'get',
   url: 'https://apis.map.qq.com/ws/location/v1/ip',
   data: {
-    key: '3IPBZ-CIUWM-E5O6O-6Z6RI-TZGWV-6SBG5',  // 这里要写你的KEY!!!
+    key: '3IPBZ-CIUWM-E5O6O-6Z6RI-TZGWV-6SBG5',
     output: 'jsonp',
   },
   dataType: 'jsonp',
@@ -103,7 +89,6 @@ function showWelcome() {
   let pos = ipLoacation.result.ad_info.nation;
   let ip;
   let posdesc;
-  //根据国家、省份、城市信息自定义欢迎语
   switch (ipLoacation.result.ad_info.nation) {
     case "日本":
       posdesc = "よろしく，一起去看樱花吗";
@@ -270,8 +255,6 @@ function showWelcome() {
       posdesc = "带我去你的国家逛逛吧。";
       break;
   }
-
-  //根据本地时间切换欢迎语
   let timeChange;
   let date = new Date();
   if (date.getHours() >= 5 && date.getHours() < 11) timeChange = "<span>上午好</span>，一日之计在于晨！";
@@ -283,7 +266,6 @@ function showWelcome() {
   else timeChange = "夜深了，早点休息，少熬夜。";
 
   try {
-    //自定义文本和需要放的位置
     document.getElementById("welcome-info").innerHTML =
       `<b><center>🎉 欢迎信息 🎉</center>&emsp;&emsp;欢迎来自 <span style="color:var(--theme-color)">${pos}</span> 的小伙伴，${timeChange}您现在距离站长约 <span style="color:var(--theme-color)">${dist}</span> 公里，当前的IP地址为： <span style="color:var(--theme-color)">${ip}</span>， ${posdesc}</b>`;
   } catch (err) {
@@ -291,19 +273,13 @@ function showWelcome() {
   }
 }
 window.onload = showWelcome;
-// 如果使用了pjax在加上下面这行代码
 document.addEventListener('pjax:complete', showWelcome);
 
-/* 欢迎信息 end */
-
-//----------------------------------------------------------------
-
-/* 微博热搜 start */
 document.addEventListener('pjax:complete', getWeibo);
 document.addEventListener('DOMContentLoaded', getWeibo);
 
 function getWeibo() {
-  fetch('').then(data => data.json()).then(data => {  // 这里要写上你的API!!!
+  fetch('').then(data => data.json()).then(data => {
     let html = '<style>.weibo-new{background:#ff3852}.weibo-hot{background:#ff9406}.weibo-jyzy{background:#ffc000}.weibo-recommend{background:#00b7ee}.weibo-adrecommend{background:#febd22}.weibo-friend{background:#8fc21e}.weibo-boom{background:#bd0000}.weibo-topic{background:#ff6f49}.weibo-topic-ad{background:#4dadff}.weibo-boil{background:#f86400}#weibo-container{overflow-y:auto;-ms-overflow-style:none;scrollbar-width:none}#weibo-container::-webkit-scrollbar{display:none}.weibo-list-item{display:flex;flex-direction:row;justify-content:space-between;flex-wrap:nowrap}.weibo-title{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-right:auto}.weibo-num{float:right}.weibo-hotness{display:inline-block;padding:0 6px;transform:scale(.8) translateX(-3px);color:#fff;border-radius:8px}</style>'
     html += '<div class="weibo-list">'
     let hotness = {
@@ -329,20 +305,12 @@ function getWeibo() {
   });
 }
 
-/* 微博热搜 end */
-
-//----------------------------------------------------------------
-
-/* 禁用f12与按键防抖 start */
-// 防抖全局计时器
-let TT = null;    //time用来控制事件的触发
-// 防抖函数:fn->逻辑 time->防抖时间
+let TT = null;  
 function debounce(fn, time) {
   if (TT !== null) clearTimeout(TT);
   TT = setTimeout(fn, time);
 }
 
-// 复制提醒
 document.addEventListener("copy", function () {
   debounce(function () {
     new Vue({
@@ -361,8 +329,6 @@ document.addEventListener("copy", function () {
   }, 300);
 })
 
-
-// f12提醒但不禁用
 document.onkeydown = function (e) {
   if (123 == e.keyCode || (e.ctrlKey && e.shiftKey && (74 === e.keyCode || 73 === e.keyCode || 67 === e.keyCode)) || (e.ctrlKey && 85 === e.keyCode)) {
     debounce(function () {
@@ -382,25 +348,21 @@ document.onkeydown = function (e) {
     }, 300);
   }
 };
-/* 禁用f12与按键防抖 end */
 
-//----------------------------------------------------------------
-
-/* 雪花特效 start */
 if ((navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i))) {
-  // 移动端不显示
+
 } else {
   // document.write('<canvas id="snow" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:-2;pointer-events:none"></canvas>');
 
   window && (() => {
     let e = {
-      flakeCount: 50, // 雪花数目
-      minDist: 150,   // 最小距离
-      color: "255, 255, 255", // 雪花颜色
-      size: 1.5,  // 雪花大小
-      speed: .5,  // 雪花速度
-      opacity: .7,    // 雪花透明度
-      stepsize: .5    // 步距
+      flakeCount: 50, 
+      minDist: 150,  
+      color: "255, 255, 255", 
+      size: 1.5,  
+      speed: .5, 
+      opacity: .7,  
+      stepsize: .5 
     };
     const t = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame || function (e) {
       window.setTimeout(e, 1e3 / 60)
@@ -493,11 +455,6 @@ if ((navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobi
   )();
 }
 
-/* 雪花特效 end */
-
-//----------------------------------------------------------------
-
-/* 星空特效 start */
 function dark() {
   window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
   var n, e, i, h, t = .05,
@@ -551,11 +508,7 @@ function dark() {
   }()
 };
 dark()
-/* 星空特效 end */
 
-//----------------------------------------------------------------
-
-/* 表情放大 start */
 document.addEventListener('pjax:complete', function () {
   if (document.getElementById('post-comment')) owoBig();
 });
@@ -563,66 +516,48 @@ document.addEventListener('DOMContentLoaded', function () {
   if (document.getElementById('post-comment')) owoBig();
 });
 
-// 表情放大
 function owoBig() {
-  let flag = 1, // 设置节流阀
-    owo_time = '', // 设置计时器
-    m = 3; // 设置放大倍数
-  // 创建盒子
+  let flag = 1, 
+    owo_time = '',
+    m = 3;
   let div = document.createElement('div'),
     body = document.querySelector('body');
-  // 设置ID
   div.id = 'owo-big';
-  // 插入盒子
   body.appendChild(div)
 
-  // 构造observer
   let observer = new MutationObserver(mutations => {
 
     for (let i = 0; i < mutations.length; i++) {
       let dom = mutations[i].addedNodes,
         owo_body = '';
       if (dom.length == 2 && dom[1].className == 'OwO-body') owo_body = dom[1];
-      // 如果需要在评论内容中启用此功能请解除下面的注释
       // else if (dom.length == 1 && dom[0].className == 'tk-comment') owo_body = dom[0];
       else continue;
 
-      // 禁用右键（手机端长按会出现右键菜单，为了体验给禁用掉）
       if (document.body.clientWidth <= 768) owo_body.addEventListener('contextmenu', e => e.preventDefault());
-      // 鼠标移入
       owo_body.onmouseover = (e) => {
         if (flag && e.target.tagName == 'IMG') {
           flag = 0;
-          // 移入300毫秒后显示盒子
           owo_time = setTimeout(() => {
-            let height = e.path[0].clientHeight * m, // 盒子高
-              width = e.path[0].clientWidth * m, // 盒子宽
-              left = (e.x - e.offsetX) - (width - e.path[0].clientWidth) / 2, // 盒子与屏幕左边距离
-              top = e.y - e.offsetY; // 盒子与屏幕顶部距离
+            let height = e.path[0].clientHeight * m,
+              width = e.path[0].clientWidth * m,
+              left = (e.x - e.offsetX) - (width - e.path[0].clientWidth) / 2,
+              top = e.y - e.offsetY;
 
-            if ((left + width) > body.clientWidth) left -= ((left + width) - body.clientWidth + 10); // 右边缘检测，防止超出屏幕
-            if (left < 0) left = 10; // 左边缘检测，防止超出屏幕
-            // 设置盒子样式
+            if ((left + width) > body.clientWidth) left -= ((left + width) - body.clientWidth + 10);
+            if (left < 0) left = 10; 
             div.style.cssText = `display:flex; height:${height}px; width:${width}px; left:${left}px; top:${top}px;`;
-            // 在盒子中插入图片
             div.innerHTML = `<img src="${e.target.src}">`
           }, 300);
         }
       };
-      // 鼠标移出隐藏盒子
       owo_body.onmouseout = () => { div.style.display = 'none', flag = 1, clearTimeout(owo_time); }
     }
 
   })
   observer.observe(document.getElementById('post-comment'), { subtree: true, childList: true })
 }
-/* 表情放大 end */
 
-//----------------------------------------------------------------
-
-/* 随便逛逛 start */
-// 随便逛逛
-// 发现有时会和当前页面重复，加一个判断
 function randomPost() {
   fetch('/baidusitemap.xml').then(res => res.text()).then(str => (new window.DOMParser()).parseFromString(str, "text/xml")).then(data => {
     let ls = data.querySelectorAll('url loc');
@@ -634,20 +569,11 @@ function randomPost() {
     }
   })
 }
-/* 随便逛逛 end */
-
-//----------------------------------------------------------------
-
-/* 小猫咪 start */
 if (document.body.clientWidth > 992) {
   function getBasicInfo() {
-    /* 窗口高度 */
     var ViewH = $(window).height();
-    /* document高度 */
     var DocH = $("body")[0].scrollHeight;
-    /* 滚动的高度 */
     var ScrollTop = $(window).scrollTop();
-    /* 可滚动的高度 */
     var S_V = DocH - ViewH;
     var Band_H = ScrollTop / (DocH - ViewH) * 100;
     return {
@@ -758,41 +684,17 @@ if (document.body.clientWidth > 992) {
   })(jQuery);
 
   $(document).ready(function () {
-    //部分自定义
     $("#myscoll").nekoScroll({
-      bgcolor: 'rgb(0 0 0 / .5)', //背景颜色，没有绳子背景图片时有效
+      bgcolor: 'rgb(0 0 0 / .5)',
       borderRadius: '2em',
       zoom: 0.9
     }
     );
-    //自定义（去掉以下注释，并注释掉其他的查看效果）
-    
-    // $("#myscoll").nekoScroll({
-    //     nekoname:'neko1', //nekoname，相当于id
-        // nekoImg:'img/猫咪.png', //neko的背景图片
-        // scImg:"img/绳1.png", //绳子的背景图片
-    //     bgcolor:'#1e90ff', //背景颜色，没有绳子背景图片时有效
-    //     zoom:0.9, //绳子长度的缩放值
-    //     hoverMsg:'你好~喵', //鼠标浮动到neko上方的对话框信息
-    //     right:'100px', //距离页面右边的距离
-    //     fontFamily:'楷体', //对话框字体
-    //     fontSize:'14px', //对话框字体的大小
-    //     color:'#1e90ff', //对话框字体颜色
-    //     scroWidth:'8px', //绳子的宽度
-    //     z_index:100, //不用解释了吧
-    //     during:1200, //从顶部到底部滑动的时长
-    // });
     
   })
 }
 
-/* 小猫咪 end */
-
-//----------------------------------------------------------------
-
-/* 右键菜单 start */
 function setMask() {
-  //设置遮罩
   if (document.getElementsByClassName("rmMask")[0] != undefined)
     return document.getElementsByClassName("rmMask")[0];
   mask = document.createElement('div');
@@ -811,8 +713,6 @@ function setMask() {
 }
 
 function insertAtCursor(myField, myValue) {
-
-  //IE 浏览器
   if (document.selection) {
     myField.focus();
     sel = document.selection.createRange();
@@ -820,12 +720,10 @@ function insertAtCursor(myField, myValue) {
     sel.select();
   }
 
-  //FireFox、Chrome等
   else if (myField.selectionStart || myField.selectionStart == '0') {
     var startPos = myField.selectionStart;
     var endPos = myField.selectionEnd;
 
-    // 保存滚动条
     var restoreTop = myField.scrollTop;
     myField.value = myField.value.substring(0, startPos) + myValue + myField.value.substring(endPos, myField.value.length);
 
@@ -880,12 +778,10 @@ rmf.switchReadMode = function () {
   newEle.addEventListener('click', clickFn)
 }
 
-//复制选中文字
 rmf.copySelect = function () {
   document.execCommand('Copy', false, null);
 }
 
-//回到顶部
 rmf.scrollToTop = function () {
   document.getElementsByClassName("menus_items")[1].setAttribute("style", "");
   document.getElementById("name-container").setAttribute("style", "display:none");
@@ -900,7 +796,6 @@ function popupMenu() {
   window.oncontextmenu = function (event) {
     // if (event.ctrlKey) return true;
 
-    // 当关掉自定义右键时候直接返回
     if (mouseMode == "off") return true;
 
     $('.rightMenu-group.hide').hide();
@@ -979,7 +874,6 @@ function popupMenu() {
           })
           .then(result => {
             if (result.state == 'granted' || result.state == 'prompt') {
-              //读取剪贴板
               navigator.clipboard.readText().then(text => {
                 console.log(text)
                 insertAtCursor(el, text)
@@ -1005,7 +899,6 @@ function popupMenu() {
       pageY -= pageY + rmHeight - window.innerHeight;
     }
     mask = setMask();
-    // 滚动消失的代码和阅读进度有冲突，因此放到readPercent.js里面了
     $(".rightMenu-item").click(() => {
       $('.rmMask').attr('style', 'display: none');
     })
@@ -1031,22 +924,22 @@ if (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mob
 const box = document.documentElement
 
 function addLongtabListener(target, callback) {
-  let timer = 0 // 初始化timer
+  let timer = 0
 
   target.ontouchstart = () => {
-    timer = 0 // 重置timer
+    timer = 0 
     timer = setTimeout(() => {
       callback();
       timer = 0
-    }, 380) // 超时器能成功执行，说明是长按
+    }, 380)
   }
 
   target.ontouchmove = () => {
-    clearTimeout(timer) // 如果来到这里，说明是滑动
+    clearTimeout(timer) 
     timer = 0
   }
 
-  target.ontouchend = () => { // 到这里如果timer有值，说明此触摸时间不足380ms，是点击
+  target.ontouchend = () => { 
     if (timer) {
       clearTimeout(timer)
     }
@@ -1055,13 +948,11 @@ function addLongtabListener(target, callback) {
 
 addLongtabListener(box, popupMenu)
 
-// 全屏
 rmf.fullScreen = function () {
   if (document.fullscreenElement) document.exitFullscreen();
   else document.documentElement.requestFullscreen();
 }
 
-// 右键开关
 if (localStorage.getItem("mouse") == undefined) {
   localStorage.setItem("mouse", "on");
 }
@@ -1105,15 +996,11 @@ function changeMouseMode() {
     }, 300);
   }
 }
-/* 右键菜单 end */
 
-//----------------------------------------------------------------
-
-/* 控制台输出字符画 start */
 var now1 = new Date();
 
 function createtime1() {
-  var grt = new Date("11/29/2024 00:00:00"); //此处修改你的建站时间或者网站上线时间
+  var grt = new Date("11/29/2024 00:00:00");
   now1.setTime(now1.getTime() + 250);
   var days = (now1 - grt) / 1000 / 60 / 60 / 24;
   var dnum = Math.floor(days);
@@ -1185,16 +1072,10 @@ function createtime2() {
 }
 createtime2();
 
-// 重写console方法
 console.log = function () { };
 console.error = function () { };
 console.warn = function () { };
 
-/* 控制台输出字符画 end */
-
-//----------------------------------------------------------------
-
-/* 夜间模式切换动画 start */
 function switchNightMode() {
   document.querySelector('body').insertAdjacentHTML('beforeend', '<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"><div id="sun"></div><div id="moon"></div></div></div>'),
     setTimeout(function () {
@@ -1209,7 +1090,6 @@ function switchNightMode() {
     })
   const nowMode = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light'
   if (nowMode === 'light') {
-    // 先设置太阳月亮透明度
     document.getElementById("sun").style.opacity = "1";
     document.getElementById("moon").style.opacity = "0";
     setTimeout(function () {
@@ -1221,7 +1101,6 @@ function switchNightMode() {
     saveToLocal.set('theme', 'dark', 2)
     // GLOBAL_CONFIG.Snackbar !== undefined && btf.snackbarShow(GLOBAL_CONFIG.Snackbar.day_to_night)
     document.getElementById('modeicon').setAttribute('xlink:href', '#icon-sun')
-    // 延时弹窗提醒
     setTimeout(() => {
       new Vue({
         data: function () {
@@ -1238,7 +1117,6 @@ function switchNightMode() {
       })
     }, 2000)
   } else {
-    // 先设置太阳月亮透明度
     document.getElementById("sun").style.opacity = "0";
     document.getElementById("moon").style.opacity = "1";
     setTimeout(function () {
@@ -1265,22 +1143,14 @@ function switchNightMode() {
       })
     }, 2000)
   }
-  // handle some cases
   typeof utterancesTheme === 'function' && utterancesTheme()
   typeof FB === 'object' && window.loadFBComment()
   window.DISQUS && document.getElementById('disqus_thread').children.length && setTimeout(() => window.disqusReset(), 200)
 }
 
-/* 夜间模式切换动画 end */
-
-//----------------------------------------------------------------
-
-/* 分享按钮 start */
-// 分享本页
 function share_() {
   let url = window.location.origin + window.location.pathname
   try {
-    // 截取标题
     var title = document.title;
     var subTitle = title.endsWith("| Fomalhaut🥝") ? title.substring(0, title.length - 14) : title;
     navigator.clipboard.writeText('梦~醒🥝的站内分享\n标题：' + subTitle + '\n链接：' + url + '\n欢迎来访！🍭🍭🍭');
@@ -1305,39 +1175,25 @@ function share_() {
   // btf.snackbarShow("本页链接已复制到剪切板，快去分享吧~")
 }
 
-// 防抖
 function share() {
   debounce(share_, 300);
 }
 
-/* 分享按钮 end */
-
-//----------------------------------------------------------------
-
-/* 恶搞标题 start */
-//动态标题
 var OriginTitile = document.title;
 var titleTime;
 document.addEventListener('visibilitychange', function () {
   if (document.hidden) {
-    //离开当前页面时标签显示内容
     document.title = '👀跑哪里去了~';
     clearTimeout(titleTime);
   } else {
-    //返回当前页面时标签显示内容
     document.title = '🐖抓到你啦～';
-    //两秒后变回正常标题
     titleTime = setTimeout(function () {
       document.title = OriginTitile;
     }, 2000);
   }
 });
-/* 恶搞标题 end */
-
-//----------------------------------------------------------------
 
 
-/* 农历转换 start */
 /**
 
 * @1900-2100区间内的公历、农历互转
@@ -1364,47 +1220,47 @@ document.addEventListener('visibilitychange', function () {
 
 */
 
-var lunarInfo = [0x04bd8, 0x04ae0, 0x0a570, 0x054d5, 0x0d260, 0x0d950, 0x16554, 0x056a0, 0x09ad0, 0x055d2, // 1900-1909
+var lunarInfo = [0x04bd8, 0x04ae0, 0x0a570, 0x054d5, 0x0d260, 0x0d950, 0x16554, 0x056a0, 0x09ad0, 0x055d2, 
 
-  0x04ae0, 0x0a5b6, 0x0a4d0, 0x0d250, 0x1d255, 0x0b540, 0x0d6a0, 0x0ada2, 0x095b0, 0x14977, // 1910-1919
+  0x04ae0, 0x0a5b6, 0x0a4d0, 0x0d250, 0x1d255, 0x0b540, 0x0d6a0, 0x0ada2, 0x095b0, 0x14977, 
 
-  0x04970, 0x0a4b0, 0x0b4b5, 0x06a50, 0x06d40, 0x1ab54, 0x02b60, 0x09570, 0x052f2, 0x04970, // 1920-1929
+  0x04970, 0x0a4b0, 0x0b4b5, 0x06a50, 0x06d40, 0x1ab54, 0x02b60, 0x09570, 0x052f2, 0x04970, 
 
-  0x06566, 0x0d4a0, 0x0ea50, 0x06e95, 0x05ad0, 0x02b60, 0x186e3, 0x092e0, 0x1c8d7, 0x0c950, // 1930-1939
+  0x06566, 0x0d4a0, 0x0ea50, 0x06e95, 0x05ad0, 0x02b60, 0x186e3, 0x092e0, 0x1c8d7, 0x0c950, 
 
-  0x0d4a0, 0x1d8a6, 0x0b550, 0x056a0, 0x1a5b4, 0x025d0, 0x092d0, 0x0d2b2, 0x0a950, 0x0b557, // 1940-1949
+  0x0d4a0, 0x1d8a6, 0x0b550, 0x056a0, 0x1a5b4, 0x025d0, 0x092d0, 0x0d2b2, 0x0a950, 0x0b557, 
 
-  0x06ca0, 0x0b550, 0x15355, 0x04da0, 0x0a5b0, 0x14573, 0x052b0, 0x0a9a8, 0x0e950, 0x06aa0, // 1950-1959
+  0x06ca0, 0x0b550, 0x15355, 0x04da0, 0x0a5b0, 0x14573, 0x052b0, 0x0a9a8, 0x0e950, 0x06aa0, 
 
-  0x0aea6, 0x0ab50, 0x04b60, 0x0aae4, 0x0a570, 0x05260, 0x0f263, 0x0d950, 0x05b57, 0x056a0, // 1960-1969
+  0x0aea6, 0x0ab50, 0x04b60, 0x0aae4, 0x0a570, 0x05260, 0x0f263, 0x0d950, 0x05b57, 0x056a0, 
 
-  0x096d0, 0x04dd5, 0x04ad0, 0x0a4d0, 0x0d4d4, 0x0d250, 0x0d558, 0x0b540, 0x0b6a0, 0x195a6, // 1970-1979
+  0x096d0, 0x04dd5, 0x04ad0, 0x0a4d0, 0x0d4d4, 0x0d250, 0x0d558, 0x0b540, 0x0b6a0, 0x195a6, 
 
-  0x095b0, 0x049b0, 0x0a974, 0x0a4b0, 0x0b27a, 0x06a50, 0x06d40, 0x0af46, 0x0ab60, 0x09570, // 1980-1989
+  0x095b0, 0x049b0, 0x0a974, 0x0a4b0, 0x0b27a, 0x06a50, 0x06d40, 0x0af46, 0x0ab60, 0x09570, 
 
-  0x04af5, 0x04970, 0x064b0, 0x074a3, 0x0ea50, 0x06b58, 0x05ac0, 0x0ab60, 0x096d5, 0x092e0, // 1990-1999
+  0x04af5, 0x04970, 0x064b0, 0x074a3, 0x0ea50, 0x06b58, 0x05ac0, 0x0ab60, 0x096d5, 0x092e0, 
 
-  0x0c960, 0x0d954, 0x0d4a0, 0x0da50, 0x07552, 0x056a0, 0x0abb7, 0x025d0, 0x092d0, 0x0cab5, // 2000-2009
+  0x0c960, 0x0d954, 0x0d4a0, 0x0da50, 0x07552, 0x056a0, 0x0abb7, 0x025d0, 0x092d0, 0x0cab5, 
 
-  0x0a950, 0x0b4a0, 0x0baa4, 0x0ad50, 0x055d9, 0x04ba0, 0x0a5b0, 0x15176, 0x052b0, 0x0a930, // 2010-2019
+  0x0a950, 0x0b4a0, 0x0baa4, 0x0ad50, 0x055d9, 0x04ba0, 0x0a5b0, 0x15176, 0x052b0, 0x0a930, 
 
-  0x07954, 0x06aa0, 0x0ad50, 0x05b52, 0x04b60, 0x0a6e6, 0x0a4e0, 0x0d260, 0x0ea65, 0x0d530, // 2020-2029
+  0x07954, 0x06aa0, 0x0ad50, 0x05b52, 0x04b60, 0x0a6e6, 0x0a4e0, 0x0d260, 0x0ea65, 0x0d530, 
 
-  0x05aa0, 0x076a3, 0x096d0, 0x04afb, 0x04ad0, 0x0a4d0, 0x1d0b6, 0x0d250, 0x0d520, 0x0dd45, // 2030-2039
+  0x05aa0, 0x076a3, 0x096d0, 0x04afb, 0x04ad0, 0x0a4d0, 0x1d0b6, 0x0d250, 0x0d520, 0x0dd45, 
 
-  0x0b5a0, 0x056d0, 0x055b2, 0x049b0, 0x0a577, 0x0a4b0, 0x0aa50, 0x1b255, 0x06d20, 0x0ada0, // 2040-2049
+  0x0b5a0, 0x056d0, 0x055b2, 0x049b0, 0x0a577, 0x0a4b0, 0x0aa50, 0x1b255, 0x06d20, 0x0ada0, 
 
-  0x14b63, 0x09370, 0x049f8, 0x04970, 0x064b0, 0x168a6, 0x0ea50, 0x06b20, 0x1a6c4, 0x0aae0, // 2050-2059
+  0x14b63, 0x09370, 0x049f8, 0x04970, 0x064b0, 0x168a6, 0x0ea50, 0x06b20, 0x1a6c4, 0x0aae0, 
 
-  0x0a2e0, 0x0d2e3, 0x0c960, 0x0d557, 0x0d4a0, 0x0da50, 0x05d55, 0x056a0, 0x0a6d0, 0x055d4, // 2060-2069
+  0x0a2e0, 0x0d2e3, 0x0c960, 0x0d557, 0x0d4a0, 0x0da50, 0x05d55, 0x056a0, 0x0a6d0, 0x055d4, 
 
-  0x052d0, 0x0a9b8, 0x0a950, 0x0b4a0, 0x0b6a6, 0x0ad50, 0x055a0, 0x0aba4, 0x0a5b0, 0x052b0, // 2070-2079
+  0x052d0, 0x0a9b8, 0x0a950, 0x0b4a0, 0x0b6a6, 0x0ad50, 0x055a0, 0x0aba4, 0x0a5b0, 0x052b0, 
 
-  0x0b273, 0x06930, 0x07337, 0x06aa0, 0x0ad50, 0x14b55, 0x04b60, 0x0a570, 0x054e4, 0x0d160, // 2080-2089
+  0x0b273, 0x06930, 0x07337, 0x06aa0, 0x0ad50, 0x14b55, 0x04b60, 0x0a570, 0x054e4, 0x0d160, 
 
-  0x0e968, 0x0d520, 0x0daa0, 0x16aa6, 0x056d0, 0x04ae0, 0x0a9d4, 0x0a2d0, 0x0d150, 0x0f252, // 2090-2099
+  0x0e968, 0x0d520, 0x0daa0, 0x16aa6, 0x056d0, 0x04ae0, 0x0a9d4, 0x0a2d0, 0x0d150, 0x0f252,
 
-  0x0d520] // 2100
+  0x0d520] 
 
 
 
@@ -1754,7 +1610,7 @@ function leapDays(y) {
 
 function monthDays(y, m) {
 
-  if (m > 12 || m < 1) { return -1 }// 月份参数从1至12，参数错误返回-1
+  if (m > 12 || m < 1) { return -1 }
 
   return ((lunarInfo[y - 1900] & (0x10000 >> m)) ? 30 : 29)
 
@@ -1776,11 +1632,11 @@ function monthDays(y, m) {
 
 function solarDays(y, m) {
 
-  if (m > 12 || m < 1) { return -1 } // 若参数错误 返回-1
+  if (m > 12 || m < 1) { return -1 }
 
   var ms = m - 1
 
-  if (ms === 1) { // 2月份的闰平规律测算后确认返回28或29
+  if (ms === 1) { 
 
     return (((y % 4 === 0) && (y % 100 !== 0) || (y % 400 === 0)) ? 29 : 28)
 
@@ -1810,9 +1666,9 @@ function toGanZhiYear(lYear) {
 
   var zhiKey = (lYear - 3) % 12
 
-  if (ganKey === 0) ganKey = 10 // 如果余数为0则为最后一个天干
+  if (ganKey === 0) ganKey = 10 
 
-  if (zhiKey === 0) zhiKey = 12 // 如果余数为0则为最后一个地支
+  if (zhiKey === 0) zhiKey = 12
 
   return Gan[ganKey - 1] + Zhi[zhiKey - 1]
 
@@ -1980,11 +1836,11 @@ function getTerm(y, n) {
 
 function toChinaMonth(m) { // 月 => \u6708
 
-  if (m > 12 || m < 1) { return -1 } // 若参数错误 返回-1
+  if (m > 12 || m < 1) { return -1 } 
 
   var s = nStr3[m - 1]
 
-  s += '\u6708' // 加上月字
+  s += '\u6708' 
 
   return s
 
@@ -2078,25 +1934,20 @@ function getAnimal(y) {
 
 */
 
-function solar2lunar(y, m, d) { // 参数区间1900.1.31~2100.12.31
-
-  // 年份限定、上限
+function solar2lunar(y, m, d) { 
 
   if (y < 1900 || y > 2100) {
 
-    return -1 // undefined转换为数字变为NaN
+    return -1
 
   }
 
-  // 公历传参最下限
 
   if (y === 1900 && m === 1 && d < 31) {
 
     return -1
 
   }
-
-  // 未传参  获得当天
 
   var objDate = null
 
@@ -2116,7 +1967,6 @@ function solar2lunar(y, m, d) { // 参数区间1900.1.31~2100.12.31
 
   var temp = 0
 
-  // 修正ymd参数
 
   y = objDate.getFullYear()
 
@@ -2141,9 +1991,6 @@ function solar2lunar(y, m, d) { // 参数区间1900.1.31~2100.12.31
   }
 
 
-
-  // 是否今天
-
   var isTodayObj = new Date()
 
   var isToday = false
@@ -2154,13 +2001,10 @@ function solar2lunar(y, m, d) { // 参数区间1900.1.31~2100.12.31
 
   }
 
-  // 星期几
 
   var nWeek = objDate.getDay()
 
   var cWeek = nStr1[nWeek]
-
-  // 数字表示周几顺应天朝周一开始的惯例
 
   if (nWeek === 0) {
 
@@ -2168,43 +2012,33 @@ function solar2lunar(y, m, d) { // 参数区间1900.1.31~2100.12.31
 
   }
 
-  // 农历年
 
   var year = i
 
-  leap = leapMonth(i) // 闰哪个月
+  leap = leapMonth(i)
 
   var isLeap = false
 
 
-
-  // 效验闰月
-
   for (i = 1; i < 13 && offset > 0; i++) {
-
-    // 闰月
 
     if (leap > 0 && i === (leap + 1) && isLeap === false) {
 
       --i
 
-      isLeap = true; temp = leapDays(year) // 计算农历闰月天数
+      isLeap = true; temp = leapDays(year)
 
     } else {
 
-      temp = monthDays(year, i)// 计算农历普通月天数
+      temp = monthDays(year, i)
 
     }
-
-    // 解除闰月
 
     if (isLeap === true && i === (leap + 1)) { isLeap = false }
 
     offset -= temp
 
   }
-
-  // 闰月导致数组下标重叠取反
 
   if (offset === 0 && leap > 0 && i === leap + 1) {
 
@@ -2225,34 +2059,18 @@ function solar2lunar(y, m, d) { // 参数区间1900.1.31~2100.12.31
     offset += temp; --i
 
   }
-
-  // 农历月
-
   var month = i
 
-  // 农历日
-
   var day = offset + 1
-
-  // 天干地支处理
 
   var sm = m - 1
 
   var gzY = toGanZhiYear(year)
 
 
+  var firstNode = getTerm(y, (m * 2 - 1))
 
-  // 当月的两个节气
-
-  // bugfix-2017-7-24 11:03:38 use lunar Year Param `y` Not `year`
-
-  var firstNode = getTerm(y, (m * 2 - 1)) // 返回当月「节」为几日开始
-
-  var secondNode = getTerm(y, (m * 2)) // 返回当月「节」为几日开始
-
-
-
-  // 依据12节气修正干支月
+  var secondNode = getTerm(y, (m * 2))
 
   var gzM = toGanZhi((y - 1900) * 12 + m + 11)
 
@@ -2261,8 +2079,6 @@ function solar2lunar(y, m, d) { // 参数区间1900.1.31~2100.12.31
     gzM = toGanZhi((y - 1900) * 12 + m + 12)
 
   }
-
-  // 传入的日期的节气与否
 
   var isTerm = false
 
@@ -2284,13 +2100,10 @@ function solar2lunar(y, m, d) { // 参数区间1900.1.31~2100.12.31
 
   }
 
-  // 日柱 当月一日与 1900/1/1 相差天数
 
   var dayCyclical = Date.UTC(y, sm, 1, 0, 0, 0, 0) / 86400000 + 25567 + 10
 
   var gzD = toGanZhi(dayCyclical + d - 1)
-
-  // 该日期所属的星座
 
   var astro = toAstro(m, d)
 
@@ -2304,9 +2117,7 @@ function solar2lunar(y, m, d) { // 参数区间1900.1.31~2100.12.31
 
 var calendarFormatter = {
 
-  // 传入阳历年月日获得详细的公历、农历object信息 <=>JSON
-
-  solar2lunar: function (y, m, d) { // 参数区间1900.1.31~2100.12.31
+  solar2lunar: function (y, m, d) { 
 
     return solar2lunar(y, m, d)
 
@@ -2330,21 +2141,18 @@ var calendarFormatter = {
 
   */
 
-  lunar2solar: function (y, m, d, isLeapMonth) { // 参数区间1900.1.31~2100.12.1
+  lunar2solar: function (y, m, d, isLeapMonth) {
 
     isLeapMonth = !!isLeapMonth
 
-    if (isLeapMonth && (leapMonth !== m)) { return -1 }// 传参要求计算该闰月公历 但该年得出的闰月与传参的月份并不同
+    if (isLeapMonth && (leapMonth !== m)) { return -1 }
 
-    if (y === 2100 && m === 12 && d > 1 || y === 1900 && m === 1 && d < 31) { return -1 } // 超出了最大极限值
+    if (y === 2100 && m === 12 && d > 1 || y === 1900 && m === 1 && d < 31) { return -1 } 
 
     var day = monthDays(y, m)
 
     var _day = day
 
-    // bugFix 2016-9-25
-
-    // if month is leap, _day use leapDays method
 
     if (isLeapMonth) {
 
@@ -2352,11 +2160,8 @@ var calendarFormatter = {
 
     }
 
-    if (y < 1900 || y > 2100 || d > _day) { return -1 }// 参数合法性效验
+    if (y < 1900 || y > 2100 || d > _day) { return -1 }
 
-
-
-    // 计算农历的时间差
 
     var offset = 0
 
@@ -2374,7 +2179,7 @@ var calendarFormatter = {
 
       leap = leapMonth(y)
 
-      if (!isAdd) { // 处理闰月
+      if (!isAdd) {
 
         if (leap <= i && leap > 0) {
 
@@ -2388,11 +2193,8 @@ var calendarFormatter = {
 
     }
 
-    // 转换闰月农历 需补充该年闰月的前一个月的时差
 
     if (isLeapMonth) { offset += day }
-
-    // 1900年农历正月一日的公历时间为1900年1月30日0时0分0秒(该时间也是本农历的最开始起始点)
 
     var stmap = Date.UTC(1900, 1, 30, 0, 0, 0)
 
@@ -2410,17 +2212,11 @@ var calendarFormatter = {
 
 }
 
-/* 农历转换 end */
-
-//----------------------------------------------------------------
-
-/* 节日弹窗 start */
 var d = new Date();
 m = d.getMonth() + 1;
 dd = d.getDate();
 y = d.getFullYear();
 
-// 公祭日
 if (m == 9 && dd == 18) {
   document.getElementsByTagName("html")[0].setAttribute("style", "filter: grayscale(60%);");
   if (sessionStorage.getItem("isPopupWindow") != "1") {
@@ -2450,97 +2246,93 @@ if (m == 8 && dd == 14) {
   }
 }
 
-
-// 节假日
-if (m == 10 && dd <= 3) {//国庆节
+if (m == 10 && dd <= 3) {
   if (sessionStorage.getItem("isPopupWindow") != "1") {
     Swal.fire("祝祖国" + (y - 1949).toString() + "岁生日快乐！");
     sessionStorage.setItem("isPopupWindow", "1");
   }
 }
-if (m == 8 && dd == 15) {//搞来玩的，小日子投降
+if (m == 8 && dd == 15) {
   if (sessionStorage.getItem("isPopupWindow") != "1") {
     Swal.fire("小日子已经投降" + (y - 1945).toString() + "年了😃");
     sessionStorage.setItem("isPopupWindow", "1");
   }
 }
-if (m == 1 && dd == 1) {//元旦节
+if (m == 1 && dd == 1) {
   if (sessionStorage.getItem("isPopupWindow") != "1") {
     Swal.fire(y.toString() + "年元旦快乐！🎉");
     sessionStorage.setItem("isPopupWindow", "1");
   }
 }
-if (m == 3 && dd == 8) {//妇女节
+if (m == 3 && dd == 8) {
   if (sessionStorage.getItem("isPopupWindow") != "1") {
     Swal.fire("各位女神们，妇女节快乐！👩");
     sessionStorage.setItem("isPopupWindow", "1");
   }
 }
 l = ["非常抱歉，因为不可控原因，博客将于明天停止运营！", "好消息，日本没了！", "美国垮了，原因竟然是川普！", "微软垮了！", "你的电脑已经过载，建议立即关机！", "你知道吗？站长很喜欢你哦！", "一分钟有61秒哦", "你喜欢的人跟别人跑了！"]
-if (m == 4 && dd == 1) {//愚人节，随机谎话
+if (m == 4 && dd == 1) {
   if (sessionStorage.getItem("isPopupWindow") != "1") {
     Swal.fire(l[Math.floor(Math.random() * l.length)]);
     sessionStorage.setItem("isPopupWindow", "1");
   }
 }
-if (m == 5 && dd == 1) {//劳动节
+if (m == 5 && dd == 1) {
   if (sessionStorage.getItem("isPopupWindow") != "1") {
     Swal.fire("劳动节快乐\n为各行各业辛勤工作的人们致敬！");
     sessionStorage.setItem("isPopupWindow", "1");
   }
 }
-if (m == 5 && dd == 4) {//青年节
+if (m == 5 && dd == 4) {
   if (sessionStorage.getItem("isPopupWindow") != "1") {
     Swal.fire("青年节快乐\n青春不是回忆逝去,而是把握现在！");
     sessionStorage.setItem("isPopupWindow", "1");
   }
 }
-if (m == 5 && dd == 20) {//520
+if (m == 5 && dd == 20) {
   if (sessionStorage.getItem("isPopupWindow") != "1") {
     Swal.fire("今年是520情人节\n快和你喜欢的人一起过吧！💑");
     sessionStorage.setItem("isPopupWindow", "1");
   }
 }
-if (m == 7 && dd == 1) {//建党节
+if (m == 7 && dd == 1) {
   if (sessionStorage.getItem("isPopupWindow") != "1") {
     Swal.fire("祝中国共产党" + (y - 1921).toString() + "岁生日快乐！");
     sessionStorage.setItem("isPopupWindow", "1");
   }
 }
-if (m == 9 && dd == 10) {//教师节
+if (m == 9 && dd == 10) {
   if (sessionStorage.getItem("isPopupWindow") != "1") {
     Swal.fire("各位老师们教师节快乐！👩‍🏫");
     sessionStorage.setItem("isPopupWindow", "1");
   }
 }
-if (m == 12 && dd == 25) {//圣诞节
+if (m == 12 && dd == 25) {
   if (sessionStorage.getItem("isPopupWindow") != "1") {
     Swal.fire("圣诞节快乐！🎄");
     sessionStorage.setItem("isPopupWindow", "1");
   }
 }
-if (m == 8 && dd == 11) {//站长生日
-  if (sessionStorage.getItem("isPopupWindow") != "1") {
-    Swal.fire("祝站长" + (y - 1998).toString() + "岁生日快乐！🥝");
-    sessionStorage.setItem("isPopupWindow", "1");
-  }
-}
-if (m == 6 && dd == 30) {//小猫咪生日
+// if (m == 8 && dd == 11) {//站长生日
+//   if (sessionStorage.getItem("isPopupWindow") != "1") {
+//     Swal.fire("祝站长" + (y - 1998).toString() + "岁生日快乐！🥝");
+//     sessionStorage.setItem("isPopupWindow", "1");
+//   }
+// }
+if (m == 6 && dd == 30) {
   if (sessionStorage.getItem("isPopupWindow") != "1") {
     Swal.fire("祝小猫咪" + (y - 1999).toString() + "岁生日快乐！🐱");
     sessionStorage.setItem("isPopupWindow", "1");
   }
 }
 
-//传统节日部分
-
-if ((y == 2023 && m == 4 && dd == 5) || (y == 2024 && m == 4 && dd == 4) || (y == 2025 && m == 4 && dd == 4)) {//清明节
+if ((y == 2023 && m == 4 && dd == 5) || (y == 2024 && m == 4 && dd == 4) || (y == 2025 && m == 4 && dd == 4)) {
   if (sessionStorage.getItem("isPopupWindow") != "1") {
     Swal.fire("清明时节雨纷纷,一束鲜花祭故人💐");
     sessionStorage.setItem("isPopupWindow", "1");
   }
 }
-if ((y == 2023 && m == 12 && dd == 22) || (y == 2024 && m == 12 && dd == 21) || (y == 2025 && m == 12 && dd == 21)) {//冬至
+if ((y == 2023 && m == 12 && dd == 22) || (y == 2024 && m == 12 && dd == 21) || (y == 2025 && m == 12 && dd == 21)) {
   if (sessionStorage.getItem("isPopupWindow") != "1") {
     Swal.fire("冬至快乐\n快吃上一碗热热的汤圆和饺子吧🧆");
     sessionStorage.setItem("isPopupWindow", "1");
@@ -2549,52 +2341,43 @@ if ((y == 2023 && m == 12 && dd == 22) || (y == 2024 && m == 12 && dd == 21) || 
 
 var lunar = calendarFormatter.solar2lunar();
 
-//农历采用汉字计算，防止出现闰月导致问题
-
 if ((lunar["IMonthCn"] == "正月" && lunar["IDayCn"] == "初六") || (lunar["IMonthCn"] == "正月" && lunar["IDayCn"] == "初五") || (lunar["IMonthCn"] == "正月" && lunar["IDayCn"] == "初四") || (lunar["IMonthCn"] == "正月" && lunar["IDayCn"] == "初三") || (lunar["IMonthCn"] == "正月" && lunar["IDayCn"] == "初二") || (lunar["IMonthCn"] == "正月" && lunar["IDayCn"] == "初一") || (lunar["IMonthCn"] == "腊月" && lunar["IDayCn"] == "三十") || (lunar["IMonthCn"] == "腊月" && lunar["IDayCn"] == "廿九")) {
-  //春节，本来只有大年三十到初六，但是有时候除夕是大年二十九，所以也加上了
   if (sessionStorage.getItem("isPopupWindow") != "1") {
     Swal.fire(y.toString() + "年新年快乐\n🎊祝你心想事成，诸事顺利🎊");
     sessionStorage.setItem("isPopupWindow", "1");
   }
 }
 if ((lunar["IMonthCn"] == "正月" && lunar["IDayCn"] == "十五")) {
-  //元宵节
   if (sessionStorage.getItem("isPopupWindow") != "1") {
     Swal.fire("元宵节快乐\n送你一个大大的灯笼🧅");
     sessionStorage.setItem("isPopupWindow", "1");
   }
 }
 if ((lunar["IMonthCn"] == "五月" && lunar["IDayCn"] == "初五")) {
-  //端午节
   if (sessionStorage.getItem("isPopupWindow") != "1") {
     Swal.fire("端午节快乐\n请你吃一条粽子🍙");
     sessionStorage.setItem("isPopupWindow", "1");
   }
 }
 if ((lunar["IMonthCn"] == "七月" && lunar["IDayCn"] == "初七")) {
-  //七夕节
   if (sessionStorage.getItem("isPopupWindow") != "1") {
     Swal.fire("七夕节快乐\n黄昏后,柳梢头,牛郎织女来碰头");
     sessionStorage.setItem("isPopupWindow", "1");
   }
 }
 if ((lunar["IMonthCn"] == "八月" && lunar["IDayCn"] == "十五")) {
-  //中秋节
   if (sessionStorage.getItem("isPopupWindow") != "1") {
     Swal.fire("中秋节快乐\n请你吃一块月饼🍪");
     sessionStorage.setItem("isPopupWindow", "1");
   }
 }
 if ((lunar["IMonthCn"] == "九月" && lunar["IDayCn"] == "初九")) {
-  //重阳节
   if (sessionStorage.getItem("isPopupWindow") != "1") {
     Swal.fire("重阳节快乐\n独在异乡为异客，每逢佳节倍思亲");
     sessionStorage.setItem("isPopupWindow", "1");
   }
 }
 
-// 切换主题提醒
 // if (y == 2022 && m == 12 && (dd >= 18 && dd <= 20)) {
 //     if (sessionStorage.getItem("isPopupWindow") != "1") {
 //         Swal.fire("网站换成冬日限定主题啦⛄");
@@ -2602,12 +2385,6 @@ if ((lunar["IMonthCn"] == "九月" && lunar["IDayCn"] == "初九")) {
 //     }
 // }
 
-
-/* 节日弹窗 end */
-
-//----------------------------------------------------------------
-
-/* 听话鼠标 start */
 var CURSOR;
 
 Math.lerp = (a, b, n) => (1 - n) * a + n * b;
@@ -2621,7 +2398,6 @@ const getStyle2 = (el, attr) => {
   return "";
 };
 
-// 为了屏蔽异步加载导致无法读取颜色值，这里统一用哈希表预处理
 const map = new Map();
 map.set('red', "rgb(241, 71, 71)");
 map.set('orange', "rgb(241, 162, 71)");
@@ -2690,7 +2466,6 @@ class Cursor {
 
   render() {
     if (this.pos.prev) {
-      // 跟踪速度调节
       this.pos.prev.x = Math.lerp(this.pos.prev.x, this.pos.curr.x, 0.15);
       this.pos.prev.y = Math.lerp(this.pos.prev.y, this.pos.curr.y, 0.15);
       this.move(this.pos.prev.x, this.pos.prev.y);
@@ -2703,92 +2478,14 @@ class Cursor {
 
 (() => {
   CURSOR = new Cursor();
-  // 需要重新获取列表时，使用 CURSOR.refresh()
 })();
 
-/* 听话鼠标 end */
-
-//----------------------------------------------------------------
-
-/* 新年倒计时 start */
-// let newYearTimer = null;
-// var newYear = () => {
-//   clearTimeout(newYearTimer);
-//   if (!document.querySelector('#newYear')) return;
-//   // 新年时间戳 and 星期对象
-//   let newYear = new Date('2023-01-22 00:00:00').getTime() / 1000,
-//     week = { 0: '周日', 1: '周一', 2: '周二', 3: '周三', 4: '周四', 5: '周五', 6: '周六' }
-
-//   time();
-
-//   // 补零函数
-//   function nol(h) { return h > 9 ? h : '0' + h; };
-
-//   function time() {
-//     // 现在 时间对象
-//     let now = new Date();
-
-//     // 右下角 今天
-//     document.querySelector('#newYear .today').innerHTML = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate() + ' ' + week[now.getDay()]
-
-//     // 现在与新年相差秒数
-//     let second = newYear - Math.round(now.getTime() / 1000);
-
-//     // 小于0则表示已经过年
-//     if (second < 0) {
-//       document.querySelector('#newYear .title').innerHTML = 'Happy New Year!';
-//       document.querySelector('#newYear .newYear-time').innerHTML = '<span class="happyNewYear">新年快乐</p>';
-//     } else {
-//       // 大于0则还未过年
-//       document.querySelector('#newYear .title').innerHTML = '距离2023年春节：'
-
-//       // 大于一天则直接渲染天数
-//       if (second > 86400) {
-//         document.querySelector('#newYear .newYear-time').innerHTML = `<span class="day">${Math.ceil(second / 86400)}<span class="unit">天</span></span>`
-//       } else {
-//         // 小于一天则使用时分秒计时。
-//         let h = nol(parseInt(second / 3600));
-//         second %= 3600;
-//         let m = nol(parseInt(second / 60));
-//         second %= 60;
-//         let s = nol(second);
-//         document.querySelector('#newYear .newYear-time').innerHTML = `<span class="time">${h}:${m}:${s}</span></span>`;
-//         // 计时
-//         newYearTimer = setTimeout(time, 1000);
-//       }
-//     }
-//   }
-
-//   // 元宝飘落
-//   jQuery(document).ready(function ($) {
-//     $('#newYear').wpSuperSnow({
-//       flakes: ['https://tuchuang.voooe.cn/images/2023/01/02/yb1.webp', 'https://tuchuang.voooe.cn/images/2023/01/02/yb2.webp', 'https://tuchuang.voooe.cn/images/2023/01/02/yb3.webp'],
-//       totalFlakes: '100',
-//       zIndex: '999999',
-//       maxSize: '30',
-//       maxDuration: '20',
-//       useFlakeTrans: false
-//     });
-//   });
-// }
-// // Pjax适配：若没有开启Pjax这里直接是newYear()即可
-// // 开了Pjax的用以下两句
-// document.addEventListener('pjax:complete', newYear);
-// document.addEventListener('DOMContentLoaded', newYear);
-
-/* 新年倒计时 end */
-
-//----------------------------------------------------------------
-
-/* 页脚计时器 start */
 var now = new Date();
 function createtime() {
-  // 当前时间
   now.setTime(now.getTime() + 1000);
-  var start = new Date("08/01/2022 00:00:00"); // 旅行者1号开始计算的时间
-  var dis = Math.trunc(23400000000 + ((now - start) / 1000) * 17); // 距离=秒数*速度 记住转换毫秒
-  var unit = (dis / 149600000).toFixed(6);  // 天文单位
-  // 网站诞生时间
+  var start = new Date("08/01/2022 00:00:00"); 
+  var dis = Math.trunc(23400000000 + ((now - start) / 1000) * 17);
+  var unit = (dis / 149600000).toFixed(6); 
   var grt = new Date("11/29/2024 00:00:00");
   var days = (now - grt) / 1e3 / 60 / 60 / 24,
     dnum = Math.floor(days),
@@ -2809,17 +2506,10 @@ function createtime() {
     document.getElementById("workboard") &&
     (document.getElementById("workboard").innerHTML = currentTimeHtml);
 }
-// 设置重复执行函数，周期1000ms
 setInterval(() => {
   createtime();
 }, 1000);
 
-/*页脚计时器 end */
-
-//----------------------------------------------------------------
-
-
-/* fps检测 start */
 if (window.localStorage.getItem("fpson") == undefined || window.localStorage.getItem("fpson") == "1") {
   var rAF = function () {
     return (
@@ -2840,7 +2530,6 @@ if (window.localStorage.getItem("fpson") == undefined || window.localStorage.get
     var fps = Math.round(1000 / fs);
 
     lastFameTime = now;
-    // 不置 0，在动画的开头及结尾记录此值的差值算出 FPS
     allFrameCount++;
     frame++;
 
@@ -2871,16 +2560,8 @@ if (window.localStorage.getItem("fpson") == undefined || window.localStorage.get
 } else {
   document.getElementById("fps").style = "display:none!important"
 }
-/* fps检测 end */
-
-//----------------------------------------------------------------
-
-/* 美化模块 start */
-
-// 更新版本需要每个用户都恢复一次默认设置
 if (localStorage.getItem("reset_4") == undefined) {
   localStorage.setItem("reset_4", "1");
-  // 清空之前的标记值
   for (var i = 1; i <= 3; i++) {
     localStorage.removeItem("reset_" + i);
   }
@@ -2902,7 +2583,6 @@ if (localStorage.getItem("reset_4") == undefined) {
   }, 1500);
 }
 
-// 清除localStorage配置项
 function clearItem() {
   localStorage.removeItem('blogbg');
   localStorage.removeItem('universe');
@@ -2918,8 +2598,6 @@ function clearItem() {
   localStorage.removeItem('snow');
 }
 
-
-// 设置字体
 if (localStorage.getItem("font") == undefined) {
   localStorage.setItem("font", "LXGW");
 }
@@ -2937,7 +2615,6 @@ function setFont(n) {
   try { setFontBorder(); } catch (err) { };
 }
 
-// 设置字体选择框边界
 function setFontBorder() {
   var curFont = localStorage.getItem("font");
   var swfId = "swf_" + curFont;
@@ -2947,8 +2624,6 @@ function setFontBorder() {
   });
 }
 
-
-// 设置主题色
 if (localStorage.getItem("themeColor") == undefined) {
   localStorage.setItem("themeColor", "green");
 }
@@ -2956,18 +2631,14 @@ setColor(localStorage.getItem("themeColor"));
 function setColor(c) {
   document.getElementById("themeColor").innerText = `:root{--theme-color:` + map.get(c) + ` !important}`;
   localStorage.setItem("themeColor", c);
-  // 刷新鼠标颜色
   CURSOR.refresh();
-  // 设置一个带有透明度的主题色，用于菜单栏的悬浮颜色
+
   var theme_color = map.get(c);
   var trans_theme_color = "rgba" + theme_color.substring(3, theme_color.length - 1) + ", 0.7)";
   var high_trans_color = "rgba" + theme_color.substring(3, theme_color.length - 1) + ", 0.5)";
   document.documentElement.style.setProperty("--text-bg-hover", trans_theme_color);
   document.documentElement.style.setProperty("--high-trans-color", high_trans_color);
 }
-
-
-// 星空背景开关
 if (localStorage.getItem("universe") == undefined) {
   localStorage.setItem("universe", "block");
 }
@@ -2984,7 +2655,6 @@ function setUniverse() {
   }
 }
 
-// 雪花开关
 if (localStorage.getItem("snow") == undefined) {
   localStorage.setItem("snow", "block");
 }
@@ -2999,8 +2669,6 @@ function setSnow() {
   }
 }
 
-
-// 帧率监测开关
 if (localStorage.getItem("fpson") == undefined) {
   localStorage.setItem("fpson", "1");
 }
@@ -3013,12 +2681,10 @@ function fpssw() {
   setTimeout(reload, 600);
 }
 
-// 刷新窗口
 function reload() {
   window.location.reload();
 }
 
-// 侧边栏开关
 if (localStorage.getItem("rs") == undefined) {
   localStorage.setItem("rs", "block");
 }
@@ -3028,7 +2694,6 @@ if (localStorage.getItem("rs") == "block") {
   document.getElementById("rightSide").innerText = `:root{--rightside-display: none}`;
 }
 function toggleRightside() {
-  // 先设置localStorage变量
   if (document.getElementById("rightSideSet").checked) {
     localStorage.setItem("rs", "block");
     document.getElementById("rightSide").innerText = `:root{--rightside-display: block}`;
@@ -3038,8 +2703,6 @@ function toggleRightside() {
   }
 }
 
-
-// 透明度调节滑块
 if (localStorage.getItem("transNum") == undefined) {
   localStorage.setItem("transNum", 50);
 }
@@ -3053,17 +2716,15 @@ function setTrans() {
   target.innerHTML = "透明度 (0%-100%): " + newTransNum + "%";
   localStorage.setItem("transNum", newTransNum);
   curTransMini = newTransNum * 0.95;
-  curTransNum = newTransNum;  // 更新当前透明度
+  curTransNum = newTransNum;
   document.querySelector('#rang_trans').style.width = curTransMini + "%";
   document.getElementById("transPercent").innerText = `:root{--trans-light: rgba(253, 253, 253, ${newTransNum}%) !important; --trans-dark: rgba(25, 25, 25, ${newTransNum}%) !important} `;
 };
 
-
-// 模糊度调节滑块
 if (localStorage.getItem("blurRad") == undefined) {
   localStorage.setItem("blurRad", 20);
 }
-var curBlur = localStorage.getItem("blurRad"); // 当前模糊半径
+var curBlur = localStorage.getItem("blurRad");
 var miniBlur = curBlur * 0.95;
 document.getElementById("blurNum").innerText = `:root{--blur-num: blur(${curBlur}px) saturate(120%) !important`;
 function setBlurNum() {
@@ -3079,8 +2740,6 @@ function setBlurNum() {
   document.getElementById("blurNum").innerText = `:root{--blur-num: blur(${curBlur}px) saturate(120%) !important`;
 };
 
-
-// 模糊效果开关
 if (localStorage.getItem("blur") == undefined) {
   localStorage.setItem("blur", 1);
 }
@@ -3099,77 +2758,26 @@ function setBlur() {
   }
 }
 
-// 更换背景(原来Leonus的代码)
-// 存数据
-// name：命名 data：数据
-// function saveData(name, data) {
-//   localStorage.setItem(name, JSON.stringify({ time: Date.now(), data: data }));
-// }
-// 取数据
-// name：命名 time：过期时长,单位分钟,如传入30,即加载数据时如果超出30分钟返回0,否则返回数据
-// function loadData(name, time) {
-//   let d = JSON.parse(localStorage.getItem(name));
-//   // 过期或有错误返回 0 否则返回数据
-//   if (d) {
-//     let t = Date.now() - d.time;
-//     if (t < time * 60 * 1000 && t > -1) return d.data;
-//   }
-//   return 0;
-// }
-// 上面两个函数如果你有其他需要存取数据的功能，也可以直接使用
-// 读取背景
-// try {
-//   let data = loadData("blogbg", 1440);
-//   if (data) changeBg(data, 1);
-//   else localStorage.removeItem("blogbg");
-// } catch (error) {
-//   localStorage.removeItem("blogbg");
-// }
-// 切换背景函数
-// 此处的flag是为了每次读取时都重新存储一次,导致过期时间不稳定
-// 如果flag为0则存储,即设置背景. 为1则不存储,即每次加载自动读取背景.
-// function changeBg(s, flag) {
-//   let bg = document.getElementById("web_bg");
-//   if (s.charAt(0) == "#") {
-//     bg.style.backgroundColor = s;
-//     bg.style.backgroundImage = "none";
-//   } else {
-//     bg.style.backgroundImage = s
-//   };
-//   if (!flag) {
-//     saveData("blogbg", s);
-//   }
-// }
-
-// 切换自定义颜色
 var defineColor = localStorage.getItem("blogbg") && localStorage.getItem("blogbg").charAt(0) == '#' ? localStorage.getItem("blogbg") : '#F4D88A';
 function changeBgColor() {
   changeBg(document.querySelector("#define_colors").value);
 }
 
-// 必应每日壁纸API
 let bingDayBg = screen.width <= 768 ? "url(https://bing.img.run/m.php)" : "url(https://bing.img.run/1920x1080.php)";
-// 必应历史壁纸API
 let bingHistoryBg = screen.width <= 768 ? "url(https://bing.img.run/rand_m.php)" : "url(https://bing.img.run/rand.php)";
-// EEE.DOG
+
 let EEEDog = "url(https://api.yimian.xyz/img?type=moe&size=1920x1080)";
-// 随机美图cdn.seovx.com
+
 let seovx = "url(https://cdn.seovx.com/?mom=302)";
-// picsum随机
+
 let picsum = "url(https://picsum.photos/1920/1080.webp)";
-// 小歪二次元
-// let waiDongman = "url(https://api.ixiaowai.cn/api/api.php)";
-//  小歪高清壁纸
+
 let waiBizhi = "url(https://api.ixiaowai.cn/gqapi/gqapi.php)";
-// 博天随机
+
 let btstu = "url(http://api.btstu.cn/sjbz/?lx=suiji)";
-// tuapi 动漫
-// let tuapi = "url(https://tuapi.eees.cc/api.php?category=dongman)";
-// unsplash随机 https://source.unsplash.com/random/1920x1080/daily (weekly)
+
 let unsplash = "url(https://source.unsplash.com/random/1920x1080/)";
 
-
-// 更换背景(自己的代码)
 if (localStorage.getItem("blogbg") != undefined) {
   setBg(localStorage.getItem("blogbg"));
 } else {
@@ -3180,14 +2788,13 @@ if (localStorage.getItem("blogbg") != undefined) {
     --mobilenight-bg: url(/assets/cover/phone-cover1.jpg);
   }`;
 }
-// 切换背景主函数
 function changeBg(s) {
-  // 自定义颜色框
+
   defineColor = s.charAt(0) == "#" ? s : '#F4D88A';
   setBg(s);
   localStorage.setItem("blogbg", s);
 }
-// 设置背景属性
+
 function setBg(s) {
   document.getElementById("defineBg").innerText = `:root{
     --default-bg: ${s};
@@ -3197,17 +2804,14 @@ function setBg(s) {
   }`;
 }
 
-// 切换链接对应的背景(加入了链接检验与防抖)
 function getPicture() {
   debounce(getPicture_, 300);
 }
 
 function getPicture_() {
   checkImgExists(document.getElementById("pic-link").value).then(() => {
-    // 有效的图片链接
     var link = "url(" + document.getElementById("pic-link").value + ")";
     changeBg(link);
-    // 提示切换成功
     new Vue({
       data: function () {
         this.$notify({
@@ -3222,7 +2826,6 @@ function getPicture_() {
       }
     })
   }).catch(() => {
-    // 无效的图片链接，提示无效
     new Vue({
       data: function () {
         this.$notify({
@@ -3238,7 +2841,6 @@ function getPicture_() {
     })
   })
 }
-// 判断图片链接是否可用
 function checkImgExists(imgurl) {
   return new Promise(function (resolve, reject) {
     var ImgObj = new Image();
@@ -3252,11 +2854,9 @@ function checkImgExists(imgurl) {
   })
 }
 
-// 黑夜霓虹灯开关
 if (localStorage.getItem("light") == undefined) {
   localStorage.setItem("light", "true");
 }
-// 这里要适配Pjax
 document.addEventListener('pjax:complete', function () {
   changeLight(localStorage.getItem("light") == "true" ? true : false)
 });
@@ -3272,7 +2872,6 @@ function setLight() {
     localStorage.setItem("light", "false");
   }
 }
-// 更换霓虹灯状态
 function changeLight(flag) {
   if (document.getElementById("site-name"))
     document.getElementById("site-name").style.animation = flag ? "light_15px 10s linear infinite" : "none";
@@ -3286,31 +2885,6 @@ function changeLight(flag) {
 }
 
 
-
-// 解决开启Pjax的问题
-// function whenDOMReady() {
-//   try {
-//     let data = loadData('blogbg', 1440)
-//     if (data) changeBg_noWindow(data, 0)
-//     else localStorage.removeItem('blogbg');
-//   } catch (error) { localStorage.removeItem('blogbg'); }
-// }
-// whenDOMReady()
-// document.addEventListener("pjax:success", whenDOMReady)
-
-// 无弹窗提醒更换背景
-// function changeBg_noWindow(s, flag) {
-//   let bg = document.getElementById("web_bg");
-//   if (s.charAt(0) == "#") {
-//     bg.style.backgroundColor = s;
-//     bg.style.backgroundImage = "none";
-//   } else bg.style.backgroundImage = s;
-//   if (!flag) {
-//     saveData("blogbg", s);
-//   }
-// }
-
-// 创建窗口
 var winbox = "";
 
 function createWinbox() {
@@ -3336,7 +2910,6 @@ function createWinbox() {
   winResize();
   window.addEventListener("resize", winResize);
 
-  // 每一类我放了一个演示，直接往下复制粘贴 a标签 就可以，需要注意的是 函数里面的链接 冒号前面需要添加反斜杠\进行转义
   winbox.body.innerHTML = `
 <div class="settings" style="display: block;">
 <div id="article-container" style="padding:12px;">
@@ -3478,7 +3051,6 @@ function createWinbox() {
 
 `;
 
-  // 打开小窗时候初始化
   $("#" + localStorage.getItem("themeColor")).attr("checked", true);
   if (localStorage.getItem("blur") == 1) {
     document.getElementById("blur").checked = true;
@@ -3513,19 +3085,16 @@ function createWinbox() {
   }
 }
 
-// 恢复默认背景
 function resetBg() {
   localStorage.removeItem('blogbg');
   reload();
 }
 
-// 恢复默认设置并刷新页面
 function reset() {
   clearItem();
   reload();
 }
 
-// 适应窗口大小
 function winResize() {
   try {
     var offsetWid = document.documentElement.clientWidth;
@@ -3539,7 +3108,6 @@ function winResize() {
   }
 }
 
-// 切换状态，窗口已创建则控制窗口显示和隐藏，没窗口则创建窗口
 function toggleWinbox() {
   if (document.querySelector("#meihuaBox")) {
     winbox.toggleClass("hide");
@@ -3547,5 +3115,3 @@ function toggleWinbox() {
     createWinbox();
   };
 }
-
-/* 美化模块 end */

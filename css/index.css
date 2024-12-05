@@ -6382,7 +6382,7 @@ blockquote.pullquote.right {
 .read-mode #article-container .note .note-icon {
   color: var(--font-color);
 }
-/* root伪类指定全局颜色 */
+
 :root {
   --blue-custom: #5ea6e5;
   --loading-color: rgba(207, 246, 247, 0.92);
@@ -6402,15 +6402,10 @@ blockquote.pullquote.right {
   --btn-bg: var(--theme-color) !important;
   --scrollbar-color: var(--theme-color) !important;
   --border-style: 1px solid rgba(169, 169, 169, 0.7);
-  /* 代码框行数背景色 */
   --hlnumber-bg: #282c34;
-  /* 代码框顶部背景色 */
   --hltools-bg: #1c1c1c;
-  /* 代码框背景色 */
   --hl-bg: #282c34;
 }
-
-/* 滚动条样式 */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -6445,7 +6440,6 @@ blockquote.pullquote.right {
   background-color: var(--theme-color) !important;
 }
 
-/* 代码框底部滚动条 */
 #article-container figure.highlight > ::-webkit-scrollbar-thumb {
   background-color: #35393f !important;
   background-image: -webkit-linear-gradient(
@@ -6461,7 +6455,6 @@ blockquote.pullquote.right {
   border-radius: 2em !important;
 }
 
-/* 字体引入 */
 @font-face {
   font-family: YSHST;
   src: url(https://data-static.netdun.net/Fomalhaut/fonts/优设好身体.woff2);
@@ -6504,7 +6497,6 @@ blockquote.pullquote.right {
   font-display: swap;
 }
 
-/* 特定部件字体调用 */
 div#menus {
   font-weight: bold !important;
 }
@@ -6531,13 +6523,11 @@ h1.post-title {
   color: #f7c768;
 }
 
-/* 解决artitalk的图标问题 */
 #uploadSource > svg {
   width: 1.19em;
   height: 1.5em;
 }
 
-/* 滚动显示的标题居中 */
 center#name-container {
   position: absolute !important;
   width: fit-content !important;
@@ -6551,14 +6541,7 @@ center#name-container {
   }
 }
 
-/* 去掉蓝色条 */
-/* #nav *::after{
-    background-color: transparent!important;
-} */
-
-/* 一级菜单居中 */
 #nav .menus_items {
-  /* 这个带不带都可以，本来就是inline */
   display: inline;
   position: absolute !important;
   width: max-content !important;
@@ -6568,11 +6551,9 @@ center#name-container {
 #nav .menus_items .menus_item {
   padding: 0 0 0 8px !important;
 }
-/* 子菜单横向展示 */
 #nav .menus_items .menus_item:hover .menus_item_child {
   display: flex !important;
 }
-/* 这里的2是代表导航栏的第二个元素，即有子菜单的元素，可以按自己需求修改 */
 .menus_items .menus_item:nth-child(2) .menus_item_child {
   left: -95px;
 }
@@ -6592,17 +6573,10 @@ center#name-container {
   left: -105px;
 }
 
-/*top-img黑色透明玻璃效果移除，不建议加，除非你执着于完全一图流或者背景图对比色明显 */
-/* #page-header:not(.not-top-img):before {
-  background-color: transparent !important;
-} */
-
-/* 置顶滚动圆角 */
 .blog-slider__img img {
   border-radius: 20px !important;
 }
 
-/* 首页文章卡片 */
 #recent-posts > .recent-post-item {
   background: var(--trans-light);
   backdrop-filter: var(--backdrop-filter);
@@ -6610,7 +6584,6 @@ center#name-container {
   border: var(--border-style);
 }
 
-/* 首页侧栏卡片 */
 #aside-content .card-widget {
   background: var(--trans-light);
   backdrop-filter: var(--backdrop-filter);
@@ -6619,7 +6592,6 @@ center#name-container {
   padding: 20px;
 }
 
-/* 文章页、归档页、普通页面 */
 div#post,
 div#page,
 div#archive {
@@ -6629,7 +6601,6 @@ div#archive {
   border-radius: 20px;
 }
 
-/* 导航栏颜色 */
 #page-header.nav-fixed #nav {
   background: linear-gradient(60deg, #ffd7e4 0, #c8f1ff 93%);
   opacity: 0.95;
@@ -6639,7 +6610,6 @@ div#archive {
   background: rgba(0, 0, 0, 0.95) !important;
 }
 
-/* 夜间模式遮罩 */
 [data-theme="dark"] #recent-posts > .recent-post-item,
 [data-theme="dark"] #aside-content .card-widget,
 [data-theme="dark"] div#post,
@@ -6648,27 +6618,24 @@ div#archive {
   background: var(--trans-dark);
 }
 
-/* 白天模式头图与页脚遮罩 */
 [data-theme="light"] #page-header:before,
 [data-theme="light"] #footer::before {
   background-color: rgba(0, 0, 0, 0.18) !important;
   z-index: -3;
 }
 
-/* 头图隐藏 */
 #page-header {
   background: transparent !important;
 }
-/* 夜间模式页脚遮罩隐藏 */
+
 [data-theme="dark"] #footer::before {
   background: transparent !important;
 }
-/* 夜间模式页脚头部遮罩隐藏 */
+
 [data-theme="dark"] #page-header::before {
   background: transparent !important;
 }
 
-/* 阅读模式 */
 .read-mode #aside-content .card-widget {
   background: rgba(158, 204, 171, 0.5) !important;
 }
@@ -6676,7 +6643,6 @@ div#archive {
   background: rgba(158, 204, 171, 0.5) !important;
 }
 
-/* 夜间模式下的阅读模式 */
 [data-theme="dark"] .read-mode #aside-content .card-widget {
   background: rgba(25, 25, 25, 0.9) !important;
   color: #ffffff;
@@ -6686,7 +6652,6 @@ div#archive {
   color: #ffffff;
 }
 
-/* 评论框  */
 .vwrap {
   box-shadow: 2px 2px 5px #bbb;
   background: rgba(255, 255, 255, 0.3);
@@ -6695,7 +6660,6 @@ div#archive {
   margin: 30px 0px 30px 0px;
 }
 
-/* 设置评论框 */
 .vcard {
   box-shadow: 2px 2px 5px #bbb;
   background: rgba(255, 255, 255, 0.3);
@@ -6704,7 +6668,6 @@ div#archive {
   margin: 30px 0px 0px 0px;
 }
 
-/* 超链接样式 参考heo */
 #article-container
   a:not(.fancybox, .imgbox, .swf, .box, .pimgbox, .magnet_link) {
   text-decoration: none;
@@ -6735,7 +6698,6 @@ div#archive {
   display: inline;
 }
 
-/* 代码框主题 */
 #article-container figure.highlight {
   border-radius: 10px;
 }
@@ -6743,7 +6705,6 @@ div#archive {
   border: 0.5px solid #404040;
 }
 
-/* 鼠标样式 */
 #cursor {
   position: fixed;
   width: 16px;
@@ -6779,18 +6740,15 @@ div#archive {
   -o-transform: scale(0.5);
 }
 
-/* twikoo评论美化 */
-/* 自定义twikoo评论输入框高度 */
 #twikoo .el-textarea textarea {
   min-height: 120px !important;
   background-size: 90px;
 }
 
-/* 自定义表情优化 */
 #twikoo .OwO-body {
   max-width: 100% !important;
 }
-/* 选择某个框 #twikoo .OwO .OwO-body .OwO-items:nth-child(1) */
+
 #twikoo .OwO .OwO-body .OwO-items {
   max-height: 250px !important;
 }
@@ -6827,7 +6785,6 @@ div#archive {
   display: block !important;
 }
 
-/* 手机端适配 */
 @media screen and (max-width: 768px) {
   .tk-comment .vemoji[alt|="Menhera"],
   .tk-comment .tk-owo-emotion[alt*="Menhera"],
@@ -6859,7 +6816,6 @@ div#archive {
   }
 }
 
-/* 右下角闭眼 */
 .el-textarea__inner {
   background-image: url(/assets/open.webp) !important;
 }
@@ -6867,12 +6823,11 @@ div#archive {
   background-image: url(/assets/close.webp) !important;
 }
 
-/* 调整楼中楼样式 ，整体左移，贴合气泡化效果 */
 .tk-replies {
   left: -70px;
   width: calc(100% + 70px);
 }
-/* 头像宽度调整 rem单位与全局字体大小挂钩，需配合自己情况调整大小以保证头像显示完整*/
+
 .tk-replies .tk-avatar {
   width: 2.5rem !important;
   height: 2.5rem !important;
@@ -6881,21 +6836,21 @@ div#archive {
   width: 2.5rem !important;
   height: 2.5rem !important;
 }
-/* 回复框左移，避免窄屏时出框 */
+
 .tk-comments-container .tk-submit {
   position: relative;
   left: -70px;
 }
-/* 评论块气泡化修改 */
+
 .tk-content {
   /* linear-gradient(to bottom, #2193b0, #6dd5ed); */
   background: linear-gradient(
     to top,
     #4568dc,
     #b06ab3
-  ); /*默认模式访客气泡配色*/
+  ); 
   padding: 10px;
-  color: #fff; /*默认模式访客气泡字体配色*/
+  color: #fff; 
   border-radius: 10px;
   font-size: 16px !important;
   width: fit-content;
@@ -6904,17 +6859,17 @@ div#archive {
   overflow: visible !important;
   max-height: none !important;
 }
-/* 修复图片出框 */
+
 .tk-content img {
   max-width: 100% !important;
 }
-/* 修复过长文本出框 */
+
 .tk-content pre {
   white-space: pre-wrap;
   word-wrap: break-word;
 }
 .tk-content a {
-  color: #eeecaa; /*默认模式超链接配色*/
+  color: #eeecaa;
 }
 .tk-content::before {
   content: "";
@@ -6925,7 +6880,7 @@ div#archive {
   left: -13px;
   border-top: 2px solid transparent;
   border-bottom: 20px solid transparent;
-  border-right: 15px solid transparent; /*默认模式访客气泡小三角配色*/
+  border-right: 15px solid transparent; 
   border-left: 0px solid transparent;
 }
 .tk-master .tk-content {
@@ -6933,8 +6888,8 @@ div#archive {
     to top,
     #43cea2,
     #185a9d
-  ); /*默认模式博主气泡配色*/
-  color: #fff; /*默认模式博主气泡字体配色*/
+  ); 
+  color: #fff; 
   width: fit-content;
   max-width: 100%;
 }
@@ -6950,7 +6905,7 @@ div#archive {
   left: -13px;
   border-top: 2px solid transparent;
   border-bottom: 20px solid transparent;
-  border-right: 15px solid transparent; /*默认模式博主气泡小三角配色*/
+  border-right: 15px solid transparent; 
   border-left: 0px solid transparent;
 }
 .tk-row[data-v-d82ce9a0] {
@@ -6962,7 +6917,6 @@ div#archive {
   margin-top: 10px;
 }
 
-/* 夜间模式配色，具体比照上方默认模式class */
 [data-theme="dark"] .tk-content {
   background: #000;
   color: #fff;
@@ -6986,9 +6940,9 @@ div#archive {
   border-right: 15px solid #000;
   border-left: 0px solid transparent;
 }
-/* 自适应内容 */
+
 @media screen and (min-width: 1024px) {
-  /* 设置宽度上限，避免挤压博主头像 */
+
   .tk-content {
     max-width: 75%;
     width: fit-content;
@@ -7015,7 +6969,7 @@ div#archive {
     border-right: 0px solid transparent;
   }
 }
-/* 设备名称常态隐藏，悬停评论时显示 */
+
 .tk-extras {
   opacity: 0;
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
@@ -7082,8 +7036,6 @@ div#archive {
   }
 }
 
-/* 文章页H1-H6图标样式效果 */
-/* 控制风车转动速度 */
 h1::before,
 h2::before,
 h3::before,
@@ -7093,7 +7045,7 @@ h6::before {
   -webkit-animation: ccc 4s linear infinite;
   animation: ccc 4s linear infinite;
 }
-/* 控制风车转动方向 -1turn 为逆时针转动，1turn 为顺时针转动，相同数字部分记得统一修改 */
+
 @-webkit-keyframes ccc {
   0% {
     -webkit-transform: rotate(0deg);
@@ -7114,7 +7066,7 @@ h6::before {
     transform: rotate(-1turn);
   }
 }
-/* 设置风车颜色 */
+
 #content-inner.layout h1::before {
   color: #ef50a8;
   margin-left: -1.55rem;
@@ -7151,7 +7103,7 @@ h6::before {
   font-size: 0.66rem;
   margin-top: 0rem;
 }
-/* s设置风车hover动效 */
+
 #content-inner.layout h1:hover,
 #content-inner.layout h2:hover,
 #content-inner.layout h3:hover,
@@ -7171,7 +7123,6 @@ h6::before {
   animation: ccc 6s linear infinite;
 }
 
-/*哔哩哔哩视频适配*/
 .aspect-ratio {
   position: relative;
   width: 90%;
@@ -7188,8 +7139,6 @@ h6::before {
   top: 0;
 }
 
-/* 图片模糊渐变清晰 */
-/*3s为加载动画的时间，1为加载动画的次数，ease-in-out为动画效果*/
 #page-header,
 #web_bg {
   -webkit-animation: imgblur 1s 1 ease-in-out;
@@ -7203,7 +7152,7 @@ h6::before {
     filter: blur(0px);
   }
 }
-/*适配使用-webkit内核的浏览器 */
+
 @-webkit-keyframes imgblur {
   0% {
     -webkit-filter: blur(5px);
@@ -7213,18 +7162,15 @@ h6::before {
   }
 }
 
-/* 全局宽度 参考:https://yisous.xyz/posts/d1fc759/ */
 .layout {
   max-width: 1400px;
 }
 
-/* 侧边卡片栏宽度 */
 .aside-content {
   max-width: 318px;
   min-width: 300px;
 }
 
-/* 平板尺寸自适应(不启用侧边栏宽度限制) */
 @media screen and (max-width: 900px) {
   .aside-content {
     max-width: none !important;
@@ -7232,7 +7178,6 @@ h6::before {
   }
 }
 
-/* 除了首页以外其他页面隐藏卡片，并采用宽屏显示 */
 #archive,
 #page,
 #category,
@@ -7243,7 +7188,6 @@ h6::before {
   display: none;
 }
 
-/* 友链一行显示更多 */
 .site-card {
   width: calc(100% / 5 - 16px) !important;
   border-radius: 18px !important;
@@ -7252,7 +7196,7 @@ h6::before {
   height: 165px !important;
   border-radius: 18px !important;
 }
-/* 适应宽度不同的设备 */
+
 @media screen and (max-width: 1200px) {
   .site-card {
     width: calc(100% / 4 - 16px) !important;
@@ -7269,18 +7213,16 @@ h6::before {
   }
 }
 
-/* Gallery一行显示更多 */
 .gallery-group {
   width: calc(33% - 8px) !important;
 }
-/* 适应宽度不同的设备 */
+
 @media screen and (max-width: 1000px) {
   .gallery-group {
     width: calc(50% - 8px) !important;
   }
 }
 
-/* 标题增强 */
 #site-name::before {
   opacity: 0;
   background-color: var(--theme-color) !important;
@@ -7304,8 +7246,8 @@ h6::before {
   font-family: "Font Awesome 6 Free";
   text-align: center;
   color: white;
-  line-height: 34px; /*如果有溢出或者垂直不居中的现象微调一下这个参数*/
-  font-size: 18px; /*根据个人喜好*/
+  line-height: 34px; 
+  font-size: 18px;
 }
 #site-name:hover::before {
   opacity: 1;
@@ -7313,11 +7255,9 @@ h6::before {
 }
 #site-name {
   position: relative;
-  font-size: 24px; /*一定要把字体调大点，否则效果惨不忍睹！*/
+  font-size: 24px;
 }
 
-/* 阅读百分比 */
-/* 返回顶部 */
 button#go-up #percent {
   display: none;
   font-weight: bold;
@@ -7329,7 +7269,6 @@ button#go-up span {
   margin-right: -1px;
 }
 
-/* 鼠标滑动到按钮上时显示返回顶部图标 */
 button#go-up:hover i {
   display: block !important;
 }
@@ -7349,7 +7288,6 @@ button#go-up:hover #percent {
   border-radius: 6px;
 }
 
-/* 评论表情放大显示 */
 #owo-big {
   position: fixed;
   align-items: center;
@@ -7371,7 +7309,6 @@ button#go-up:hover #percent {
   width: 100%;
 }
 
-/* 动画效果代码由 Heo：https://blog.zhheo.com/ 提供 */
 @keyframes owoIn {
   0% {
     transform: translate(0, -95%);
@@ -7383,8 +7320,6 @@ button#go-up:hover #percent {
   }
 }
 
-/* 评论区输入提示 */
-/* 设置文字内容 :nth-child(1)的作用是选择第几个 */
 .el-input.el-input--small.el-input-group.el-input-group--prepend:nth-child(
     1
   ):before {
@@ -7403,48 +7338,43 @@ button#go-up:hover #percent {
   content: "可以通过昵称访问您的网站🔗";
 }
 
-/* 当用户点击输入框时显示 */
 .el-input.el-input--small.el-input-group.el-input-group--prepend:focus-within::before,
 .el-input.el-input--small.el-input-group.el-input-group--prepend:focus-within::after {
   display: block;
 }
 
-/* 主内容区 */
 .el-input.el-input--small.el-input-group.el-input-group--prepend::before {
-  /* 先隐藏起来 */
+
   display: none;
-  /* 绝对定位 */
+
   position: absolute;
-  /* 向上移动60像素 */
+
   top: -60px;
-  /* 文字强制不换行，防止left:50%导致的文字换行 */
+
   white-space: nowrap;
-  /* 圆角 */
+
   border-radius: 10px;
-  /* 距离左边50% */
+
   left: 50%;
-  /* 然后再向左边挪动自身的一半，即可实现居中 */
+
   transform: translate(-50%);
-  /* 填充 */
+
   padding: 14px 18px;
   background: #444;
   color: #fff;
 }
 
-/* 小角标 */
 .el-input.el-input--small.el-input-group.el-input-group--prepend::after {
   display: none;
   content: "";
   position: absolute;
-  /* 内容大小（宽高）为0且边框大小不为0的情况下，每一条边（4个边）都是一个三角形，组成一个正方形。
-    我们先将所有边框透明，再给其中的一条边添加颜色就可以实现小三角图标 */
+
   border: 12px solid transparent;
   border-top-color: #444;
   left: 50%;
   transform: translate(-50%, -48px);
 }
 
-/* 美化模块 */
 .winbox {
   border-radius: 12px;
   overflow: hidden;
@@ -7505,7 +7435,7 @@ button#go-up:hover #percent {
 }
 
 @media screen and (max-width: 768px) {
-  /* 背景 */
+
   .pimgbox,
   .imgbox,
   .box {
@@ -7516,7 +7446,6 @@ button#go-up:hover #percent {
     height: 205px;
   }
 
-  /* 2.0新增内容 */
   .wb-min {
     display: none;
   }
@@ -7525,7 +7454,6 @@ button#go-up:hover #percent {
   }
 }
 
-/* 应用监控夜间模式适配 id要# class是直接来就行*/
 [data-theme="dark"] #statistic {
   background: #2b2929;
 }
@@ -7581,7 +7509,6 @@ button#go-up:hover #percent {
   }
 } */
 
-/* 个人信息卡片背景图 */
 [data-theme="light"] #aside-content > .card-widget.card-info {
   background-image: url(https://tuchuang.voooe.cn/images/2023/02/28/springBg.png);
   background-repeat: no-repeat;
@@ -7594,7 +7521,6 @@ button#go-up:hover #percent {
   background-attachment: inherit;
   background-size: 100%;
 }
-/* 头像呼吸灯 */
 [data-theme="light"] .avatar-img {
   animation: huxi_light 4s ease-in-out infinite;
 }
@@ -7624,7 +7550,6 @@ button#go-up:hover #percent {
   }
 }
 
-/* 个人信息Follow me按钮 */
 #aside-content > .card-widget.card-info > #card-info-btn {
   background-color: var(--theme-color) !important;
   border-radius: 30px;
@@ -7634,12 +7559,10 @@ button#go-up:hover #percent {
   background-color: var(--text-bg-hover) !important;
 }
 
-/* Aplayer字体 */
 #article-container .aplayer {
   font-family: var(--global-font) !important;
 }
 
-/* 背景图片链接输入框placeholder*/
 input#pic-link::-webkit-input-placeholder {
   color: rgb(150, 150, 150);
 }
@@ -7653,19 +7576,16 @@ input#pic-link {
   outline: 1px solid var(--theme-color) !important;
 }
 
-/* heo 加载动画头像 */
 .loading-img {
   background: url(/assets/tx.png)
     no-repeat center center;
   background-size: cover;
 }
 
-/* heo 夜间模式加载背景色 */
 [data-theme="dark"] {
   --loading-color: rgba(25, 25, 25, 0.92) !important;
 }
 
-/* 顶栏常驻 */
 .nav-fixed #nav {
   transform: translateY(58px) !important;
   -webkit-transform: translateY(58px) !important;
@@ -7686,8 +7606,6 @@ input#pic-link {
     padding: 0 28px;
   }
 }
-
-/* 导航栏显示标题 */
 #page-name::before {
   font-size: 18px;
   position: absolute;
@@ -7706,7 +7624,7 @@ input#pic-link {
   -o-transition: all 0.3s;
   opacity: 0;
   box-shadow: 0 0 3px var(--theme-color) !important;
-  line-height: 45px; /*如果垂直位置不居中可以微调此值，也可以删了*/
+  line-height: 45px; 
 }
 #page-name:hover:before {
   opacity: 1;
@@ -7723,10 +7641,9 @@ input#pic-link {
 }
 #page-name {
   position: relative;
-  padding: 10px 30px; /*如果文字间隔不合理可以微调修改，第二个是水平方向的padding，第一个是垂直的*/
+  padding: 10px 30px; 
 }
 
-/* 调节字体显示栏目 */
 #swfs {
   display: flex;
   flex-wrap: wrap;
@@ -7746,7 +7663,6 @@ input#pic-link {
   background: var(--text-bg-hover) !important;
 }
 
-/* 主题色选择 */
 input[name="colors"] {
   margin-right: 15px;
   min-width: 1rem;
@@ -7855,7 +7771,6 @@ input[name="colors"] {
   background-color: var(--color-blackgray);
 }
 
-/* 主题色适配覆盖区域 */
 .category-lists ul li:before {
   border: 0.215em solid var(--theme-color) !important;
 }
@@ -8024,7 +7939,6 @@ a:hover {
   border: 3px solid var(--theme-color) !important;
 }
 
-/* 开关按钮 */
 .settings input[type="checkbox"] {
   width: 37px;
   height: 20px;
@@ -8083,18 +7997,15 @@ a:hover {
   margin-right: 5px;
 }
 
-/* 手机侧边菜单栏 */
 #sidebar #sidebar-menus {
   background: linear-gradient(60deg, #ffd7e4 0, #c8f1ff 93%);
   border-radius: 15px;
 }
 
-/* 手机菜单栏渐变色适配暗黑模式 */
 [data-theme="dark"] #sidebar #sidebar-menus {
   background: rgba(25, 25, 25, 0.95) !important;
 }
 
-/* 帧率检测 */
 #fps {
   position: fixed;
   right: 10px;
@@ -8114,19 +8025,16 @@ a:hover {
   border-radius: 4px;
 }
 
-/* 侧边栏 */
 div#rightside {
   display: var(--rightside-display);
   opacity: 0.98 !important;
   transform: translateX(-58px);
 }
 
-/* 标签圆角 */
 .hl-label {
   border-radius: 8px;
 }
 
-/* 透明度和模糊半径滑块 */
 input[type="range"] {
   display: block;
   -webkit-appearance: none;
@@ -8159,12 +8067,11 @@ input[type="range"]::-webkit-slider-thumb {
   border-radius: 2px 0 0 2px;
 }
 
-/* 翻页按钮居中 */
 #pagination {
   width: 100%;
   margin: auto;
 }
-/* 翻页按钮上边距 */
+
 #pagination .pagination {
   margin-top: 10px;
 }
@@ -8187,7 +8094,6 @@ li.categoryBar-list-item {
   border-radius: 20px !important;
 } */
 
-/* 置顶滚动栏电脑端样式，手机端用默认的 */
 @media screen and (min-width: 600px) {
   .blog-slider {
     height: 260px !important;
@@ -8198,7 +8104,6 @@ li.categoryBar-list-item {
   }
 }
 
-/* 自定义颜色框 */
 #define_colors::before {
   position: absolute;
   color: rgb(255, 255, 255);
@@ -8216,7 +8121,6 @@ li.categoryBar-list-item {
   padding: 0;
 }
 
-/* 顶部胶囊加载条 */
 .pace {
   -webkit-pointer-events: none;
   pointer-events: none;
@@ -8283,7 +8187,6 @@ li.categoryBar-list-item {
   }
 }
 
-/* 右键菜单 */
 #rightMenu {
   display: none;
   position: fixed;
@@ -8342,7 +8245,6 @@ li.categoryBar-list-item {
   display: none;
 }
 
-/* 页脚心跳动画 */
 #heartbeat {
   color: red;
   animation: iconAnimate 1s ease-in-out infinite;
@@ -8428,7 +8330,6 @@ li.categoryBar-list-item {
   }
 }
 
-/* 星空背景 */
 #universe {
   position: fixed;
   margin: 0;
@@ -8440,23 +8341,21 @@ li.categoryBar-list-item {
   width: 100%;
   height: 100%;
   pointer-events: none;
-  /* 星空在底层避免干扰阅读 */
+
   z-index: -2;
 }
 
-/* 星空手机模式消失 */
 @media screen and (max-width: 768px) {
   #universe {
     display: none !important;
   }
 }
 
-/* 星空白天模式消失 */
+
 [data-theme="light"] #universe {
   display: none !important;
 }
 
-/* 雪花特效 */
 [data-theme="light"] #snow {
   position: fixed;
   left: 0;
@@ -8467,23 +8366,16 @@ li.categoryBar-list-item {
   z-index: -2;
 }
 
-/* 雪花夜间模式不显示 */
 [data-theme="dark"] #snow {
   display: none !important;
 }
 
-/* 雪花手机模式不显示 */
 @media screen and (max-width: 768px) {
   #snow {
     display: none !important;
   }
 }
 
-/* 右边的小猫咪 */
-/* 滚动条，我设置的不隐藏，为了可以到达任何地方 */
-/* body::-webkit-scrollbar {
-    width: 0;
-} */
 
 .neko {
   width: 64px;
@@ -8532,7 +8424,6 @@ li.categoryBar-list-item {
   color: #333;
 }
 
-/* 小猫咪手机端消失 */
 @media screen and (max-width: 768px) {
   .neko,
   #myscoll {
@@ -8574,19 +8465,10 @@ li.categoryBar-list-item {
   }
 }
 
-/* By Fomalhaut版权大小 */
 .copyright {
   font-size: 16px;
 }
 
-/* 电子钟字体调节 */
-/* .card-clock-location,
-.card-clock-windDir,
-span.card-clock-weather {
-  font-family: var(--global-font) !important;
-} */
-
-/* 二级菜单圆角 */
 #nav .menus_items .menus_item .menus_item_child,
 #nav .menus_items .menus_item .menus_item_child li,
 #nav .menus_items .menus_item .menus_item_child li:first-child,
@@ -8594,13 +8476,11 @@ span.card-clock-weather {
   border-radius: 8px;
 }
 
-/* 右边的按钮间距 */
 #meihua-button,
 #nightmode-button {
   padding-left: 12px;
 }
 
-/* 搜索框样式 */
 #algolia-search .search-dialog .ais-SearchBox .ais-SearchBox-form input {
   border: 2px solid var(--theme-color) !important;
   border-right: 0px !important;
@@ -8614,7 +8494,6 @@ span.card-clock-weather {
   border: 0.215em solid var(--theme-color) !important;
 }
 
-/* 小冰分类分类磁铁黑夜模式适配 */
 .magnet_item {
   margin-right: 5px !important;
 }
@@ -8639,13 +8518,11 @@ span.card-clock-weather {
   border-radius: 6px;
 }
 
-/* 公告栏、微博 */
 .anno_content:hover,
 .weibo-title:hover {
   border-bottom: 2px solid var(--theme-color) !important;
 }
 
-/* 关于页面区块 */
 .about_page {
   background: #fafafa;
   border-radius: 20px;
@@ -8656,11 +8533,10 @@ span.card-clock-weather {
 [data-theme="dark"] .about_page {
   background: #252525;
 }
-/* 首页文章信息彩色图标右边相隔5px */
+
 .post-ui-icon {
   margin-right: 2px;
 }
-/* 欢迎信息 */
 #welcome-info {
   background: linear-gradient(45deg, #b9f4f3, #e3fbf9);
   border-radius: 18px;
@@ -8670,8 +8546,6 @@ span.card-clock-weather {
   background: #212121;
 }
 
-
-/* 霓虹灯颜色渐变 */
 #site-name,
 #site-title,
 #site-subtitle,
@@ -8681,8 +8555,6 @@ span.card-clock-weather {
   transition: text-shadow 1s linear !important;
 }
 
-/* tzy页脚样式 */
-/* 自定义底部  start */
 #ft {
   max-width: 1200px;
   margin: 0 auto 12px;
@@ -8842,31 +8714,25 @@ span.card-clock-weather {
 #footer-wrap {
   padding: 20px 20px;
 }
-/* 自定义底部  End */
 
-/* 手机菜单栏选中圆角 */
 #sidebar #sidebar-menus .menus_items .site-page:hover {
   border-radius: 10px;
 }
 
-/* 代码框数字行 */
 #article-container figure.highlight .gutter pre {
   border-right: 0.5px solid #808080;
 }
 
-/* 右侧栏宽度 */
 @media screen and (min-width: 900px) {
   #aside-content {
     padding: 0 5px 0 5px;
   }
 }
 
-/* 右边栏设置齿轮转速 */
 i.fas.fa-cog.right_side {
   animation: fa-spin 5s linear infinite;
 }
 
-/* 文章封面箭头动画 */
 .recent-post-arrow {
   animation: ddd 3s linear infinite;
 }
@@ -8895,7 +8761,6 @@ i.fas.fa-cog.right_side {
   }
 }
 
-/* 下一篇文章的圆角 */
 .relatedPosts > .relatedPosts-list > div,
 #pagination.pagination-post,
 .postImgHover img,
@@ -8905,7 +8770,6 @@ i.fas.fa-cog.right_side {
   border-radius: 12px;
 }
 
-/* 个人信息状态(参考鱼的) */
 .card-info-avatar .author-status-box {
   position: absolute;
   bottom: 0;
@@ -8956,7 +8820,6 @@ i.fas.fa-cog.right_side {
   position: relative;
 }
 
-/* 波浪css */
 .main-hero-waves-area {
   width: 100%;
   position: absolute;
@@ -8968,7 +8831,6 @@ i.fas.fa-cog.right_side {
   width: 100%;
   height: 5rem;
 }
-/* Animation */
 
 .parallax > use {
   animation: move-forever 25s cubic-bezier(0.55, 0.5, 0.45, 0.5) infinite;
@@ -8993,7 +8855,6 @@ i.fas.fa-cog.right_side {
   animation-duration: 20s;
   fill: #f7f9fe;
 }
-/* 黑色模式背景 */
 [data-theme="dark"] .parallax > use:nth-child(1) {
   animation-delay: -2s;
   animation-duration: 7s;
@@ -9023,44 +8884,39 @@ i.fas.fa-cog.right_side {
     transform: translate3d(85px, 0, 0);
   }
 }
-/*Shrinking for mobile*/
+
 @media (max-width: 768px) {
   .waves-area .waves-svg {
     height: 40px;
     min-height: 40px;
   }
 }
-/* 波浪黑夜模式隐藏 */
+
 [data-theme="dark"] .main-hero-waves-area {
   display: none;
 }
 
-/* 图片圆角和边框 */
 .post-content img,
 #article-container:has(.fj-gallery, #gitZone, .about_page) img {
   border-radius: 12px;
   border: 0.5px solid #80808030;
 }
 
-/* twikoo评论框聚焦边框颜色 */
 #twikoo .el-textarea textarea:focus,
 .twikoo .el-input__inner:focus {
   border-color: var(--theme-color) !important;
 }
 
-/* 友链描述 */
 .flink-desc {
   font-size: 1.1em;
   padding: 0px 0px 20px 10px;
   font-weight: bold;
 }
 
-/* 目录样式 */
 #aside-content #card-toc .toc-content {
   margin: 0 -16px 0 -25px;
 }
 
-/* diff块颜色 */
 figure.highlight pre .addition {
   color: #13dfa8;
 }
@@ -9068,7 +8924,6 @@ figure.highlight pre .deletion {
   color: #f669f6;
 }
 
-/* 新年侧边栏 */
 
 #newYear {
   color: white;
@@ -9130,7 +8985,6 @@ figure.highlight pre .deletion {
   background-color: rgba(0, 0, 0, 0.1);
 }
 
-/* 夜间模式友链文字颜色 */
 [data-theme="dark"] .site-card .info .desc {
   color: #aaa;
 }
@@ -9150,13 +9004,6 @@ figure.highlight pre .deletion {
   color: #ccc !important;
 }
 
-/* 信息卡片彩带 */
-/* .author_top:hover {
-  background: url(https://tuchuang.voooe.cn/images/2023/01/02/snow.gif);
-  background-size: cover;
-} */
-
-/* 霓虹灯css实现 light_15px 10s linear infinite */
 [data-theme="light"] #site-name,
 [data-theme="light"] #site-title,
 [data-theme="light"] #site-subtitle,
@@ -9263,7 +9110,6 @@ figure.highlight pre .deletion {
   }
 }
 
-/* 夜间模式菜单栏发光字 0 0 1px var(--theme-color) */
 [data-theme="light"] .menu_word {
   text-shadow: none !important;
 }
@@ -9271,7 +9117,6 @@ figure.highlight pre .deletion {
   text-shadow: var(--menu-shadow);
 }
 
-/* 评论按钮 */
 .el-button--primary {
   background-color: var(--theme-color) !important;
   border-color: transparent !important;
@@ -9301,7 +9146,6 @@ figure.highlight pre .deletion {
   border-radius: 8px !important;
 }
 
-/* 分割线 */
 hr {
   border: 2px dashed var(--high-trans-color) !important;
 }
@@ -9310,7 +9154,6 @@ hr:before {
   color: var(--theme-color) !important;
 }
 
-/* 版权下面标签排列 */
 #post .tag_share .post-meta__tag-list {
   display: flex;
 }
@@ -9318,7 +9161,6 @@ hr:before {
   border-radius: 20px;
 }
 
-/* 必应壁纸框 */
 #bingDayBox:hover,
 #bingHistoryBox:hover,
 #EEEDogBox:hover,
@@ -9372,7 +9214,6 @@ hr:before {
   content: "Unsplash随机壁纸";
 }
 
-/* 评论区圆角 */
 .tk-meta-input .el-input .el-input-group__prepend {
   border-bottom-left-radius: 6px;
   border-top-left-radius: 6px;
@@ -9382,7 +9223,6 @@ hr:before {
   border-top-right-radius: 6px;
 }
 
-/* Twikoo底部小字样式 */
 .tk-footer {
   font-size: 0.9em;
 }
@@ -9392,7 +9232,6 @@ hr:before {
   color: #a591e0;
 }
 
-/* Github徽标 */
 .github-badge img:hover {
   scale: 1.05;
   transition: all 0.3s ease-in-out;

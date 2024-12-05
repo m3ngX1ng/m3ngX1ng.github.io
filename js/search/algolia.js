@@ -7,7 +7,6 @@ window.addEventListener('load', () => {
     btf.animateIn(document.querySelector('#algolia-search .search-dialog'), 'titleScale 0.5s')
     setTimeout(() => { document.querySelector('#algolia-search .ais-SearchBox-input').focus() }, 100)
 
-    // shortcut: ESC
     document.addEventListener('keydown', function f (event) {
       if (event.code === 'Escape') {
         closeSearch()
@@ -81,8 +80,8 @@ window.addEventListener('load', () => {
   const searchBox = instantsearch.widgets.searchBox({
     container: '#algolia-search-input',
     showReset: false,
-    showSubmit: true, // 设为true 可以通过按钮搜索
-    searchAsYouType: false, // 新增 可以实现回车或点击按钮搜索，不会每次输入都搜索
+    showSubmit: true,
+    searchAsYouType: false, 
     placeholder: GLOBAL_CONFIG.algolia.languages.input_placeholder,
     showLoadingIndicator: true
   })
@@ -146,7 +145,7 @@ window.addEventListener('load', () => {
   })
 
 
-  search.addWidgets([configure,searchBox,hits,stats,powerBy,pagination]) // add the widgets to the instantsearch instance
+  search.addWidgets([configure,searchBox,hits,stats,powerBy,pagination]) 
 
   search.start()
 
