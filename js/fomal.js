@@ -2783,7 +2783,7 @@ if (localStorage.getItem("blogbg") != undefined) {
 } else {
   document.getElementById("defineBg").innerText = `:root{
     --default-bg: url(/assets/cover/1.png);
-    --darkmode-bg:url(/assets/cover/dark.jpg);
+    --darkmode-bg: url(/assets/cover/dark.jpg);
     --mobileday-bg: url(/assets/cover/phone-cover7.jpg);
     --mobilenight-bg: url(/assets/cover/phone-cover1.jpg);
   }`;
@@ -3038,6 +3038,13 @@ function createWinbox() {
 <details class="folding-tag" cyan><summary> 设置自定义背景 </summary>
               <div class='content'>
               <p><center><input type="text" id="pic-link" size="70%" maxlength="1000" placeholder="请输入有效的图片链接，如 https://source.fomal.cc/img/home_bg.webp"></center></p><p><center><button type="button" onclick="getPicture()" style="background:var(--theme-color);width:35%;padding: 5px 0px 7px 0px;border-radius:30px;color:white;line-height:2;">🌈切换背景🌈</button></center></p>
+              </div>
+            </details>
+
+<h3>9. 作者推荐</h3>
+<details class="folding-tag" cyan><summary> 查看作者推荐背景 </summary>
+              <div class='content'>
+              <div class="bgbox"><a href="javascript:;" rel="noopener external nofollow" class="box" style="background-image:url(/assets/cover/2.png)" class="pimgbox" onclick="changeBg('url(/assets/cover/2.png)')"></a><a href="javascript:;" rel="noopener external nofollow" class="box" style="background-image:url(/assets/cover/cover3.jpg)" class="pimgbox" onclick="changeBg('url(/assets/cover/cover3.jpg)')"></a></div>
               </div>
             </details>
 
