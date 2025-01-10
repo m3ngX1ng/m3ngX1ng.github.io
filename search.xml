@@ -279,31 +279,6 @@
     
     
     <entry>
-      <title>docker保存和打包镜像</title>
-      <link href="/posts/5721bfe4.html"/>
-      <url>/posts/5721bfe4.html</url>
-      
-        <content type="html"><![CDATA[<h2 id="docker保存和打包镜像">docker保存和打包镜像</h2><p>作用：在现在容器镜像上保存镜像进行打包，在另一台服务上使用；或现有的容器安装了一些库，配置了开发环境，需要保存下载，下次加载后直接使用。</p><h4 id="1-1-首先查看下现有容器镜像（目的是查询需要保存镜像的ID）">1.1 首先查看下现有容器镜像（目的是查询需要保存镜像的ID）</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps -a</span><br></pre></td></tr></table></figure><h4 id="1-2-接下来用commit参数进行保存镜像（精简版）">1.2 接下来用commit参数进行保存镜像（精简版）</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker commit  7ca736d99653    yolov5:v6.2</span><br></pre></td></tr></table></figure><p>其中，7ca736d99653 是需要保存镜像的ID，刚才用docker ps -a 查询到的。</p><h2 id="打包tar">打包tar</h2><p>使用save参数进行打包，格式如：docker save -o  tar文件名称     镜像REPOSITORY:TAG</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker save -o yolov5-v6.2.tar yolov5:v6.2</span><br></pre></td></tr></table></figure><p>其中yolov5:v6.2 是需要保存镜像的REPOSITORY、和TAG；也是上面保存的镜像名称。</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> CTF </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 其他姿势 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>parse_url函数</title>
       <link href="/posts/f885edb3.html"/>
       <url>/posts/f885edb3.html</url>
@@ -346,6 +321,31 @@
         <tags>
             
             <tag> web姿势 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>docker保存和打包镜像</title>
+      <link href="/posts/5721bfe4.html"/>
+      <url>/posts/5721bfe4.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="docker保存和打包镜像">docker保存和打包镜像</h2><p>作用：在现在容器镜像上保存镜像进行打包，在另一台服务上使用；或现有的容器安装了一些库，配置了开发环境，需要保存下载，下次加载后直接使用。</p><h4 id="1-1-首先查看下现有容器镜像（目的是查询需要保存镜像的ID）">1.1 首先查看下现有容器镜像（目的是查询需要保存镜像的ID）</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps -a</span><br></pre></td></tr></table></figure><h4 id="1-2-接下来用commit参数进行保存镜像（精简版）">1.2 接下来用commit参数进行保存镜像（精简版）</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker commit  7ca736d99653    yolov5:v6.2</span><br></pre></td></tr></table></figure><p>其中，7ca736d99653 是需要保存镜像的ID，刚才用docker ps -a 查询到的。</p><h2 id="打包tar">打包tar</h2><p>使用save参数进行打包，格式如：docker save -o  tar文件名称     镜像REPOSITORY:TAG</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker save -o yolov5-v6.2.tar yolov5:v6.2</span><br></pre></td></tr></table></figure><p>其中yolov5:v6.2 是需要保存镜像的REPOSITORY、和TAG；也是上面保存的镜像名称。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> CTF </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 其他姿势 </tag>
             
         </tags>
       
@@ -529,6 +529,31 @@
     
     
     <entry>
+      <title>MD5绕过</title>
+      <link href="/posts/cfe09059.html"/>
+      <url>/posts/cfe09059.html</url>
+      
+        <content type="html"><![CDATA[<p>记录网站：【CTF_Web：php弱类型绕过与md5碰撞 - CSDN App】<a href="http://t.csdnimg.cn/A58wf">http://t.csdnimg.cn/A58wf</a></p><h4 id="MD5函数漏洞">MD5函数漏洞</h4><p>$str1 = $_GET[‘str1’];<br>$str2 = $_GET[‘str2’];<br>if (md5($str1) == md5($str2)){<br>die(‘OK’); }</p><p>php弱类型比较产生的漏洞<br>想要满足这个判断只需要构造出MD5值为0e开头的字符串，这样的话弱类型比较会认为是科学技术法，0的多少次方都是0，因此可以绕过MD5</p><p>编码后0e开头的字符串：<br>QNKCDZO（0e830400451993494058024219903391）<br>aabg7XSs（0e087386482136013740957780965295）<br>aaabEgHn（0e418636035810609803317995275027）<br>240610708<br>s878926199a<br>s155964671a<br>s214587387a<br>还有MD5和双MD5以后的值都是0e开头的<br>CbDLytmyGm2xQyaLNhWn<br>770hQgrBOjrcqftrlaZk<br>7r4lGXCH2Ksu2JNT3BYM</p><h4 id="md5-数组绕过。">md5()数组绕过。</h4><p>如果我们传入/?name[]=1，那$name的值就是一个数组，name[]=1,2也一样，两个数组进行比较的时候会比较数组内的元素，但md5编码就不一样了，md5()函数统一把数组当成字符串array，这也就导致只要两个都是数组，那他们的md5编码都一样，都为字符串array的md5编码。</p><p>PHP特性<br>$str1 = $_GET[‘str1’];<br>$str2 = $_GET[‘str2’];</p><p>if (md5($str1) === md5($str2)) {<br>die(‘OK’);<br>}</p><p>因为是强类型比较，用0e开头的字符串是没办法绕过的了，但是PHP自身的特性使得可以提交一个数组，<br>而md5函数传入数组的返回值都是NULL，这样就可以绕过强类型比较了。所以这里用GET传入?str1[]=1&amp;str2[]=2就行了<br>补充：md5()或者sha1()之类的函数计算的是一个字符串的哈希值，对于数组则返回false，如果$str1和$str2都是数组则双双返回FALSE,<br>两个FALSE相等得以绕过</p><h4 id="MD5碰撞">MD5碰撞</h4><p>$str1 = (string)$_GET[‘str1’];<br>$str2 = (string)$_GET[‘str2’];</p><p>if (md5($str1) === md5($str2)) {<br>die(‘OK’);<br>}</p><p>由于强制类型转换，传数组就不可行了，这里就需要MD5碰撞，对于需要两个内容不同但是MD5值相同的文件，使用Fastcoll就可以了</p><h4 id="绕过md5-来构造攻击语句">绕过md5()来构造攻击语句</h4><p>select * from ‘admin’ where password=md5($pass,true)</p><h4 id="ffifdyop">ffifdyop</h4><p>这个点的原理是 ffifdyop 这个字符串被 md5 哈希了之后会变成 276f722736c95d99e921722cf9ed621c，这个字符串前几位刚好是 ‘ or ‘6，<br>而 Mysql 刚好又会吧 hex 转成 ascii 解释，因此拼接之后的形式是select * from ‘admin’ where password=‘’ or ‘6xxxxx’。等价于 or 一个永真式，因此相当于万能密码，可以绕过md5()函数</p><h4 id="md5碰撞（最强解）">md5碰撞（最强解）</h4><p>a=%4d%c9%68%ff%0e%e3%5c%20%95%72%d4%77%7b%72%15%87%d3%6f%a7%b2%1b%dc%56%b7%4a%3d%c0%78%3e%7b%95%18%af%bf%a2%00%a8%28%4b%f3%6e%8e%4b%55%b3%5f%42%75%93%d8%49%67%6d%a0%d1%55%5d%83%60%fb%5f%07%fe%a2<br>&amp;b=%4d%c9%68%ff%0e%e3%5c%20%95%72%d4%77%7b%72%15%87%d3%6f%a7%b2%1b%dc%56%b7%4a%3d%c0%78%3e%7b%95%18%af%bf%a2%02%a8%28%4b%f3%6e%8e%4b%55%b3%5f%42%75%93%d8%49%67%6d%a0%d1%d5%5d%83%60%fb%5f%07%fe%a2</p><p>$a=M%C9h%FF%0E%E3%5C%20%95r%D4w%7Br%15%87%D3o%A7%B2%1B%DCV%B7J%3D%C0x%3E%7B%95%18%AF%BF%A2%02%A8%28K%F3n%8EKU%B3_Bu%93%D8Igm%A0%D1%D5%5D%83%60%FB_%07%FE%A2</p><p>$b=M%C9h%FF%0E%E3%5C%20%95r%D4w%7Br%15%87%D3o%A7%B2%1B%DCV%B7J%3D%C0x%3E%7B%95%18%AF%BF%A2%00%A8%28K%F3n%8EKU%B3_Bu%93%D8Igm%A0%D1U%5D%83%60%FB_%07%FE%A2</p><p>以0e开头的原字符串md5后的密文还是以0e开头<br>0e215962017</p><h4 id="超过精确度的弱类型问题">超过精确度的弱类型问题</h4><p>超过精确度的数字(小数点后超过17位)在进行弱类型比较时，会出 现相等的情况。例如var_dump(0.99999999999999999==1)的结果为 True。</p><h4 id="in-arrray-函数">in_arrray()函数</h4><p>in_array()函数的基本格式为:in_array($search,Array())，表示搜索 $search是否为数组Array()的元素。in_array()函数实际上存在第三个参 数，该参数默认为false。如果第三个参数设置为true，则判断$search与 数组的值类型是否相同，即进行强类型比较;若第三个参数设置为 false，则in_array()函数进行判断的时候，会强制将$search的值转换为 数组的值类型，此时就是弱类型比较。</p><h4 id="eregi-函数">eregi()函数</h4><p>eregi()函数用于在一个字符串中搜索指定模式的字符串，搜索时不区分 大小写。<br>关于eregi()函数的考点一般为:eregi()函数可以被%00截断(PHP5版 本，该函数在PHP7中被弃用)。<br>eregi(“111”.substr($input,0,1),“1114”) and substr($input,0,1) !=4<br>该语句要求$input的第一个字符不能为4，但同时要求字符串111与 $input的第一个字符拼接后的结果必须能够匹配字符串1114。按照常 理，这是相互矛盾的，此时可以使用%00来进行输入。请注意，%00在 此处表示一个字符，即\0。之所以会出现截断问题，是因为PHP的底层 是基于C语言实现的，而在C语言里，字符串是以\0作为结尾的。</p><h4 id="md5长度限制强相等">md5长度限制强相等</h4><p>总思路：传相同字符的不同数据类型</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">    error_reporting(0);</span><br><span class="line">    highlight_file(__FILE__);</span><br><span class="line"> </span><br><span class="line">    class ctfshow &#123;</span><br><span class="line">        private $d = &#x27;&#x27;;</span><br><span class="line">        private $s = &#x27;&#x27;;</span><br><span class="line">        private $b = &#x27;&#x27;;</span><br><span class="line">        private $ctf = &#x27;&#x27;;</span><br><span class="line"> </span><br><span class="line">        public function __destruct() &#123;</span><br><span class="line">            $this-&gt;d = (string)$this-&gt;d;</span><br><span class="line">            $this-&gt;s = (string)$this-&gt;s;</span><br><span class="line">            $this-&gt;b = (string)$this-&gt;b;</span><br><span class="line"> </span><br><span class="line">            if (($this-&gt;d != $this-&gt;s) &amp;&amp; ($this-&gt;d != $this-&gt;b) &amp;&amp; ($this-&gt;s != $this-&gt;b)) &#123;</span><br><span class="line">                $dsb = $this-&gt;d.$this-&gt;s.$this-&gt;b;</span><br><span class="line"> </span><br><span class="line">                if ((strlen($dsb) &lt;= 3) &amp;&amp; (strlen($this-&gt;ctf) &lt;= 3)) &#123;</span><br><span class="line">                    if (($dsb !== $this-&gt;ctf) &amp;&amp; ($this-&gt;ctf !== $dsb)) &#123;</span><br><span class="line">                        if (md5($dsb) === md5($this-&gt;ctf)) &#123;</span><br><span class="line">                            echo file_get_contents(&quot;/flag.txt&quot;);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    unserialize($_GET[&quot;dsbctf&quot;]);</span><br></pre></td></tr></table></figure><p>1.php浮点数常量NAN和INF：<br>在PHP中，NAN是一个特殊的浮点数值，表示非数值（Not-A-Number）。当一个运算无法计算结果时，比如零除以零，就会产生NAN。<br>PHP中的INF是一个特殊的浮点数值，表示无穷大（Infinity）。当数值超过PHP_FLOAT_MAX或者使用一些数学函数产生极大或极小的结果时，就会得到INF。</p><p><img src="https://i-blog.csdnimg.cn/direct/3274e38e37864a8bab5c7d727b9e087d.png" alt="img"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/6bf426412d004c1e88db877f6816fd1e.png" alt="img"></p><p>利用思路：<br>php浮点数常量NAN和INF:<br>使用浮点常量INF分别给ctf和dsb变量赋值，长度都为3，dsb是字符串类型，ctf是浮点型，由于MD5是以字符串形式进行加密的，所以他们的MD5值是相等的。这样就达到了绕过的目的。</p><p>2.dsb会被转化成字符串类型，但是ctf不会，所以可以利用不同类型的相同字符绕过。比如：</p><p>md5(‘123’)=md5(123)</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> CTF </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> web姿势 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Docker run 运行镜像</title>
       <link href="/posts/3445c523.html"/>
       <url>/posts/3445c523.html</url>
@@ -571,31 +596,6 @@
         <tags>
             
             <tag> 其他姿势 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>MD5绕过</title>
-      <link href="/posts/cfe09059.html"/>
-      <url>/posts/cfe09059.html</url>
-      
-        <content type="html"><![CDATA[<p>记录网站：【CTF_Web：php弱类型绕过与md5碰撞 - CSDN App】<a href="http://t.csdnimg.cn/A58wf">http://t.csdnimg.cn/A58wf</a></p><h4 id="MD5函数漏洞">MD5函数漏洞</h4><p>$str1 = $_GET[‘str1’];<br>$str2 = $_GET[‘str2’];<br>if (md5($str1) == md5($str2)){<br>die(‘OK’); }</p><p>php弱类型比较产生的漏洞<br>想要满足这个判断只需要构造出MD5值为0e开头的字符串，这样的话弱类型比较会认为是科学技术法，0的多少次方都是0，因此可以绕过MD5</p><p>编码后0e开头的字符串：<br>QNKCDZO（0e830400451993494058024219903391）<br>aabg7XSs（0e087386482136013740957780965295）<br>aaabEgHn（0e418636035810609803317995275027）<br>240610708<br>s878926199a<br>s155964671a<br>s214587387a<br>还有MD5和双MD5以后的值都是0e开头的<br>CbDLytmyGm2xQyaLNhWn<br>770hQgrBOjrcqftrlaZk<br>7r4lGXCH2Ksu2JNT3BYM</p><h4 id="md5-数组绕过。">md5()数组绕过。</h4><p>如果我们传入/?name[]=1，那$name的值就是一个数组，name[]=1,2也一样，两个数组进行比较的时候会比较数组内的元素，但md5编码就不一样了，md5()函数统一把数组当成字符串array，这也就导致只要两个都是数组，那他们的md5编码都一样，都为字符串array的md5编码。</p><p>PHP特性<br>$str1 = $_GET[‘str1’];<br>$str2 = $_GET[‘str2’];</p><p>if (md5($str1) === md5($str2)) {<br>die(‘OK’);<br>}</p><p>因为是强类型比较，用0e开头的字符串是没办法绕过的了，但是PHP自身的特性使得可以提交一个数组，<br>而md5函数传入数组的返回值都是NULL，这样就可以绕过强类型比较了。所以这里用GET传入?str1[]=1&amp;str2[]=2就行了<br>补充：md5()或者sha1()之类的函数计算的是一个字符串的哈希值，对于数组则返回false，如果$str1和$str2都是数组则双双返回FALSE,<br>两个FALSE相等得以绕过</p><h4 id="MD5碰撞">MD5碰撞</h4><p>$str1 = (string)$_GET[‘str1’];<br>$str2 = (string)$_GET[‘str2’];</p><p>if (md5($str1) === md5($str2)) {<br>die(‘OK’);<br>}</p><p>由于强制类型转换，传数组就不可行了，这里就需要MD5碰撞，对于需要两个内容不同但是MD5值相同的文件，使用Fastcoll就可以了</p><h4 id="绕过md5-来构造攻击语句">绕过md5()来构造攻击语句</h4><p>select * from ‘admin’ where password=md5($pass,true)</p><h4 id="ffifdyop">ffifdyop</h4><p>这个点的原理是 ffifdyop 这个字符串被 md5 哈希了之后会变成 276f722736c95d99e921722cf9ed621c，这个字符串前几位刚好是 ‘ or ‘6，<br>而 Mysql 刚好又会吧 hex 转成 ascii 解释，因此拼接之后的形式是select * from ‘admin’ where password=‘’ or ‘6xxxxx’。等价于 or 一个永真式，因此相当于万能密码，可以绕过md5()函数</p><h4 id="md5碰撞（最强解）">md5碰撞（最强解）</h4><p>a=%4d%c9%68%ff%0e%e3%5c%20%95%72%d4%77%7b%72%15%87%d3%6f%a7%b2%1b%dc%56%b7%4a%3d%c0%78%3e%7b%95%18%af%bf%a2%00%a8%28%4b%f3%6e%8e%4b%55%b3%5f%42%75%93%d8%49%67%6d%a0%d1%55%5d%83%60%fb%5f%07%fe%a2<br>&amp;b=%4d%c9%68%ff%0e%e3%5c%20%95%72%d4%77%7b%72%15%87%d3%6f%a7%b2%1b%dc%56%b7%4a%3d%c0%78%3e%7b%95%18%af%bf%a2%02%a8%28%4b%f3%6e%8e%4b%55%b3%5f%42%75%93%d8%49%67%6d%a0%d1%d5%5d%83%60%fb%5f%07%fe%a2</p><p>$a=M%C9h%FF%0E%E3%5C%20%95r%D4w%7Br%15%87%D3o%A7%B2%1B%DCV%B7J%3D%C0x%3E%7B%95%18%AF%BF%A2%02%A8%28K%F3n%8EKU%B3_Bu%93%D8Igm%A0%D1%D5%5D%83%60%FB_%07%FE%A2</p><p>$b=M%C9h%FF%0E%E3%5C%20%95r%D4w%7Br%15%87%D3o%A7%B2%1B%DCV%B7J%3D%C0x%3E%7B%95%18%AF%BF%A2%00%A8%28K%F3n%8EKU%B3_Bu%93%D8Igm%A0%D1U%5D%83%60%FB_%07%FE%A2</p><p>以0e开头的原字符串md5后的密文还是以0e开头<br>0e215962017</p><h4 id="超过精确度的弱类型问题">超过精确度的弱类型问题</h4><p>超过精确度的数字(小数点后超过17位)在进行弱类型比较时，会出 现相等的情况。例如var_dump(0.99999999999999999==1)的结果为 True。</p><h4 id="in-arrray-函数">in_arrray()函数</h4><p>in_array()函数的基本格式为:in_array($search,Array())，表示搜索 $search是否为数组Array()的元素。in_array()函数实际上存在第三个参 数，该参数默认为false。如果第三个参数设置为true，则判断$search与 数组的值类型是否相同，即进行强类型比较;若第三个参数设置为 false，则in_array()函数进行判断的时候，会强制将$search的值转换为 数组的值类型，此时就是弱类型比较。</p><h4 id="eregi-函数">eregi()函数</h4><p>eregi()函数用于在一个字符串中搜索指定模式的字符串，搜索时不区分 大小写。<br>关于eregi()函数的考点一般为:eregi()函数可以被%00截断(PHP5版 本，该函数在PHP7中被弃用)。<br>eregi(“111”.substr($input,0,1),“1114”) and substr($input,0,1) !=4<br>该语句要求$input的第一个字符不能为4，但同时要求字符串111与 $input的第一个字符拼接后的结果必须能够匹配字符串1114。按照常 理，这是相互矛盾的，此时可以使用%00来进行输入。请注意，%00在 此处表示一个字符，即\0。之所以会出现截断问题，是因为PHP的底层 是基于C语言实现的，而在C语言里，字符串是以\0作为结尾的。</p><h4 id="md5长度限制强相等">md5长度限制强相等</h4><p>总思路：传相同字符的不同数据类型</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">    error_reporting(0);</span><br><span class="line">    highlight_file(__FILE__);</span><br><span class="line"> </span><br><span class="line">    class ctfshow &#123;</span><br><span class="line">        private $d = &#x27;&#x27;;</span><br><span class="line">        private $s = &#x27;&#x27;;</span><br><span class="line">        private $b = &#x27;&#x27;;</span><br><span class="line">        private $ctf = &#x27;&#x27;;</span><br><span class="line"> </span><br><span class="line">        public function __destruct() &#123;</span><br><span class="line">            $this-&gt;d = (string)$this-&gt;d;</span><br><span class="line">            $this-&gt;s = (string)$this-&gt;s;</span><br><span class="line">            $this-&gt;b = (string)$this-&gt;b;</span><br><span class="line"> </span><br><span class="line">            if (($this-&gt;d != $this-&gt;s) &amp;&amp; ($this-&gt;d != $this-&gt;b) &amp;&amp; ($this-&gt;s != $this-&gt;b)) &#123;</span><br><span class="line">                $dsb = $this-&gt;d.$this-&gt;s.$this-&gt;b;</span><br><span class="line"> </span><br><span class="line">                if ((strlen($dsb) &lt;= 3) &amp;&amp; (strlen($this-&gt;ctf) &lt;= 3)) &#123;</span><br><span class="line">                    if (($dsb !== $this-&gt;ctf) &amp;&amp; ($this-&gt;ctf !== $dsb)) &#123;</span><br><span class="line">                        if (md5($dsb) === md5($this-&gt;ctf)) &#123;</span><br><span class="line">                            echo file_get_contents(&quot;/flag.txt&quot;);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    unserialize($_GET[&quot;dsbctf&quot;]);</span><br></pre></td></tr></table></figure><p>1.php浮点数常量NAN和INF：<br>在PHP中，NAN是一个特殊的浮点数值，表示非数值（Not-A-Number）。当一个运算无法计算结果时，比如零除以零，就会产生NAN。<br>PHP中的INF是一个特殊的浮点数值，表示无穷大（Infinity）。当数值超过PHP_FLOAT_MAX或者使用一些数学函数产生极大或极小的结果时，就会得到INF。</p><p><img src="https://i-blog.csdnimg.cn/direct/3274e38e37864a8bab5c7d727b9e087d.png" alt="img"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/6bf426412d004c1e88db877f6816fd1e.png" alt="img"></p><p>利用思路：<br>php浮点数常量NAN和INF:<br>使用浮点常量INF分别给ctf和dsb变量赋值，长度都为3，dsb是字符串类型，ctf是浮点型，由于MD5是以字符串形式进行加密的，所以他们的MD5值是相等的。这样就达到了绕过的目的。</p><p>2.dsb会被转化成字符串类型，但是ctf不会，所以可以利用不同类型的相同字符绕过。比如：</p><p>md5(‘123’)=md5(123)</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> CTF </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> web姿势 </tag>
             
         </tags>
       
@@ -1793,11 +1793,33 @@
     
     
     <entry>
+      <title></title>
+      <link href="/css/coin.css"/>
+      <url>/css/coin.css</url>
+      
+        <content type="html"><![CDATA[.tip-button {  border: 0;  border-radius: 0.25rem;  cursor: pointer;  font-size: 20px;  font-weight: 600;  height: 2.6rem;  margin-bottom: -4rem;  outline: 0;  position: relative;  top: 0;  transform-origin: 0% 100%;  transition: transform 50ms ease-in-out;  width: auto;  -webkit-tap-highlight-color: transparent;}.tip-button:active {  transform: rotate(4deg);}.tip-button.clicked {  animation: 150ms ease-in-out 1 shake;  pointer-events: none;}.tip-button.clicked .tip-button__text {  opacity: 0;  transition: opacity 100ms linear 200ms;}.tip-button.clicked::before {  height: 0.5rem;  width: 60%;  background: var(button-hover-color);}.tip-button.clicked .coin {  transition: margin-bottom 1s linear 200ms;  margin-bottom: 0;}.tip-button.shrink-landing::before {  transition: width 200ms ease-in;  width: 0;}.tip-button.coin-landed::after {  opacity: 1;  transform: scale(1);  transform-origin: 50% 100%;}.tip-button.coin-landed .coin-wrapper {  background: radial-gradient(circle at 35% 97%, rgba(3, 16, 50, 0.4) 0.04rem, transparent 0.04rem), radial-gradient(circle at 45% 92%, rgba(3, 16, 50, 0.4) 0.04rem, transparent 0.02rem), radial-gradient(circle at 55% 98%, rgba(3, 16, 50, 0.4) 0.04rem, transparent 0.04rem), radial-gradient(circle at 65% 96%, rgba(3, 16, 50, 0.4) 0.06rem, transparent 0.06rem);  background-position: center bottom;  background-size: 100%;  bottom: -1rem;  opacity: 0;  transform: scale(2) translateY(-10px);}.tip-button__text {  color: #fff;  margin-right: 1.8rem;  opacity: 1;  position: relative;  transition: opacity 100ms linear 500ms;  z-index: 3;}.tip-button::before {  border-radius: 0.25rem;  bottom: 0;  content: '';  display: block;  height: 100%;  left: 50%;  position: absolute;  transform: translateX(-50%);  transition: height 250ms ease-in-out 400ms, width 250ms ease-in-out 300ms;  width: 100%;  z-index: 2;}.tip-button::after {  bottom: -1rem;  color: white;  content: 'ヾ(≧O≦)〃嗷~';  height: 110%;  left: 0;  opacity: 0;  position: absolute;  pointer-events: none;  text-align: center;  transform: scale(0);  transform-origin: 50% 20%;  transition: transform 200ms cubic-bezier(0, 0, 0.35, 1.43);  width: 100%;  z-index: 1;}.coin-wrapper {  background: none;  bottom: 0;  height: 18rem;  left: 0;  opacity: 1;  overflow: hidden;  pointer-events: none;  position: absolute;  transform: none;  transform-origin: 50% 100%;  transition: opacity 200ms linear 100ms, transform 300ms ease-out;  width: 100%;}.coin {  --front-y-multiplier: 0;  --back-y-multiplier: 0;  --coin-y-multiplier: 0;  --coin-x-multiplier: 0;  --coin-scale-multiplier: 0;  --coin-rotation-multiplier: 0;  --shine-opacity-multiplier: 0.4;  --shine-bg-multiplier: 50%;  bottom: calc(var(--coin-y-multiplier) * 1rem - 3.5rem);  height: 3.5rem;  margin-bottom: 3.05rem;  position: absolute;  right: calc(var(--coin-x-multiplier) * 34% + 16%);  transform: translateX(50%) scale(calc(0.4 + var(--coin-scale-multiplier))) rotate(calc(var(--coin-rotation-multiplier) * -1deg));  transition: opacity 100ms linear 200ms;  width: 3.5rem;  z-index: 3;}.coin__front, .coin__middle, .coin__back, .coin::before, .coin__front::after, .coin__back::after {  border-radius: 50%;  box-sizing: border-box;  height: 100%;  left: 0;  position: absolute;  width: 100%;  z-index: 3;}.coin__front {  background: radial-gradient(circle at 50% 50%, transparent 50%, rgba(115, 124, 153, 0.4) 54%, #c2cadf 54%), linear-gradient(210deg, #8590b3 32%, transparent 32%), linear-gradient(150deg, #8590b3 32%, transparent 32%), linear-gradient(to right, #8590b3 22%, transparent 22%, transparent 78%, #8590b3 78%), linear-gradient(to bottom, #fcfaf9 44%, transparent 44%, transparent 65%, #fcfaf9 65%, #fcfaf9 71%, #8590b3 71%), linear-gradient(to right, transparent 28%, #fcfaf9 28%, #fcfaf9 34%, #8590b3 34%, #8590b3 40%, #fcfaf9 40%, #fcfaf9 47%, #8590b3 47%, #8590b3 53%, #fcfaf9 53%, #fcfaf9 60%, #8590b3 60%, #8590b3 66%, #fcfaf9 66%, #fcfaf9 72%, transparent 72%);  background-color: #8590b3;  background-size: 100% 100%;  transform: translateY(calc(var(--front-y-multiplier) * 0.3181818182rem / 2)) scaleY(var(--front-scale-multiplier));}.coin__front::after {  background: rgba(0, 0, 0, 0.2);  content: '';  opacity: var(--front-y-multiplier);}.coin__middle {  background: #737c99;  transform: translateY(calc(var(--middle-y-multiplier) * 0.3181818182rem / 2)) scaleY(var(--middle-scale-multiplier));}.coin__back {  background: radial-gradient(circle at 50% 50%, transparent 50%, rgba(115, 124, 153, 0.4) 54%, #c2cadf 54%), radial-gradient(circle at 50% 40%, #fcfaf9 23%, transparent 23%), radial-gradient(circle at 50% 100%, #fcfaf9 35%, transparent 35%);  background-color: #8590b3;  background-size: 100% 100%;  transform: translateY(calc(var(--back-y-multiplier) * 0.3181818182rem / 2)) scaleY(var(--back-scale-multiplier));}.coin__back::after {  background: rgba(0, 0, 0, 0.2);  content: '';  opacity: var(--back-y-multiplier);}.coin::before {  background: radial-gradient(circle at 25% 65%, transparent 50%, rgba(255, 255, 255, 0.9) 90%), linear-gradient(55deg, transparent calc(var(--shine-bg-multiplier) + 0%), #e9f4ff calc(var(--shine-bg-multiplier) + 0%), transparent calc(var(--shine-bg-multiplier) + 50%));  content: '';  opacity: var(--shine-opacity-multiplier);  transform: translateY(calc(var(--middle-y-multiplier) * 0.3181818182rem / -2)) scaleY(var(--middle-scale-multiplier)) rotate(calc(var(--coin-rotation-multiplier) * 1deg));  z-index: 10;}.coin::after {  background: #737c99;  content: '';  height: 0.3181818182rem;  left: 0;  position: absolute;  top: 50%;  transform: translateY(-50%);  width: 100%;  z-index: 2;}@keyframes shake {  0% {    transform: rotate(4deg);  }  66% {    transform: rotate(-4deg);  }  100% {    transform: rotate();  }}]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>分类</title>
       <link href="/categories/index.html"/>
       <url>/categories/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title></title>
+      <link href="/css/kslink.css"/>
+      <url>/css/kslink.css</url>
+      
+        <content type="html"><![CDATA[.addBtn {    display: flex;    justify-content: center;    flex-wrap: wrap;}.addBtn button {    transition: .2s;    display: flex;    margin: 5px auto;    color: var(--global-bg);    padding: 15px;    border-radius: 40px;    background: var(--search-result-title);    align-items: center;}button {    padding: 0;    outline: 0;    border: none;    background: 0 0;    cursor: pointer;    touch-action: manipulation;}.fa-solid, .fas {    font-family: "Font Awesome 6 Free";    font-weight: 900;}.addBtn i {    font-size: 1.3rem;    margin-right: 10px;}.addBtn button:hover {    background: var(--theme-color);    color: #fff;}]]></content>
       
     </entry>
     
@@ -1827,17 +1849,6 @@
     
     <entry>
       <title></title>
-      <link href="/js/f12.js"/>
-      <url>/js/f12.js</url>
-      
-        <content type="html"><![CDATA[document.onkeydown = function (e) {    if (123 == e.keyCode || (e.ctrlKey && e.shiftKey && (74 === e.keyCode || 73 === e.keyCode || 67 === e.keyCode)) || (e.ctrlKey && 85 === e.keyCode)) return btf.snackbarShow("你真坏，不能打开控制台喔!"), event.keyCode = 0, event.returnValue = !1, !1};]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title></title>
       <link href="/js/coin.js"/>
       <url>/js/coin.js</url>
       
@@ -1859,11 +1870,11 @@
     
     
     <entry>
-      <title></title>
-      <link href="/css/coin.css"/>
-      <url>/css/coin.css</url>
+      <title>标签</title>
+      <link href="/tags/index.html"/>
+      <url>/tags/index.html</url>
       
-        <content type="html"><![CDATA[.tip-button {  border: 0;  border-radius: 0.25rem;  cursor: pointer;  font-size: 20px;  font-weight: 600;  height: 2.6rem;  margin-bottom: -4rem;  outline: 0;  position: relative;  top: 0;  transform-origin: 0% 100%;  transition: transform 50ms ease-in-out;  width: auto;  -webkit-tap-highlight-color: transparent;}.tip-button:active {  transform: rotate(4deg);}.tip-button.clicked {  animation: 150ms ease-in-out 1 shake;  pointer-events: none;}.tip-button.clicked .tip-button__text {  opacity: 0;  transition: opacity 100ms linear 200ms;}.tip-button.clicked::before {  height: 0.5rem;  width: 60%;  background: var(button-hover-color);}.tip-button.clicked .coin {  transition: margin-bottom 1s linear 200ms;  margin-bottom: 0;}.tip-button.shrink-landing::before {  transition: width 200ms ease-in;  width: 0;}.tip-button.coin-landed::after {  opacity: 1;  transform: scale(1);  transform-origin: 50% 100%;}.tip-button.coin-landed .coin-wrapper {  background: radial-gradient(circle at 35% 97%, rgba(3, 16, 50, 0.4) 0.04rem, transparent 0.04rem), radial-gradient(circle at 45% 92%, rgba(3, 16, 50, 0.4) 0.04rem, transparent 0.02rem), radial-gradient(circle at 55% 98%, rgba(3, 16, 50, 0.4) 0.04rem, transparent 0.04rem), radial-gradient(circle at 65% 96%, rgba(3, 16, 50, 0.4) 0.06rem, transparent 0.06rem);  background-position: center bottom;  background-size: 100%;  bottom: -1rem;  opacity: 0;  transform: scale(2) translateY(-10px);}.tip-button__text {  color: #fff;  margin-right: 1.8rem;  opacity: 1;  position: relative;  transition: opacity 100ms linear 500ms;  z-index: 3;}.tip-button::before {  border-radius: 0.25rem;  bottom: 0;  content: '';  display: block;  height: 100%;  left: 50%;  position: absolute;  transform: translateX(-50%);  transition: height 250ms ease-in-out 400ms, width 250ms ease-in-out 300ms;  width: 100%;  z-index: 2;}.tip-button::after {  bottom: -1rem;  color: white;  content: 'ヾ(≧O≦)〃嗷~';  height: 110%;  left: 0;  opacity: 0;  position: absolute;  pointer-events: none;  text-align: center;  transform: scale(0);  transform-origin: 50% 20%;  transition: transform 200ms cubic-bezier(0, 0, 0.35, 1.43);  width: 100%;  z-index: 1;}.coin-wrapper {  background: none;  bottom: 0;  height: 18rem;  left: 0;  opacity: 1;  overflow: hidden;  pointer-events: none;  position: absolute;  transform: none;  transform-origin: 50% 100%;  transition: opacity 200ms linear 100ms, transform 300ms ease-out;  width: 100%;}.coin {  --front-y-multiplier: 0;  --back-y-multiplier: 0;  --coin-y-multiplier: 0;  --coin-x-multiplier: 0;  --coin-scale-multiplier: 0;  --coin-rotation-multiplier: 0;  --shine-opacity-multiplier: 0.4;  --shine-bg-multiplier: 50%;  bottom: calc(var(--coin-y-multiplier) * 1rem - 3.5rem);  height: 3.5rem;  margin-bottom: 3.05rem;  position: absolute;  right: calc(var(--coin-x-multiplier) * 34% + 16%);  transform: translateX(50%) scale(calc(0.4 + var(--coin-scale-multiplier))) rotate(calc(var(--coin-rotation-multiplier) * -1deg));  transition: opacity 100ms linear 200ms;  width: 3.5rem;  z-index: 3;}.coin__front, .coin__middle, .coin__back, .coin::before, .coin__front::after, .coin__back::after {  border-radius: 50%;  box-sizing: border-box;  height: 100%;  left: 0;  position: absolute;  width: 100%;  z-index: 3;}.coin__front {  background: radial-gradient(circle at 50% 50%, transparent 50%, rgba(115, 124, 153, 0.4) 54%, #c2cadf 54%), linear-gradient(210deg, #8590b3 32%, transparent 32%), linear-gradient(150deg, #8590b3 32%, transparent 32%), linear-gradient(to right, #8590b3 22%, transparent 22%, transparent 78%, #8590b3 78%), linear-gradient(to bottom, #fcfaf9 44%, transparent 44%, transparent 65%, #fcfaf9 65%, #fcfaf9 71%, #8590b3 71%), linear-gradient(to right, transparent 28%, #fcfaf9 28%, #fcfaf9 34%, #8590b3 34%, #8590b3 40%, #fcfaf9 40%, #fcfaf9 47%, #8590b3 47%, #8590b3 53%, #fcfaf9 53%, #fcfaf9 60%, #8590b3 60%, #8590b3 66%, #fcfaf9 66%, #fcfaf9 72%, transparent 72%);  background-color: #8590b3;  background-size: 100% 100%;  transform: translateY(calc(var(--front-y-multiplier) * 0.3181818182rem / 2)) scaleY(var(--front-scale-multiplier));}.coin__front::after {  background: rgba(0, 0, 0, 0.2);  content: '';  opacity: var(--front-y-multiplier);}.coin__middle {  background: #737c99;  transform: translateY(calc(var(--middle-y-multiplier) * 0.3181818182rem / 2)) scaleY(var(--middle-scale-multiplier));}.coin__back {  background: radial-gradient(circle at 50% 50%, transparent 50%, rgba(115, 124, 153, 0.4) 54%, #c2cadf 54%), radial-gradient(circle at 50% 40%, #fcfaf9 23%, transparent 23%), radial-gradient(circle at 50% 100%, #fcfaf9 35%, transparent 35%);  background-color: #8590b3;  background-size: 100% 100%;  transform: translateY(calc(var(--back-y-multiplier) * 0.3181818182rem / 2)) scaleY(var(--back-scale-multiplier));}.coin__back::after {  background: rgba(0, 0, 0, 0.2);  content: '';  opacity: var(--back-y-multiplier);}.coin::before {  background: radial-gradient(circle at 25% 65%, transparent 50%, rgba(255, 255, 255, 0.9) 90%), linear-gradient(55deg, transparent calc(var(--shine-bg-multiplier) + 0%), #e9f4ff calc(var(--shine-bg-multiplier) + 0%), transparent calc(var(--shine-bg-multiplier) + 50%));  content: '';  opacity: var(--shine-opacity-multiplier);  transform: translateY(calc(var(--middle-y-multiplier) * 0.3181818182rem / -2)) scaleY(var(--middle-scale-multiplier)) rotate(calc(var(--coin-rotation-multiplier) * 1deg));  z-index: 10;}.coin::after {  background: #737c99;  content: '';  height: 0.3181818182rem;  left: 0;  position: absolute;  top: 50%;  transform: translateY(-50%);  width: 100%;  z-index: 2;}@keyframes shake {  0% {    transform: rotate(4deg);  }  66% {    transform: rotate(-4deg);  }  100% {    transform: rotate();  }}]]></content>
+        <content type="html"><![CDATA[]]></content>
       
     </entry>
     
@@ -1882,32 +1893,10 @@
     
     <entry>
       <title></title>
-      <link href="/css/kslink.css"/>
-      <url>/css/kslink.css</url>
+      <link href="/js/f12.js"/>
+      <url>/js/f12.js</url>
       
-        <content type="html"><![CDATA[.addBtn {    display: flex;    justify-content: center;    flex-wrap: wrap;}.addBtn button {    transition: .2s;    display: flex;    margin: 5px auto;    color: var(--global-bg);    padding: 15px;    border-radius: 40px;    background: var(--search-result-title);    align-items: center;}button {    padding: 0;    outline: 0;    border: none;    background: 0 0;    cursor: pointer;    touch-action: manipulation;}.fa-solid, .fas {    font-family: "Font Awesome 6 Free";    font-weight: 900;}.addBtn i {    font-size: 1.3rem;    margin-right: 10px;}.addBtn button:hover {    background: var(--theme-color);    color: #fff;}]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>标签</title>
-      <link href="/tags/index.html"/>
-      <url>/tags/index.html</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>画廊</title>
-      <link href="/box/gallery/index.html"/>
-      <url>/box/gallery/index.html</url>
-      
-        <content type="html"><![CDATA[]]></content>
+        <content type="html"><![CDATA[document.onkeydown = function (e) {    if (123 == e.keyCode || (e.ctrlKey && e.shiftKey && (74 === e.keyCode || 73 === e.keyCode || 67 === e.keyCode)) || (e.ctrlKey && 85 === e.keyCode)) return btf.snackbarShow("你真坏，不能打开控制台喔!"), event.keyCode = 0, event.returnValue = !1, !1};]]></content>
       
     </entry>
     
@@ -1936,22 +1925,11 @@
     
     
     <entry>
-      <title>影院</title>
-      <link href="/life/movies/index.html"/>
-      <url>/life/movies/index.html</url>
+      <title>画廊</title>
+      <link href="/box/gallery/index.html"/>
+      <url>/box/gallery/index.html</url>
       
-        <content type="html"><![CDATA[<main class="layout" id="content-inner">    <div id="page">        <div id="article-container">            <span class="p center logo h2 blue">                <b>( ＾∀＾）／欢迎光临影院，切换黑夜模式食用效果更佳哦~!＼( ＾∀＾）</b>            </span>    <br>    <br></main>    <details class="folding-tag" blue>    <summary>哔哩哔哩放映厅</summary>        <div class="content">            <div class="tabs" id="room_1">                <ul class="nav-tabs">                    <li class="tab active">                        <button type="button" data-href="#room_1-1">1号厅</button>                    </li>                    <li class="tab">                        <button type="button" data-href="#room_1-2">2号厅</button>                    </li>                    <li class="tab">                        <button type="button" data-href="#room_1-3">3号厅</button>                    </li>                </ul>                <div class="tab-contents">                    <div class="tab-item-content active" id="room_1-1">                        <h3 id="您当前正处于-1-号厅，当前放映的是《冲破黑暗 Out of Darkness》">您当前正处于 1 号厅，当前放映的是《冲破黑暗 Out of Darkness》</h3>                        <div align="center" class="aspect-ratio">                            <iframe src="//player.bilibili.com/player.html?isOutside=true&aid=714997425&bvid=BV1hX4y1g7pp&cid=321134107&p=1&autoplay=0" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>                        </div>                        <button type="button" class="tab-to-top" aria-label="scroll to top">                            <i class="fas fa-arrow-up"></i>                        </button>                    </div>                    <div class="tab-item-content" id="room_1-2">                        <h3 id="您当前正处于-2-号厅，当前放映的是《记忆管理局》">您当前正处于 2 号厅，当前放映的是《记忆管理局》</h3>                        <div align="center" class="aspect-ratio">                            <iframe src="//player.bilibili.com/player.html?isOutside=true&aid=884758835&bvid=BV1iK4y187Th&cid=240382860&p=1&autoplay=0" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>                        </div>                        <button type="button" class="tab-to-top" aria-label="scroll to top">                            <i class="fas fa-arrow-up"></i>                        </button>                    </div>                    <div class="tab-item-content" id="room_1-3">                        <h3 id="您当前正处于-3-号厅，当前放映的是《黑盒》">您当前正处于 3 号厅，当前放映的是《黑盒》</h3>                        <div align="center" class="aspect-ratio">                            <iframe src="//player.bilibili.com/player.html?isOutside=true&aid=58854830&bvid=BV1Pt411L7Uo&cid=102606378&p=1&autoplay=0" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>                        </div>                        <button type="button" class="tab-to-top" aria-label="scroll to top">                            <i class="fas fa-arrow-up"></i>                        </button>                    </div>                    </div>                      </div>        </div></details>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>网站统计</title>
-      <link href="/site/census/index.html"/>
-      <url>/site/census/index.html</url>
-      
-        <content type="html"><![CDATA[<!-- <script src="https://npm.elemecdn.com/echarts@4.9.0/dist/echarts.min.js"></script><script src="https://npm.elemecdn.com/echarts@4.9.0/map/js/china.js"></script> 绘制地图需要另外添加 china.js -->]]></content>
+        <content type="html"><![CDATA[]]></content>
       
     </entry>
     
@@ -1969,44 +1947,11 @@
     
     
     <entry>
-      <title>文章统计</title>
-      <link href="/site/echarts/index.html"/>
-      <url>/site/echarts/index.html</url>
+      <title>恋爱小屋</title>
+      <link href="/personal/love/index.html"/>
+      <url>/personal/love/index.html</url>
       
-        <content type="html"><![CDATA[<script src="https://npm.elemecdn.com/echarts@4.9.0/dist/echarts.min.js"></script><!-- 文章发布时间统计图 --><div id="posts-chart" data-start="2021-01" style="border-radius: 8px; height: 300px; padding: 10px;"></div><!-- 文章标签统计图 --><div id="tags-chart" data-length="10" style="border-radius: 8px; height: 300px; padding: 10px;"></div><!-- 文章分类统计图 --><div id="categories-chart" data-parent="true" style="border-radius: 8px; height: 300px; padding: 10px;"></div>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>网站建设</title>
-      <link href="/site/time/index.html"/>
-      <url>/site/time/index.html</url>
-      
-        <content type="html"><![CDATA[<main class="layout" id="content-inner">    <div id="page">        <div id="article-container">            <span class="p center logo h2 blue">                <b>( ＾∀＾）／关于小站的建设进程都在这里哦~!＼( ＾∀＾）</b>            </span>    <br>    <br></main><details class="folding-tag" blue>    <summary>2024.11.29</summary>    <p>        网站基本框架建设完毕，小站处于调试阶段！    </p></details><details class="folding-tag" blue>    <summary>2024.11.30</summary>        <p>1. 上传文章，并完成基本的排版！</p>        <p>2. 增添文章统计功能，插入文章统计图表！</p>        <p>3. 更改网站背景图，更换文章封面！</p></details><details class="folding-tag" blue>    <summary>2024.12.01</summary>        <p>1. 完成网站的评论功能！</p>        <p>2. 增加首页的标签冰贴</p>        <p>3. 更换头像以及预加载头像动画！</p></details><details class="folding-tag" blue>    <summary>2024.12.02</summary>        <p>1. 完善网站的一些细节，增加格言等文案</p>        <p>2. 进行手机适配设置，让手机用户访问网站更加舒适！</p>        <p>3. 增加文章的评论功能！</p></details><details class="folding-tag" blue>    <summary>2024.12.03</summary>        <p>1. 完成网站的网站地图功能！</p>        <p>2. 注册百度站长和ping站长账号，做好推送准备</p>        <p>3. 修改美化设置，将默认设置修改成了站长喜好！</p></details><details class="folding-tag" blue>    <summary>2024.12.04</summary>        <p>1. 完成网站的大部分建设</p>        <p>2. 增加“八音盒”功能，能从网易云音乐索引音乐播放</p>        <p>3. 实现全局音乐播放，在左下角固定音乐播放器，能实现背景音乐播放（但还是没有当背景音乐播放，考虑到可能会吵到读者）</p>        <p>4. 增加“影院”功能，牵引哔哩哔哩等链接，进行视频观看（都是站长亲自选定的）！</p>        <p>5. 增加根据地理位置欢迎的语句，并不断调试，最终正式上线！</p>        <p>6. 页脚增加标签、格言等！</p>        <p>7. 注册了两个域名（m3x1.cn和m3x1.fun），并实现绑定！</p>        <p>            <span style="color: blue;">至此，网站正式上线！</span>        </p></details><details class="folding-tag" blue>    <summary>2024.12.05</summary>        <p>            <span style="color: blue;">1. 网站“旧时光”功能搭建，开始记录网站建设的历程！</span>        </p>        <p>2. 解决打开影院功能时，视频播放器全部自动播放的问题！</p></details>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>朋友圈</title>
-      <link href="/social/fcircle/index.html"/>
-      <url>/social/fcircle/index.html</url>
-      
-        <content type="html"><![CDATA[<style>  #cf-container {    background: transparent !important;  }  .cf-article .cf-article-title:hover {    color: #f4f4f4 !important;  }  .cf-img-avatar {    opacity: .4 !important;  }  .cf-article-author:hover {    background: var(--theme-color) !important;  }  #cf-more:hover {    background: var(--theme-color) !important;  }  .cf-overshow p a:hover {    color: #f4f4f4 !important;  }  .cf-article {    transition: transform linear 0.3s;  }  .cf-article:hover {    transform: scale(1.05);    box-shadow: 0 5px 10px 8px #07111b29;  }  .cf-article {    border-radius: 15px !important;    border: 1px solid #a5a5a5ee !important;  }  ::selection {  background: var(--theme-color) !important;  color: #f4f4f4 !important;  }</style><!-- <div id="hexo-circle-of-friends-root"></div><script>    let UserConfig = {        // 替换为你的API!!!        private_api_url: '',        // 点击加载更多时，一次最多加载几篇文章，默认10        page_turning_number: 12,        // 头像加载失败时，默认头像地址        error_img: '/assets/r1.jpg',        // 进入页面时第一次的排序规则        sort_rule: 'created'    }</script> -->]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>八音盒</title>
-      <link href="/life/music/index.html"/>
-      <url>/life/music/index.html</url>
-      
-        <content type="html"><![CDATA[<main class="layout" id="content-inner">    <div id="page">        <div id="article-container">            <span class="p center logo h2 blue">                <b>( ＾∀＾）／欢迎光临八音盒，希望舒缓的音乐能带走你一天的疲劳~!＼( ＾∀＾）</b>            </span>    <br>    <br></main>    <blockquote><p>来源：网易云音乐</p></blockquote>    <div id="aplayer-oPcjaTPF" class="aplayer aplayer-tag-marker meting-tag-marker"         data-id="12952460159" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="false" data-listmaxheight="400px" data-preload="none" data-theme="#ad7a86"    ></div><!-- <iframe  frameborder="no" border="0"  marginwidth="0" marginheight="0"  width=530 height=310  src="//activity.kugou.com/share/v-a00a45b0/index.html?u=1045443904&h1=240987975537390846260097417101362365343&h2=483a904874cd4093b4e2381eaea94080&specialid=-2147483648&global_specialid=collection_3_1045443904_16_0&cType=0"></iframe> -->]]></content>
+        <content type="html"><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="抱歉, 这个密码看着不太对, 请再试试!" data-whm="OOPS, these decrypted content may changed, but you can still have a look.">  <script id="hbeData" type="hbeData" data-hmacdigest="68a67bcaa7c7ae655582f6919cf5877154246bd92067818ccb167cfcda078bd9">a6cd693ebeafe4bee833748a5eaf37fb3f3323ffefd29f3a44d678fe3ed94d91808a51bfb44fae3ecd5951e94d82eeaf1b0e43eb8bce90c7da30f34169084165352fbf135e9421518d47c43cc97c6ddd6aaaaad5d75c30976aa42f572e37ceb0e2fd73f522e41fab16f6e371ead7cdeaab451dbd58385106d60ea6085336ff1162f03b0e6c6f7a3955661d47d01541318f78c2893fe90a13940fd1faad0b5c6a143bb3d1b3e2f3795cabf8276ff1bd07c04e6f3a794adcae6cc9657875cbf171769e276a34b6fd5db0b3b4daf578cc9cb2ec3dd4c679cd90408d523b2ddca7a21a501f9dd784e7fe098c4c0cf43e04c30d8a3e0df02a870f58b384319f85c5c2cc15adadd8f3a8edd0e182c6fb045ae6ae6cfdab5c237205b393360d9d25b449f2a717eb850f70c09408915de6582bac24684a47e36d063a6d07ef8adea1ff444e53cb8c5304b9cc16bf19ed02a018a81f1c7a3ff06498d868b93ac560146935aa0f464c3fb157fa7e4994e54f10b738c289aef34207e703e6574d2337fbf79864e01f470e21db3881fdf931905d0d4ceab2102ed026d176e707020163cfae16f5d05dac71741e154fdebf7aadf7b4b5f46af68026d2b32c1dadaf20aba5da8c71187c43e86e452cae6ca00276ec903d67c0428662289b9dd8de1b116c73f8fccc22a00abb0426d8d01432c2f0b802c3145376072ba074a99658c9109f74622fde6cf5162bf4ac9a973b6c19b8e84fba06efbbaa540481b57a8af729136748d6d5a8e659244a578bdfc5e3ddb3c759ae2d6daad1625d5f7534cc92a9ede896386dcd1f34f87faa8a33e34ee77b9b86e6cc3f62d62e311d7e1c1723e93ebd0ea2ab0e17e3ff90a11745a8d6f9e5e97920a254149f8e6312c864aaba7b35493adb8d4ac807d55724aea2953deee4e7adc2d84f77eddaccf03e08e0956950a96b204eaddbcc1606b3e9638da86cc20b2aa47b5be3e66616dce48d9a190798ba128f09817f304805389c9fc7b519660a2a990c0c1d8cdf0a1ff4b7747a25c420ef805f84f56f9af4422ec35b2b2b8d8a969ce36341f8c7143b69c420760b7cea6811bd408475316b4ba41021d1178acae59d1cbd905f4771bbd0627d43fa7761840c9621dd218cb02f4e276e04f1425c5a4acd938e87f056a10bb12ed46bf2069cdde3caa51c3d5c96d8ad946d4f3d03886015a057138df813521b843c92063d9d0ceeb44447f579e2ee887a716a60670a056e3d21c6c4c938264ff1d31db23d0c35c21034d15cae864e0f4fcdfff0029803958e4a0c9eacf9cd103d401c10875f397613fced98dc1896a21d7c5355ab628fa786d7a04994b7b21a2c883a91e0435087f1abe3240bed23ff5b2551802e52ebccd316a5c2ce88b440b40a68c6d58b981f6f63e50fa2a2ca0801ba1e8f44b5cd9c4c6cd990546798e5817a6886623e8ecfec5652fe0431a498aac6ddad008bc5b9ffc522066aad07153bae10af39d681fe1c7a2157a8add9396d1bc090c64a945a77567120ef84a5dfef79a78f16aec178ac65037c09c0e9be396a70aaf96e34975409dfc03d838d47178c2f937bcea76cdff9cced8e81c0f42b9eea7f056f13b836f1075749ee0e3b3f562841446b74b89cc69843e9f4a2236533474c759f612278c9ed710c5c7f6585a868cfa310dfff8188351e26b1ce15432b53e15698932f0d70d2bf69e0a1588da57ff08d8274215299d4c41d2b62d0bab1e702382cfe9705edbc68166d8fa96fff48fc6cb83128e5da1091518e29fdeecd14400af74a6e31493efb8c24bc50a7c1545d5d0ec5393309d641bbedd319638d73c90c4414c6270b0a36df1e37f4005ce9b36b4014b19caa76b369054ab82ddc280a74eeedd3bca9c99dc3e936ad1d86e8f78caa3c0e5363591f8d660c209fd7c782377a3fd0b1a8e6e7bfc0325c529d4b2ea7db6810c84ff26774a6db3d0bbda976e69745543f219a5e914a758bd244147a52a5c4c3f01ae4a409709f8e36936f6c3ba53bf0518799c9ff02c299a83e3745f12ba5b9b84f601da405931689178d8f1c63dd4cabd046618b80d88e37654af7ac584c32c78225206011aab9f20653235b6d6069869682376930c578b99194144a38d3a3cea12db77573b720b73690824334f747448e4d8ad6cf964141659162aac7ef021f19ef60dbde53bac7bf6b1c58afa50690b13f47175b41fd859846283da0247a4279e8bacb78a8b346cf93db6279ae94a85b2ae92a521b907a019dee1edbe04b2d09ceaf753546905ed3335572bb676048a65d8d348f57a75702d97adf7a7fa85ba0f49bbda4c6548da19ceb0cb774f333f711023c8b9ffb28612ecbad9ba3a9ba64930b9408e206392ae7df148ff9977ab28a4d6c176b3229296ff0a3344721129ca0e104d2e5fb7169e98d001ebd3ff2f6020b8a631a7bf341fd15544f608b782ddfc9b87c50ecfc8303d4da9a15bf04ea42b85a91a6f5f1b5b20fb5981e35295d9bd582475f7c37a5b8923000545c323753cf55ecda3e029520f00b092dcce86705d0dc0adb3da1b32fec7ba76f58dd3a665609c97f58332d86a9bd40da67f9fd8612e4e06eacaf6985cbab894d8c9268a6a6e489de5bd758ff84cf8b7b6bc4d44b55fe6d5ce14bd0d3e0106479c7bab18da7d9d0c4e3100947b008a5e79f7d00a36a64e426282e240b582e7fa58a0485e784db0a0056d773a9c8e77d654cf216e9518ffa1d06cdc9a4bf3e9cdf5415629f2cb25e5a2594ef5c330fd4e36c8b1e5a7c0cc7fc1667bbe6679164240e8f89d27cd111287ea5c80b4fb28cb1c6710fcebe05e1000f18881ffc3f8a2f4b75a37c3cbcdeac96f8c07f2235ed30b54373226cced6eacb3820dab93ad239d525d524e840ffd666d5de82a6ec22831bf406186e76a2d7424357d658bd40c56c01b1e77f095e4954e3d14fd981e4b89ba76427fcdab2b86860ab9553d17b322b89de40422a319f13f226330c2e246dba09a5b002efb58a7fbba1eef5340de10487ed849cf4d3206b9782e3ef03ece1795fec5bf3ef5085d7699f96c63b53fbd8c6917eeb9fce8583070dcce59700cf0b9914fdc45e5a01dcd14e3dfdd330eb4c37ae1f5c35a4fe0791f0a4b223cb246a99de0bde40bf535122762fbfbb2001e181f8529aa401f78c5a9e500ffe61573bb1633e408ee6b0419474aa798150360af58bbf15291ccd1df2a05a537c9232115d05567197f3392403db1318974151cd6ebd0edd90f2b11064a7ad35c0d57a66566296cee1d04ff579dcfd1649f93032f31bf3f02e56e41a28438a6c13c39ccff13f89eeb147af713734b678c144d30a169ed4b2cd9f12d9e7849a3084a6fa1af5e76d42a6b68816330c9303bc08340a48ecf4e379b2576d846709ec6986751d6ed2952cd9d8ea1a768b114398d775eb636b2c78c5d07d2319472cf7433a6da6050a67a423062445c51ad26a84de5633b58d73f34a4c2fc75ddaad1cd16361d4cca2b2b55c125bc587120d93e7e57f2ce19b570ada4e824dab9dd3e6362a0c2627803e9bffa819f42fb2c9df9637ebe22057f0b9a1e80f3cff755ea5b349103d96c920b831a9bc31f739000a3f0a0a87764c7d3fa687b0746fc6a5d241c4636e27ad1ad21b154450d313562128327cdbe3f3460af3546afb60e91b92a3b070a7280d6ff13bf9edf7136b63f33e8ef9ef1ea685eb1bd2d7e2d3b8d73fdd71d501b89303bce9faa822c1ebd070f4d083878c4198b4f90b69cfe6edc4303c7affce8f8e82e9c556909a796954dd2fc6225b056be5f16f2082f94852a3633d5bc7774fc25247a3656edafed0e673a16c013458b0dfdb7681e837a1f593a573be1916c07d1c6f11fbe6f77d18845c8dc24ca9b7d9ddd5a1f84047c7f8c61dd80777cdb5680ebcd622997d11334b21548fb6d65e778e2f131c3dcf635ee28f0094f032e5c4f88f08ab6151eb6d34e9d81e5e0cbd414ecd385af8e15ac766e06141d95f67faff64758ff808b2e2bc3fffc911295c0ee830836d4195bbd8e403a4100ce9063fc3829653092941d2c68e704a775e978cec73886895d28f5bdd851e67adf306a3511e2296ac658f8bbf5c66e47816d6be86bc858799ec6d0977856d829bab715bdc9cf21b42dc3c71839216aef53f945aa16ab72068d723f2e9621e33601982c87d76a685860bdf0f8711a4613862bfbb702ea23d015f5df154f5f9d40864b02263526b4f24977d97edd4ab86e4ec7e5a16af994be9bc5b81828cd73d67041a44c4e23f65c0f44a31627c14964d5eadddcb6b664961848131ac4974896cfce94f2c44b62aae27b87c31d032955868f0078dedf5789e430be42b23c111614d6791f8ecfccd8feaa43f8d195f9c55c5dfc4af76e658eb486163b6c0c04963d8584c1728abbf7110f2405478b41e24f4e8cf2687682095570c5a9f9aca0a391b233a00c85d2953526fcbdb3743659d5e58aa2dbf10de52dfc8628fcb32c604d67cdcd3b7b9eefe7dff94ea6315ccfde154cfa0340ff86285193c31f1fa1cbee3e039bd79417efea5052f733dd163105571c15aa262adae0cbe04ba07a0396ad526e515442ebecdaf216144a2ed5a2a4f0b5d476fb8aaccb1f0f2366664da6fba354eb520a4f4033e2a035ba984c3da75e2e093f2c86b12df4325b35091cccf6f9221823e0693ae2921f267ffc1098d562a7b2355c7720621b5e2484d73ad67ec58a0626bd47ee13b8e004f88cd06d9016866ccfbccd8552a51e77d330078aa6dee5d4eeaacdff9aabfef4acda637566349e007c2ee865ee42e186163f5d04009c19ffae591cf79b9728d39f86387c41bb68358718d69c59f1a7ee1b191b2b65656a186e8eaf98efbf3b988344c6ed187112aa9fdb60020ffae6676b65e2d16851429b7e1bd309812a01940a666b3339ba63ce01e5fa3b1f516544fc7c01add1610c8b81f1937c4dd60111ffe053e4fa99349a11765ca68f102a52e12ce6976b4123dca446825a05ee17eda56cdc86e322022bf3ba394170e4644460ed7534c0113a3e72db544597a982689d5c30ccc25cd954457a5c405fe01f3343426966831ac44c07e149f5ed5e54b50088620ebf9bcc9bfe8d0c43aed0d307693bf037f268ae5fb9b2ffdfdfac46fa49f1190127b962aca8b075fb10d6fbf47770499104556adb72dc42b1956b7dc50f20a97352f839eecd8409d603878f6b34e474c7b45d7c1857e14d3f8380a183a5fd98ed769938953da603ddf691a4e4c15599917be0a71b54876b72224cef60974df65931c3dc7af0e0a6f75c7e6312e616d6020846c7908112ed94baddf189e8285c2f4c326ec77d7564d2b44f4be4d0ef2a1f8bc06d84ca8de578d5e68e4e5945d589ef3e9aa0b702c42b033dd10e80a1581f78127d9c098a972e595a11de8070bb85dbaa43923dceeb47103593776fe31ec77109235bd8423d6f21d9c3c6ef46f623cc0b99a27b49f83a082ea5ef07f516988db91397ccd8a6d6e14727c79679fef2fdb1dcddfd578365b04a436e6d4c6245322fb02b2c3ca1f49c9c217f4817c7fa462be68e487176590b30577eb5228248e5d3b3daec143f28d33829f42a9d2e80a590a5e43a9bd014fe8c75028cb7bb77e9d6e9e556e63ec9c1b8b9f3e68d61038c786294395e81d3da79becaa671572e6caa16c9423066cf9f6da0d091ad1f7f321bd66a64cc5956e6c931c5b11fdf57c452074d772b8198601461e3bf91e05937ac3927220762915ce066ba34b3ccb01454c24266691fb7f094b7ea81669bd23ae0cec439203dcd53cc681e301595b78728c5706eb557984a955d686953ab261ae80baa5c4b08b7879447bd8f896955811b69433e3bbf0c9302005ea961345511ac7d5c1d3dd6b8c64ca54b4d865450818d35c69c46d97589b6e7e4be67a133273f78c0a5ff89e3726743468710ac94cd5dff012429f489132f1ae962cca5152f874f821f788e4d48a15b0897f41d4d3addd14d46e886bfd7d2694ac6b0ecd9b8da9cda2c2559e7673b196449b1ae6477a7482a99636d7c26be04ce46ebeed40177a7ccc9f8a6cbb2f1e4b5e0c4a608c79a5cea5fcc337aa19fe8d2d8755287d3c00dabadc7dce0ec9a320cc7ff8d52c77e62d112893f87dae21b3634dfe1bde7903b38a803a34392cfc02572755d78754635412ad6e80341ab9be58b7a7ec660b38cd4c5de3ea8848076289e553bf5bf47630c0f4716c86c687cdb269bc932c6f99746b4752e7204729ff40656b3cb28f6aa7688a90a431b55da9ca34559b27da11cee9e932018bbcc0a4df081b5ff3c55a7db81512b75c6c0466e4a58a0002cd656e238b47cfd2b08415747467b174a990375bddf4bc5edad6f779bdff21c2bcd5a97e54e267d55c356e040cd14f2b36d2acd58e3300116c2b8a4b4bcd405ec870d24a6804923d5f61e4505a12f5f058dd3f5e5eb2c975db0124065bf49d0b2083299b7f83ab1a0d32870cc2018e0ab3cda6670df1c6d27c9f5500676793d02fbea5d53ec4d74e3518021b47a467492808f0b2e9551c04b0eaa5dd5a9eb946ef1052e591de1cc475999a9d4dcf6b85df0cd5d701c952622c539b769626cb46f381d0564ef97e52e6f76aea3f3face654bceedace75bc0394f5cb2db66bad7edb9aeda0afc5a710ee4dfa824e7df85e5efad9bfeb9b437e79345fa08636d6ddc7fa9107d49ca5079d5ed1a24edc2fbed38c2bb0a8c43a02743c533ddec64f9082cf0966c2b3d262811883c89a2e967b309cc32fe0f839dd8793f3c686396174bbd64ad3f22a4efcc369d25755c9dbdefa044cc8e9ec22eb2a4816946cdcab49b7ddc26a3c59aa33670b7293340020d2c0be5dc8034ed983446e53fa5ce13e15fdadc7e1fabf1ecf3de3049d20a8ecaa241d7d76e10c3faf89469369cdc3a491193b77098677f34403328f07739e8331737addf1c2d7a5a433f47c3683ac956e77ada6569bf01e5ed1e982182d3e6e162eafe76f3be968c5dac038364ff7b35b26eecae607dad80bc9f4071221fc876d1dd393e902844e29c92ea972258ce19a76016ee3ab548f088548bd84c9c0c3c717247e03ea952eea9c0b8572a1c5acd54e2068ca5fd9ad11e0937d4a006e25330870ef9044de165e6b5fd4abd10c27b23afdf5ef41c48e7d6cd905f614cfe61e49659cab6f91bfc237c43af60617d832e157630db115edb3984d62c430a5bac024a8285b429547ba6556b3d2008a99a878fdba1526fb1167442266110e359238d703c5c35d365b26441d284ed1b1a4e7e96b7e23de38af174e90f6e48402a4ed3e8dbc69da9039df145599fd4e2de119ba4bd53e8eb4364bcc7433672acbb6b39ab24b645261b83d9e5dec5c51d2fb9ebee845d5e5bdbc6a5a7f867942bd4486a93e79432f94746a5ce4d7578df4e1c983420f8b986ad6748c07fd5b79308c552c854dd5b31357a26d804765b1b1c6013cfe2761a93acf5fd6898054c8dac29684bd3a68cee07d9a39421923e1724efdcd3c41da836dd3f50a92c5f3c65d5e3e65a1f13e66162fbe6a28414cf6f81e41661a907bebfa41627f6db8a82756050fb45e21111707f3a4fcd45e0dd39e5043f927289d89a14fa758feca4bfdde56e1d612d3177a1df4b9a08d1be7762da9e8564b1c65d8557ffa0052260de51967899c12e0c5754623ab2b5d5f0a106ea0a74b8dc3cb0a66071993772e7601dcc6575e40d6a782d55da8a4b0260b312c627fa2cc35690121d2db1804c736c0c1fa7189ba49ed6eac371d047680c734b308d0dba451710b6575c60fe0d013d87cbc8fb05ad6fbe339a12057d11bc2a76ce05538d4cd769089a07ea923e832f1bad9061fa0e68d57cfedb32143854c6ad10225e675027ad45c6e36868f3fcf99e1edf0fcea13416deaff5b45ccf1e79c8e5618d363b11b1be948831a2886664b37bc0dfd0a8455633a1f960f406989ac76fb8f8012f54d9fa7eebf44175a6a2b1f09a9be4c7ac1b4455710dc56c12ef4e88a4780bef816d99e315937730baf5df79b990f843a497e3472e02b21955301f42068fe0f3885afcde7eb7b4221ff4ad188f7cf108a4dc4d490883dd5525a9ec11b9790e4dc0f00d23d86323babca90a90a0489c71bb28b9a44c42a6ec67e5d60c136bbc3611d0c5c40acc749ac27828f16c08b9f0ea858d8d9c67de60a739e7cb22cdef99b5fe032418bbac95eb34ebb6425067e291f6033450c6b5f998c6449c8bfdec2f48f98716bee86f22a37f69fda7818527e69deb98f93afaf8edcaa1e75e4ccc1f43aaa4f4ed77f6bb82eff4fdbbdad8f56ae095bc23e38ec853748e9e1978916485e9b87620f983e2aa9382276270d3f704b60a7f8b96c3c8bdb24fc7d70e87168cbe333dce46e009b3055f38f444ce53681322ca57fdf456d3e52e85672f55628388fd73363e390c8bbba1fc71504f9ed5e1246b9168f98c00a4616b739ed01f3c3dada3bf42ddc068803b52f0082b976fd906cf57f26f794d4f8d6eb75bd9c24aeb5a78f72c3251475ff8738ffb7e2c2537615940814905b938b9eceafb1d4bf7c5db560bc439ae5f24fdc669e8caad9fe2a1e88e3b7d93f0b0623b7a86e8df6ec9431b85c61347cc3295486a3520c06170053871bec24f42454742c066ddc8f515e3ed7448e28d2c94ae1c4151b0e49de2f9d3ab57a94e9e864b652f460f9699f8cb3669d5fef504c57c24ab6d326d89dbe8fab0589ae799632f58433c36fea28cff10896c46c6be67d080f59b44ce37f16fd37f795006dd75e3052a3dc02301c1ca8c4bb505360806b4896b92d3374fc7c6d65ad901115c0b3e89cc4e1341019bfa82dd331bde7f748f27d7b33b41db9bb7ab92d0e5779b5fc675e141e70bf289de99e96aca33c93dc05b484c0a8252d0a73d67d126ec7f58e28f364eb6628a85e00d4b3ae4c39ac4419066728dfa9c5d81d4233af229f339a77a3c371ab96700e36fe04e07d2c7ee25fe7c5dd8e4c8ea1712c4138acf41fe789168d7eac3d434e8ef3370e6c6f397236b763ff85eeb7b8ae8ab8242c77ef6f2bdceac349f7cdad273119e6bcf222e074a18907b20f5a64fa59f13baa916eaa264f9fad29644a726f859fe7c6b283ef8e8d03c565d886b1a58af1564d2895bab3b8f5528e4edc5d41bb294983334587843bdda19f279be7b5f90cf4667e91ff13ecbb247059f29fb7f044ca0040722954c697e85b458fb69380b09805de16c802c1aa6b537860d49d133881f1405dc8c165db3a257bec85d50ef37ad8e3d16ac6c6bcc4e1889700831bb343536c20ee6f032575df484c59e0e3ba2c7dfaa625e7463d2dd443af4f0afea2cbf0c76a7e15d3c45e1e40387e81997348285f24cbe9b88103dff9f446866420a8f172cf25a819d478313bcde22fd8464c0cea02dbe4516569c7f051d47ce097fe36e01f5de2461a5e4a6756ba9d755a3063fd1695d9fbe3720a85e7f34a23ecd5f6826a82dfa097f6f242d55fe9f889c905fe67514cc10d052cd5f0d60da1d7868daa3f0b6df408e51d711c8b53b4704a9e939df8053e8c65801c2a4ff0a981bcc67f997e40a3fbd72973a1cf506ef835a86f0fe231bb43820f0e30162f2724f8ac71cb31b234cd39a43f01476171f95621d77e96992e89c10fc96e0bd487225c45eae5ffaedaf2e8a268a051130d188889c44013b54d6ad2c335fa229f6401d4f190ca89147bf29e75ecc6c13b4ccdc48a61ba589cd5b0fc81e209fbba69d50634ceec79f8a80e13c8ce8dd43f50a2d4d663212d1972b7938ecfad434278af58f3a8c575bb331235df00a54a6a14dd77e0b42d7874c36f8209728de6624cad9bebe4ded6add133c1214a2f7bcb79af6ec7c13bf6825318266484afa286e658a4939d61e121a3f8950cf78c8a05b430219508e886eca989938c2c28922d59bce68e8cb5078273c6ef5a81c43e603cae917c2711dacd71fc5e8dd765b5eaa35fdd1b75462700ed304c1228458b7d8f57fe2fc7878500b41ac944261a46d2bd7d6155cdcee45f275c13b4b4f0bd04d4e9f0fa85c3c4e9e21f7ff8aef00c821d7a15c2df8484a0a8fe909e2c1b99a770ec2033ac0d95e93cc6b4017088f04b7804dcb9b3cba40b15af29abf6e7d65a26b59f7d3c3f96755da2273f10c77003d2ddf0f7b0c667d610b15a71518eaff168fe2a4a73122da0c0a0ed3101985b31d7a47a8c439f738c427054401f2f868644134ad22b3b06065a371c57d5a37516d25ef5b83684dd2af74a5989f41cb0dd18c005a72eb670c6fa7884227ef49a61e34f465e404625010c5e09983d1cba29b12a39faaff92c3e988736307371da28cc098a6cdb6fa4c7a4412bb4da66c0385dbf8e1c0dcc308f10d0a2d6051d24379e81d8fe13a963ae8c2c2f34b0f8580b31fa35c10bdb971914cdd7bf832636908f7a09e0391d5c2fd5fc3ce5d6bad2039f90e869cd4c1b206a88ecdcb39c926a8e33a8ab89726f4e03e7d086403f8792da2e6740dc26359489b1e0808a164ebe2496c5c4ed31e8589a3faf4560502528f02955300b75015d292e4d01905d40cddd49cc76671924bea320571b52cb3abd797b66c4a7bb2e22711ecb91d9a4de806c022b8ee080b5909edb2803ab16d75986bdc650093c0ee325cb725b186888f5378441a8414f82213f176d8d094aa91c91832035df933f43feac84beaeb4c0549995930ac3a8c9f62a837acf88115120efdbd413ad49647166acd96e674c84b0911213ffc958eef38c874618149d59d1835b84f633a5763eb9ac7f8db8d17cb0514c378aa61bbd380d6179cd304adab9b813e8b7018fa253e3142b063060671fb66ee7b64696b46872c2a8a2ded3376ba96ad302640ed57377f271dc76b05d6f61d2c9ab95fbd3570c939c7ecdf2c1d4ec3b10eb4f0e0418b9ff5c512675889ad291c9f2b19709612e7538478accad89e409fc0dda596536c4f10d843ad7554a7415de9d5aaf098b9b937d4b6b5fed9b80e6e7985292b75e08cbcf18102ac35db0b00a72afc1e849473aa8cfc6cf12774ae94c5110b3427c0d44dba7f0d81928e20138232cfd72204917d63565d11d2573fe6e086ee19e3ba58a2e275f25c47e93c7e1789c7f9bf42754a8e4d501911974492a5863448fe6589fe29f8437de4e0d2ceed42896d403e2ecf1794b546af3d452da2920d743807c519ccc499156768c9befdada877a03adfbc8bf52ac82bd3f0dffc3d845884593ee930f1525c2cdbee0d6c77662c16e44e4dec26898ad9367e6a00a7423531ae60fbf62c3b1c17225abed1f704235635e5cfad34411f713a778381c77387d03728f71a1811380614130b9cdaa952f3a89a289d742fc615677b7b0bb9b24e7424120891f6babcb7696d47c7024f5a216ba659009b66bf9a8c66796d10e10772b2d2b8ef59a39481f12e7f382592aa045597f46f707570234bb24f8c4dedea06fafcd37b80f679b3305675d50bcb7d0074289fc069eb217eb4f1f9dfd5ad251a8d8ec7f842eaabc782c4a207b41c90c15b71ac36dea7e97240141dd361d9569b04da0775efcfe37d4a7763d5d3c9b126626d95c8376901fb9e18c1552a81f21e1bc1170fd8c6610edfb67db882cebe28f0538b8b4da88215462258e542bdef746129dbe915f31d96a9e06c3419f84e9b2dcf20f5a5c8c2105b725f21cefae395139087f30ccabc272081690d6223d29e911f3e327e1020d262d33687a3e2985a05127a4902753bf6ca6daaec4359a90a2e1b1a79a5e38a48b770a22d53684e054511916f36ccf7fe6176a702bce3ec31d5d5ef0f5b4245b25022e747640533b63e2067032ed2c946b3ec0a608eac7178c39bb1aac32411fd0e7fed00ce2321d9826c8f14a487ceeaf8d2477ad987740fed428836abf9d9eef27d741d0ebb86944c3f116297873d607b890fdcdabb1d5cdb1564c2eb875573f8867ca0ecbd8386dff018148ed1ffa5e70f31eadfbc683512b2ab16b1334b4a3e6fc7f6e35a289cb9ea9b1c918309ae985004e82bf101cdd49cd0d5777644aea904add70a7efaeebda9a030265fd77d5a385f067e453148f5932470d4f06a1513cc2f5315cfa3dae60004835752c5a9e9e95719d91c317de6884f6012b180a4e331f7ac604ff060b6ecac64d3398c0e41a10db64aa0765efde42482b67f9a8d32487456221784aa272a054f2c17b6ce4a9c46ac4b7ed180ae18c5b78699be1cbdb5e8d8b0bcf27771893d8796b42f30f63bf6a0370f2a5b22d8f43f32dad4b5e48df45162758cdf5845fb4b40d96f4ada6cba27effc85fc8ff219986a20489dbcd31fd387015d00b8874213e124172fb9739fbc026406d18d32ab15bd7d8e7ad307803badad378c22a6a99472e25540f0e3966bf032d40284adc2183ecb4c16a4bc82698242c780c363110b8fb5daaa0294b4b26f13c38735d601ce5f6a8b746fb114719783387b9ed8be2b74964cd228b213651fa80abf7cb1f8f513b4afe3e552b0dacf35ad6ecb19dd63e8b2bbdc05001f80572d40fd4896005d2f52af4dc09d8ce77ef7a6d7bdebaf6ab1b7ac3296a0890b358b18a87aded986289678194bf67c7cf6d5f548b6f21cd355effb87942d6026af5940c6b687bc272ad8cac218e1f956166885cf646fbf5d0dc20854355bfaab5e69a70cf6e302e24d63f3d37c8c4d9f9c74329167478cf7226a55422365a39f63031dd9d0c7455dc23c8f514183348cded11f3ee1300b531acf53f15db583b8519b11acb7c820ceb8c8887919decfe04b8f9d6c762220aee9e5af82cf457dea666f741f7fbfa9baf7c12669a9cb4503dc6d306d83965090b29319ba244398993e65436c6a0e5574f0f98a4f04255aa4ca7bf5685eed0ad791ea6b9e68a6f101a04bc3cfe47a1e4b89ab46ec3b2e7c8b6bac1b3111583cbe91b96a167e84fab3055071c5c74689d6f81bd8ef0dbebc804a2ed96c173bc00ead449cb536ed7b30a22015f69d6d186b7bc46c3489173d7eaf9c1bf7c2bcf7fa1db05549cd56141eb790149267b327daafaa122bced2e7f81250dce50efd61981156fe92235489ed19c2f0aa97fc4daebcda39e35099189106052175b2a744ac0bd0d4cf4956eb73aac6376ae0c5f1823ee6f6c81288a588f63a929d028e5cf8764f647f2dbd973f8ce17eceb0cd70d507e4ee36d4b1ee528024ac51365aac8261c612443c90fd287f27514bc6482f37cbd17e12ec6abb490f389d47253d50a9caab85a2e05f1e51c3243dbbe66a4fe4c6c5867b9725df9fbfb2bc7870e04e247d9204276422db54f6c744ec62fd8d6834d2a8ad2f1b491c646aa730db0f5e0157938b8ce5c3a7d993e74cfa5d95fb4b7d9e60a5bb4252858a3034434656c912e0d44d74445c16fe63be552f0f366268c11381acdff730e67c73580e35b64c40d323e4c3b8b7084c99cfd3209a124699ce4399b5fceabed614597502fb500f399a094423db925bc9f1ef5223bee223f5b3467b29e0916d3943169cdef528dd9b62c7fcd8b23b54378ca1d94741fd8fdaec60fcdea587f3b575978570b731a8231ab5f385caa44f84afe0fca59ae1181b107cd1f8f4afbbc0592047cd0fbe094b422da8e8457bc3b08d0aa2c4037314b1651078160ac8106546c6bc4a6d9510c3d43e2ea23ad2076339e5777bf2294f66845fe900ad903b7ac55c13b5dc4c0ba9cd8c5389f6906814e85ca9cce65882e37d6bdfbe01758f48c2e53a4ecf8d46933b90445f6f5467e6e086219ca1240b54d46e1a098c1f7624042dfa2c03c94c55b00f4be81f5e6f0fb9d95c24b25bc18bf04dd21af1987c573a68dce8705c7bc630362e0d2a281b86be42b072f19e9a0d138f0d9d9f62b6e2b08502fbcd30b55ef7578915f11a64ed29f6555a122aef50e3c340b7a59082719c73475d1cf2d64baab565786145885a55e1f08c7a886151c7395ba4e5051c47d9280abb1aca8e4e68e9d03fc503697f2f10d368ff31088011c3132c8194631f382c3f267769aad6371aba95f40eefb165e9b1a67e15081778157b5235c0c22cdde69a8b53f3843c9e4684458225892d25a9de4ef8705a31d8917767f9c00b55e73191b630fa4d133d4f5198a54e3459bd0ae30454eba1910e5a19cc32113c2b26e01c998bb52f33dff1b6e819491a397518d8a88f7a3b1bf12ca4403f77715933ce557ba5cb7319f0e80e476c172b6b18616a8ae8a20deb8aabb6cad658db47e577b53d6add371af49fd686e4797ecb97bf6e0ed3efcaa1bef50f0b4119182b2086eff5e3f6f69cd86c44c251e97596f8bbb88ddb0d44a6ca442542fabc7c484c8b278fd4a93d996ca06bcc8ba39741c8e9c0612f72a574410b942d4786cf5e205dd31b4def5c13caf50b5f6e715bf8ab39888f2502f4db3fb899d9c01a60c67a47c9549c7f9e1bd336f3f826334f3188d12f30f2c706736814729728f67c471f433fb22e2fd928b9addcbff63916c8cc3621a267d9610715c31a38dc79fb0b47d6c34550fe84e4bf2e8fc8f0aeed99f840145dc84fa3adec7d1d2f9bec7373585678cc978f73a4db4ac6f5b4c0cc5600818e30adcbbacadd957315683a4d5b0da1b6dcf37a2533a18a9375c5df595830756445c72183643213fd2733069bf52879c1b95f7bd16c8ed09315bac72ca42c4a06663cacb55231ce54f7f6c114b0f4a3acf4f7db01e8bfbfb48fee73204ba07856d45a8582a453b2325d7346008036cc336bbe59eea74f0518cb22c4df4020325a341d3c134e3af17f3ffeb054e6c743bafc9fe343559b90ed7f36c275bc57325940f91174266e242a46351a2b7fe2c0df09db465fd2458aba7de61431d620f62b243cb5024f8be236984640c5bf4708e9cd511387c8202ca89291847411b47acb352e7fa1ee874340b8825f32f46d5def6271b4398a80a84013e1417d91e0e85c394958fdd808552e06943938ca00643a26f61142f174e43a23c844f0cca47039ba89dff3d117d3e5ece91079e227f1c67fcb920395300ebd5ff5b76b7c8dc140c2f5fbb7ed3a0fbbd5bffc35cd6469530a8b5859d091adf8aa4420ee882d1cfce301545f923324a7dc88271918bfed587e546a2e3b89d71fc4d2163868e0a2b3b9620361418266d61baf57ca70780dfb5c5ad00</script>  <div class="hbe hbe-content">    <div class="hbe hbe-input hbe-input-xray">      <input class="hbe hbe-input-field hbe-input-field-xray" type="password" id="hbePass">      <label class="hbe hbe-input-label hbe-input-label-xray" for="hbePass">        <span class="hbe hbe-input-label-content hbe-input-label-content-xray">这里记录我和女朋友的一些事情哦，需要密码才能进入!</span>      </label>      <svg class="hbe hbe-graphic hbe-graphic-xray" width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">        <path d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0"></path>        <path d="M0,2.5c0,0,298.666,0,399.333,0C448.336,2.5,513.994,13,597,13c77.327,0,135-10.5,200.999-10.5c95.996,0,402.001,0,402.001,0"></path>      </svg>    </div>  </div></div><script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
       
     </entry>
     
@@ -2035,11 +1980,55 @@
     
     
     <entry>
-      <title>恋爱小屋</title>
-      <link href="/personal/love/index.html"/>
-      <url>/personal/love/index.html</url>
+      <title>八音盒</title>
+      <link href="/life/music/index.html"/>
+      <url>/life/music/index.html</url>
       
-        <content type="html"><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="抱歉, 这个密码看着不太对, 请再试试!" data-whm="OOPS, these decrypted content may changed, but you can still have a look.">  <script id="hbeData" type="hbeData" data-hmacdigest="df0f8e2061060da7077de08faed19690880a3d588d31fa0f4c43db152ce54afe">67b9c55d48b773f353458da7083b1fa0b08f106f00e36f446994a20569f1c39a</script>  <div class="hbe hbe-content">    <div class="hbe hbe-input hbe-input-xray">      <input class="hbe hbe-input-field hbe-input-field-xray" type="password" id="hbePass">      <label class="hbe hbe-input-label hbe-input-label-xray" for="hbePass">        <span class="hbe hbe-input-label-content hbe-input-label-content-xray">这里记录我和女朋友的一些事情哦，需要密码才能进入!</span>      </label>      <svg class="hbe hbe-graphic hbe-graphic-xray" width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">        <path d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0"></path>        <path d="M0,2.5c0,0,298.666,0,399.333,0C448.336,2.5,513.994,13,597,13c77.327,0,135-10.5,200.999-10.5c95.996,0,402.001,0,402.001,0"></path>      </svg>    </div>  </div></div><script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
+        <content type="html"><![CDATA[<main class="layout" id="content-inner">    <div id="page">        <div id="article-container">            <span class="p center logo h2 blue">                <b>( ＾∀＾）／欢迎光临八音盒，希望舒缓的音乐能带走你一天的疲劳~!＼( ＾∀＾）</b>            </span>    <br>    <br></main>    <blockquote><p>来源：网易云音乐</p></blockquote>    <div id="aplayer-btKKleNV" class="aplayer aplayer-tag-marker meting-tag-marker"         data-id="12952460159" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="false" data-listmaxheight="400px" data-preload="none" data-theme="#ad7a86"    ></div><!-- <iframe  frameborder="no" border="0"  marginwidth="0" marginheight="0"  width=530 height=310  src="//activity.kugou.com/share/v-a00a45b0/index.html?u=1045443904&h1=240987975537390846260097417101362365343&h2=483a904874cd4093b4e2381eaea94080&specialid=-2147483648&global_specialid=collection_3_1045443904_16_0&cType=0"></iframe> -->]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>影院</title>
+      <link href="/life/movies/index.html"/>
+      <url>/life/movies/index.html</url>
+      
+        <content type="html"><![CDATA[<main class="layout" id="content-inner">    <div id="page">        <div id="article-container">            <span class="p center logo h2 blue">                <b>( ＾∀＾）／欢迎光临影院，切换黑夜模式食用效果更佳哦~!＼( ＾∀＾）</b>            </span>    <br>    <br></main>    <details class="folding-tag" blue>    <summary>哔哩哔哩放映厅</summary>        <div class="content">            <div class="tabs" id="room_1">                <ul class="nav-tabs">                    <li class="tab active">                        <button type="button" data-href="#room_1-1">1号厅</button>                    </li>                    <li class="tab">                        <button type="button" data-href="#room_1-2">2号厅</button>                    </li>                    <li class="tab">                        <button type="button" data-href="#room_1-3">3号厅</button>                    </li>                </ul>                <div class="tab-contents">                    <div class="tab-item-content active" id="room_1-1">                        <h3 id="您当前正处于-1-号厅，当前放映的是《冲破黑暗 Out of Darkness》">您当前正处于 1 号厅，当前放映的是《冲破黑暗 Out of Darkness》</h3>                        <div align="center" class="aspect-ratio">                            <iframe src="//player.bilibili.com/player.html?isOutside=true&aid=714997425&bvid=BV1hX4y1g7pp&cid=321134107&p=1&autoplay=0" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>                        </div>                        <button type="button" class="tab-to-top" aria-label="scroll to top">                            <i class="fas fa-arrow-up"></i>                        </button>                    </div>                    <div class="tab-item-content" id="room_1-2">                        <h3 id="您当前正处于-2-号厅，当前放映的是《记忆管理局》">您当前正处于 2 号厅，当前放映的是《记忆管理局》</h3>                        <div align="center" class="aspect-ratio">                            <iframe src="//player.bilibili.com/player.html?isOutside=true&aid=884758835&bvid=BV1iK4y187Th&cid=240382860&p=1&autoplay=0" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>                        </div>                        <button type="button" class="tab-to-top" aria-label="scroll to top">                            <i class="fas fa-arrow-up"></i>                        </button>                    </div>                    <div class="tab-item-content" id="room_1-3">                        <h3 id="您当前正处于-3-号厅，当前放映的是《黑盒》">您当前正处于 3 号厅，当前放映的是《黑盒》</h3>                        <div align="center" class="aspect-ratio">                            <iframe src="//player.bilibili.com/player.html?isOutside=true&aid=58854830&bvid=BV1Pt411L7Uo&cid=102606378&p=1&autoplay=0" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>                        </div>                        <button type="button" class="tab-to-top" aria-label="scroll to top">                            <i class="fas fa-arrow-up"></i>                        </button>                    </div>                    </div>                      </div>        </div></details>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>文章统计</title>
+      <link href="/site/echarts/index.html"/>
+      <url>/site/echarts/index.html</url>
+      
+        <content type="html"><![CDATA[<script src="https://npm.elemecdn.com/echarts@4.9.0/dist/echarts.min.js"></script><!-- 文章发布时间统计图 --><div id="posts-chart" data-start="2021-01" style="border-radius: 8px; height: 300px; padding: 10px;"></div><!-- 文章标签统计图 --><div id="tags-chart" data-length="10" style="border-radius: 8px; height: 300px; padding: 10px;"></div><!-- 文章分类统计图 --><div id="categories-chart" data-parent="true" style="border-radius: 8px; height: 300px; padding: 10px;"></div>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>网站建设</title>
+      <link href="/site/time/index.html"/>
+      <url>/site/time/index.html</url>
+      
+        <content type="html"><![CDATA[<main class="layout" id="content-inner">    <div id="page">        <div id="article-container">            <span class="p center logo h2 blue">                <b>( ＾∀＾）／关于小站的建设进程都在这里哦~!＼( ＾∀＾）</b>            </span>    <br>    <br></main><details class="folding-tag" blue>    <summary>2024.11.29</summary>    <p>        网站基本框架建设完毕，小站处于调试阶段！    </p></details><details class="folding-tag" blue>    <summary>2024.11.30</summary>        <p>1. 上传文章，并完成基本的排版！</p>        <p>2. 增添文章统计功能，插入文章统计图表！</p>        <p>3. 更改网站背景图，更换文章封面！</p></details><details class="folding-tag" blue>    <summary>2024.12.01</summary>        <p>1. 完成网站的评论功能！</p>        <p>2. 增加首页的标签冰贴</p>        <p>3. 更换头像以及预加载头像动画！</p></details><details class="folding-tag" blue>    <summary>2024.12.02</summary>        <p>1. 完善网站的一些细节，增加格言等文案</p>        <p>2. 进行手机适配设置，让手机用户访问网站更加舒适！</p>        <p>3. 增加文章的评论功能！</p></details><details class="folding-tag" blue>    <summary>2024.12.03</summary>        <p>1. 完成网站的网站地图功能！</p>        <p>2. 注册百度站长和ping站长账号，做好推送准备</p>        <p>3. 修改美化设置，将默认设置修改成了站长喜好！</p></details><details class="folding-tag" blue>    <summary>2024.12.04</summary>        <p>1. 完成网站的大部分建设</p>        <p>2. 增加“八音盒”功能，能从网易云音乐索引音乐播放</p>        <p>3. 实现全局音乐播放，在左下角固定音乐播放器，能实现背景音乐播放（但还是没有当背景音乐播放，考虑到可能会吵到读者）</p>        <p>4. 增加“影院”功能，牵引哔哩哔哩等链接，进行视频观看（都是站长亲自选定的）！</p>        <p>5. 增加根据地理位置欢迎的语句，并不断调试，最终正式上线！</p>        <p>6. 页脚增加标签、格言等！</p>        <p>7. 注册了两个域名（m3x1.cn和m3x1.fun），并实现绑定！</p>        <p>            <span style="color: blue;">至此，网站正式上线！</span>        </p></details><details class="folding-tag" blue>    <summary>2024.12.05</summary>        <p>            <span style="color: blue;">1. 网站“旧时光”功能搭建，开始记录网站建设的历程！</span>        </p>        <p>2. 解决打开影院功能时，视频播放器全部自动播放的问题！</p></details>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>网站统计</title>
+      <link href="/site/census/index.html"/>
+      <url>/site/census/index.html</url>
+      
+        <content type="html"><![CDATA[<!-- <script src="https://npm.elemecdn.com/echarts@4.9.0/dist/echarts.min.js"></script><script src="https://npm.elemecdn.com/echarts@4.9.0/map/js/china.js"></script> 绘制地图需要另外添加 china.js -->]]></content>
       
     </entry>
     
@@ -2051,6 +2040,17 @@
       <url>/social/link/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>朋友圈</title>
+      <link href="/social/fcircle/index.html"/>
+      <url>/social/fcircle/index.html</url>
+      
+        <content type="html"><![CDATA[<style>  #cf-container {    background: transparent !important;  }  .cf-article .cf-article-title:hover {    color: #f4f4f4 !important;  }  .cf-img-avatar {    opacity: .4 !important;  }  .cf-article-author:hover {    background: var(--theme-color) !important;  }  #cf-more:hover {    background: var(--theme-color) !important;  }  .cf-overshow p a:hover {    color: #f4f4f4 !important;  }  .cf-article {    transition: transform linear 0.3s;  }  .cf-article:hover {    transform: scale(1.05);    box-shadow: 0 5px 10px 8px #07111b29;  }  .cf-article {    border-radius: 15px !important;    border: 1px solid #a5a5a5ee !important;  }  ::selection {  background: var(--theme-color) !important;  color: #f4f4f4 !important;  }</style><!-- <div id="hexo-circle-of-friends-root"></div><script>    let UserConfig = {        // 替换为你的API!!!        private_api_url: '',        // 点击加载更多时，一次最多加载几篇文章，默认10        page_turning_number: 12,        // 头像加载失败时，默认头像地址        error_img: '/assets/r1.jpg',        // 进入页面时第一次的排序规则        sort_rule: 'created'    }</script> -->]]></content>
       
     </entry>
     
