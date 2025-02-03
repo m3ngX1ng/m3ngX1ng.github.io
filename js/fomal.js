@@ -690,7 +690,7 @@ if (document.body.clientWidth > 992) {
       zoom: 0.9
     }
     );
-    
+
   })
 }
 
@@ -2499,12 +2499,12 @@ function createtime() {
     snum = Math.round(seconds);
   1 == String(snum).length && (snum = "0" + snum);
   let currentTimeHtml = "";
-  (currentTimeHtml =
+  currentTimeHtml =
     hnum < 18 && hnum >= 9
       ? `<img class='boardsign' src='' title=''><br> <div style="font-size:13px;font-weight:bold">本站居然运行了 ${dnum} 天 ${hnum} 小时 ${mnum} 分 ${snum} 秒 <i id="heartbeat" class='fas fa-heartbeat'></i> <br> <b>旅行者 1 号当前距离地球 ${dis} 千米，约为 ${unit} 个天文单位 🚀</b> <br> <b><font size=2px>少年有他的山海，有他的重重山影，有他的万里波涛。如果可以，风给他，沙漠给他，天空也给他。是无拘无束的风，会下大雨的沙漠，和铺满星辰的天空。万物给他，让他自由✨</font></b></div>`
-      : `<img class='boardsign' src='' title=''><br> <div style="font-size:13px;font-weight:bold">本站居然运行了 ${dnum} 天 ${hnum} 小时 ${mnum} 分 ${snum} 秒 <i id="heartbeat" class='fas fa-heartbeat'></i> <br> 旅行者 1 号当前距离地球 ${dis} 千米，约为 ${unit} 个天文单位 🚀</b> <br> <b><font size=2px>少年有他的山海，有他的重重山影，有他的万里波涛。如果可以，风给他，沙漠给他，天空也给他。是无拘无束的风，会下大雨的沙漠，和铺满星辰的天空。万物给他，让他自由✨</font></b></div>`),
-    document.getElementById("workboard") &&
-    (document.getElementById("workboard").innerHTML = currentTimeHtml);
+      : `<img class='boardsign' src='' title=''><br> <div style="font-size:13px;font-weight:bold">本站居然运行了 ${dnum} 天 ${hnum} 小时 ${mnum} 分 ${snum} 秒 <i id="heartbeat" class='fas fa-heartbeat'></i> <br> 旅行者 1 号当前距离地球 ${dis} 千米，约为 ${unit} 个天文单位 🚀</b> <br> <b><font size=2px>少年有他的山海，有他的重重山影，有他的万里波涛。如果可以，风给他，沙漠给他，天空也给他。是无拘无束的风，会下大雨的沙漠，和铺满星辰的天空。万物给他，让他自由✨</font></b></div>`,
+  document.getElementById("workboard")
+  document.getElementById("workboard").innerHTML = currentTimeHtml
 }
 setInterval(() => {
   createtime();
