@@ -7,12 +7,10 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function percent() {
-
   try {
     rmf.showRightMenu(false);
     $('.rmMask').attr('style', 'display: none');
   } catch (err) {
-
   }
 
   let a = document.documentElement.scrollTop,
