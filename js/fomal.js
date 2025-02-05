@@ -2780,8 +2780,8 @@ if (localStorage.getItem("blogbg") != undefined) {
   setBg(localStorage.getItem("blogbg"));
 } else {
   document.getElementById("defineBg").innerText = `:root{
-    --default-bg: url(/assets/cover/1.png);
-    --darkmode-bg: url(/assets/cover/dark.jpg);
+    --default-bg: url(/assets/cover/homecover1.png);
+    --darkmode-bg: url(/assets/cover/darkcover2.jpg);
     --mobileday-bg: url(/assets/cover/phone-cover7.jpg);
     --mobilenight-bg: url(/assets/cover/phone-cover1.jpg);
   }`;
@@ -2908,6 +2908,31 @@ function createWinbox() {
   winResize();
   window.addEventListener("resize", winResize);
 
+/*   背景设置中的一些其他标签：
+<h3>1. 二次元</h3>
+<details class="folding-tag" cyan><summary> 查看二次元背景 </summary>
+              <div class='content'>
+              <div class="bgbox"><a href="javascript:;" rel="noopener external nofollow" style="background-image:url(https://lskypro.acozycotage.net/Fomalhaut/img/home_bg.webp)" class="imgbox" onclick="changeBg('url(https://lskypro.acozycotage.net/Fomalhaut/img/home_bg.webp)')"></a></div>
+              </div>
+            </details>
+
+<h3>2. 风景</h3>
+
+<details class="folding-tag" cyan><summary> 查看风景背景 </summary>
+              <div class='content'>
+              <div class="bgbox"><a href="javascript:;" rel="noopener external nofollow" style="background-image:url(https://lskypro.acozycotage.net/Fomalhaut/img/fj1.webp)" class="imgbox" onclick="changeBg('url(https://lskypro.acozycotage.net/Fomalhaut/img/fj1.webp)')"></a></div>
+              </div>
+            </details>
+
+<h3>3. 萌宠</h3>
+
+<details class="folding-tag" cyan><summary> 查看萌宠背景 </summary>
+              <div class='content'>
+              <div class="bgbox"><a href="javascript:;" rel="noopener external nofollow" style="background-image:url(https://lskypro.acozycotage.net/Fomalhaut/img/mc1.webp)" class="imgbox" onclick="changeBg('url(https://lskypro.acozycotage.net/Fomalhaut/img/mc1.webp)')"></a></div>
+              </div>
+            </details>
+*/
+
   winbox.body.innerHTML = `
 <div class="settings" style="display: block;">
 <div id="article-container" style="padding:12px;">
@@ -2975,31 +3000,8 @@ function createWinbox() {
 <h2>四、背景设置</h2>
 <center><button onclick="resetBg()" style="background:var(--theme-color);display:block;width:35%;padding:15px 0;border-radius:30px;color:white;"><i class="fa-solid fa-arrows-rotate"></i>&nbsp;恢复默认背景</button></center>
 
-<h3>1. 二次元</h3>
-<details class="folding-tag" cyan><summary> 查看二次元背景 </summary>
-              <div class='content'>
-              <div class="bgbox"><a href="javascript:;" rel="noopener external nofollow" style="background-image:url(https://lskypro.acozycotage.net/Fomalhaut/img/home_bg.webp)" class="imgbox" onclick="changeBg('url(https://lskypro.acozycotage.net/Fomalhaut/img/home_bg.webp)')"></a></div>
-              </div>
-            </details>
 
-
-<h3>2. 风景</h3>
-
-<details class="folding-tag" cyan><summary> 查看风景背景 </summary>
-              <div class='content'>
-              <div class="bgbox"><a href="javascript:;" rel="noopener external nofollow" style="background-image:url(https://lskypro.acozycotage.net/Fomalhaut/img/fj1.webp)" class="imgbox" onclick="changeBg('url(https://lskypro.acozycotage.net/Fomalhaut/img/fj1.webp)')"></a></div>
-              </div>
-            </details>
-
-<h3>3. 萌宠</h3>
-
-<details class="folding-tag" cyan><summary> 查看萌宠背景 </summary>
-              <div class='content'>
-              <div class="bgbox"><a href="javascript:;" rel="noopener external nofollow" style="background-image:url(https://lskypro.acozycotage.net/Fomalhaut/img/mc1.webp)" class="imgbox" onclick="changeBg('url(https://lskypro.acozycotage.net/Fomalhaut/img/mc1.webp)')"></a></div>
-              </div>
-            </details>
-
-<h3>4. 渐变色</h3>
+<h3>1. 渐变色</h3>
 <details class="folding-tag" cyan><summary> 查看渐变色背景 </summary>
               <div class='content'>
               <div class="bgbox"><a href="javascript:;" rel="noopener external nofollow" class="box" style="background: linear-gradient(to right, #544a7d, #ffd452)" onclick="changeBg('linear-gradient(to right, #544a7d, #ffd452)')"></a><a href="javascript:;" rel="noopener external nofollow" class="box" style="background: linear-gradient(to bottom, #7f7fd5, #86a8e7, #91eae4)" onclick="changeBg('linear-gradient(to bottom, #7f7fd5, #86a8e7, #91eae4)')"></a><a href="javascript:;" rel="noopener external nofollow" class="box" style="background: linear-gradient(to left, #654ea3, #eaafc8)" onclick="changeBg('linear-gradient(to left, #654ea3, #eaafc8)')"></a><a href="javascript:;" rel="noopener external nofollow" class="box" style="background: linear-gradient(to top, #feac5e, #c779d0, #4bc0c8)" onclick="changeBg('linear-gradient(to top, #feac5e, #c779d0, #4bc0c8)')"></a><a href="javascript:;" rel="noopener external nofollow" class="box" style="background: linear-gradient(to top, #d3959b, #bfe6ba)" onclick="changeBg('linear-gradient(to top, #d3959b, #bfe6ba)')"></a><a href="javascript:;" rel="noopener external nofollow" class="box" style="background: linear-gradient(to top, #8360c3, #2ebf91)" onclick="changeBg('linear-gradient(to top, #8360c3, #2ebf91)')"></a><a href="javascript:;" rel="noopener external nofollow" class="box" style="background: linear-gradient(to top, #108dc7, #ef8e38)" onclick="changeBg('linear-gradient(to top, #108dc7, #ef8e38)')"></a><a href="javascript:;" rel="noopener external nofollow" class="box" style="background: linear-gradient(to top, #355c7d, #6c5b7b, #c06c84)" onclick="changeBg('linear-gradient(to top, #355c7d, #6c5b7b, #c06c84)')"></a></div>
@@ -3007,7 +3009,7 @@ function createWinbox() {
             </details>
 
 
-<h3>5. 纯色</h3>
+<h3>2. 纯色</h3>
 <details class="folding-tag" cyan><summary> 查看纯色背景 </summary>
               <div class='content'>
               <div class="bgbox"><a href="javascript:;" rel="noopener external nofollow" class="box" style="background: #ecb1b1" onclick="changeBg('#ecb1b1')"></a> <a href="javascript:;" rel="noopener external nofollow" class="box" style="background: #d3ebac" onclick="changeBg('#d3ebac')"></a> <a href="javascript:;" rel="noopener external nofollow" class="box" style="background: #ace9ce" onclick="changeBg('#ace9ce')"></a><a href="javascript:;" rel="noopener external nofollow" class="box" style="background: #c1ebea" onclick="changeBg('#c1ebea')"></a> <a href="javascript:;" rel="noopener external nofollow" class="box" style="background: #dee7f1" onclick="changeBg('#dee7f1')"></a> <a href="javascript:;" rel="noopener external nofollow" class="box" style="background: #e9e3f2" onclick="changeBg('#e9e3f2')"></a> <a href="javascript:;" rel="noopener external nofollow" class="box" style="background: #f7eff5" onclick="changeBg('#f7eff5')"></a>  <input type="color" id="define_colors" href="javascript:;" rel="noopener external nofollow" class="box" autocomplete="on" value="${defineColor}" oninput="changeBgColor()"></input></div>
@@ -3016,7 +3018,7 @@ function createWinbox() {
 
 
 
-<h3>6. 适配手机</h3>
+<h3>3. 适配手机</h3>
 <details class="folding-tag" cyan><summary> 查看适配手机的背景 </summary>
               <div class='content'>
               <div class="bgbox"><a href="javascript:;" rel="noopener external nofollow" style="background-image:url(https://lskypro.acozycotage.net/Fomalhaut/img/mb4.webp)" class="pimgbox" onclick="changeBg('url(https://lskypro.acozycotage.net/Fomalhaut/img/mb4.webp)')"></a><a href="javascript:;" rel="noopener external nofollow" style="background-image:url(/assets/cover/phone-cover1.jpg)" class="pimgbox" onclick="changeBg('url(/assets/cover/phone-cover1.jpg)')"></a><a href="javascript:;" rel="noopener external nofollow" style="background-image:url(/assets/cover/phone-cover2.jpg)" class="pimgbox" onclick="changeBg('url(/assets/cover/phone-cover2.jpg)')"></a><a href="javascript:;" rel="noopener external nofollow" style="background-image:url(/assets/cover/phone-cover3.jpg)" class="pimgbox" onclick="changeBg('url(/assets/cover/phone-cover3.jpg)')"></a><a href="javascript:;" rel="noopener external nofollow" style="background-image:url(/assets/cover/phone-cover4.jpg)" class="pimgbox" onclick="changeBg('url(/assets/cover/phone-cover4.jpg)')"></a><a href="javascript:;" rel="noopener external nofollow" style="background-image:url(/assets/cover/phone-cover5.jpg)" class="pimgbox" onclick="changeBg('url(/assets/cover/phone-cover5.jpg)')"></a><a href="javascript:;" rel="noopener external nofollow" style="background-image:url(/assets/cover/phone-cover6.jpg)" class="pimgbox" onclick="changeBg('url(/assets/cover/phone-cover6.jpg)')"></a><a href="javascript:;" rel="noopener external nofollow" style="background-image:url(/assets/cover/phone-cover7.jpg)" class="pimgbox" onclick="changeBg('url(/assets/cover/phone-cover7.jpg)')"></a><a href="javascript:;" rel="noopener external nofollow" style="background-image:url(/assets/cover/phone-cover8.jpg)" class="pimgbox" onclick="changeBg('url(/assets/cover/phone-cover8.jpg)')"></a><a href="javascript:;" rel="noopener external nofollow" style="background-image:url(/assets/cover/phone-cover9.jpg)" class="pimgbox" onclick="changeBg('url(/assets/cover/phone-cover9.jpg)')"></a></div>
@@ -3024,7 +3026,7 @@ function createWinbox() {
             </details>
 
 
-<h3>7. 壁纸API</h3>
+<h3>4. 壁纸API</h3>
 <details class="folding-tag" cyan><summary> 查看壁纸API系列背景 </summary>
               <div class='content'>
               <div class="bgbox"><a id="bingDayBox" rel="noopener external nofollow" style="background-image: ${bingDayBg}" class="box apiBox" onclick="changeBg('${bingDayBg}')"></a><a id="bingHistoryBox" rel="noopener external nofollow" style="background-image: ${bingHistoryBg}" class="box apiBox" onclick="changeBg('${bingHistoryBg}')"></a><a id="EEEDogBox" rel="noopener external nofollow" style="background-image: ${EEEDog}" class="box apiBox" onclick="changeBg('${EEEDog}')"></a><a id="seovxBox" rel="noopener external nofollow" style="background-image: ${seovx}" class="box apiBox" onclick="changeBg('${seovx}')"></a><a id="picsumBox" rel="noopener external nofollow" style="background-image: ${picsum}" class="box apiBox" onclick="changeBg('${picsum}')"></a><a id="waiBizhiBox" rel="noopener external nofollow" style="background-image: ${waiBizhi}" class="box apiBox" onclick="changeBg('${waiBizhi}')"></a><a id="btstuBox" rel="noopener external nofollow" style="background-image: ${btstu}" class="box apiBox" onclick="changeBg('${btstu}')"></a><a id="unsplashBox" rel="noopener external nofollow" style="background-image: ${unsplash}" class="box apiBox" onclick="changeBg('${unsplash}')"></a></div>
@@ -3032,17 +3034,17 @@ function createWinbox() {
             </details>
 
 
-<h3>8. 自定义背景</h3>
+<h3>5. 自定义背景</h3>
 <details class="folding-tag" cyan><summary> 设置自定义背景 </summary>
               <div class='content'>
               <p><center><input type="text" id="pic-link" size="70%" maxlength="1000" placeholder="请输入有效的图片链接，如 https://source.fomal.cc/img/home_bg.webp"></center></p><p><center><button type="button" onclick="getPicture()" style="background:var(--theme-color);width:35%;padding: 5px 0px 7px 0px;border-radius:30px;color:white;line-height:2;">🌈切换背景🌈</button></center></p>
               </div>
             </details>
 
-<h3>9. 作者推荐</h3>
+<h3>6. 作者推荐</h3>
 <details class="folding-tag" cyan><summary> 查看作者推荐背景 </summary>
               <div class='content'>
-              <div class="bgbox"><a href="javascript:;" rel="noopener external nofollow" class="box" style="background-image:url(/assets/cover/2.png)" class="pimgbox" onclick="changeBg('url(/assets/cover/2.png)')"></a><a href="javascript:;" rel="noopener external nofollow" class="box" style="background-image:url(/assets/cover/cover3.jpg)" class="pimgbox" onclick="changeBg('url(/assets/cover/cover3.jpg)')"></a></div>
+              <div class="bgbox"><a href="javascript:;" rel="noopener external nofollow" class="box" style="background-image:url(/assets/cover/homecover2.png)" class="pimgbox" onclick="changeBg('url(/assets/cover/homecover2.png)')"></a><a href="javascript:;" rel="noopener external nofollow" class="box" style="background-image:url(/assets/cover/homecover3.jpg)" class="pimgbox" onclick="changeBg('url(/assets/cover/homecover3.jpg)')"></a><a href="javascript:;" rel="noopener external nofollow" class="box" style="background-image:url(/assets/cover/darkcover2.jpg)" class="pimgbox" onclick="changeBg('url(/assets/cover/darkcover2.jpg)')"></a><a href="javascript:;" rel="noopener external nofollow" class="box" style="background-image:url(/assets/cover/darkcover1.jpg)" class="pimgbox" onclick="changeBg('url(/assets/cover/darkcover1.jpg)')"></a><a href="javascript:;" rel="noopener external nofollow" class="box" style="background-image:url(/assets/cover/darkcover3.jpg)" class="pimgbox" onclick="changeBg('url(/assets/cover/darkcover3.jpg)')"></a></div>
               </div>
             </details>
 

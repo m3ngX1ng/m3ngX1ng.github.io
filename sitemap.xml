@@ -803,6 +803,15 @@
   </url>
   
   <url>
+    <loc>https://m3x1.cn/box/nav/index.html</loc>
+    
+    <lastmod>2023-03-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://m3x1.cn/box/gallery/index.html</loc>
     
     <lastmod>2023-03-22</lastmod>
@@ -813,15 +822,6 @@
   
   <url>
     <loc>https://m3x1.cn/life/games/index.html</loc>
-    
-    <lastmod>2023-03-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://m3x1.cn/box/nav/index.html</loc>
     
     <lastmod>2023-03-22</lastmod>
     
@@ -857,14 +857,14 @@
 
   
   <url>
-    <loc>https://m3x1.cn/tags/misc-wp/</loc>
+    <loc>https://m3x1.cn/tags/misc%E5%A7%BF%E5%8A%BF/</loc>
     <lastmod>2025-02-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://m3x1.cn/tags/misc%E5%A7%BF%E5%8A%BF/</loc>
+    <loc>https://m3x1.cn/tags/misc-wp/</loc>
     <lastmod>2025-02-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -879,6 +879,13 @@
   
   <url>
     <loc>https://m3x1.cn/tags/web%E5%A7%BF%E5%8A%BF/</loc>
+    <lastmod>2025-02-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://m3x1.cn/tags/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/</loc>
     <lastmod>2025-02-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -900,13 +907,6 @@
   
   <url>
     <loc>https://m3x1.cn/tags/%E7%AC%94%E8%AE%B0/</loc>
-    <lastmod>2025-02-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://m3x1.cn/tags/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/</loc>
     <lastmod>2025-02-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
