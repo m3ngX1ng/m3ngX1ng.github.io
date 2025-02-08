@@ -14,7 +14,6 @@ window.addEventListener('load', () => {
       }
     })
   }
-
   const closeSearch = () => {
     const bodyStyle = document.body.style
     bodyStyle.width = ''
@@ -22,49 +21,39 @@ window.addEventListener('load', () => {
     btf.animateOut(document.querySelector('#algolia-search .search-dialog'), 'search_close .5s')
     btf.animateOut(document.getElementById('search-mask'), 'to_hide 0.5s')
   }
-
   const searchClickFn = () => {
     document.querySelector('#search-button > .search').addEventListener('click', openSearch)
   }
-
   const searchClickFnOnce = () => {
     document.getElementById('search-mask').addEventListener('click', closeSearch)
     document.querySelector('#algolia-search .search-close-button').addEventListener('click', closeSearch)
   }
-
   const cutContent = content => {
     if (content === '') return ''
-
     const firstOccur = content.indexOf('<mark>')
-
     let start = firstOccur - 30
     let end = firstOccur + 120
     let pre = ''
     let post = ''
-
     if (start <= 0) {
       start = 0
       end = 140
     } else {
       pre = '...'
     }
-
     if (end > content.length) {
       end = content.length
     } else {
       post = '...'
     }
-
     let matchContent = pre + content.substring(start, end) + post
     return matchContent
   }
-
   const algolia = GLOBAL_CONFIG.algolia
   const isAlgoliaValid = algolia.appId && algolia.apiKey && algolia.indexName
   if (!isAlgoliaValid) {
     return console.error('Algolia setting is invalid!')
   }
-
   const search = instantsearch({
     indexName: algolia.indexName,
     searchClient: algoliasearch(algolia.appId, algolia.apiKey),
@@ -72,11 +61,9 @@ window.addEventListener('load', () => {
       helper.state.query && helper.search()
     },
   })
-
   const configure = instantsearch.widgets.configure({
     hitsPerPage: 5
   })
-
   const searchBox = instantsearch.widgets.searchBox({
     container: '#algolia-search-input',
     showReset: false,
@@ -85,7 +72,6 @@ window.addEventListener('load', () => {
     placeholder: GLOBAL_CONFIG.algolia.languages.input_placeholder,
     showLoadingIndicator: true
   })
-
   const hits = instantsearch.widgets.hits({
     container: '#algolia-hits',
     templates: {
@@ -114,7 +100,6 @@ window.addEventListener('load', () => {
       }
     }
   })
-
   const stats = instantsearch.widgets.stats({
     container: '#algolia-info > .algolia-stats',
     templates: {
@@ -128,11 +113,9 @@ window.addEventListener('load', () => {
       }
     }
   })
-
   const powerBy = instantsearch.widgets.poweredBy({
     container: '#algolia-info > .algolia-poweredBy',
   })
-
   const pagination = instantsearch.widgets.pagination({
     container: '#algolia-pagination',
     totalPages: 5,
@@ -143,20 +126,14 @@ window.addEventListener('load', () => {
       next: '<i class="fas fa-angle-right"></i>'
     }
   })
-
-
   search.addWidgets([configure,searchBox,hits,stats,powerBy,pagination]) 
-
   search.start()
-
   searchClickFn()
   searchClickFnOnce()
-
   window.addEventListener('pjax:complete', () => {
     getComputedStyle(document.querySelector('#algolia-search .search-dialog')).display === 'block' && closeSearch()
     searchClickFn()
   })
-
   window.pjax && search.on('render', () => {
     window.pjax.refresh(document.getElementById('algolia-hits'))
   })

@@ -1,11 +1,9 @@
-
 document.addEventListener('pjax:complete', function () {
   window.onscroll = percent;
 });
 document.addEventListener('DOMContentLoaded', function () {
   window.onscroll = percent;
 });
-
 function percent() {
   try {
     rmf.showRightMenu(false);
@@ -27,7 +25,6 @@ function percent() {
     btn.childNodes[0].style.display = 'block'
   }
 }
-
 document.addEventListener('pjax:complete', tonav);
 document.addEventListener('DOMContentLoaded', tonav);
 function tonav() {
@@ -46,13 +43,11 @@ function tonav() {
   });
   document.getElementById("page-name").innerText = document.title.split(" | 梦~醒🥝")[0];
 }
-
 function scrollToTop() {
   document.getElementsByClassName("menus_items")[1].setAttribute("style", "");
   document.getElementById("name-container").setAttribute("style", "display:none");
   btf.scrollToDest(0, 500);
 }
-
 $.ajax({
   type: 'get',
   url: 'https://apis.map.qq.com/ws/location/v1/ip',
@@ -73,16 +68,13 @@ function getDistance(e1, n1, e2, n2) {
     n *= PI / 180
     return { x: cos(n) * cos(e), y: cos(n) * sin(e), z: sin(n) }
   }
-
   let a = getPoint(e1, n1)
   let b = getPoint(e2, n2)
   let c = hypot(a.x - b.x, a.y - b.y, a.z - b.z)
   let r = asin(c / 2) * 2 * R
   return Math.round(r);
 }
-
 function showWelcome() {
-
   let dist = getDistance(114.335981, 30.583783, ipLoacation.result.location.lng, ipLoacation.result.location.lat); //这里换成自己的经纬度
   let pos = ipLoacation.result.ad_info.nation;
   let ip;
@@ -262,7 +254,6 @@ function showWelcome() {
   else if (date.getHours() >= 16 && date.getHours() < 19) timeChange = "<span>夕阳无限好！</span>";
   else if (date.getHours() >= 19 && date.getHours() < 24) timeChange = "<span>晚上好</span>，夜生活嗨起来！";
   else timeChange = "夜深了，早点休息，少熬夜。";
-
   try {
     document.getElementById("welcome-info").innerHTML =
       `<b><center>🎉 欢迎信息 🎉</center>&emsp;&emsp;欢迎来自 <span style="color:var(--theme-color)">${pos}</span> 的小伙伴，${timeChange}您现在距离站长约 <span style="color:var(--theme-color)">${dist}</span> 公里，当前的IP地址为： <span style="color:var(--theme-color)">${ip}</span>， ${posdesc}</b>`;
@@ -272,10 +263,8 @@ function showWelcome() {
 }
 window.onload = showWelcome;
 document.addEventListener('pjax:complete', showWelcome);
-
 document.addEventListener('pjax:complete', getWeibo);
 document.addEventListener('DOMContentLoaded', getWeibo);
-
 function getWeibo() {
   fetch('').then(data => data.json()).then(data => {
     let html = '<style>.weibo-new{background:#ff3852}.weibo-hot{background:#ff9406}.weibo-jyzy{background:#ffc000}.weibo-recommend{background:#00b7ee}.weibo-adrecommend{background:#febd22}.weibo-friend{background:#8fc21e}.weibo-boom{background:#bd0000}.weibo-topic{background:#ff6f49}.weibo-topic-ad{background:#4dadff}.weibo-boil{background:#f86400}#weibo-container{overflow-y:auto;-ms-overflow-style:none;scrollbar-width:none}#weibo-container::-webkit-scrollbar{display:none}.weibo-list-item{display:flex;flex-direction:row;justify-content:space-between;flex-wrap:nowrap}.weibo-title{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-right:auto}.weibo-num{float:right}.weibo-hotness{display:inline-block;padding:0 6px;transform:scale(.8) translateX(-3px);color:#fff;border-radius:8px}</style>'
@@ -302,13 +291,11 @@ function getWeibo() {
     console.log(error);
   });
 }
-
 let TT = null;  
 function debounce(fn, time) {
   if (TT !== null) clearTimeout(TT);
   TT = setTimeout(fn, time);
 }
-
 document.addEventListener("copy", function () {
   debounce(function () {
     new Vue({
@@ -326,7 +313,6 @@ document.addEventListener("copy", function () {
     })
   }, 300);
 })
-
 document.onkeydown = function (e) {
   if (123 == e.keyCode || (e.ctrlKey && e.shiftKey && (74 === e.keyCode || 73 === e.keyCode || 67 === e.keyCode)) || (e.ctrlKey && 85 === e.keyCode)) {
     debounce(function () {
@@ -346,12 +332,10 @@ document.onkeydown = function (e) {
     }, 300);
   }
 };
-
 if ((navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i))) {
 
 } else {
   // document.write('<canvas id="snow" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:-2;pointer-events:none"></canvas>');
-
   window && (() => {
     let e = {
       flakeCount: 50, 
@@ -452,7 +436,6 @@ if ((navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobi
   }
   )();
 }
-
 function dark() {
   window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
   var n, e, i, h, t = .05,
@@ -462,7 +445,6 @@ function dark() {
     r = "226,225,142",
     d = "226,225,224",
     c = [];
-
   function f() {
     n = window.innerWidth, e = window.innerHeight, i = .216 * n, s.setAttribute("width", n), s.setAttribute("height", e)
   }
@@ -506,14 +488,12 @@ function dark() {
   }()
 };
 dark()
-
 document.addEventListener('pjax:complete', function () {
   if (document.getElementById('post-comment')) owoBig();
 });
 document.addEventListener('DOMContentLoaded', function () {
   if (document.getElementById('post-comment')) owoBig();
 });
-
 function owoBig() {
   let flag = 1, 
     owo_time = '',
@@ -522,16 +502,13 @@ function owoBig() {
     body = document.querySelector('body');
   div.id = 'owo-big';
   body.appendChild(div)
-
   let observer = new MutationObserver(mutations => {
-
     for (let i = 0; i < mutations.length; i++) {
       let dom = mutations[i].addedNodes,
         owo_body = '';
       if (dom.length == 2 && dom[1].className == 'OwO-body') owo_body = dom[1];
       // else if (dom.length == 1 && dom[0].className == 'tk-comment') owo_body = dom[0];
       else continue;
-
       if (document.body.clientWidth <= 768) owo_body.addEventListener('contextmenu', e => e.preventDefault());
       owo_body.onmouseover = (e) => {
         if (flag && e.target.tagName == 'IMG') {
@@ -551,11 +528,9 @@ function owoBig() {
       };
       owo_body.onmouseout = () => { div.style.display = 'none', flag = 1, clearTimeout(owo_time); }
     }
-
   })
   observer.observe(document.getElementById('post-comment'), { subtree: true, childList: true })
 }
-
 function randomPost() {
   fetch('/baidusitemap.xml').then(res => res.text()).then(str => (new window.DOMParser()).parseFromString(str, "text/xml")).then(data => {
     let ls = data.querySelectorAll('url loc');
@@ -599,7 +574,7 @@ if (document.body.clientWidth > 992) {
         borderRadius: 5 + 'px',
         right: 55.6 + 'px',
         nekoImg: "https://bu.dusays.com/2022/07/20/62d812db74be9.png",
-        hoverMsg: "相遇即是上上签~",
+        hoverMsg: "喵呜~",
         color: "var(--theme-color)",
         during: 500,
         blog_body: "body",
@@ -680,7 +655,6 @@ if (document.body.clientWidth > 992) {
       return this;
     }
   })(jQuery);
-
   $(document).ready(function () {
     $("#myscoll").nekoScroll({
       bgcolor: 'rgb(0 0 0 / .5)',
@@ -691,7 +665,6 @@ if (document.body.clientWidth > 992) {
 
   })
 }
-
 function setMask() {
   if (document.getElementsByClassName("rmMask")[0] != undefined)
     return document.getElementsByClassName("rmMask")[0];
@@ -709,7 +682,6 @@ function setMask() {
   document.getElementById("rightMenu").style.zIndex = 19198;
   return mask;
 }
-
 function insertAtCursor(myField, myValue) {
   if (document.selection) {
     myField.focus();
@@ -717,18 +689,14 @@ function insertAtCursor(myField, myValue) {
     sel.text = myValue;
     sel.select();
   }
-
   else if (myField.selectionStart || myField.selectionStart == '0') {
     var startPos = myField.selectionStart;
     var endPos = myField.selectionEnd;
-
     var restoreTop = myField.scrollTop;
     myField.value = myField.value.substring(0, startPos) + myValue + myField.value.substring(endPos, myField.value.length);
-
     if (restoreTop > 0) {
       myField.scrollTop = restoreTop;
     }
-
     myField.focus();
     myField.selectionStart = startPos + myValue.length;
     myField.selectionEnd = startPos + myValue.length;
@@ -737,19 +705,16 @@ function insertAtCursor(myField, myValue) {
     myField.focus();
   }
 }
-
 let rmf = {};
 rmf.showRightMenu = function (isTrue, x = 0, y = 0) {
   let $rightMenu = $('#rightMenu');
   $rightMenu.css('top', x + 'px').css('left', y + 'px');
-
   if (isTrue) {
     $rightMenu.show();
   } else {
     $rightMenu.hide();
   }
 }
-
 rmf.copyWordsLink = function () {
   let url = window.location.href
   let txa = document.createElement("textarea");
@@ -766,36 +731,27 @@ rmf.switchReadMode = function () {
   newEle.type = 'button'
   newEle.className = 'fas fa-sign-out-alt exit-readmode'
   $body.appendChild(newEle)
-
   function clickFn() {
     $body.classList.remove('read-mode')
     newEle.remove()
     newEle.removeEventListener('click', clickFn)
   }
-
   newEle.addEventListener('click', clickFn)
 }
-
 rmf.copySelect = function () {
   document.execCommand('Copy', false, null);
 }
-
 rmf.scrollToTop = function () {
   document.getElementsByClassName("menus_items")[1].setAttribute("style", "");
   document.getElementById("name-container").setAttribute("style", "display:none");
   btf.scrollToDest(0, 500);
 }
-
 document.body.addEventListener('touchmove', function () {
-
 }, { passive: false });
-
 function popupMenu() {
   window.oncontextmenu = function (event) {
     // if (event.ctrlKey) return true;
-
     if (mouseMode == "off") return true;
-
     $('.rightMenu-group.hide').hide();
     if (document.getSelection().toString()) {
       $('#menu-text').show();
@@ -911,7 +867,6 @@ function popupMenu() {
     $('.rmMask').attr('style', 'display: flex');
     return false;
   };
-
   window.addEventListener('click', function () {
     rmf.showRightMenu(false);
   });
@@ -920,10 +875,8 @@ if (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mob
   popupMenu()
 }
 const box = document.documentElement
-
 function addLongtabListener(target, callback) {
   let timer = 0
-
   target.ontouchstart = () => {
     timer = 0 
     timer = setTimeout(() => {
@@ -931,26 +884,21 @@ function addLongtabListener(target, callback) {
       timer = 0
     }, 380)
   }
-
   target.ontouchmove = () => {
     clearTimeout(timer) 
     timer = 0
   }
-
   target.ontouchend = () => { 
     if (timer) {
       clearTimeout(timer)
     }
   }
 }
-
 addLongtabListener(box, popupMenu)
-
 rmf.fullScreen = function () {
   if (document.fullscreenElement) document.exitFullscreen();
   else document.documentElement.requestFullscreen();
 }
-
 if (localStorage.getItem("mouse") == undefined) {
   localStorage.setItem("mouse", "on");
 }
@@ -994,15 +942,12 @@ function changeMouseMode() {
     }, 300);
   }
 }
-
 var now1 = new Date();
-
 function createtime1() {
   var grt = new Date("11/29/2024 00:00:00");
   now1.setTime(now1.getTime() + 250);
   var days = (now1 - grt) / 1000 / 60 / 60 / 24;
   var dnum = Math.floor(days);
-
   var ascll = [
     `欢迎来到 梦~醒🥝の小家!`,
     `Future is now 🍭🍭🍭`,
@@ -1020,7 +965,6 @@ function createtime1() {
     "天啦!",
     "©2024 By 梦~醒🥝",
   ];
-
   setTimeout(
     console.log.bind(
       console,
@@ -1035,12 +979,9 @@ function createtime1() {
     )
   );
 }
-
 createtime1();
-
 function createtime2() {
   var ascll2 = [`NCC2-036`, `调用前置摄像头拍照成功，识别为「大聪明」`, `Photo captured: `, ` 🤪 `];
-
   setTimeout(
     console.log.bind(
       console,
@@ -1051,9 +992,7 @@ function createtime2() {
       'background:url("https://unpkg.zhimg.com/anzhiyu-assets@latest/image/common/tinggge.gif") no-repeat;font-size:450%'
     )
   );
-
   setTimeout(console.log.bind(console, "%c WELCOME %c 欢迎光临，大聪明", "color:white; background-color:#23c682", ""));
-
   setTimeout(
     console.warn.bind(
       console,
@@ -1062,18 +1001,15 @@ function createtime2() {
       ""
     )
   );
-
   setTimeout(console.log.bind(console, "%c W23-12 %c 系统监测到你已打开控制台", "color:white; background-color:#4f90d9", ""));
   setTimeout(
     console.warn.bind(console, "%c S013-782 %c 你现在正处于监控中", "color:white; background-color:#d9534f", "")
   );
 }
 createtime2();
-
 console.log = function () { };
 console.error = function () { };
 console.warn = function () { };
-
 function switchNightMode() {
   document.querySelector('body').insertAdjacentHTML('beforeend', '<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"><div id="sun"></div><div id="moon"></div></div></div>'),
     setTimeout(function () {
@@ -1094,7 +1030,6 @@ function switchNightMode() {
       document.getElementById("sun").style.opacity = "0";
       document.getElementById("moon").style.opacity = "1";
     }, 1000);
-
     activateDarkMode()
     saveToLocal.set('theme', 'dark', 2)
     // GLOBAL_CONFIG.Snackbar !== undefined && btf.snackbarShow(GLOBAL_CONFIG.Snackbar.day_to_night)
@@ -1121,7 +1056,6 @@ function switchNightMode() {
       document.getElementById("sun").style.opacity = "1";
       document.getElementById("moon").style.opacity = "0";
     }, 1000);
-
     activateLightMode()
     saveToLocal.set('theme', 'light', 2)
     document.querySelector('body').classList.add('DarkMode'), document.getElementById('modeicon').setAttribute('xlink:href', '#icon-moon')
@@ -1145,7 +1079,6 @@ function switchNightMode() {
   typeof FB === 'object' && window.loadFBComment()
   window.DISQUS && document.getElementById('disqus_thread').children.length && setTimeout(() => window.disqusReset(), 200)
 }
-
 function share_() {
   let url = window.location.origin + window.location.pathname
   try {
@@ -1172,11 +1105,9 @@ function share_() {
   // new ClipboardJS(".share", { text: function () { return '标题：' + document.title + '\n链接：' + url } });
   // btf.snackbarShow("本页链接已复制到剪切板，快去分享吧~")
 }
-
 function share() {
   debounce(share_, 300);
 }
-
 var OriginTitile = document.title;
 var titleTime;
 document.addEventListener('visibilitychange', function () {
@@ -1190,8 +1121,6 @@ document.addEventListener('visibilitychange', function () {
     }, 2000);
   }
 });
-
-
 /**
 
 * @1900-2100区间内的公历、农历互转
@@ -1259,9 +1188,6 @@ var lunarInfo = [0x04bd8, 0x04ae0, 0x0a570, 0x054d5, 0x0d260, 0x0d950, 0x16554, 
   0x0e968, 0x0d520, 0x0daa0, 0x16aa6, 0x056d0, 0x04ae0, 0x0a9d4, 0x0a2d0, 0x0d150, 0x0f252,
 
   0x0d520] 
-
-
-
 var solarMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
 
@@ -1535,15 +1461,10 @@ var nStr3 = ['\u6b63', '\u4e8c', '\u4e09', '\u56db', '\u4e94', '\u516d', '\u4e03
 */
 
 function lYearDays(y) {
-
   var i
-
   var sum = 348
-
   for (i = 0x8000; i > 0x8; i >>= 1) { sum += (lunarInfo[y - 1900] & i) ? 1 : 0 }
-
   return (sum + leapDays(y))
-
 }
 
 
@@ -1561,9 +1482,7 @@ function lYearDays(y) {
 */
 
 function leapMonth(y) { // 闰字编码 \u95f0
-
   return (lunarInfo[y - 1900] & 0xf)
-
 }
 
 
@@ -1581,15 +1500,10 @@ function leapMonth(y) { // 闰字编码 \u95f0
 */
 
 function leapDays(y) {
-
   if (leapMonth(y)) {
-
     return ((lunarInfo[y - 1900] & 0x10000) ? 30 : 29)
-
   }
-
   return (0)
-
 }
 
 
@@ -1607,11 +1521,8 @@ function leapDays(y) {
 */
 
 function monthDays(y, m) {
-
   if (m > 12 || m < 1) { return -1 }
-
   return ((lunarInfo[y - 1900] & (0x10000 >> m)) ? 30 : 29)
-
 }
 
 
@@ -1629,21 +1540,13 @@ function monthDays(y, m) {
 */
 
 function solarDays(y, m) {
-
   if (m > 12 || m < 1) { return -1 }
-
   var ms = m - 1
-
   if (ms === 1) { 
-
     return (((y % 4 === 0) && (y % 100 !== 0) || (y % 400 === 0)) ? 29 : 28)
-
   } else {
-
     return (solarMonth[ms])
-
   }
-
 }
 
 
@@ -1659,15 +1562,10 @@ function solarDays(y, m) {
 */
 
 function toGanZhiYear(lYear) {
-
   var ganKey = (lYear - 3) % 10
-
   var zhiKey = (lYear - 3) % 12
-
   if (ganKey === 0) ganKey = 10 
-
   if (zhiKey === 0) zhiKey = 12
-
   return Gan[ganKey - 1] + Zhi[zhiKey - 1]
 
 }
@@ -1729,93 +1627,44 @@ function toGanZhi(offset) {
 */
 
 function getTerm(y, n) {
-
   if (y < 1900 || y > 2100) { return -1 }
-
   if (n < 1 || n > 24) { return -1 }
-
   var _table = sTermInfo[y - 1900]
-
   var _info = [
-
     parseInt('0x' + _table.substr(0, 5)).toString(),
-
     parseInt('0x' + _table.substr(5, 5)).toString(),
-
     parseInt('0x' + _table.substr(10, 5)).toString(),
-
     parseInt('0x' + _table.substr(15, 5)).toString(),
-
     parseInt('0x' + _table.substr(20, 5)).toString(),
-
     parseInt('0x' + _table.substr(25, 5)).toString()
-
   ]
-
   var _calday = [
-
     _info[0].substr(0, 1),
-
     _info[0].substr(1, 2),
-
     _info[0].substr(3, 1),
-
     _info[0].substr(4, 2),
-
-
-
     _info[1].substr(0, 1),
-
     _info[1].substr(1, 2),
-
     _info[1].substr(3, 1),
-
     _info[1].substr(4, 2),
-
-
-
     _info[2].substr(0, 1),
-
     _info[2].substr(1, 2),
-
     _info[2].substr(3, 1),
-
     _info[2].substr(4, 2),
-
-
-
     _info[3].substr(0, 1),
-
     _info[3].substr(1, 2),
-
     _info[3].substr(3, 1),
-
     _info[3].substr(4, 2),
-
-
-
     _info[4].substr(0, 1),
-
     _info[4].substr(1, 2),
-
     _info[4].substr(3, 1),
-
     _info[4].substr(4, 2),
-
-
-
     _info[5].substr(0, 1),
-
     _info[5].substr(1, 2),
-
     _info[5].substr(3, 1),
-
     _info[5].substr(4, 2)
-
   ]
-
   return parseInt(_calday[n - 1])
-
 }
 
 
@@ -1833,15 +1682,10 @@ function getTerm(y, n) {
 */
 
 function toChinaMonth(m) { // 月 => \u6708
-
   if (m > 12 || m < 1) { return -1 } 
-
   var s = nStr3[m - 1]
-
   s += '\u6708' 
-
   return s
-
 }
 
 
@@ -1859,39 +1703,22 @@ function toChinaMonth(m) { // 月 => \u6708
 */
 
 function toChinaDay(d) { // 日 => \u65e5
-
   var s
-
   switch (d) {
-
     case 10:
-
       s = '\u521d\u5341'
-
       break
-
     case 20:
-
       s = '\u4e8c\u5341'
-
       break
-
     case 30:
-
       s = '\u4e09\u5341'
-
       break
-
     default:
-
       s = nStr2[Math.floor(d / 10)]
-
       s += nStr1[d % 10]
-
   }
-
   return (s)
-
 }
 
 
@@ -1909,9 +1736,7 @@ function toChinaDay(d) { // 日 => \u65e5
 */
 
 function getAnimal(y) {
-
   return Animals[(y - 4) % 12]
-
 }
 
 
@@ -1933,192 +1758,93 @@ function getAnimal(y) {
 */
 
 function solar2lunar(y, m, d) { 
-
   if (y < 1900 || y > 2100) {
-
     return -1
-
   }
-
-
   if (y === 1900 && m === 1 && d < 31) {
-
     return -1
-
   }
-
   var objDate = null
-
   if (!y) {
-
     objDate = new Date()
-
   } else {
-
     objDate = new Date(y, parseInt(m) - 1, d)
-
   }
-
   var i
-
   var leap = 0
-
   var temp = 0
-
-
   y = objDate.getFullYear()
-
   m = objDate.getMonth() + 1
-
   d = objDate.getDate()
-
   var offset = (Date.UTC(objDate.getFullYear(), objDate.getMonth(), objDate.getDate()) - Date.UTC(1900, 0, 31)) / 86400000
-
   for (i = 1900; i < 2101 && offset > 0; i++) {
-
     temp = lYearDays(i)
-
     offset -= temp
-
   }
-
   if (offset < 0) {
-
     offset += temp; i--
-
   }
-
-
   var isTodayObj = new Date()
-
   var isToday = false
-
   if (isTodayObj.getFullYear() === y && isTodayObj.getMonth() + 1 === m && isTodayObj.getDate() === d) {
-
     isToday = true
-
   }
-
-
   var nWeek = objDate.getDay()
-
   var cWeek = nStr1[nWeek]
-
   if (nWeek === 0) {
-
     nWeek = 7
-
   }
-
-
   var year = i
-
   leap = leapMonth(i)
-
   var isLeap = false
-
-
   for (i = 1; i < 13 && offset > 0; i++) {
-
     if (leap > 0 && i === (leap + 1) && isLeap === false) {
-
       --i
-
       isLeap = true; temp = leapDays(year)
-
     } else {
-
       temp = monthDays(year, i)
-
     }
-
     if (isLeap === true && i === (leap + 1)) { isLeap = false }
-
     offset -= temp
-
   }
-
   if (offset === 0 && leap > 0 && i === leap + 1) {
-
     if (isLeap) {
-
       isLeap = false
-
     } else {
-
       isLeap = true; --i
-
     }
-
   }
-
   if (offset < 0) {
-
     offset += temp; --i
-
   }
   var month = i
-
   var day = offset + 1
-
   var sm = m - 1
-
   var gzY = toGanZhiYear(year)
-
-
   var firstNode = getTerm(y, (m * 2 - 1))
-
   var secondNode = getTerm(y, (m * 2))
-
   var gzM = toGanZhi((y - 1900) * 12 + m + 11)
-
   if (d >= firstNode) {
-
     gzM = toGanZhi((y - 1900) * 12 + m + 12)
-
   }
-
   var isTerm = false
-
   var Term = null
-
   if (firstNode === d) {
-
     isTerm = true
-
     Term = solarTerm[m * 2 - 2]
-
   }
-
   if (secondNode === d) {
-
     isTerm = true
-
     Term = solarTerm[m * 2 - 1]
-
   }
-
-
   var dayCyclical = Date.UTC(y, sm, 1, 0, 0, 0, 0) / 86400000 + 25567 + 10
-
   var gzD = toGanZhi(dayCyclical + d - 1)
-
   var astro = toAstro(m, d)
-
   return { 'lYear': year, 'lMonth': month, 'lDay': day, 'Animal': getAnimal(year), 'IMonthCn': (isLeap ? '\u95f0' : '') + toChinaMonth(month), 'IDayCn': toChinaDay(day), 'cYear': y, 'cMonth': m, 'cDay': d, 'gzYear': gzY, 'gzMonth': gzM, 'gzDay': gzD, 'isToday': isToday, 'isLeap': isLeap, 'nWeek': nWeek, 'ncWeek': '\u661f\u671f' + cWeek, 'isTerm': isTerm, 'Term': Term, 'astro': astro }
-
 }
-
-
-
-
-
 var calendarFormatter = {
-
   solar2lunar: function (y, m, d) { 
-
     return solar2lunar(y, m, d)
-
   },
 
   /**
@@ -2140,81 +1866,43 @@ var calendarFormatter = {
   */
 
   lunar2solar: function (y, m, d, isLeapMonth) {
-
     isLeapMonth = !!isLeapMonth
-
     if (isLeapMonth && (leapMonth !== m)) { return -1 }
-
     if (y === 2100 && m === 12 && d > 1 || y === 1900 && m === 1 && d < 31) { return -1 } 
-
     var day = monthDays(y, m)
-
     var _day = day
-
-
     if (isLeapMonth) {
-
       _day = leapDays(y, m)
-
     }
-
     if (y < 1900 || y > 2100 || d > _day) { return -1 }
-
-
     var offset = 0
-
     for (var i = 1900; i < y; i++) {
-
       offset += lYearDays(i)
-
     }
-
     var leap = 0
-
     var isAdd = false
-
     for (i = 1; i < m; i++) {
-
       leap = leapMonth(y)
-
       if (!isAdd) {
-
         if (leap <= i && leap > 0) {
-
           offset += leapDays(y); isAdd = true
-
         }
-
       }
-
       offset += monthDays(y, i)
-
     }
-
-
     if (isLeapMonth) { offset += day }
-
     var stmap = Date.UTC(1900, 1, 30, 0, 0, 0)
-
     var calObj = new Date((offset + d - 31) * 86400000 + stmap)
-
     var cY = calObj.getUTCFullYear()
-
     var cM = calObj.getUTCMonth() + 1
-
     var cD = calObj.getUTCDate()
-
     return solar2lunar(cY, cM, cD)
-
   }
-
 }
-
 var d = new Date();
 m = d.getMonth() + 1;
 dd = d.getDate();
 y = d.getFullYear();
-
 if (m == 9 && dd == 18) {
   document.getElementsByTagName("html")[0].setAttribute("style", "filter: grayscale(60%);");
   if (sessionStorage.getItem("isPopupWindow") != "1") {
@@ -2243,7 +1931,6 @@ if (m == 8 && dd == 14) {
     sessionStorage.setItem("isPopupWindow", "1");
   }
 }
-
 if (m == 10 && dd <= 3) {
   if (sessionStorage.getItem("isPopupWindow") != "1") {
     Swal.fire("祝祖国" + (y - 1949).toString() + "岁生日快乐！");
@@ -2311,19 +1998,13 @@ if (m == 12 && dd == 25) {
     sessionStorage.setItem("isPopupWindow", "1");
   }
 }
-// if (m == 8 && dd == 11) {//站长生日
-//   if (sessionStorage.getItem("isPopupWindow") != "1") {
-//     Swal.fire("祝站长" + (y - 1998).toString() + "岁生日快乐！🥝");
-//     sessionStorage.setItem("isPopupWindow", "1");
-//   }
-// }
+
 if (m == 6 && dd == 30) {
   if (sessionStorage.getItem("isPopupWindow") != "1") {
     Swal.fire("祝小猫咪" + (y - 1999).toString() + "岁生日快乐！🐱");
     sessionStorage.setItem("isPopupWindow", "1");
   }
 }
-
 if ((y == 2023 && m == 4 && dd == 5) || (y == 2024 && m == 4 && dd == 4) || (y == 2025 && m == 4 && dd == 4)) {
   if (sessionStorage.getItem("isPopupWindow") != "1") {
     Swal.fire("清明时节雨纷纷,一束鲜花祭故人💐");
@@ -2336,9 +2017,13 @@ if ((y == 2023 && m == 12 && dd == 22) || (y == 2024 && m == 12 && dd == 21) || 
     sessionStorage.setItem("isPopupWindow", "1");
   }
 }
-
 var lunar = calendarFormatter.solar2lunar();
-
+if (lunar["IMonthCn"] == "七月" && lunar["IDayCn"] == "廿七") {
+  if (sessionStorage.getItem("isPopupWindow") != "1") {
+    Swal.fire("祝站长" + (y - 2005).toString() + "岁生日快乐！🥝");
+    sessionStorage.setItem("isPopupWindow", "1");
+  }
+}
 if ((lunar["IMonthCn"] == "正月" && lunar["IDayCn"] == "初六") || (lunar["IMonthCn"] == "正月" && lunar["IDayCn"] == "初五") || (lunar["IMonthCn"] == "正月" && lunar["IDayCn"] == "初四") || (lunar["IMonthCn"] == "正月" && lunar["IDayCn"] == "初三") || (lunar["IMonthCn"] == "正月" && lunar["IDayCn"] == "初二") || (lunar["IMonthCn"] == "正月" && lunar["IDayCn"] == "初一") || (lunar["IMonthCn"] == "腊月" && lunar["IDayCn"] == "三十") || (lunar["IMonthCn"] == "腊月" && lunar["IDayCn"] == "廿九")) {
   if (sessionStorage.getItem("isPopupWindow") != "1") {
     Swal.fire(y.toString() + "年新年快乐\n🎊祝你心想事成，诸事顺利🎊");
@@ -2375,18 +2060,14 @@ if ((lunar["IMonthCn"] == "九月" && lunar["IDayCn"] == "初九")) {
     sessionStorage.setItem("isPopupWindow", "1");
   }
 }
-
 // if (y == 2022 && m == 12 && (dd >= 18 && dd <= 20)) {
 //     if (sessionStorage.getItem("isPopupWindow") != "1") {
 //         Swal.fire("网站换成冬日限定主题啦⛄");
 //         sessionStorage.setItem("isPopupWindow", "1");
 //     }
 // }
-
 var CURSOR;
-
 Math.lerp = (a, b, n) => (1 - n) * a + n * b;
-
 const getStyle2 = (el, attr) => {
   try {
     return window.getComputedStyle
@@ -2395,7 +2076,6 @@ const getStyle2 = (el, attr) => {
   } catch (e) { }
   return "";
 };
-
 const map = new Map();
 map.set('red', "rgb(241, 71, 71)");
 map.set('orange', "rgb(241, 162, 71)");
@@ -2409,7 +2089,6 @@ map.set('pink', "rgb(237, 112, 155)");
 map.set('black', "rgb(0, 0, 0)");
 map.set('darkblue', "rgb(97, 100, 159)");
 map.set('heoblue', "rgb(66, 90, 239)");
-
 class Cursor {
   constructor() {
     this.pos = { curr: null, prev: null };
@@ -2418,12 +2097,10 @@ class Cursor {
     this.init();
     this.render();
   }
-
   move(left, top) {
     this.cursor.style["left"] = `${left}px`;
     this.cursor.style["top"] = `${top}px`;
   }
-
   create() {
     if (!this.cursor) {
       this.cursor = document.createElement("div");
@@ -2439,19 +2116,16 @@ class Cursor {
     document.body.appendChild((this.scr = document.createElement("style")));
     this.scr.innerHTML = `* {cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8' width='8px' height='8px'><circle cx='4' cy='4' r='4' opacity='1.0' fill='` + colorVal + `'/></svg>") 4 4, auto}`;
   }
-
   refresh() {
     this.scr.remove();
     this.cursor.classList.remove("hover");
     this.cursor.classList.remove("active");
     this.pos = { curr: null, prev: null };
     this.pt = [];
-
     this.create();
     this.init();
     this.render();
   }
-
   init() {
     document.onmouseover = e => this.pt.includes(e.target.outerHTML) && this.cursor.classList.add("hover");
     document.onmouseout = e => this.pt.includes(e.target.outerHTML) && this.cursor.classList.remove("hover");
@@ -2461,7 +2135,6 @@ class Cursor {
     document.onmousedown = e => this.cursor.classList.add("active");
     document.onmouseup = e => this.cursor.classList.remove("active");
   }
-
   render() {
     if (this.pos.prev) {
       this.pos.prev.x = Math.lerp(this.pos.prev.x, this.pos.curr.x, 0.15);
@@ -2473,11 +2146,9 @@ class Cursor {
     requestAnimationFrame(() => this.render());
   }
 }
-
 (() => {
   CURSOR = new Cursor();
 })();
-
 var now = new Date();
 function createtime() {
   now.setTime(now.getTime() + 1000);
@@ -2499,15 +2170,14 @@ function createtime() {
   let currentTimeHtml = "";
   currentTimeHtml =
     hnum < 21 && hnum >= 8
-      ? `<img class='boardsign' src='/assets/糖果屋-营业中.svg' title='距离百年老店也就差不到一百年~'><div id='runtime'><img class='boardsign' src='' title=''><br> <div style="font-size:13px;font-weight:bold">本站居然运行了 ${dnum} 天 ${hnum} 小时 ${mnum} 分 ${snum} 秒 <i id="heartbeat" class='fas fa-heartbeat'></i> <br> <b>旅行者 1 号当前距离地球 ${dis} 千米，约为 ${unit} 个天文单位 🚀</b> <br> <b><font size=2px>少年有他的山海，有他的重重山影，有他的万里波涛。如果可以，风给他，沙漠给他，天空也给他。是无拘无束的风，会下大雨的沙漠，和铺满星辰的天空。万物给他，让他自由✨</font></b></div>`
-      : `<img class='boardsign' src='/assets/糖果屋-打烊了.svg' title='这个点了应该去睡觉啦，熬夜对身体不好哦'><div id='runtime'><img class='boardsign' src='' title=''><br> <div style="font-size:13px;font-weight:bold">本站居然运行了 ${dnum} 天 ${hnum} 小时 ${mnum} 分 ${snum} 秒 <i id="heartbeat" class='fas fa-heartbeat'></i> <br> 旅行者 1 号当前距离地球 ${dis} 千米，约为 ${unit} 个天文单位 🚀</b> <br> <b><font size=2px>少年有他的山海，有他的重重山影，有他的万里波涛。如果可以，风给他，沙漠给他，天空也给他。是无拘无束的风，会下大雨的沙漠，和铺满星辰的天空。万物给他，让他自由✨</font></b></div>`,
+      ? `<img class='boardsign' src='/assets/糖果屋-营业中.svg' title='距离百年老店也就差不到一百年~'><br> <div style="font-size:13px;font-weight:bold">本站居然运行了 ${dnum} 天 ${hnum} 小时 ${mnum} 分 ${snum} 秒 <i id="heartbeat" class='fas fa-heartbeat'></i> <br> <b>旅行者 1 号当前距离地球 ${dis} 千米，约为 ${unit} 个天文单位 🚀</b> <br> <b><font size=2px>少年有他的山海，有他的重重山影，有他的万里波涛。如果可以，风给他，沙漠给他，天空也给他。是无拘无束的风，会下大雨的沙漠，和铺满星辰的天空。万物给他，让他自由✨</font></b></div>`
+      : `<img class='boardsign' src='/assets/糖果屋-打烊了.svg' title='这个点了应该去睡觉啦，熬夜对身体不好哦'><br> <div style="font-size:13px;font-weight:bold">本站居然运行了 ${dnum} 天 ${hnum} 小时 ${mnum} 分 ${snum} 秒 <i id="heartbeat" class='fas fa-heartbeat'></i> <br> 旅行者 1 号当前距离地球 ${dis} 千米，约为 ${unit} 个天文单位 🚀</b> <br> <b><font size=2px>少年有他的山海，有他的重重山影，有他的万里波涛。如果可以，风给他，沙漠给他，天空也给他。是无拘无束的风，会下大雨的沙漠，和铺满星辰的天空。万物给他，让他自由✨</font></b></div>`,
   document.getElementById("workboard")
   document.getElementById("workboard").innerHTML = currentTimeHtml
 }
 setInterval(() => {
   createtime();
 }, 1000);
-
 if (window.localStorage.getItem("fpson") == undefined || window.localStorage.getItem("fpson") == "1") {
   var rAF = function () {
     return (
@@ -2526,11 +2196,9 @@ if (window.localStorage.getItem("fpson") == undefined || window.localStorage.get
     var now = Date.now();
     var fs = (now - lastFameTime);
     var fps = Math.round(1000 / fs);
-
     lastFameTime = now;
     allFrameCount++;
     frame++;
-
     if (now > 1000 + lastTime) {
       var fps = Math.round((frame * 1000) / (now - lastTime));
       if (fps <= 5) {
@@ -2550,10 +2218,8 @@ if (window.localStorage.getItem("fpson") == undefined || window.localStorage.get
       frame = 0;
       lastTime = now;
     };
-
     rAF(loop);
   }
-
   loop();
 } else {
   document.getElementById("fps").style = "display:none!important"
@@ -2580,7 +2246,6 @@ if (localStorage.getItem("reset_4") == undefined) {
     })
   }, 1500);
 }
-
 function clearItem() {
   localStorage.removeItem('blogbg');
   localStorage.removeItem('universe');
@@ -2595,7 +2260,6 @@ function clearItem() {
   localStorage.removeItem('light');
   localStorage.removeItem('snow');
 }
-
 if (localStorage.getItem("font") == undefined) {
   localStorage.setItem("font", "LXGW");
 }
@@ -2612,7 +2276,6 @@ function setFont(n) {
   }
   try { setFontBorder(); } catch (err) { };
 }
-
 function setFontBorder() {
   var curFont = localStorage.getItem("font");
   var swfId = "swf_" + curFont;
@@ -2621,7 +2284,6 @@ function setFontBorder() {
     if (ee.id != swfId) ee.style.border = "2px solid var(--border-color)";
   });
 }
-
 if (localStorage.getItem("themeColor") == undefined) {
   localStorage.setItem("themeColor", "green");
 }
@@ -2630,7 +2292,6 @@ function setColor(c) {
   document.getElementById("themeColor").innerText = `:root{--theme-color:` + map.get(c) + ` !important}`;
   localStorage.setItem("themeColor", c);
   CURSOR.refresh();
-
   var theme_color = map.get(c);
   var trans_theme_color = "rgba" + theme_color.substring(3, theme_color.length - 1) + ", 0.7)";
   var high_trans_color = "rgba" + theme_color.substring(3, theme_color.length - 1) + ", 0.5)";
@@ -2652,7 +2313,6 @@ function setUniverse() {
     setUniverse2("none");
   }
 }
-
 if (localStorage.getItem("snow") == undefined) {
   localStorage.setItem("snow", "block");
 }
@@ -2666,7 +2326,6 @@ function setSnow() {
     localStorage.setItem("snow", "none");
   }
 }
-
 if (localStorage.getItem("fpson") == undefined) {
   localStorage.setItem("fpson", "1");
 }
@@ -2678,11 +2337,9 @@ function fpssw() {
   }
   setTimeout(reload, 600);
 }
-
 function reload() {
   window.location.reload();
 }
-
 if (localStorage.getItem("rs") == undefined) {
   localStorage.setItem("rs", "block");
 }
@@ -2700,7 +2357,6 @@ function toggleRightside() {
     document.getElementById("rightSide").innerText = `:root{--rightside-display: none}`;
   }
 }
-
 if (localStorage.getItem("transNum") == undefined) {
   localStorage.setItem("transNum", 50);
 }
@@ -2718,7 +2374,6 @@ function setTrans() {
   document.querySelector('#rang_trans').style.width = curTransMini + "%";
   document.getElementById("transPercent").innerText = `:root{--trans-light: rgba(253, 253, 253, ${newTransNum}%) !important; --trans-dark: rgba(25, 25, 25, ${newTransNum}%) !important} `;
 };
-
 if (localStorage.getItem("blurRad") == undefined) {
   localStorage.setItem("blurRad", 20);
 }
@@ -2737,7 +2392,6 @@ function setBlurNum() {
   document.querySelector('#rang_blur').style.width = miniBlur + "%";
   document.getElementById("blurNum").innerText = `:root{--blur-num: blur(${curBlur}px) saturate(120%) !important`;
 };
-
 if (localStorage.getItem("blur") == undefined) {
   localStorage.setItem("blur", 1);
 }
@@ -2755,27 +2409,18 @@ function setBlur() {
     document.getElementById("settingStyle").innerText = `:root{--backdrop-filter: none}`;
   }
 }
-
 var defineColor = localStorage.getItem("blogbg") && localStorage.getItem("blogbg").charAt(0) == '#' ? localStorage.getItem("blogbg") : '#F4D88A';
 function changeBgColor() {
   changeBg(document.querySelector("#define_colors").value);
 }
-
 let bingDayBg = screen.width <= 768 ? "url(https://bing.img.run/m.php)" : "url(https://bing.img.run/1920x1080.php)";
 let bingHistoryBg = screen.width <= 768 ? "url(https://bing.img.run/rand_m.php)" : "url(https://bing.img.run/rand.php)";
-
 let EEEDog = "url(https://api.yimian.xyz/img?type=moe&size=1920x1080)";
-
 let seovx = "url(https://cdn.seovx.com/?mom=302)";
-
 let picsum = "url(https://picsum.photos/1920/1080.webp)";
-
 let waiBizhi = "url(https://api.ixiaowai.cn/gqapi/gqapi.php)";
-
 let btstu = "url(http://api.btstu.cn/sjbz/?lx=suiji)";
-
 let unsplash = "url(https://source.unsplash.com/random/1920x1080/)";
-
 if (localStorage.getItem("blogbg") != undefined) {
   setBg(localStorage.getItem("blogbg"));
 } else {
@@ -2787,12 +2432,10 @@ if (localStorage.getItem("blogbg") != undefined) {
   }`;
 }
 function changeBg(s) {
-
   defineColor = s.charAt(0) == "#" ? s : '#F4D88A';
   setBg(s);
   localStorage.setItem("blogbg", s);
 }
-
 function setBg(s) {
   document.getElementById("defineBg").innerText = `:root{
     --default-bg: ${s};
@@ -2801,11 +2444,9 @@ function setBg(s) {
     --mobilenight-bg: ${s};
   }`;
 }
-
 function getPicture() {
   debounce(getPicture_, 300);
 }
-
 function getPicture_() {
   checkImgExists(document.getElementById("pic-link").value).then(() => {
     var link = "url(" + document.getElementById("pic-link").value + ")";
@@ -2851,7 +2492,6 @@ function checkImgExists(imgurl) {
     }
   })
 }
-
 if (localStorage.getItem("light") == undefined) {
   localStorage.setItem("light", "true");
 }
@@ -2881,10 +2521,7 @@ function changeLight(flag) {
     document.getElementById("post-info").style.animation = flag ? "light_5px 10s linear infinite" : "none";
   document.getElementById("menu_shadow").innerText = flag ? `:root{--menu-shadow: 0 0 1px var(--theme-color);}` : `:root{--menu-shadow: none;}`;
 }
-
-
 var winbox = "";
-
 function createWinbox() {
   let div = document.createElement("div");
   document.body.appendChild(div);
@@ -2907,7 +2544,6 @@ function createWinbox() {
   });
   winResize();
   window.addEventListener("resize", winResize);
-
 /*   背景设置中的一些其他标签：
 <h3>1. 二次元</h3>
 <details class="folding-tag" cyan><summary> 查看二次元背景 </summary>
@@ -2932,44 +2568,34 @@ function createWinbox() {
               </div>
             </details>
 */
-
   winbox.body.innerHTML = `
 <div class="settings" style="display: block;">
 <div id="article-container" style="padding:12px;">
 <br>
 <center><p><button onclick="reset()" style="background:linear-gradient(to right, #fc354c, #0abfbc);display:block;width:40%;padding:15px 0;border-radius:30px;color:white;font-size:1.1em;"><i class="fa-solid fa-arrows-rotate"></i>&nbsp;恢复默认设置</button></p></center>
-
 <h2>一、显示偏好</h2>
-
 <div class="transValue" style="font-weight:bold;padding-left:10px">透明度 (0%-100%): ${curTransNum}%</div>
 <div class="range">
   <input id="transSet" type="range" min="0" max="100" step="1" value=${curTransNum} oninput="setTrans()">
   <p class="rang_width" id="rang_trans" style="width:${curTransMini}%"></p>
 </div>
-
 <div class="blurValue" style="font-weight:bold;padding-left:10px">模糊半径 (开启模糊生效 0px-100px): ${curBlur} px</div>
 <div class="range">
   <input id="blurSet" type="range" min="0" max="100" step="1" value="${curBlur}" oninput="setBlurNum()">
   <p class="rang_width" id="rang_blur" style="width:${miniBlur}%"></p>
 </div>
-
-
 <div class="content" style="display:flex">
   <div class="content-text" style="font-weight:bold; padding-left:10px"> 星空特效 (夜间模式) </div><input type="checkbox" id="universeSet" onclick="setUniverse()">
   <div class="content-text" style="font-weight:bold; padding-left:20px"> 霓虹灯 (夜间模式) </div><input type="checkbox" id="lightSet" onclick="setLight()">
 </div>
-
 <div class="content" style="display:flex">
   <div class="content-text" style="font-weight:bold; padding-left:10px"> 模糊效果 (消耗性能) </div><input type="checkbox" id="blur" onclick="setBlur()">
   <div class="content-text" style="font-weight:bold; padding-left:20px"> 侧边栏 (默认开) </div><input type="checkbox" id="rightSideSet" onclick="toggleRightside()">
 </div>
-
 <div class="content" style="display:flex">
   <div class="content-text" style="font-weight:bold; padding-left:10px"> 帧率监测 (刷新生效) </div><input type="checkbox" id="fpson" onclick="fpssw()">
   <div class="content-text" style="font-weight:bold; padding-left:10px"> 雪花特效 (白天模式) </div><input type="checkbox" id="snowSet" onclick="setSnow()">
 </div>
-
-
 <h2>二、字体设置</h2>
 <div class="note warning modern"><p>非商免字体未经授权只能个人使用。本站为完全非商业、非盈利性质的网站，平时用于个人学习交流，如有侵权请联系站长删除，谢谢！ —— 致版权方</p>
 </div>
@@ -2982,7 +2608,6 @@ function createWinbox() {
 <a class="swf" id="swf_MiSans" href="javascript:;" rel="noopener external nofollow" style="font-family:'MiSans'!important;color:black" onclick="setFont('MiSans')">MiSans</a>
 <a class="swf" id="swf_default" href="javascript:;" rel="noopener external nofollow" style="font-family:-apple-system, IBM Plex Mono ,monosapce,'微软雅黑', sans-serif;!important;color:black" onclick="setFont('default')">系统默认</a>
 </p>
-
 <h2>三、主题色设置</h2>
 <div class="content" style="display:flex"><input type="radio" id="red" name="colors" value=" "
         onclick="setColor('red')"><input type="radio" id="orange" name="colors" value=" "
@@ -2996,68 +2621,50 @@ function createWinbox() {
         onclick="setColor('pink')" checked="checked"><input type="radio" id="black" name="colors" value=" "
         onclick="setColor('black')"><input type="radio" id="blackgray" name="colors" value=" "
         onclick="setColor('blackgray')"></div>
-
 <h2>四、背景设置</h2>
 <center><button onclick="resetBg()" style="background:var(--theme-color);display:block;width:35%;padding:15px 0;border-radius:30px;color:white;"><i class="fa-solid fa-arrows-rotate"></i>&nbsp;恢复默认背景</button></center>
-
-
 <h3>1. 渐变色</h3>
 <details class="folding-tag" cyan><summary> 查看渐变色背景 </summary>
               <div class='content'>
               <div class="bgbox"><a href="javascript:;" rel="noopener external nofollow" class="box" style="background: linear-gradient(to right, #544a7d, #ffd452)" onclick="changeBg('linear-gradient(to right, #544a7d, #ffd452)')"></a><a href="javascript:;" rel="noopener external nofollow" class="box" style="background: linear-gradient(to bottom, #7f7fd5, #86a8e7, #91eae4)" onclick="changeBg('linear-gradient(to bottom, #7f7fd5, #86a8e7, #91eae4)')"></a><a href="javascript:;" rel="noopener external nofollow" class="box" style="background: linear-gradient(to left, #654ea3, #eaafc8)" onclick="changeBg('linear-gradient(to left, #654ea3, #eaafc8)')"></a><a href="javascript:;" rel="noopener external nofollow" class="box" style="background: linear-gradient(to top, #feac5e, #c779d0, #4bc0c8)" onclick="changeBg('linear-gradient(to top, #feac5e, #c779d0, #4bc0c8)')"></a><a href="javascript:;" rel="noopener external nofollow" class="box" style="background: linear-gradient(to top, #d3959b, #bfe6ba)" onclick="changeBg('linear-gradient(to top, #d3959b, #bfe6ba)')"></a><a href="javascript:;" rel="noopener external nofollow" class="box" style="background: linear-gradient(to top, #8360c3, #2ebf91)" onclick="changeBg('linear-gradient(to top, #8360c3, #2ebf91)')"></a><a href="javascript:;" rel="noopener external nofollow" class="box" style="background: linear-gradient(to top, #108dc7, #ef8e38)" onclick="changeBg('linear-gradient(to top, #108dc7, #ef8e38)')"></a><a href="javascript:;" rel="noopener external nofollow" class="box" style="background: linear-gradient(to top, #355c7d, #6c5b7b, #c06c84)" onclick="changeBg('linear-gradient(to top, #355c7d, #6c5b7b, #c06c84)')"></a></div>
               </div>
             </details>
-
-
 <h3>2. 纯色</h3>
 <details class="folding-tag" cyan><summary> 查看纯色背景 </summary>
               <div class='content'>
               <div class="bgbox"><a href="javascript:;" rel="noopener external nofollow" class="box" style="background: #ecb1b1" onclick="changeBg('#ecb1b1')"></a> <a href="javascript:;" rel="noopener external nofollow" class="box" style="background: #d3ebac" onclick="changeBg('#d3ebac')"></a> <a href="javascript:;" rel="noopener external nofollow" class="box" style="background: #ace9ce" onclick="changeBg('#ace9ce')"></a><a href="javascript:;" rel="noopener external nofollow" class="box" style="background: #c1ebea" onclick="changeBg('#c1ebea')"></a> <a href="javascript:;" rel="noopener external nofollow" class="box" style="background: #dee7f1" onclick="changeBg('#dee7f1')"></a> <a href="javascript:;" rel="noopener external nofollow" class="box" style="background: #e9e3f2" onclick="changeBg('#e9e3f2')"></a> <a href="javascript:;" rel="noopener external nofollow" class="box" style="background: #f7eff5" onclick="changeBg('#f7eff5')"></a>  <input type="color" id="define_colors" href="javascript:;" rel="noopener external nofollow" class="box" autocomplete="on" value="${defineColor}" oninput="changeBgColor()"></input></div>
               </div>
             </details>
-
-
-
 <h3>3. 适配手机</h3>
 <details class="folding-tag" cyan><summary> 查看适配手机的背景 </summary>
               <div class='content'>
               <div class="bgbox"><a href="javascript:;" rel="noopener external nofollow" style="background-image:url(https://lskypro.acozycotage.net/Fomalhaut/img/mb4.webp)" class="pimgbox" onclick="changeBg('url(https://lskypro.acozycotage.net/Fomalhaut/img/mb4.webp)')"></a><a href="javascript:;" rel="noopener external nofollow" style="background-image:url(/assets/cover/phone-cover1.jpg)" class="pimgbox" onclick="changeBg('url(/assets/cover/phone-cover1.jpg)')"></a><a href="javascript:;" rel="noopener external nofollow" style="background-image:url(/assets/cover/phone-cover2.jpg)" class="pimgbox" onclick="changeBg('url(/assets/cover/phone-cover2.jpg)')"></a><a href="javascript:;" rel="noopener external nofollow" style="background-image:url(/assets/cover/phone-cover3.jpg)" class="pimgbox" onclick="changeBg('url(/assets/cover/phone-cover3.jpg)')"></a><a href="javascript:;" rel="noopener external nofollow" style="background-image:url(/assets/cover/phone-cover4.jpg)" class="pimgbox" onclick="changeBg('url(/assets/cover/phone-cover4.jpg)')"></a><a href="javascript:;" rel="noopener external nofollow" style="background-image:url(/assets/cover/phone-cover5.jpg)" class="pimgbox" onclick="changeBg('url(/assets/cover/phone-cover5.jpg)')"></a><a href="javascript:;" rel="noopener external nofollow" style="background-image:url(/assets/cover/phone-cover6.jpg)" class="pimgbox" onclick="changeBg('url(/assets/cover/phone-cover6.jpg)')"></a><a href="javascript:;" rel="noopener external nofollow" style="background-image:url(/assets/cover/phone-cover7.jpg)" class="pimgbox" onclick="changeBg('url(/assets/cover/phone-cover7.jpg)')"></a><a href="javascript:;" rel="noopener external nofollow" style="background-image:url(/assets/cover/phone-cover8.jpg)" class="pimgbox" onclick="changeBg('url(/assets/cover/phone-cover8.jpg)')"></a><a href="javascript:;" rel="noopener external nofollow" style="background-image:url(/assets/cover/phone-cover9.jpg)" class="pimgbox" onclick="changeBg('url(/assets/cover/phone-cover9.jpg)')"></a></div>
               </div>
             </details>
-
-
 <h3>4. 壁纸API</h3>
 <details class="folding-tag" cyan><summary> 查看壁纸API系列背景 </summary>
               <div class='content'>
               <div class="bgbox"><a id="bingDayBox" rel="noopener external nofollow" style="background-image: ${bingDayBg}" class="box apiBox" onclick="changeBg('${bingDayBg}')"></a><a id="bingHistoryBox" rel="noopener external nofollow" style="background-image: ${bingHistoryBg}" class="box apiBox" onclick="changeBg('${bingHistoryBg}')"></a><a id="EEEDogBox" rel="noopener external nofollow" style="background-image: ${EEEDog}" class="box apiBox" onclick="changeBg('${EEEDog}')"></a><a id="seovxBox" rel="noopener external nofollow" style="background-image: ${seovx}" class="box apiBox" onclick="changeBg('${seovx}')"></a><a id="picsumBox" rel="noopener external nofollow" style="background-image: ${picsum}" class="box apiBox" onclick="changeBg('${picsum}')"></a><a id="waiBizhiBox" rel="noopener external nofollow" style="background-image: ${waiBizhi}" class="box apiBox" onclick="changeBg('${waiBizhi}')"></a><a id="btstuBox" rel="noopener external nofollow" style="background-image: ${btstu}" class="box apiBox" onclick="changeBg('${btstu}')"></a><a id="unsplashBox" rel="noopener external nofollow" style="background-image: ${unsplash}" class="box apiBox" onclick="changeBg('${unsplash}')"></a></div>
               </div>
             </details>
-
-
 <h3>5. 自定义背景</h3>
 <details class="folding-tag" cyan><summary> 设置自定义背景 </summary>
               <div class='content'>
               <p><center><input type="text" id="pic-link" size="70%" maxlength="1000" placeholder="请输入有效的图片链接，如 https://source.fomal.cc/img/home_bg.webp"></center></p><p><center><button type="button" onclick="getPicture()" style="background:var(--theme-color);width:35%;padding: 5px 0px 7px 0px;border-radius:30px;color:white;line-height:2;">🌈切换背景🌈</button></center></p>
               </div>
             </details>
-
 <h3>6. 作者推荐</h3>
 <details class="folding-tag" cyan><summary> 查看作者推荐背景 </summary>
               <div class='content'>
               <div class="bgbox"><a href="javascript:;" rel="noopener external nofollow" class="box" style="background-image:url(/assets/cover/homecover2.png)" class="pimgbox" onclick="changeBg('url(/assets/cover/homecover2.png)')"></a><a href="javascript:;" rel="noopener external nofollow" class="box" style="background-image:url(/assets/cover/homecover3.jpg)" class="pimgbox" onclick="changeBg('url(/assets/cover/homecover3.jpg)')"></a><a href="javascript:;" rel="noopener external nofollow" class="box" style="background-image:url(/assets/cover/darkcover2.jpg)" class="pimgbox" onclick="changeBg('url(/assets/cover/darkcover2.jpg)')"></a><a href="javascript:;" rel="noopener external nofollow" class="box" style="background-image:url(/assets/cover/darkcover1.jpg)" class="pimgbox" onclick="changeBg('url(/assets/cover/darkcover1.jpg)')"></a><a href="javascript:;" rel="noopener external nofollow" class="box" style="background-image:url(/assets/cover/darkcover3.jpg)" class="pimgbox" onclick="changeBg('url(/assets/cover/darkcover3.jpg)')"></a></div>
               </div>
             </details>
-
 <br>
 <center><div style="font-size:1.2em;color:var(--theme-color);font-weight:bold;">------ ( •̀ ω •́ )y 到底啦 ------</div></center>
 <br>
-
 </div>
-
 </div>
-
 `;
-
   $("#" + localStorage.getItem("themeColor")).attr("checked", true);
   if (localStorage.getItem("blur") == 1) {
     document.getElementById("blur").checked = true;
@@ -3091,17 +2698,14 @@ function createWinbox() {
     document.getElementById("snowSet").checked = false;
   }
 }
-
 function resetBg() {
   localStorage.removeItem('blogbg');
   reload();
 }
-
 function reset() {
   clearItem();
   reload();
 }
-
 function winResize() {
   try {
     var offsetWid = document.documentElement.clientWidth;
@@ -3114,7 +2718,6 @@ function winResize() {
     // console.log("Pjax毒瘤抽风运行winResize方法🙄🙄🙄");
   }
 }
-
 function toggleWinbox() {
   if (document.querySelector("#meihuaBox")) {
     winbox.toggleClass("hide");
@@ -3122,58 +2725,36 @@ function toggleWinbox() {
     createWinbox();
   };
 }
-
-/* 新年倒计时 start */
-
 let newYearTimer = null;
 var newYear = () => {
   clearTimeout(newYearTimer);
   if (!document.querySelector('#newYear')) return;
-  // 新年时间戳 and 星期对象
   let newYear = new Date('2023-01-22 00:00:00').getTime() / 1000,
     week = { 0: '周日', 1: '周一', 2: '周二', 3: '周三', 4: '周四', 5: '周五', 6: '周六' }
-
   time();
-
-  // 补零函数
   function nol(h) { return h > 9 ? h : '0' + h; };
-
   function time() {
-    // 现在 时间对象
     let now = new Date();
-
-    // 右下角 今天
     document.querySelector('#newYear .today').innerHTML = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate() + ' ' + week[now.getDay()]
-
-    // 现在与新年相差秒数
     let second = newYear - Math.round(now.getTime() / 1000);
-
-    // 小于0则表示已经过年
     if (second < 0) {
       document.querySelector('#newYear .title').innerHTML = 'Happy New Year!';
       document.querySelector('#newYear .newYear-time').innerHTML = '<span class="happyNewYear">新年快乐</p>';
     } else {
-      // 大于0则还未过年
       document.querySelector('#newYear .title').innerHTML = '距离2023年春节：'
-
-      // 大于一天则直接渲染天数
       if (second > 86400) {
         document.querySelector('#newYear .newYear-time').innerHTML = `<span class="day">${Math.ceil(second / 86400)}<span class="unit">天</span></span>`
       } else {
-        // 小于一天则使用时分秒计时。
         let h = nol(parseInt(second / 3600));
         second %= 3600;
         let m = nol(parseInt(second / 60));
         second %= 60;
         let s = nol(second);
         document.querySelector('#newYear .newYear-time').innerHTML = `<span class="time">${h}:${m}:${s}</span></span>`;
-        // 计时
         newYearTimer = setTimeout(time, 1000);
       }
     }
   }
-
-  // 元宝飘落
   jQuery(document).ready(function ($) {
     $('#newYear').wpSuperSnow({
       flakes: ['https://tuchuang.voooe.cn/images/2023/01/02/yb1.webp', 'https://tuchuang.voooe.cn/images/2023/01/02/yb2.webp', 'https://tuchuang.voooe.cn/images/2023/01/02/yb3.webp'],
@@ -3185,9 +2766,8 @@ var newYear = () => {
     });
   });
 }
-// Pjax适配：若没有开启Pjax这里直接是newYear()即可
-// 开了Pjax的用以下两句
 document.addEventListener('pjax:complete', newYear);
 document.addEventListener('DOMContentLoaded', newYear);
-
-/* 新年倒计时 end */
+document.onkeydown = function (e) {
+  if (123 == e.keyCode || (e.ctrlKey && e.shiftKey && (74 === e.keyCode || 73 === e.keyCode || 67 === e.keyCode)) || (e.ctrlKey && 85 === e.keyCode)) return btf.snackbarShow("你真坏，不能打开控制台喔!"), event.keyCode = 0, event.returnValue = !1, !1
+};

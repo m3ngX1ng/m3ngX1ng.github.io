@@ -14,7 +14,6 @@ const btf = {
       if (callNow) func.apply(context, args)
     }
   },
-
   throttle: function (func, wait, options) {
     let timeout, context, args
     let previous = 0
@@ -26,7 +25,6 @@ const btf = {
       func.apply(context, args)
       if (!timeout) context = args = null
     }
-
     const throttled = function () {
       const now = new Date().getTime()
       if (!previous && options.leading === false) previous = now
@@ -45,10 +43,8 @@ const btf = {
         timeout = setTimeout(later, remaining)
       }
     }
-
     return throttled
   },
-
   sidebarPaddingR: () => {
     const innerWidth = window.innerWidth
     const clientWidth = document.body.clientWidth
@@ -57,7 +53,6 @@ const btf = {
       document.body.style.paddingRight = paddingRight + 'px'
     }
   },
-
   snackbarShow: (text, showAction = false, duration = 2000) => {
     const { position, bgLight, bgDark } = GLOBAL_CONFIG.Snackbar
     const bg = document.documentElement.getAttribute('data-theme') === 'light' ? bgLight : bgDark
@@ -70,7 +65,6 @@ const btf = {
       customClass: 'snackbar-css'
     })
   },
-
   diffDate: (d, more = false) => {
     const dateNow = new Date()
     const datePost = new Date(d)
@@ -79,14 +73,12 @@ const btf = {
     const hour = minute * 60
     const day = hour * 24
     const month = day * 30
-
     let result
     if (more) {
       const monthCount = dateDiff / month
       const dayCount = dateDiff / day
       const hourCount = dateDiff / hour
       const minuteCount = dateDiff / minute
-
       if (monthCount > 12) {
         result = datePost.toLocaleDateString().replace(/\//g, '-')
       } else if (monthCount >= 1) {
@@ -105,7 +97,6 @@ const btf = {
     }
     return result
   },
-
   loadComment: (dom, callback) => {
     if ('IntersectionObserver' in window) {
       const observerItem = new IntersectionObserver((entries) => {
@@ -119,7 +110,6 @@ const btf = {
       callback()
     }
   },
-
   scrollToDest: (pos, time = 500) => {
     const currentPos = window.pageYOffset
     if (currentPos > pos) pos = pos - 70
@@ -131,7 +121,6 @@ const btf = {
       })
       return
     }
-
     let start = null
     pos = +pos
     window.requestAnimationFrame(function step (currentTime) {
@@ -149,12 +138,10 @@ const btf = {
       }
     })
   },
-
   animateIn: (ele, text) => {
     ele.style.display = 'block'
     ele.style.animation = text
   },
-
   animateOut: (ele, text) => {
     ele.addEventListener('animationend', function f () {
       ele.style.display = ''
@@ -163,14 +150,12 @@ const btf = {
     })
     ele.style.animation = text
   },
-
   getParents: (elem, selector) => {
     for (; elem && elem !== document; elem = elem.parentNode) {
       if (elem.matches(selector)) return elem
     }
     return null
   },
-
   siblings: (ele, selector) => {
     return [...ele.parentNode.children].filter((child) => {
       if (selector) {
@@ -193,7 +178,6 @@ const btf = {
     selector.parentNode.insertBefore(creatEle, selector)
     creatEle.appendChild(selector)
   },
-
   unwrap: el => {
     const elParentNode = el.parentNode
     if (elParentNode !== document.body) {
@@ -201,24 +185,18 @@ const btf = {
       elParentNode.parentNode.removeChild(elParentNode)
     }
   },
-
   isHidden: ele => ele.offsetHeight === 0 && ele.offsetWidth === 0,
-
   getEleTop: ele => {
     let actualTop = ele.offsetTop
     let current = ele.offsetParent
-
     while (current !== null) {
       actualTop += current.offsetTop
       current = current.offsetParent
     }
-
     return actualTop
   },
-
   loadLightbox: ele => {
     const service = GLOBAL_CONFIG.lightbox
-
     if (service === 'mediumZoom') {
       const zoom = mediumZoom(ele)
       zoom.on('open', e => {
@@ -228,7 +206,6 @@ const btf = {
         })
       })
     }
-
     if (service === 'fancybox') {
       ele.forEach(i => {
         if (i.parentNode.tagName !== 'A') {
@@ -237,7 +214,6 @@ const btf = {
           btf.wrap(i, 'a', { href: dataSrc, 'data-fancybox': 'gallery', 'data-caption': dataCaption, 'data-thumb': dataSrc })
         }
       })
-
       if (!window.fancyboxRun) {
         Fancybox.bind('[data-fancybox]', {
           Hash: false,
@@ -249,7 +225,6 @@ const btf = {
       }
     }
   },
-
   initJustifiedGallery: function (selector) {
     selector.forEach(function (i) {
       if (!btf.isHidden(i)) {
@@ -264,7 +239,6 @@ const btf = {
       }
     })
   },
-
   updateAnchor: (anchor) => {
     if (anchor !== window.location.hash) {
       if (!anchor) anchor = location.pathname

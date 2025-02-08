@@ -88,7 +88,6 @@
   width: 100%;
   z-index: 1;
 }
-
 .coin-wrapper {
   background: none;
   bottom: 0;
@@ -103,7 +102,6 @@
   transition: opacity 200ms linear 100ms, transform 300ms ease-out;
   width: 100%;
 }
-
 .coin {
   --front-y-multiplier: 0;
   --back-y-multiplier: 0;
@@ -176,7 +174,6 @@
   width: 100%;
   z-index: 2;
 }
-
 @keyframes shake {
   0% {
     transform: rotate(4deg);

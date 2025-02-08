@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
   let blogNameWidth, menusWidth, searchWidth, $nav
   let mobileSidebarOpen = false
-
   const adjustMenu = (init) => {
     if (init) {
       blogNameWidth = document.getElementById('site-name').offsetWidth
@@ -12,7 +11,6 @@ document.addEventListener('DOMContentLoaded', function () {
       searchWidth = $searchEle ? $searchEle.offsetWidth : 0
       $nav = document.getElementById('nav')
     }
-
     let hideMenuIndex = ''
     if (window.innerWidth <= 800) hideMenuIndex = true
     if (hideMenuIndex) {
@@ -21,12 +19,10 @@ document.addEventListener('DOMContentLoaded', function () {
       $nav.classList.remove('hide-menu')
     }
   }
-
   const initAdjust = () => {
     adjustMenu(true)
     $nav.classList.add('show')
   }
-
   const sidebarFn = {
     open: () => {
       btf.sidebarPaddingR()
@@ -44,41 +40,32 @@ document.addEventListener('DOMContentLoaded', function () {
       mobileSidebarOpen = false
     }
   }
-
   const scrollDownInIndex = () => {
     const $scrollDownEle = document.getElementById('scroll-down')
     $scrollDownEle && $scrollDownEle.addEventListener('click', function () {
       btf.scrollToDest(document.getElementById('content-inner').offsetTop, 300)
     })
   }
-
   const addHighlightTool = function () {
     const highLight = GLOBAL_CONFIG.highlight
     if (!highLight) return
-
     const isHighlightCopy = highLight.highlightCopy
     const isHighlightLang = highLight.highlightLang
     const isHighlightShrink = GLOBAL_CONFIG_SITE.isHighlightShrink
     const highlightHeightLimit = highLight.highlightHeightLimit
     const isShowTool = isHighlightCopy || isHighlightLang || isHighlightShrink !== undefined
     const $figureHighlight = highLight.plugin === 'highlighjs' ? document.querySelectorAll('figure.highlight') : document.querySelectorAll('pre[class*="language-"]')
-
     if (!((isShowTool || highlightHeightLimit) && $figureHighlight.length)) return
-
     const isPrismjs = highLight.plugin === 'prismjs'
-
     let highlightShrinkEle = ''
     let highlightCopyEle = ''
     const highlightShrinkClass = isHighlightShrink === true ? 'closed' : ''
-
     if (isHighlightShrink !== undefined) {
       highlightShrinkEle = `<i class="fas fa-angle-down expand ${highlightShrinkClass}"></i>`
     }
-
     if (isHighlightCopy) {
       highlightCopyEle = '<div class="copy-notice"></div><i class="fas fa-paste copy-button"></i>'
     }
-
     const copy = (text, ctx) => {
       if (document.queryCommandSupported && document.queryCommandSupported('copy')) {
         document.execCommand('copy')
@@ -98,7 +85,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       }
     }
-
     const highlightCopyFn = (ele) => {
       const $buttonParent = ele.parentNode
       $buttonParent.classList.add('copy-true')
@@ -113,7 +99,6 @@ document.addEventListener('DOMContentLoaded', function () {
       selection.removeAllRanges()
       $buttonParent.classList.remove('copy-true')
     }
-
     const highlightShrinkFn = (ele) => {
       const $nextEle = [...ele.parentNode.children].slice(1)
       ele.firstChild.classList.toggle('closed')
@@ -123,20 +108,16 @@ document.addEventListener('DOMContentLoaded', function () {
         $nextEle.forEach(e => { e.style.display = 'none' })
       }
     }
-
     const highlightToolsFn = function (e) {
       const $target = e.target.classList
       if ($target.contains('expand')) highlightShrinkFn(this)
       else if ($target.contains('copy-button')) highlightCopyFn(this)
     }
-
     const expandCode = function () {
       this.classList.toggle('expand-done')
     }
-
     function createEle (lang, item, service) {
       const fragment = document.createDocumentFragment()
-
       if (isShowTool) {
         const hlTools = document.createElement('div')
         hlTools.className = `highlight-tools ${highlightShrinkClass}`
@@ -144,7 +125,6 @@ document.addEventListener('DOMContentLoaded', function () {
         hlTools.addEventListener('click', highlightToolsFn)
         fragment.appendChild(hlTools)
       }
-
       if (highlightHeightLimit && item.offsetHeight > highlightHeightLimit + 30) {
         const ele = document.createElement('div')
         ele.className = 'code-expand-btn'
@@ -152,14 +132,12 @@ document.addEventListener('DOMContentLoaded', function () {
         ele.addEventListener('click', expandCode)
         fragment.appendChild(ele)
       }
-
       if (service === 'hl') {
         item.insertBefore(fragment, item.firstChild)
       } else {
         item.parentNode.insertBefore(fragment, item)
       }
     }
-
     if (isHighlightLang) {
       if (isPrismjs) {
         $figureHighlight.forEach(function (item) {
@@ -189,7 +167,6 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     }
   }
-
   function addPhotoFigcaption () {
     document.querySelectorAll('#article-container img').forEach(function (item) {
       const parentEle = item.parentNode
@@ -202,57 +179,45 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     })
   }
-
-
   const runLightbox = () => {
     btf.loadLightbox(document.querySelectorAll('#article-container img:not(.no-lightbox)'))
   }
-
   const runJustifiedGallery = function (ele) {
     ele.forEach(item => {
       const $imgList = item.querySelectorAll('img')
-
       $imgList.forEach(i => {
         const dataLazySrc = i.getAttribute('data-lazy-src')
         if (dataLazySrc) i.src = dataLazySrc
         btf.wrap(i, 'div', { class: 'fj-gallery-item' })
       })
     })
-
     if (window.fjGallery) {
       setTimeout(() => { btf.initJustifiedGallery(ele) }, 100)
       return
     }
-
     const newEle = document.createElement('link')
     newEle.rel = 'stylesheet'
     newEle.href = GLOBAL_CONFIG.source.justifiedGallery.css
     document.body.appendChild(newEle)
     getScript(`${GLOBAL_CONFIG.source.justifiedGallery.js}`).then(() => { btf.initJustifiedGallery(ele) })
   }
-
-
   const scrollFn = function () {
     const $rightside = document.getElementById('rightside')
     const innerHeight = window.innerHeight + 56
-
     if (document.body.scrollHeight <= innerHeight) {
       $rightside.style.cssText = 'opacity: 1; transform: translateX(-58px)'
       return
     }
-
     function scrollDirection (currentTop) {
       const result = currentTop > initTop 
       initTop = currentTop
       return result
     }
-
     let initTop = 0
     let isChatShow = true
     const $header = document.getElementById('page-header')
     const isChatBtnHide = typeof chatBtnHide === 'function'
     const isChatBtnShow = typeof chatBtnShow === 'function'
-
     window.scrollCollect = () => {
       return btf.throttle(function (e) {
         const currentTop = window.scrollY || document.documentElement.scrollTop
@@ -281,32 +246,25 @@ document.addEventListener('DOMContentLoaded', function () {
           }
           $rightside.style.cssText = "opacity: ''; transform: ''"
         }
-
         if (document.body.scrollHeight <= innerHeight) {
           $rightside.style.cssText = 'opacity: 0.8; transform: translateX(-58px)'
         }
       }, 200)()
     }
-
     window.addEventListener('scroll', scrollCollect)
   }
-
   const scrollFnToDo = function () {
     const isToc = GLOBAL_CONFIG_SITE.isToc
     const isAnchor = GLOBAL_CONFIG.isAnchor
     const $article = document.getElementById('article-container')
-
     if (!($article && (isToc || isAnchor))) return
-
     let $tocLink, $cardToc, scrollPercent, autoScrollToc, isExpand
-
     if (isToc) {
       const $cardTocLayout = document.getElementById('card-toc')
       $cardToc = $cardTocLayout.getElementsByClassName('toc-content')[0]
       $tocLink = $cardToc.querySelectorAll('.toc-link')
       const $tocPercentage = $cardTocLayout.querySelector('.toc-percentage')
       isExpand = $cardToc.classList.contains('is-expand')
-
       scrollPercent = currentTop => {
         const docHeight = $article.clientHeight
         const winHeight = document.documentElement.clientHeight
@@ -317,12 +275,10 @@ document.addEventListener('DOMContentLoaded', function () {
         const percentage = (scrollPercentRounded > 100) ? 100 : (scrollPercentRounded <= 0) ? 0 : scrollPercentRounded
         $tocPercentage.textContent = percentage
       }
-
       window.mobileToc = {
         open: () => {
           $cardTocLayout.style.cssText = 'animation: toc-open .3s; opacity: 1; right: 55px'
         },
-
         close: () => {
           $cardTocLayout.style.animation = 'toc-close .2s'
           setTimeout(() => {
@@ -330,7 +286,6 @@ document.addEventListener('DOMContentLoaded', function () {
           }, 100)
         }
       }
-
       $cardToc.addEventListener('click', e => {
         e.preventDefault()
         const target = e.target.classList
@@ -343,7 +298,6 @@ document.addEventListener('DOMContentLoaded', function () {
           window.mobileToc.close()
         }
       })
-
       autoScrollToc = item => {
         const activePosition = item.getBoundingClientRect().top
         const sidebarScrollTop = $cardToc.scrollTop
@@ -355,17 +309,14 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       }
     }
-
     const list = $article.querySelectorAll('h1,h2,h3,h4,h5,h6')
     let detectItem = ''
     const findHeadPosition = function (top) {
       if (top === 0) {
         return false
       }
-
       let currentId = ''
       let currentIndex = ''
-
       list.forEach(function (ele, index) {
         if (top > btf.getEleTop(ele) - 80) {
           const id = ele.id
@@ -373,36 +324,27 @@ document.addEventListener('DOMContentLoaded', function () {
           currentIndex = index
         }
       })
-
       if (detectItem === currentIndex) return
-
       if (isAnchor) btf.updateAnchor(currentId)
-
       detectItem = currentIndex
-
       if (isToc) {
         $cardToc.querySelectorAll('.active').forEach(i => { i.classList.remove('active') })
 
         if (currentId === '') {
           return
         }
-
         const currentActive = $tocLink[currentIndex]
         currentActive.classList.add('active')
-
         setTimeout(() => {
           autoScrollToc(currentActive)
         }, 0)
-
         if (isExpand) return
         let parent = currentActive.parentNode
-
         for (; !parent.matches('.toc'); parent = parent.parentNode) {
           if (parent.matches('li')) parent.classList.add('active')
         }
       }
     }
-
     window.tocScrollFn = function () {
       return btf.throttle(function () {
         const currentTop = window.scrollY || document.documentElement.scrollTop
@@ -412,7 +354,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     window.addEventListener('scroll', tocScrollFn)
   }
-
   const rightSideFn = {
     switchReadMode: () => { 
       const $body = document.body
@@ -421,13 +362,11 @@ document.addEventListener('DOMContentLoaded', function () {
       newEle.type = 'button'
       newEle.className = 'fas fa-sign-out-alt exit-readmode'
       $body.appendChild(newEle)
-
       function clickFn () {
         $body.classList.remove('read-mode')
         newEle.remove()
         newEle.removeEventListener('click', clickFn)
       }
-
       newEle.addEventListener('click', clickFn)
     },
     switchDarkMode: () => {
@@ -438,9 +377,7 @@ document.addEventListener('DOMContentLoaded', function () {
       } else {
         activateLightMode()
         saveToLocal.set('theme', 'light', 2)
-
       }
-
       typeof utterancesTheme === 'function' && utterancesTheme()
       typeof changeGiscusTheme === 'function' && changeGiscusTheme()
       typeof FB === 'object' && window.loadFBComment()
@@ -467,13 +404,11 @@ document.addEventListener('DOMContentLoaded', function () {
         : saveToLocal.set('aside-status', 'hide', 2)
       $htmlDom.toggle('hide-aside')
     },
-
     runMobileToc: () => {
       if (window.getComputedStyle(document.getElementById('card-toc')).getPropertyValue('opacity') === '0') window.mobileToc.open()
       else window.mobileToc.close()
     }
   }
-
   document.getElementById('rightside').addEventListener('click', function (e) {
     const $target = e.target.id ? e.target : e.target.parentNode
     switch ($target.id) {
@@ -499,7 +434,6 @@ document.addEventListener('DOMContentLoaded', function () {
         break
     }
   })
-
   const clickFnOfSubMenu = () => {
     document.querySelectorAll('#sidebar-menus .site-page.group').forEach(function (item) {
       item.addEventListener('click', function () {
@@ -507,7 +441,6 @@ document.addEventListener('DOMContentLoaded', function () {
       })
     })
   }
-
   const addCopyright = () => {
     const copyright = GLOBAL_CONFIG.copyright
     document.body.oncopy = (e) => {
@@ -529,7 +462,6 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     }
   }
-
   const addRuntime = () => {
     const $runtimeCount = document.getElementById('runtimeshow')
     if ($runtimeCount) {
@@ -544,7 +476,6 @@ document.addEventListener('DOMContentLoaded', function () {
       $lastPushDateItem.innerText = btf.diffDate(lastPushDate, true)
     }
   }
-
   const addTableWrap = () => {
     const $table = document.querySelectorAll('#article-container :not(.highlight) > table, #article-container > table')
     if ($table.length) {
@@ -553,7 +484,6 @@ document.addEventListener('DOMContentLoaded', function () {
       })
     }
   }
-
   const clickFnOfTagHide = function () {
     const $hideInline = document.querySelectorAll('#article-container .hide-button')
     if ($hideInline.length) {
@@ -567,14 +497,12 @@ document.addEventListener('DOMContentLoaded', function () {
       })
     }
   }
-
   const tabsFn = {
     clickFnOfTabs: function () {
       document.querySelectorAll('#article-container .tab > button').forEach(function (item) {
         item.addEventListener('click', function (e) {
           const $this = this
           const $tabItem = $this.parentNode
-
           if (!$tabItem.classList.contains('active')) {
             const $tabContent = $tabItem.parentNode.nextElementSibling
             const $siblings = btf.siblings($tabItem, '.active')[0]
@@ -602,7 +530,6 @@ document.addEventListener('DOMContentLoaded', function () {
       })
     }
   }
-
   const toggleCardCategory = function () {
     const $cardCategory = document.querySelectorAll('#aside-cat-list .card-category-list-item.parent i')
     if ($cardCategory.length) {
@@ -621,7 +548,6 @@ document.addEventListener('DOMContentLoaded', function () {
       })
     }
   }
-
   const switchComments = function () {
     let switchDone = false
     const $switchBtn = document.querySelector('#comment-switch > .switch-btn')
@@ -641,7 +567,6 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     })
   }
-
   const addPostOutdateNotice = function () {
     const data = GLOBAL_CONFIG.noticeOutdate
     const diffDay = btf.diffDate(GLOBAL_CONFIG_SITE.postUpdate)
@@ -657,7 +582,6 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     }
   }
-
   const lazyloadImg = () => {
     window.lazyLoadInstance = new LazyLoad({
       elements_selector: 'img',
@@ -665,7 +589,6 @@ document.addEventListener('DOMContentLoaded', function () {
       data_src: 'lazy-src'
     })
   }
-
   const relativeDate = function (selector) {
     selector.forEach(item => {
       const $this = item
@@ -674,23 +597,18 @@ document.addEventListener('DOMContentLoaded', function () {
       $this.style.display = 'inline'
     })
   }
-
   const unRefreshFn = function () {
     window.addEventListener('resize', () => {
       adjustMenu(false)
       btf.isHidden(document.getElementById('toggle-menu')) && mobileSidebarOpen && sidebarFn.close()
     })
-
     document.getElementById('menu-mask').addEventListener('click', e => { sidebarFn.close() })
-
     clickFnOfSubMenu()
     GLOBAL_CONFIG.islazyload && lazyloadImg()
     GLOBAL_CONFIG.copyright !== undefined && addCopyright()
   }
-
   window.refreshFn = function () {
     initAdjust()
-
     if (GLOBAL_CONFIG_SITE.isPost) {
       GLOBAL_CONFIG.noticeOutdate !== undefined && addPostOutdateNotice()
       GLOBAL_CONFIG.relativeDate.post && relativeDate(document.querySelectorAll('#post-meta time'))
@@ -700,16 +618,13 @@ document.addEventListener('DOMContentLoaded', function () {
       addLastPushDate()
       toggleCardCategory()
     }
-
     scrollFnToDo()
     GLOBAL_CONFIG_SITE.isHome && scrollDownInIndex()
     addHighlightTool()
     GLOBAL_CONFIG.isPhotoFigcaption && addPhotoFigcaption()
     scrollFn()
-
     const $jgEle = document.querySelectorAll('#article-container .fj-gallery')
     $jgEle.length && runJustifiedGallery($jgEle)
-
     runLightbox()
     addTableWrap()
     clickFnOfTagHide()
@@ -718,7 +633,6 @@ document.addEventListener('DOMContentLoaded', function () {
     switchComments()
     document.getElementById('toggle-menu').addEventListener('click', () => { sidebarFn.open() })
   }
-
   refreshFn()
   unRefreshFn()
 })

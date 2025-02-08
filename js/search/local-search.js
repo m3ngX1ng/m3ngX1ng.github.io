@@ -2,7 +2,6 @@ window.addEventListener('load', () => {
   let loadFlag = false
   let dataObj = []
   const $searchMask = document.getElementById('search-mask')
-
   const openSearch = () => {
     const bodyStyle = document.body.style
     bodyStyle.width = '100%'
@@ -21,7 +20,6 @@ window.addEventListener('load', () => {
       }
     })
   }
-
   const closeSearch = () => {
     const bodyStyle = document.body.style
     bodyStyle.width = ''
@@ -29,22 +27,18 @@ window.addEventListener('load', () => {
     btf.animateOut(document.querySelector('#local-search .search-dialog'), 'search_close .5s')
     btf.animateOut($searchMask, 'to_hide 0.5s')
   }
-
   const searchClickFn = () => {
     document.querySelector('#search-button > .search').addEventListener('click', openSearch)
   }
-
   const searchClickFnOnce = () => {
     document.querySelector('#local-search .search-close-button').addEventListener('click', closeSearch)
     $searchMask.addEventListener('click', closeSearch)
     if (GLOBAL_CONFIG.localSearch.preload) dataObj = fetchData(GLOBAL_CONFIG.localSearch.path)
   }
-
   const isJson = url => {
     const reg = /\.json$/
     return reg.test(url)
   }
-
   const fetchData = async (path) => {
     let data = []
     const response = await fetch(path)
@@ -69,20 +63,16 @@ window.addEventListener('load', () => {
     }
     return data
   }
-
   const search = () => {
     if (!GLOBAL_CONFIG.localSearch.preload) {
       dataObj = fetchData(GLOBAL_CONFIG.localSearch.path)
     }
-
     const $input = document.querySelector('#local-search-input input')
     const $resultContent = document.getElementById('local-search-results')
     const $loadingStatus = document.getElementById('loading-status')
-
     $input.addEventListener('input', function () {
       const keywords = this.value.trim().toLowerCase().split(/[\s]+/)
       if (keywords[0] !== '') $loadingStatus.innerHTML = '<i class="fas fa-spinner fa-pulse"></i>'
-
       $resultContent.innerHTML = ''
       let str = '<div class="search-result-list">'
       if (keywords.length <= 0) return
@@ -123,34 +113,27 @@ window.addEventListener('load', () => {
               let end = firstOccur + 100
               let pre = ''
               let post = ''
-
               if (start < 0) {
                 start = 0
               }
-
               if (start === 0) {
                 end = 100
               } else {
                 pre = '...'
               }
-
               if (end > dataContent.length) {
                 end = dataContent.length
               } else {
                 post = '...'
               }
-
               let matchContent = dataContent.substring(start, end)
-
               keywords.forEach(keyword => {
                 const regS = new RegExp(keyword, 'gi')
                 matchContent = matchContent.replace(regS, '<span class="search-keyword">' + keyword + '</span>')
                 dataTitle = dataTitle.replace(regS, '<span class="search-keyword">' + keyword + '</span>')
               })
-
               str += '<div class="local-search__hit-item"><a href="' + dataUrl + '" class="search-result-title">' + dataTitle + '</a>'
               count += 1
-
               if (dataContent !== '') {
                 str += '<p class="search-result">' + pre + matchContent + post + '</p>'
               }
@@ -169,10 +152,8 @@ window.addEventListener('load', () => {
       })
     })
   }
-
   searchClickFn()
   searchClickFnOnce()
-
   window.addEventListener('pjax:complete', () => {
     !btf.isHidden($searchMask) && closeSearch()
     searchClickFn()

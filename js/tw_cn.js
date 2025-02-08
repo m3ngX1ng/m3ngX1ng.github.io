@@ -14,7 +14,6 @@ document.addEventListener('DOMContentLoaded', function () {
     : Number(saveToLocal.get('translate-chn-cht'))
   let translateButtonObject
   const isSnackbar = GLOBAL_CONFIG.Snackbar !== undefined
-
   function translateText (txt) {
     if (txt === '' || txt == null) return ''
     if (currentEncoding === 1 && targetEncoding === 2) return Simplized(txt)
