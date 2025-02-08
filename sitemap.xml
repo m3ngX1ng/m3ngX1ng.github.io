@@ -819,6 +819,13 @@
   </url>
   
   <url>
+    <loc>https://m3x1.cn/tags/web%E5%A7%BF%E5%8A%BF/</loc>
+    <lastmod>2025-02-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://m3x1.cn/tags/misc%E5%A7%BF%E5%8A%BF/</loc>
     <lastmod>2025-02-08</lastmod>
     <changefreq>weekly</changefreq>
@@ -827,13 +834,6 @@
   
   <url>
     <loc>https://m3x1.cn/tags/web-wp/</loc>
-    <lastmod>2025-02-08</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://m3x1.cn/tags/web%E5%A7%BF%E5%8A%BF/</loc>
     <lastmod>2025-02-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
