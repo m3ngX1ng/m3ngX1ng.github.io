@@ -2247,18 +2247,18 @@ if (localStorage.getItem("reset_4") == undefined) {
   }, 1500);
 }
 function clearItem() {
-  localStorage.removeItem('blogbg');
-  localStorage.removeItem('universe');
-  localStorage.removeItem('blur');
-  localStorage.removeItem('fpson');
-  localStorage.removeItem('transNum');
-  localStorage.removeItem('blurRad');
-  localStorage.removeItem('font');
-  localStorage.removeItem('themeColor');
-  localStorage.removeItem('rs');
-  localStorage.removeItem('mouse');
-  localStorage.removeItem('light');
-  localStorage.removeItem('snow');
+  localStorage.removeItem('blogbg')
+  localStorage.removeItem('universe')
+  localStorage.removeItem('blur')
+  localStorage.removeItem('fpson')
+  localStorage.removeItem('transNum')
+  localStorage.removeItem('blurRad')
+  localStorage.removeItem('font')
+  localStorage.removeItem('themeColor')
+  localStorage.removeItem('rs')
+  localStorage.removeItem('mouse')
+  localStorage.removeItem('light')
+  localStorage.removeItem('snow')
 }
 if (localStorage.getItem("font") == undefined) {
   localStorage.setItem("font", "LXGW");
