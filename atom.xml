@@ -374,27 +374,6 @@
   </entry>
   
   <entry>
-    <title>第八届强网杯青少赛wp</title>
-    <link href="https://blog.m3x1.cn/posts/2cd096fe.html"/>
-    <id>https://blog.m3x1.cn/posts/2cd096fe.html</id>
-    <published>2024-11-23T16:00:00.000Z</published>
-    <updated>2025-02-09T11:31:43.532Z</updated>
-    
-    <content type="html"><![CDATA[<p>[TOC]</p><h2 id="misc">misc</h2><h4 id="签到漫画">签到漫画</h4><blockquote><p>每个漫画的最后一张都是二维码的一部分，全部保存，然后拼在一起，扫描二维码出flag.。</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241124155544679.png" alt="image-20241124155544679"></p><blockquote><p>flag{youthful_and_upward}</p></blockquote><h4 id="whitepic">whitepic</h4><blockquote><p>考点：gif图像</p></blockquote><blockquote><p>下载文件，没有后缀名，能用010editor打开</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241124155848111.png" alt="image-20241124155848111"></p><blockquote><p>根据文件头GIF89a，可以看出是个gif文件。直接使用gifsplitter分离帧数，在其中一帧找到flag</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241124160011013.png" alt="image-20241124160011013"></p><h4 id="问卷">问卷</h4><blockquote><p>你懂的</p></blockquote><h2 id="web">web</h2><h4 id="ezGetFlag">ezGetFlag</h4><blockquote><p>考点：http请求方式</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241124160230507.png" alt=""></p><blockquote><p>点击10次会出现提示</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241124160307890.png" alt="image-20241124160307890"></p><blockquote><p>直接抓包，修改请求方式，把GET改成POST就行了。</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241124160446998.png" alt="image-20241124160446998"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241124160500182.png" alt="image-20241124160500182"></p><blockquote><p>flag{4efb5300-7885-40a9-bf2a-31bbd8ebef86}</p></blockquote><h4 id="ezFindShell">ezFindShell</h4><blockquote><p>考点：代码审计</p></blockquote><p>这题是赛后复现，所以可能不全</p><p>首先拿到一堆php文件，用seay审计</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241130223303421.png" alt="image-20241130223303421"></p><p>非常相似，当时比赛没找到漏洞，现在复现，全局搜索一下post</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241130223557289.png" alt="image-20241130223557289"></p><p>发现可用漏洞</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241130223624296.png" alt="image-20241130223624296"></p><p>array_filter() 函数用回调函数过滤数组中的元素。</p><p>该函数把输入数组中的每个键值传给回调函数。如果回调函数返回 true，则把输入数组中的当前键值返回给结果数组。数组键名保持不变。</p><p>将代码进行base64编码传上去应该就可利用该漏洞。</p>]]></content>
-    
-    
-    <summary type="html">🥧第八届强网杯青少赛wp</summary>
-    
-    
-    
-    <category term="CTF" scheme="https://blog.m3x1.cn/categories/CTF/"/>
-    
-    
-    <category term="比赛wp" scheme="https://blog.m3x1.cn/tags/%E6%AF%94%E8%B5%9Bwp/"/>
-    
-  </entry>
-  
-  <entry>
     <title>docker保存和打包镜像</title>
     <link href="https://blog.m3x1.cn/posts/5721bfe4.html"/>
     <id>https://blog.m3x1.cn/posts/5721bfe4.html</id>
@@ -412,6 +391,27 @@
     
     
     <category term="其他姿势" scheme="https://blog.m3x1.cn/tags/%E5%85%B6%E4%BB%96%E5%A7%BF%E5%8A%BF/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>第八届强网杯青少赛wp</title>
+    <link href="https://blog.m3x1.cn/posts/2cd096fe.html"/>
+    <id>https://blog.m3x1.cn/posts/2cd096fe.html</id>
+    <published>2024-11-23T16:00:00.000Z</published>
+    <updated>2025-02-09T11:31:43.532Z</updated>
+    
+    <content type="html"><![CDATA[<p>[TOC]</p><h2 id="misc">misc</h2><h4 id="签到漫画">签到漫画</h4><blockquote><p>每个漫画的最后一张都是二维码的一部分，全部保存，然后拼在一起，扫描二维码出flag.。</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241124155544679.png" alt="image-20241124155544679"></p><blockquote><p>flag{youthful_and_upward}</p></blockquote><h4 id="whitepic">whitepic</h4><blockquote><p>考点：gif图像</p></blockquote><blockquote><p>下载文件，没有后缀名，能用010editor打开</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241124155848111.png" alt="image-20241124155848111"></p><blockquote><p>根据文件头GIF89a，可以看出是个gif文件。直接使用gifsplitter分离帧数，在其中一帧找到flag</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241124160011013.png" alt="image-20241124160011013"></p><h4 id="问卷">问卷</h4><blockquote><p>你懂的</p></blockquote><h2 id="web">web</h2><h4 id="ezGetFlag">ezGetFlag</h4><blockquote><p>考点：http请求方式</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241124160230507.png" alt=""></p><blockquote><p>点击10次会出现提示</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241124160307890.png" alt="image-20241124160307890"></p><blockquote><p>直接抓包，修改请求方式，把GET改成POST就行了。</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241124160446998.png" alt="image-20241124160446998"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241124160500182.png" alt="image-20241124160500182"></p><blockquote><p>flag{4efb5300-7885-40a9-bf2a-31bbd8ebef86}</p></blockquote><h4 id="ezFindShell">ezFindShell</h4><blockquote><p>考点：代码审计</p></blockquote><p>这题是赛后复现，所以可能不全</p><p>首先拿到一堆php文件，用seay审计</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241130223303421.png" alt="image-20241130223303421"></p><p>非常相似，当时比赛没找到漏洞，现在复现，全局搜索一下post</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241130223557289.png" alt="image-20241130223557289"></p><p>发现可用漏洞</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241130223624296.png" alt="image-20241130223624296"></p><p>array_filter() 函数用回调函数过滤数组中的元素。</p><p>该函数把输入数组中的每个键值传给回调函数。如果回调函数返回 true，则把输入数组中的当前键值返回给结果数组。数组键名保持不变。</p><p>将代码进行base64编码传上去应该就可利用该漏洞。</p>]]></content>
+    
+    
+    <summary type="html">🥧第八届强网杯青少赛wp</summary>
+    
+    
+    
+    <category term="CTF" scheme="https://blog.m3x1.cn/categories/CTF/"/>
+    
+    
+    <category term="比赛wp" scheme="https://blog.m3x1.cn/tags/%E6%AF%94%E8%B5%9Bwp/"/>
     
   </entry>
   
