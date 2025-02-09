@@ -227,27 +227,6 @@
   </entry>
   
   <entry>
-    <title>XSS在线平台使用</title>
-    <link href="https://m3x1.cn/posts/169f5f8e.html"/>
-    <id>https://m3x1.cn/posts/169f5f8e.html</id>
-    <published>2024-11-27T16:00:00.000Z</published>
-    <updated>2024-12-02T09:25:18.658Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>前言：由于自己搭建的xss平台需要服务器才能获取其他网络的cookie，所以无法接收赛题的cookie，最简便的方法还是使用在线平台，虽然可能有一定风险，以后买服务器了再搭建自己的吧</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128191835876.png" alt="image-20241128191835876"></p><p>登录后，直接创建项目就行</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128191919585.png" alt="image-20241128191919585"></p><p>传入的地址如下：</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128191232646.png" alt="image-20241128191232646"></p><p>然后就能在平台上接受到了</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128192046521.png" alt="image-20241128192046521"></p>]]></content>
-    
-    
-    <summary type="html">XSS在线平台使用</summary>
-    
-    
-    
-    <category term="CTF" scheme="https://m3x1.cn/categories/CTF/"/>
-    
-    
-    <category term="其他姿势" scheme="https://m3x1.cn/tags/%E5%85%B6%E4%BB%96%E5%A7%BF%E5%8A%BF/"/>
-    
-  </entry>
-  
-  <entry>
     <title>CTFHub技能树-XSS</title>
     <link href="https://m3x1.cn/posts/57dd66d8.html"/>
     <id>https://m3x1.cn/posts/57dd66d8.html</id>
@@ -265,6 +244,27 @@
     
     
     <category term="web-wp" scheme="https://m3x1.cn/tags/web-wp/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>XSS在线平台使用</title>
+    <link href="https://m3x1.cn/posts/169f5f8e.html"/>
+    <id>https://m3x1.cn/posts/169f5f8e.html</id>
+    <published>2024-11-27T16:00:00.000Z</published>
+    <updated>2024-12-02T09:25:18.658Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>前言：由于自己搭建的xss平台需要服务器才能获取其他网络的cookie，所以无法接收赛题的cookie，最简便的方法还是使用在线平台，虽然可能有一定风险，以后买服务器了再搭建自己的吧</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128191835876.png" alt="image-20241128191835876"></p><p>登录后，直接创建项目就行</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128191919585.png" alt="image-20241128191919585"></p><p>传入的地址如下：</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128191232646.png" alt="image-20241128191232646"></p><p>然后就能在平台上接受到了</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128192046521.png" alt="image-20241128192046521"></p>]]></content>
+    
+    
+    <summary type="html">XSS在线平台使用</summary>
+    
+    
+    
+    <category term="CTF" scheme="https://m3x1.cn/categories/CTF/"/>
+    
+    
+    <category term="其他姿势" scheme="https://m3x1.cn/tags/%E5%85%B6%E4%BB%96%E5%A7%BF%E5%8A%BF/"/>
     
   </entry>
   

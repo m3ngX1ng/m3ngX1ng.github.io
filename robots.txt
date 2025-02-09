@@ -2,8 +2,6 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://m3x1.cn/sitemap.xml
-Sitemap: https://m3x1.cn/baidusitemap.xml
-Sitemap: https://m3x1.fun/sitemap.xml
-Sitemap: https://m3x1.fun/baidusitemap.xml
-
+Sitemap: https://blog.m3x1.cn/sitemap.xml
+Sitemap: https://blog.m3x1.fun/sitemap.xml
+Sitemap: https://cloudflare.m3x1.fun/sitemap.xml
