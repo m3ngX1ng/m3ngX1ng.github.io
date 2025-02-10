@@ -353,27 +353,6 @@
   </entry>
   
   <entry>
-    <title>docker保存和打包镜像</title>
-    <link href="https://blog.m3x1.cn/posts/5721bfe4.html"/>
-    <id>https://blog.m3x1.cn/posts/5721bfe4.html</id>
-    <published>2024-11-23T16:00:00.000Z</published>
-    <updated>2024-12-02T09:09:58.908Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="docker保存和打包镜像">docker保存和打包镜像</h2><p>作用：在现在容器镜像上保存镜像进行打包，在另一台服务上使用；或现有的容器安装了一些库，配置了开发环境，需要保存下载，下次加载后直接使用。</p><h4 id="1-1-首先查看下现有容器镜像（目的是查询需要保存镜像的ID）">1.1 首先查看下现有容器镜像（目的是查询需要保存镜像的ID）</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps -a</span><br></pre></td></tr></table></figure><h4 id="1-2-接下来用commit参数进行保存镜像（精简版）">1.2 接下来用commit参数进行保存镜像（精简版）</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker commit  7ca736d99653    yolov5:v6.2</span><br></pre></td></tr></table></figure><p>其中，7ca736d99653 是需要保存镜像的ID，刚才用docker ps -a 查询到的。</p><h2 id="打包tar">打包tar</h2><p>使用save参数进行打包，格式如：docker save -o  tar文件名称     镜像REPOSITORY:TAG</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker save -o yolov5-v6.2.tar yolov5:v6.2</span><br></pre></td></tr></table></figure><p>其中yolov5:v6.2 是需要保存镜像的REPOSITORY、和TAG；也是上面保存的镜像名称。</p>]]></content>
-    
-    
-    <summary type="html">🥧docker保存和打包镜像</summary>
-    
-    
-    
-    <category term="CTF" scheme="https://blog.m3x1.cn/categories/CTF/"/>
-    
-    
-    <category term="其他姿势" scheme="https://blog.m3x1.cn/tags/%E5%85%B6%E4%BB%96%E5%A7%BF%E5%8A%BF/"/>
-    
-  </entry>
-  
-  <entry>
     <title>深入理解 JavaScript Prototype 污染攻击</title>
     <link href="https://blog.m3x1.cn/posts/575ed4b2.html"/>
     <id>https://blog.m3x1.cn/posts/575ed4b2.html</id>
@@ -412,6 +391,27 @@
     
     
     <category term="比赛wp" scheme="https://blog.m3x1.cn/tags/%E6%AF%94%E8%B5%9Bwp/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>docker保存和打包镜像</title>
+    <link href="https://blog.m3x1.cn/posts/5721bfe4.html"/>
+    <id>https://blog.m3x1.cn/posts/5721bfe4.html</id>
+    <published>2024-11-23T16:00:00.000Z</published>
+    <updated>2024-12-02T09:09:58.908Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="docker保存和打包镜像">docker保存和打包镜像</h2><p>作用：在现在容器镜像上保存镜像进行打包，在另一台服务上使用；或现有的容器安装了一些库，配置了开发环境，需要保存下载，下次加载后直接使用。</p><h4 id="1-1-首先查看下现有容器镜像（目的是查询需要保存镜像的ID）">1.1 首先查看下现有容器镜像（目的是查询需要保存镜像的ID）</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps -a</span><br></pre></td></tr></table></figure><h4 id="1-2-接下来用commit参数进行保存镜像（精简版）">1.2 接下来用commit参数进行保存镜像（精简版）</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker commit  7ca736d99653    yolov5:v6.2</span><br></pre></td></tr></table></figure><p>其中，7ca736d99653 是需要保存镜像的ID，刚才用docker ps -a 查询到的。</p><h2 id="打包tar">打包tar</h2><p>使用save参数进行打包，格式如：docker save -o  tar文件名称     镜像REPOSITORY:TAG</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker save -o yolov5-v6.2.tar yolov5:v6.2</span><br></pre></td></tr></table></figure><p>其中yolov5:v6.2 是需要保存镜像的REPOSITORY、和TAG；也是上面保存的镜像名称。</p>]]></content>
+    
+    
+    <summary type="html">🥧docker保存和打包镜像</summary>
+    
+    
+    
+    <category term="CTF" scheme="https://blog.m3x1.cn/categories/CTF/"/>
+    
+    
+    <category term="其他姿势" scheme="https://blog.m3x1.cn/tags/%E5%85%B6%E4%BB%96%E5%A7%BF%E5%8A%BF/"/>
     
   </entry>
   
