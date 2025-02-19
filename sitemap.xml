@@ -758,15 +758,6 @@
   </url>
   
   <url>
-    <loc>https://blog.m3x1.cn/box/gallery/index.html</loc>
-    
-    <lastmod>2023-03-22</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.m3x1.cn/box/animation/index.html</loc>
     
     <lastmod>2023-03-22</lastmod>
@@ -777,6 +768,15 @@
   
   <url>
     <loc>https://blog.m3x1.cn/box/nav/index.html</loc>
+    
+    <lastmod>2023-03-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.m3x1.cn/box/gallery/index.html</loc>
     
     <lastmod>2023-03-22</lastmod>
     
