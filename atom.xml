@@ -147,7 +147,7 @@
     <link href="https://blog.m3x1.cn/posts/762268d0.html"/>
     <id>https://blog.m3x1.cn/posts/762268d0.html</id>
     <published>2024-11-30T16:00:00.000Z</published>
-    <updated>2025-02-19T11:03:22.131Z</updated>
+    <updated>2025-02-19T11:11:13.252Z</updated>
     
     <content type="html"><![CDATA[<h3 id="0-前言">0.前言</h3><p>hexo引入图片的方式有很多种：</p><ul><li>从本地文件加载，方法参见参考文献一。</li><li>使用图床，markdown中直接引用图床的链接。</li></ul><h3 id="1-问题描述">1.问题描述</h3><p>Hexo使用图床的方式加载在blog中加载图片，会在非本人的电脑或者手机端报“html访问图片资源403问题(http referrer)”，导致采用图床方式加载的图片全部无法加载。</p><h3 id="2-问题原因">2.问题原因</h3><p>http请求体的header中有一个referrer字段，用来表示发起http请求的源地址信息，这个referrer信息是可以省略但是不可修改的，就是说你只能设置是否带上这个referrer信息，不能定制referrer里面的值。</p><p>服务器端在拿到这个referrer值后就可以进行相关的处理，比如图片资源，可以通过referrer值判断请求是否来自本站，若不是则返回403或者重定向返回其他信息，从而实现图片的防盗链。上面出现403就是因为，请求的是别人服务器上的资源，但把自己的referrer信息带过去了，被对方服务器拦截返回了403。</p><p>在前端可以通过meta来设置referrer policy(来源策略)，具体可以设置哪些值以及对应的结果参考<a href="https://links.jianshu.com/go?to=https%3A%2F%2Fdeveloper.mozilla.org%2Fzh-CN%2Fdocs%2FWeb%2FHTTP%2FHeaders%2FReferrer-Policy">这里</a>。所以针对上面的403情况的解决方法，就是把referrer设置成<code>no-referrer</code>，这样发送请求不会带上referrer信息，对方服务器也就无法拦截了。</p><p>浏览器中referrer默认的值是<code>no-referrer-when-downgrade</code>，就是除了降级请求的情况以外都会带上referrer信息。降级请求是指https协议的地址去请求http协议，所以上面403的情况还有另一种解决方法就是，请求的图片地址换成http协议，自己的地址使用http协议，这样降级请求也不会带上referrer。</p><h3 id="3-解决办法">3.解决办法</h3><h4 id="3-1-butterfly主题">3.1 butterfly主题</h4><p>在G:\blog\themes\butterfly\layout\includes目录下有一个head.pug文件，修改该文件的meta信息，会使生成的所有页面都带有该head。在head.pug文件中添加如下内容，结果参见图片。</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">meta</span>(name=<span class="string">&quot;referrer&quot;</span> content=<span class="string">&quot;no-referrer&quot;</span>)</span><br></pre></td></tr></table></figure><p><img src="https:////upload-images.jianshu.io/upload_images/13838098-1b07689b2e132b5d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/656/format/webp" alt="img"></p><p>butterfly添加头.png</p><h4 id="3-2-yilia主题">3.2 yilia主题</h4><p>在G:\blog\themes\yilia\layout_partial目录下有一个head.ejs，同样在head.ejs文件中添加如下meta信息即可</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;meta name=<span class="string">&quot;referrer&quot;</span> content=<span class="string">&quot;no-referrer&quot;</span> /&gt;</span><br></pre></td></tr></table></figure><h3 id="4-结果">4.结果</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">使用hexo g 重新生成一下工程</span><br></pre></td></tr></table></figure><p>在G:\blog\public\2021目录下就是所有21年生成的blog，找到该目录下的任意一个index.html，用文本编辑器打开就可以看到已经自动生成了referrer标签了。</p><p><img src="https:////upload-images.jianshu.io/upload_images/13838098-34cdaee390f1a3dd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/508/format/webp" alt="img"></p><p>生成的html中包含有referrer头.png</p><p>然后使用hexo d指令将工程同步到github即可</p>]]></content>
     
@@ -156,10 +156,10 @@
     
     
     
-    <category term="问题解决" scheme="https://blog.m3x1.cn/categories/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/"/>
+    <category term="问题解决笔记" scheme="https://blog.m3x1.cn/categories/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E7%AC%94%E8%AE%B0/"/>
     
     
-    <category term="问题解决" scheme="https://blog.m3x1.cn/tags/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/"/>
+    <category term="问题解决笔记" scheme="https://blog.m3x1.cn/tags/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
@@ -353,27 +353,6 @@
   </entry>
   
   <entry>
-    <title>docker保存和打包镜像</title>
-    <link href="https://blog.m3x1.cn/posts/5721bfe4.html"/>
-    <id>https://blog.m3x1.cn/posts/5721bfe4.html</id>
-    <published>2024-11-23T16:00:00.000Z</published>
-    <updated>2024-12-02T09:09:58.908Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="docker保存和打包镜像">docker保存和打包镜像</h2><p>作用：在现在容器镜像上保存镜像进行打包，在另一台服务上使用；或现有的容器安装了一些库，配置了开发环境，需要保存下载，下次加载后直接使用。</p><h4 id="1-1-首先查看下现有容器镜像（目的是查询需要保存镜像的ID）">1.1 首先查看下现有容器镜像（目的是查询需要保存镜像的ID）</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps -a</span><br></pre></td></tr></table></figure><h4 id="1-2-接下来用commit参数进行保存镜像（精简版）">1.2 接下来用commit参数进行保存镜像（精简版）</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker commit  7ca736d99653    yolov5:v6.2</span><br></pre></td></tr></table></figure><p>其中，7ca736d99653 是需要保存镜像的ID，刚才用docker ps -a 查询到的。</p><h2 id="打包tar">打包tar</h2><p>使用save参数进行打包，格式如：docker save -o  tar文件名称     镜像REPOSITORY:TAG</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker save -o yolov5-v6.2.tar yolov5:v6.2</span><br></pre></td></tr></table></figure><p>其中yolov5:v6.2 是需要保存镜像的REPOSITORY、和TAG；也是上面保存的镜像名称。</p>]]></content>
-    
-    
-    <summary type="html">🥧docker保存和打包镜像</summary>
-    
-    
-    
-    <category term="CTF" scheme="https://blog.m3x1.cn/categories/CTF/"/>
-    
-    
-    <category term="其他姿势" scheme="https://blog.m3x1.cn/tags/%E5%85%B6%E4%BB%96%E5%A7%BF%E5%8A%BF/"/>
-    
-  </entry>
-  
-  <entry>
     <title>parse_url函数</title>
     <link href="https://blog.m3x1.cn/posts/f885edb3.html"/>
     <id>https://blog.m3x1.cn/posts/f885edb3.html</id>
@@ -412,6 +391,27 @@
     
     
     <category term="web姿势" scheme="https://blog.m3x1.cn/tags/web%E5%A7%BF%E5%8A%BF/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>docker保存和打包镜像</title>
+    <link href="https://blog.m3x1.cn/posts/5721bfe4.html"/>
+    <id>https://blog.m3x1.cn/posts/5721bfe4.html</id>
+    <published>2024-11-23T16:00:00.000Z</published>
+    <updated>2024-12-02T09:09:58.908Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="docker保存和打包镜像">docker保存和打包镜像</h2><p>作用：在现在容器镜像上保存镜像进行打包，在另一台服务上使用；或现有的容器安装了一些库，配置了开发环境，需要保存下载，下次加载后直接使用。</p><h4 id="1-1-首先查看下现有容器镜像（目的是查询需要保存镜像的ID）">1.1 首先查看下现有容器镜像（目的是查询需要保存镜像的ID）</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps -a</span><br></pre></td></tr></table></figure><h4 id="1-2-接下来用commit参数进行保存镜像（精简版）">1.2 接下来用commit参数进行保存镜像（精简版）</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker commit  7ca736d99653    yolov5:v6.2</span><br></pre></td></tr></table></figure><p>其中，7ca736d99653 是需要保存镜像的ID，刚才用docker ps -a 查询到的。</p><h2 id="打包tar">打包tar</h2><p>使用save参数进行打包，格式如：docker save -o  tar文件名称     镜像REPOSITORY:TAG</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker save -o yolov5-v6.2.tar yolov5:v6.2</span><br></pre></td></tr></table></figure><p>其中yolov5:v6.2 是需要保存镜像的REPOSITORY、和TAG；也是上面保存的镜像名称。</p>]]></content>
+    
+    
+    <summary type="html">🥧docker保存和打包镜像</summary>
+    
+    
+    
+    <category term="CTF" scheme="https://blog.m3x1.cn/categories/CTF/"/>
+    
+    
+    <category term="其他姿势" scheme="https://blog.m3x1.cn/tags/%E5%85%B6%E4%BB%96%E5%A7%BF%E5%8A%BF/"/>
     
   </entry>
   
