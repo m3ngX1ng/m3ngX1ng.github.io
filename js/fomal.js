@@ -2005,13 +2005,13 @@ if (m == 6 && dd == 30) {
     sessionStorage.setItem("isPopupWindow", "1");
   }
 }
-if ((y == 2023 && m == 4 && dd == 5) || (y == 2024 && m == 4 && dd == 4) || (y == 2025 && m == 4 && dd == 4)) {
+if ((m == 4 && dd == 5) || (m == 4 && dd == 4) || (m == 4 && dd == 4)) {
   if (sessionStorage.getItem("isPopupWindow") != "1") {
     Swal.fire("清明时节雨纷纷,一束鲜花祭故人💐");
     sessionStorage.setItem("isPopupWindow", "1");
   }
 }
-if ((y == 2023 && m == 12 && dd == 22) || (y == 2024 && m == 12 && dd == 21) || (y == 2025 && m == 12 && dd == 21)) {
+if ((m == 12 && dd == 22) || (m == 12 && dd == 21) || (m == 12 && dd == 21)) {
   if (sessionStorage.getItem("isPopupWindow") != "1") {
     Swal.fire("冬至快乐\n快吃上一碗热热的汤圆和饺子吧🧆");
     sessionStorage.setItem("isPopupWindow", "1");
@@ -2741,7 +2741,7 @@ var newYear = () => {
       document.querySelector('#newYear .title').innerHTML = 'Happy New Year!';
       document.querySelector('#newYear .newYear-time').innerHTML = '<span class="happyNewYear">新年快乐</p>';
     } else {
-      document.querySelector('#newYear .title').innerHTML = '距离2023年春节：'
+      document.querySelector('#newYear .title').innerHTML = '距离2026年春节：'
       if (second > 86400) {
         document.querySelector('#newYear .newYear-time').innerHTML = `<span class="day">${Math.ceil(second / 86400)}<span class="unit">天</span></span>`
       } else {
