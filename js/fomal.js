@@ -2729,7 +2729,7 @@ let newYearTimer = null;
 var newYear = () => {
   clearTimeout(newYearTimer);
   if (!document.querySelector('#newYear')) return;
-  let newYear = new Date('2023-01-22 00:00:00').getTime() / 1000,
+  let newYear = new Date('2026-02-17 00:00:00').getTime() / 1000,
     week = { 0: '周日', 1: '周一', 2: '周二', 3: '周三', 4: '周四', 5: '周五', 6: '周六' }
   time();
   function nol(h) { return h > 9 ? h : '0' + h; };
@@ -2739,7 +2739,7 @@ var newYear = () => {
     let second = newYear - Math.round(now.getTime() / 1000);
     if (second < 0) {
       document.querySelector('#newYear .title').innerHTML = 'Happy New Year!';
-      document.querySelector('#newYear .newYear-time').innerHTML = '<span class="happyNewYear">新年快乐</p>';
+      document.querySelector('#newYear .newYear-time').innerHTML = '<span class="happyNewYear">新年快乐</span>';
     } else {
       document.querySelector('#newYear .title').innerHTML = '距离2026年春节：'
       if (second > 86400) {

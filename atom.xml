@@ -6,7 +6,7 @@
   <link href="https://blog.m3x1.cn/atom.xml" rel="self"/>
   
   <link href="https://blog.m3x1.cn/"/>
-  <updated>2025-02-01T13:26:47.646Z</updated>
+  <updated>2025-02-19T11:33:06.151Z</updated>
   <id>https://blog.m3x1.cn/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Git问题：解决“ssh:connect to host github.com port 22: Connection timed out”</title>
+    <link href="https://blog.m3x1.cn/posts/e4e8b439.html"/>
+    <id>https://blog.m3x1.cn/posts/e4e8b439.html</id>
+    <published>2025-02-18T16:00:00.000Z</published>
+    <updated>2025-02-19T11:33:06.151Z</updated>
+    
+    <content type="html"><![CDATA[<p>[TOC]</p><h2 id="问题描述：">问题描述：</h2><p>在某一天使用hexo d命令时突然出现报错：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh:connect to host github.com port 22: Connection timed out</span><br></pre></td></tr></table></figure><p>之前都是可以链接的，后来换了地方突然链接不上github了。</p><h2 id="问题分析：">问题分析：</h2><p>根据错误提示知道，连接不成功可能是：</p><ol><li>网络问题</li><li>ssh密钥需要重新添加</li><li>22端口被占用</li></ol><p>根据此进行尝试解决，应该能解决。我就是第三个问题</p><h2 id="解决方法：">解决方法：</h2><h4 id="情况一：">情况一：</h4><p>检查网络连接情况，检查代理是否开启。然后ping一下看看。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ping github.com</span><br></pre></td></tr></table></figure><h4 id="情况二：">情况二：</h4><p>直接重新添加ssh密钥就行</p><h4 id="情况三：">情况三：</h4><p>这也是我的情况，可能是22端口不行或者被占用，就需要换个端口。</p><p>操作方法：</p><p>1.进入~/.ssh下</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd ~/.ssh</span><br></pre></td></tr></table></figure><p>2.创建一个config文件(这里我用的vim编辑器)</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim config</span><br></pre></td></tr></table></figure><p>3.编辑文件内容：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Host github.com</span><br><span class="line">User git</span><br><span class="line">Hostname ssh.github.com</span><br><span class="line">PreferredAuthentications publickey</span><br><span class="line">IdentityFile ~/.ssh/id_rsa</span><br><span class="line">Port 443</span><br><span class="line"></span><br><span class="line">Host gitlab.com</span><br><span class="line">Hostname altssh.gitlab.com</span><br><span class="line">User git</span><br><span class="line">Port 443</span><br><span class="line">PreferredAuthentications publickey</span><br><span class="line">IdentityFile ~/.ssh/id_rsa</span><br><span class="line">12345678910111213</span><br></pre></td></tr></table></figure><p>4.保存退出</p><p>5.检查是否成功</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure><p>这里要根据它的提示操作，有个地方要输入yes。</p><p>然后再试试hexo d，估计就能提交了。</p><p>（<a href="http://xn--pinggithub-wj2ph1j7w8fubmba3571oi6a.com">但是我还是ping不通github.com</a>，不知道为什么，但是换个端口也能传上去。有大佬知道的请指教！）</p>]]></content>
+    
+    
+    <summary type="html">🥧标题的Git问题解决</summary>
+    
+    
+    
+    <category term="问题解决笔记" scheme="https://blog.m3x1.cn/categories/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E7%AC%94%E8%AE%B0/"/>
+    
+    
+    <category term="问题解决笔记" scheme="https://blog.m3x1.cn/tags/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
   
   <entry>
     <title>CTFHub技能树-rce</title>
@@ -412,27 +433,6 @@
     
     
     <category term="其他姿势" scheme="https://blog.m3x1.cn/tags/%E5%85%B6%E4%BB%96%E5%A7%BF%E5%8A%BF/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>第八届强网杯青少赛wp</title>
-    <link href="https://blog.m3x1.cn/posts/2cd096fe.html"/>
-    <id>https://blog.m3x1.cn/posts/2cd096fe.html</id>
-    <published>2024-11-23T16:00:00.000Z</published>
-    <updated>2025-02-19T10:59:27.760Z</updated>
-    
-    <content type="html"><![CDATA[<p>[TOC]</p><h2 id="misc">misc</h2><h4 id="签到漫画">签到漫画</h4><blockquote><p>每个漫画的最后一张都是二维码的一部分，全部保存，然后拼在一起，扫描二维码出flag.。</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241124155544679.png" alt="image-20241124155544679"></p><blockquote><p>flag{youthful_and_upward}</p></blockquote><h4 id="whitepic">whitepic</h4><blockquote><p>考点：gif图像</p></blockquote><blockquote><p>下载文件，没有后缀名，能用010editor打开</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241124155848111.png" alt="image-20241124155848111"></p><blockquote><p>根据文件头GIF89a，可以看出是个gif文件。直接使用gifsplitter分离帧数，在其中一帧找到flag</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241124160011013.png" alt="image-20241124160011013"></p><h4 id="问卷">问卷</h4><blockquote><p>你懂的</p></blockquote><h2 id="web">web</h2><h4 id="ezGetFlag">ezGetFlag</h4><blockquote><p>考点：http请求方式</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241124160230507.png" alt=""></p><blockquote><p>点击10次会出现提示</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241124160307890.png" alt="image-20241124160307890"></p><blockquote><p>直接抓包，修改请求方式，把GET改成POST就行了。</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241124160446998.png" alt="image-20241124160446998"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241124160500182.png" alt="image-20241124160500182"></p><blockquote><p>flag{4efb5300-7885-40a9-bf2a-31bbd8ebef86}</p></blockquote><h4 id="ezFindShell">ezFindShell</h4><blockquote><p>考点：代码审计</p></blockquote><p>这题是赛后复现，所以可能不全</p><p>首先拿到一堆php文件，用seay审计</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241130223303421.png" alt="image-20241130223303421"></p><p>非常相似，当时比赛没找到漏洞，现在复现，全局搜索一下post</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241130223557289.png" alt="image-20241130223557289"></p><p>发现可用漏洞</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241130223624296.png" alt="image-20241130223624296"></p><p>array_filter() 函数用回调函数过滤数组中的元素。</p><p>该函数把输入数组中的每个键值传给回调函数。如果回调函数返回 true，则把输入数组中的当前键值返回给结果数组。数组键名保持不变。</p><p>将代码进行base64编码传上去应该就可利用该漏洞。</p>]]></content>
-    
-    
-    <summary type="html">🥧第八届强网杯青少赛wp</summary>
-    
-    
-    
-    <category term="CTF" scheme="https://blog.m3x1.cn/categories/CTF/"/>
-    
-    
-    <category term="比赛wp" scheme="https://blog.m3x1.cn/tags/%E6%AF%94%E8%B5%9Bwp/"/>
     
   </entry>
   
