@@ -6,7 +6,7 @@
   <link href="https://blog.m3x1.cn/atom.xml" rel="self"/>
   
   <link href="https://blog.m3x1.cn/"/>
-  <updated>2025-03-20T14:12:24.884Z</updated>
+  <updated>2025-03-20T14:32:03.424Z</updated>
   <id>https://blog.m3x1.cn/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>vm虚拟机如何实现与主机共享代理实现科学上网</title>
+    <link href="https://blog.m3x1.cn/posts/5892bf96.html"/>
+    <id>https://blog.m3x1.cn/posts/5892bf96.html</id>
+    <published>2025-03-19T16:00:00.000Z</published>
+    <updated>2025-03-20T14:32:03.424Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="方法一：使用tun模式（推荐）">方法一：使用tun模式（推荐）</h2><p>相关文章：<a href="https://clashvmess.com/3841.html">深度解析clash开tun模式：配置与使用指南 - Clash最新教程</a></p><p>如果主机是使用代理软件走代理的话，比如clash， 可以直接使用Tun模式。Tun模式下，代理软件会创建一个虚拟网卡，主机上的进程（包括虚拟机）的网络请求都会重定向到这个虚拟网卡。这种模式拦截了所有进程的网络请求，有些进程并不遵守系统代理，比如终端, pip, docker等等，Tun模式专治这种。</p><h2 id="方法二：使用系统代理模式">方法二：使用系统代理模式</h2><p><strong>很麻烦，推荐第一种</strong></p><p>VM软件配置<br>1.VM虚拟网络编辑器<br>打开虚拟网络编辑器（方式：编辑-&gt;虚拟网络编辑器),</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/216a0bd2ce71cea38b1f4060f7fe222d.png" alt="img"></p><p>然后点击更改设置</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/b11d02909648f7584aa1ce3936623e16.png" alt="img"></p><p>2.配置VMnet8和VMnet1<br>VMnet8【子网配置】如下：</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/b4914dfc9f3dabeed102f4c586b9d7df.png" alt="img"></p><p>【NAT设置】如下：</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/0cfcf812206f19a1f412471b775de26b.png" alt="img"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/5637516b8ae4604ce33c42b7f64c5097.png" alt="img"></p><p>【DHCP设置】如下：（可以理解为虚拟机的ip范围， 不要跟上图配置的网关冲突了）</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/035253150ff47c67925cfeabecb99510.png" alt="img"></p><p>【VMnet1】采用默认配置就可以了，当然你也可以按照上述vmnet8的方式修改一个容易记住的ip：</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/0a544c334a48ba9745ba0c480fc19e90.png" alt="img"></p><p>四、主机IP配置<br>windows进入打开设置-&gt;网络</p><p>【2024-9-18补充】【可选START  // 表示这个这个范围是可有可无的】</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/7642faecf3cd6799ce2c0e73d8c90f4e.png" alt="img"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/64d182eddb6d4b654d1a3b89f0ca5508.png" alt="img"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/aeaecd6a90ce5b0bdbf72c3502f8f7ef.png" alt="img"></p><p>双击上述红框，然后配置如下：（这里不要跟之前的网关冲突了）</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/78c1f95ff9c312d75159e9012aee7f2d.png" alt="img"></p><p>【2024-9-18补充】【可选END   // 表示这个范围是可有可无的】</p><p>代理软件要开启【Allow LAN】：（这里要记住端口, 我的是7890）</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/11c1bd289cab27c99074b57b67ca05a6.png" alt="img"></p><p>然击后点：</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/1393a2df6b6644e3ba6a7f4a1ba42e77.png" alt="img"></p><p>记住下面的接口ip,这个ip需要在Vm虚拟机中使用， 两个都可以用</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/4bec5d2c26060c002847ed712896f740.png" alt="img"></p><p>在windows终端下输入ipconfig同样可以查到：</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/5ab320459f15a3b4338421f1c5dfe6d6.png" alt="img"></p><p>五、虚拟机代理ip配置<br>在配置代理之前需要设置网络适配器， 我们之前配置了VMnet8，在这里可以使用。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/3799988deebfaaf7cef1b13c329631da.png" alt="img"></p><p>5.1 虚拟机上用【设置】配置代理<br>用【设置】配置代理，代理设置会影响所有图形app， 比如浏览器，shell…</p><p>但是却影响不了ssh(用ssh连接虚拟机ubuntu)终端，所以在使用ssh还需要配置代理，参考第七节。</p><p>当然这种配置也影响不了很多需要单独配置代理的app, 比如conda, pip, docker等等</p><p>进入虚拟机，配置ip,如果是Ubuntu可以参考下面的配置：(注意下图的端口，要跟代理软件的端口一致)</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/05f8d947f6ccce3f08fc91b7118ddf3d.png" alt="img"></p><p>然后可以打开浏览器看外网，或者终端：</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/896ca71206197898e7112c685fb5919f.png" alt="img"></p>]]></content>
+    
+    
+    <summary type="html">🥧vm虚拟机如何实现与主机共享代理实现科学上网；软件代理使用tun模式；系统代理设置方法</summary>
+    
+    
+    
+    <category term="问题解决笔记" scheme="https://blog.m3x1.cn/categories/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E7%AC%94%E8%AE%B0/"/>
+    
+    
+    <category term="问题解决笔记" scheme="https://blog.m3x1.cn/tags/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
   
   <entry>
     <title>Shiro反序列化漏洞全解析</title>
@@ -405,27 +426,6 @@
     
     
     <summary type="html">🥧mb_strpos与mb_substr错位索引</summary>
-    
-    
-    
-    <category term="CTF" scheme="https://blog.m3x1.cn/categories/CTF/"/>
-    
-    
-    <category term="web姿势" scheme="https://blog.m3x1.cn/tags/web%E5%A7%BF%E5%8A%BF/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>随机数种子爆破</title>
-    <link href="https://blog.m3x1.cn/posts/b4b5a295.html"/>
-    <id>https://blog.m3x1.cn/posts/b4b5a295.html</id>
-    <published>2024-11-25T16:00:00.000Z</published>
-    <updated>2025-02-09T11:30:31.764Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241116165931510.png" alt="image-20241116165931510"></p><p>在PHP中，变量以$符号开头，后面拼接变量名。上述代码的基本 含义是:从$str变量中随机取32次字符(字符可重复)，并拼接成字符 串，最后将该字符串赋值给变量$password。执行代码后会输出 $password变量的前10个字节，此时通过POST请求传递password参数到 服务端，如果password参数的值与$password变量的值完全相等，那么 就会输出flag。</p><p>理论上，如果选取字符的时候是完全随机的，那么几乎不可能出现 password参数值与$password变量值相等的情况(概率极低)。但由于 代码中使用mt_rand()函数来生成随机数，因此如果可以得知该函数生 成的一段随机数序列，就可以通过工具爆破出其选取的随机数种子 (该种子由$_Session[‘seed’]变量生成)，从而预测之后的所有随机数序 列。在这里，我们使用php_mt_seed工具来爆破随机数种子。该工具的 下载地址为:<a href="https://www.openwall.com/php_mt_seed/php_mt_seed-">https://www.openwall.com/php_mt_seed/php_mt_seed-</a> 4.0.tar.gz</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241116165647076.png" alt="image-20241116165647076"></p><p>访问题目页面，可得到前10个字节的随机字符，将输出的随机字符转换为php_mt_seed可识别的数据格式。使用</p><p>Python3脚本进行转换:</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241116165703575.png" alt="image-20241116165703575"></p><p>str1变量的值就是PHP代码中的$str的值，str2变量的值就是PHP代码中 输出的$password的前10个字节。这段代码的基本作用就是将$password 中的前10个字节(即变量str2)进行定位，得到其在str1中的具体下标 位置，然后按照具体格式输出。以str2中的第一个字母A为例，字母A 在变量str1中的下标是36(字符串下标从0开始)</p><p>将输出的字符输入到编译好的php_mt_seed工具中，具体指令如下:</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241116165734372.png" alt="image-20241116165734372"></p><p>最终我们找到一个随机数种子 19290735(PHP7.1)。在这一步需要注意的是，mt_rand()函数本身确 实存在问题，但是根据PHP版本的不同，其生成的随机数会略有区别。 所以，在实际题目中一定要注意PHP版本问题，不能脱离PHP版本来做 题。</p><p>利用得到的随机数种子编写PHP脚本，如下所示:</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241116165751773.png" alt="image-20241116165751773"></p><p>尝试将该结果提交给服务端，即可成功得到flag。</p><p>本质上是因为mt_rand()函数的不安全性导致的。所以，我们需要明确 以下几点:</p><ol><li>mt_rand()函数的不安全性是考点的核心。</li></ol><p>2)要爆破随机数种子，首先需要得到mt_rand()函数生成的随机数序</p><p>列。</p><p>3)mt_rand()函数生成的随机数序列可能以不同的形式表现(例如生成 随机字符串)。</p><p>4)相同函数在不同的PHP版本(大版本)中的实现代码可能是不一样 的。例如，在PHP7和PHP5中，mt_rand()函数的实现算法是完全不同 的。</p><p>5)计算机中不存在真正的随机数，这是mt_rand()函数存在安全问题的 根本原因。</p>]]></content>
-    
-    
-    <summary type="html">🥧随机数种子爆破</summary>
     
     
     
