@@ -41,7 +41,7 @@ function tonav() {
     }
     position = scroll;
   });
-  document.getElementById("page-name").innerText = document.title.split(" | 梦~醒🥝")[0];
+  document.getElementById("page-name").innerText = document.title.split(" | 梦~醒🍇")[0];
 }
 function scrollToTop() {
   document.getElementsByClassName("menus_items")[1].setAttribute("style", "");
@@ -949,21 +949,21 @@ function createtime1() {
   var days = (now1 - grt) / 1000 / 60 / 60 / 24;
   var dnum = Math.floor(days);
   var ascll = [
-    `欢迎来到 梦~醒🥝の小家!`,
+    `欢迎来到 梦~醒🍇の小家!`,
     `Future is now 🍭🍭🍭`,
-    `
+//     `
         
-███████  ██████  ███    ███  █████  ██      ██   ██  █████  ██    ██ ████████ 
-██      ██    ██ ████  ████ ██   ██ ██      ██   ██ ██   ██ ██    ██    ██    
-█████   ██    ██ ██ ████ ██ ███████ ██      ███████ ███████ ██    ██    ██    
-██      ██    ██ ██  ██  ██ ██   ██ ██      ██   ██ ██   ██ ██    ██    ██    
-██       ██████  ██      ██ ██   ██ ███████ ██   ██ ██   ██  ██████     ██   
+// ███████  ██████  ███    ███  █████  ██      ██   ██  █████  ██    ██ ████████ 
+// ██      ██    ██ ████  ████ ██   ██ ██      ██   ██ ██   ██ ██    ██    ██    
+// █████   ██    ██ ██ ████ ██ ███████ ██      ███████ ███████ ██    ██    ██    
+// ██      ██    ██ ██  ██  ██ ██   ██ ██      ██   ██ ██   ██ ██    ██    ██    
+// ██       ██████  ██      ██ ██   ██ ███████ ██   ██ ██   ██  ██████     ██   
                                               
-`,
+// `,
     "小站已经苟活",
     dnum,
     "天啦!",
-    "©2024 By 梦~醒🥝",
+    "©2024 By 梦~醒🍇",
   ];
   setTimeout(
     console.log.bind(
@@ -996,7 +996,7 @@ function createtime2() {
   setTimeout(
     console.warn.bind(
       console,
-      "%c ⚡ Powered by 梦~醒🥝 %c 你正在访问 梦~醒🥝の小家",
+      "%c ⚡ Powered by 梦~醒🍇 %c 你正在访问 梦~醒🍇の小家",
       "color:white; background-color:#f0ad4e",
       ""
     )
@@ -1083,8 +1083,8 @@ function share_() {
   let url = window.location.origin + window.location.pathname
   try {
     var title = document.title;
-    var subTitle = title.endsWith("| Fomalhaut🥝") ? title.substring(0, title.length - 14) : title;
-    navigator.clipboard.writeText('梦~醒🥝的站内分享\n标题：' + subTitle + '\n链接：' + url + '\n欢迎来访！🍭🍭🍭');
+    var subTitle = title.endsWith("| 梦~醒🍇") ? title.substring(0, title.length - 14) : title;
+    navigator.clipboard.writeText('梦~醒🍇的站内分享\n标题：' + subTitle + '\n链接：' + url + '\n欢迎来访！🍭🍭🍭');
     new Vue({
       data: function () {
         this.$notify({
@@ -2020,7 +2020,7 @@ if ((m == 12 && dd == 22) || (m == 12 && dd == 21) || (m == 12 && dd == 21)) {
 var lunar = calendarFormatter.solar2lunar();
 if (lunar["IMonthCn"] == "七月" && lunar["IDayCn"] == "廿七") {
   if (sessionStorage.getItem("isPopupWindow") != "1") {
-    Swal.fire("祝站长" + (y - 2005).toString() + "岁生日快乐！🥝");
+    Swal.fire("祝站长" + (y - 2005).toString() + "岁生日快乐！🍇");
     sessionStorage.setItem("isPopupWindow", "1");
   }
 }
@@ -2208,11 +2208,11 @@ if (window.localStorage.getItem("fpson") == undefined || window.localStorage.get
       } else if (fps <= 25) {
         var kd = `<span style="color:orange">有点难受😨</span>`
       } else if (fps < 35) {
-        var kd = `<span style="color:#9338e6">不太流畅🙄</span>`
+        var kd = `<span style="color:#9338e6">不太流畅😐</span>`
       } else if (fps <= 45) {
         var kd = `<span style="color:#08b7e4">还不错哦😁</span>`
       } else {
-        var kd = `<span style="color:#39c5bb">十分流畅🤣</span>`
+        var kd = `<span style="color:#39c5bb">十分流畅🤩</span>`
       }
       document.getElementById("fps").innerHTML = `FPS:${fps} ${kd}`;
       frame = 0;
