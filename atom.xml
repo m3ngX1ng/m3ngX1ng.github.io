@@ -6,7 +6,7 @@
   <link href="https://blog.m3x1.cn/atom.xml" rel="self"/>
   
   <link href="https://blog.m3x1.cn/"/>
-  <updated>2025-04-21T00:08:54.592Z</updated>
+  <updated>2025-04-25T01:37:36.861Z</updated>
   <id>https://blog.m3x1.cn/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ciphey安装及使用方法</title>
+    <link href="https://blog.m3x1.cn/posts/ccb89301.html"/>
+    <id>https://blog.m3x1.cn/posts/ccb89301.html</id>
+    <published>2025-04-24T16:00:00.000Z</published>
+    <updated>2025-04-25T01:37:36.861Z</updated>
+    
+    <content type="html"><![CDATA[<p>[TOC]</p><h2 id="下载方法：">下载方法：</h2><p>要求python3+，但是最好使用python3.8，不要使用python3.10以上的，不然会报错（要是报错就换个python版本试试）</p><p>直接pip下载</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install ciphey</span><br></pre></td></tr></table></figure><h2 id="使用方法：">使用方法：</h2><h3 id="参数列表：">参数列表：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">ciphey --help</span><br><span class="line">用法: ciphey [选项] [TEXT_STDIN]</span><br><span class="line"></span><br><span class="line">  Ciphey - 自动解密工具</span><br><span class="line"></span><br><span class="line">  文档地址: https://github.com/Ciphey/Ciphey/wiki</span><br><span class="line"></span><br><span class="line">  Discord (这里支持，我们大部分时间都在线):</span><br><span class="line">  https://discord.ciphey.online/</span><br><span class="line"></span><br><span class="line">  GitHub: https://github.com/ciphey/ciphey</span><br><span class="line"></span><br><span class="line"> cipher是一种使用智能人工智能的自动解密工具</span><br><span class="line">和自然语言处理。输入加密文本，获取解密文本</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">例如:</span><br><span class="line">基本用法: ciphey -t &quot;aGVsbG8gbXkgbmFtZSBpcyBiZWU=&quot;</span><br><span class="line"></span><br><span class="line">选项:</span><br><span class="line">  -t, --text TEXT            您想要解密的密文。</span><br><span class="line">  -q, --quiet                减少冗长的显示,直接给结果</span><br><span class="line">  -g, --greppable            只输出答案(对于grep很有用)</span><br><span class="line">  -v, --verbose</span><br><span class="line">  -C, --checker TEXT         使用给定的检查器</span><br><span class="line">  -c, --config TEXT          使用给定的配置文件。默认为</span><br><span class="line">                             appdirs.user_config_dir(&#x27;ciphey&#x27;,</span><br><span class="line">                             &#x27;ciphey&#x27;)/&#x27;config.yml&#x27;</span><br><span class="line"></span><br><span class="line">  -w, --wordlist TEXT        使用给定的密码字典</span><br><span class="line">  -p, --param TEXT           将参数传递给语言检查器</span><br><span class="line">  -l, --list-params BOOLEAN  列出所选模块的参数</span><br><span class="line">  --searcher TEXT            选择要使用的搜索算法</span><br><span class="line">  -b, --bytes                强制密码使用二进制模式作为输入</span><br><span class="line">  --default-dist TEXT        设置默认的字符/字节分布</span><br><span class="line">  -m, --module PATH          从给定路径添加模块</span><br><span class="line">  -A, --appdirs              输出密码到想要的文件位置</span><br><span class="line"></span><br><span class="line">  -f, --file FILENAME</span><br><span class="line">  --help                     显示此帮助消息并退出。</span><br></pre></td></tr></table></figure><h3 id="运行Ciphey：">运行Ciphey：</h3><p>有三种方法。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">1.文件输入：</span><br><span class="line">ciphey -f encrypted.txt  &amp;</span><br><span class="line">python -m ciphey -f encrypted.txt</span><br><span class="line"></span><br><span class="line">2.不规范的方法：</span><br><span class="line">ciphey -- &quot;Encrypted input&quot;  &amp;</span><br><span class="line">python -m ciphey -- &quot;Encrypted input&quot;</span><br><span class="line"></span><br><span class="line">3.正常方式</span><br><span class="line">ciphey -t &quot;Encrypted input&quot;  &amp;</span><br><span class="line">python -m ciphey -t &quot;Encrypted input&quot;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+    <summary type="html">🥧ciphey安装及使用方法</summary>
+    
+    
+    
+    <category term="CTF" scheme="https://blog.m3x1.cn/categories/CTF/"/>
+    
+    
+    <category term="misc姿势" scheme="https://blog.m3x1.cn/tags/misc%E5%A7%BF%E5%8A%BF/"/>
+    
+  </entry>
   
   <entry>
     <title>hubu群星杯2025wp-看看flag队</title>
@@ -412,27 +433,6 @@
     
     
     <category term="问题解决笔记" scheme="https://blog.m3x1.cn/tags/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E7%AC%94%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>刷题2025.3.15</title>
-    <link href="https://blog.m3x1.cn/posts/a546d02c.html"/>
-    <id>https://blog.m3x1.cn/posts/a546d02c.html</id>
-    <published>2025-03-14T16:00:00.000Z</published>
-    <updated>2025-03-18T14:15:08.956Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>题目来源：NSSCTF平台</p></blockquote><p>[TOC]</p><h4 id="SWPUCTF-2021-新生赛-easyupload2-0">[SWPUCTF 2021 新生赛]easyupload2.0</h4><blockquote><p>考点：文件上传绕过</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20250315181309418.png" alt="image-20250315181309418"></p><p>进行文件上传测试，首先上传jpg文件，然后抓包改成php文件，结果提示php文件不能上传。</p><p>上传htaccess文件也不行，于是改成后缀为phtml。</p><p>phtml也会被当成php解析。</p><p>发现上传成功，用蚁剑连接，找到flag.</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20250315181643259.png" alt="image-20250315181643259"></p><blockquote><p>NSSCTF{76333d4d-efe1-4a18-acf5-09bd35c8ca3b}</p></blockquote><h4 id="SWPUCTF-2021-新生赛-PseudoProtocols">[SWPUCTF 2021 新生赛]PseudoProtocols</h4><blockquote><p>考点：PHP伪协议，文件包含</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20250315191122515.png" alt="image-20250315191122515"></p><p>先扫一下目录，发现什么都没有，然后看到需要传参，又要读取hint.php，使用filter伪协议</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php://filter/read=convert.base64-encode/resource=/var/www/html/hint.php</span><br></pre></td></tr></table></figure><p>得到一串base64，解码</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">PD9waHANCi8vZ28gdG8gL3Rlc3QyMjIyMjIyMjIyMjIyLnBocA0KPz4=</span><br><span class="line"></span><br><span class="line">&lt;?php</span><br><span class="line">//go to /test2222222222222.php</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure><p>直接访问/test2222222222222.php</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20250315191348678.png" alt="image-20250315191348678"></p><p>直接使用data协议绕过file_get_contents函数</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/?a=data://text/plain;base64,SSB3YW50IGZsYWc=</span><br></pre></td></tr></table></figure><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20250315191105190.png" alt="image-20250315191105190"></p><blockquote><p>NSSCTF{74d9bfc7-cdff-4a86-a6c0-f76568061d63}</p></blockquote><h4 id="FSCTF-2023-加速加速">[FSCTF 2023]加速加速</h4><blockquote><p>考点：条件竞争</p></blockquote><p>先把后缀改成.jpg拿到对方保存文件的路径，为当前路径下的upload目录里。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/34c2cf74b08950b8f9f87a2ebccb2bbd.png" alt="1698321877579">看见标签是条件竞争，那就按照条件竞争的方法去做。</p><p>先创建一个jz-cmd.php文件，运行创建cmd.php文件并写入一句话木马的命令。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php $f=fopen(&quot;cmd.php&quot;,&quot;w&quot;); fputs($f,&#x27;&lt;?php @eval($_POST[cmd]);?&gt;&#x27;);?&gt;</span><br></pre></td></tr></table></figure><p>先抓取上传文件的数据包，再抓取访问upload文件夹里的jz-cmd.php这两个数据包；虽然上传jz-cmd.php是不被允许的，但其实这个文件在服务器上有存在过，只是很快就被删除了。所以我们用BP疯狂发包访问upload文件夹下的jz-cmd.php文件是道理的。而只要此jz-cmd.php被访问成功，就会在upload文件夹里创建cmd.php这个后门文件。</p><p>具体操作就是抓取上传和访问的数据包，然后将他们都放入intruder中，设置如下：</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/8367695e46096811033b203f54941d0f.png" alt="1698322910515"></p><p>然后就先攻击发送的数据包，再攻击读取（读取cmd.php）的数据包。读取的包出现200，且浏览器能正常访问，说明一句话木马就写入进去了，用蚁剑连接找到flag。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-03-15%20202450.png" alt=""></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20250315202512251.png" alt="image-20250315202512251"></p><blockquote><p>FSCTF{p@ti0ns_15_key_1n_1ife}</p></blockquote>]]></content>
-    
-    
-    <summary type="html">2025.3.15刷题题目:[SWPUCTF 2021 新生赛]easyupload2.0,[SWPUCTF 2021新生赛]PseudoProtocols,[FSCTF 2023]加速加速</summary>
-    
-    
-    
-    <category term="CTF" scheme="https://blog.m3x1.cn/categories/CTF/"/>
-    
-    
-    <category term="web-wp" scheme="https://blog.m3x1.cn/tags/web-wp/"/>
     
   </entry>
   
