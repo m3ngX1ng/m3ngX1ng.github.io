@@ -58,6 +58,15 @@ $.ajax({
   dataType: 'jsonp',
   success: function (res) {
     ipLoacation = res;
+  },
+  error: function(xhr, status, error) {
+    console.error('Map API request failed:', status, error);
+    ipLoacation = {
+      result: {
+        location: { lng: 114.335981, lat: 30.583783 },
+        ad_info: { nation: '中国', province: '湖北省', city: '武汉市' }
+      }
+    };
   }
 })
 function getDistance(e1, n1, e2, n2) {
@@ -1007,9 +1016,10 @@ function createtime2() {
   );
 }
 createtime2();
-console.log = function () { };
-console.error = function () { };
-console.warn = function () { };
+// 控制台功能已恢复
+// console.log = function () { };
+// console.error = function () { };
+// console.warn = function () { };
 function switchNightMode() {
   document.querySelector('body').insertAdjacentHTML('beforeend', '<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"><div id="sun"></div><div id="moon"></div></div></div>'),
     setTimeout(function () {
