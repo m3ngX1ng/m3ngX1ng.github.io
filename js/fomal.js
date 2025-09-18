@@ -2778,6 +2778,6 @@ var newYear = () => {
 }
 document.addEventListener('pjax:complete', newYear);
 document.addEventListener('DOMContentLoaded', newYear);
-// document.onkeydown = function (e) {
-//   if (123 == e.key || (e.ctrlKey && e.shiftKey && (74 === e.key || 73 === e.key || 67 === e.key)) || (e.ctrlKey && 85 === e.key)) return btf.snackbarShow("你真坏，不能打开控制台喔!"), e.event.keyCode = 0, e.event.returnValue = !1, !1
-// };
+document.onkeydown = function (e) {
+  if (123 == e.key || (e.ctrlKey && e.shiftKey && (74 === e.key || 73 === e.key || 67 === e.key)) || (e.ctrlKey && 85 === e.key)) return btf.snackbarShow("你真坏，不能打开控制台喔!"), e.event.keyCode = 0, e.event.returnValue = !1, !1
+};
