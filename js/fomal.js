@@ -988,10 +988,9 @@ function createtime2() {
   );
 }
 createtime2();
-// 控制台功能已恢复
-// console.log = function () { };
-// console.error = function () { };
-// console.warn = function () { };
+console.log = function () { };
+console.error = function () { };
+console.warn = function () { };
 function switchNightMode() {
   document.querySelector('body').insertAdjacentHTML('beforeend', '<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"><div id="sun"></div><div id="moon"></div></div></div>'),
     setTimeout(function () {
