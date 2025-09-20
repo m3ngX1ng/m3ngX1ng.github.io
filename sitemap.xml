@@ -965,7 +965,7 @@
 
   
   <url>
-    <loc>https://blog.m3x1.cn/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/</loc>
+    <loc>https://blog.m3x1.cn/tags/%E6%AF%94%E8%B5%9Bwp/</loc>
     <lastmod>2025-09-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -979,14 +979,14 @@
   </url>
   
   <url>
-    <loc>https://blog.m3x1.cn/tags/misc-wp/</loc>
+    <loc>https://blog.m3x1.cn/tags/%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/</loc>
     <lastmod>2025-09-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://blog.m3x1.cn/tags/%E6%AF%94%E8%B5%9Bwp/</loc>
+    <loc>https://blog.m3x1.cn/tags/misc-wp/</loc>
     <lastmod>2025-09-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1044,7 +1044,7 @@
 
   
   <url>
-    <loc>https://blog.m3x1.cn/categories/web%E6%B8%97%E9%80%8F/</loc>
+    <loc>https://blog.m3x1.cn/categories/CTF/</loc>
     <lastmod>2025-09-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -1058,7 +1058,7 @@
   </url>
   
   <url>
-    <loc>https://blog.m3x1.cn/categories/CTF/</loc>
+    <loc>https://blog.m3x1.cn/categories/web%E6%B8%97%E9%80%8F/</loc>
     <lastmod>2025-09-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
