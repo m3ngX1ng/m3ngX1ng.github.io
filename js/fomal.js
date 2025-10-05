@@ -1,47 +1,70 @@
+function throttle(func, limit) {
+  let inThrottle;
+  return function() {
+    const args = arguments;
+    const context = this;
+    if (!inThrottle) {
+      func.apply(context, args);
+      inThrottle = true;
+      setTimeout(() => inThrottle = false, limit);
+    }
+  }
+}
+const throttledPercent = throttle(percent, 100);
 document.addEventListener('pjax:complete', function () {
-  window.onscroll = percent;
+  window.onscroll = throttledPercent;
 });
 document.addEventListener('DOMContentLoaded', function () {
-  window.onscroll = percent;
+  window.onscroll = throttledPercent;
 });
 function percent() {
   try {
-    rmf.showRightMenu(false);
-    $('.rmMask').attr('style', 'display: none');
+    if (typeof rmf !== 'undefined' && rmf.showRightMenu) {
+      rmf.showRightMenu(false);
+    }
+    if (typeof $ !== 'undefined') {
+      $('.rmMask').attr('style', 'display: none');
+    }
   } catch (err) {
+    console.warn('Failed to hide right menu:', err.message);
   }
-
   let a = document.documentElement.scrollTop,
     b = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight, document.body.offsetHeight, document.documentElement.offsetHeight, document.body.clientHeight, document.documentElement.clientHeight) - document.documentElement.clientHeight, // 整个网页高度 减去 可视高度
     result = Math.round(a / b * 100),
     btn = document.querySelector("#go-up"); 
-
-  if (result < 95) {
-    btn.childNodes[0].style.display = 'none'
-    btn.childNodes[1].style.display = 'block'
-    btn.childNodes[1].innerHTML = result + '<span>%</span>';
-  } else {
-    btn.childNodes[1].style.display = 'none'
-    btn.childNodes[0].style.display = 'block'
+  if (btn && btn.childNodes.length >= 2) {
+    if (result < 95) {
+      btn.childNodes[0].style.display = 'none';
+      btn.childNodes[1].style.display = 'block';
+      btn.childNodes[1].innerHTML = result + '<span>%</span>';
+    } else {
+      btn.childNodes[1].style.display = 'none';
+      btn.childNodes[0].style.display = 'block';
+    }
   }
 }
 document.addEventListener('pjax:complete', tonav);
 document.addEventListener('DOMContentLoaded', tonav);
 function tonav() {
-  document.getElementById("name-container").setAttribute("style", "display:none");
+  const nameContainer = document.getElementById("name-container");
+  const menuItems = document.getElementsByClassName("menus_items")[1];
+  const pageName = document.getElementById("page-name");
+  if (!nameContainer || !menuItems || !pageName) return;
+  nameContainer.style.display = "none";
+  $(window).off('scroll.tonav');
   var position = $(window).scrollTop();
-  $(window).scroll(function () {
+  $(window).on('scroll.tonav', function () {
     var scroll = $(window).scrollTop();
     if (scroll > position) {
-      document.getElementById("name-container").setAttribute("style", "");
-      document.getElementsByClassName("menus_items")[1].setAttribute("style", "display:none!important");
+      nameContainer.style.display = "";
+      menuItems.style.display = "none";
     } else {
-      document.getElementsByClassName("menus_items")[1].setAttribute("style", "");
-      document.getElementById("name-container").setAttribute("style", "display:none");
+      menuItems.style.display = "";
+      nameContainer.style.display = "none";
     }
     position = scroll;
   });
-  document.getElementById("page-name").innerText = document.title.split(" | 梦~醒🍇")[0];
+  pageName.innerText = document.title.split(" | 梦~醒🍇")[0];
 }
 function scrollToTop() {
   document.getElementsByClassName("menus_items")[1].setAttribute("style", "");
@@ -57,18 +80,18 @@ $.ajax({
   },
   dataType: 'jsonp',
   success: function (res) {
-    ipLoacation = res;
+    ipLocation = res;
   },
   error: function(xhr, status, error) {
     console.error('Map API request failed:', status, error);
-    ipLoacation = {
+    ipLocation = {
       result: {
         location: { lng: 114.335981, lat: 30.583783 },
         ad_info: { nation: '中国', province: '湖北省', city: '武汉市' }
       }
     };
   }
-})
+});
 function getDistance(e1, n1, e2, n2) {
   const R = 6371
   const { sin, cos, asin, PI, hypot } = Math
@@ -84,11 +107,11 @@ function getDistance(e1, n1, e2, n2) {
   return Math.round(r);
 }
 function showWelcome() {
-  let dist = getDistance(114.335981, 30.583783, ipLoacation.result.location.lng, ipLoacation.result.location.lat); //这里换成自己的经纬度
-  let pos = ipLoacation.result.ad_info.nation;
+  let dist = getDistance(114.335981, 30.583783, ipLocation.result.location.lng, ipLocation.result.location.lat);
+  let pos = ipLocation.result.ad_info.nation;
   let ip;
   let posdesc;
-  switch (ipLoacation.result.ad_info.nation) {
+  switch (ipLocation.result.ad_info.nation) {
     case "日本":
       posdesc = "よろしく，一起去看樱花吗";
       break;
@@ -114,9 +137,9 @@ function showWelcome() {
       posdesc = "拾起一片枫叶赠予你";
       break;
     case "中国":
-      pos = ipLoacation.result.ad_info.province + " " + ipLoacation.result.ad_info.city + " " + ipLoacation.result.ad_info.district;
-      ip = ipLoacation.result.ip;
-      switch (ipLoacation.result.ad_info.province) {
+      pos = ipLocation.result.ad_info.province + " " + ipLocation.result.ad_info.city + " " + ipLocation.result.ad_info.district;
+      ip = ipLocation.result.ip;
+      switch (ipLocation.result.ad_info.province) {
         case "北京市":
           posdesc = "北——京——欢迎你~~~";
           break;
@@ -145,7 +168,7 @@ function showWelcome() {
           posdesc = "众所周知，中国只有两个城市。";
           break;
         case "江苏省":
-          switch (ipLoacation.result.ad_info.city) {
+          switch (ipLocation.result.ad_info.city) {
             case "南京市":
               posdesc = "这是我挺想去的城市啦。";
               break;
@@ -161,7 +184,7 @@ function showWelcome() {
           posdesc = "东风渐绿西湖柳，雁已还人未南归。";
           break;
         case "河南省":
-          switch (ipLoacation.result.ad_info.city) {
+          switch (ipLocation.result.ad_info.city) {
             case "郑州市":
               posdesc = "豫州之域，天地之中。";
               break;
@@ -295,7 +318,7 @@ document.addEventListener("copy", function () {
   }, 300);
 })
 document.onkeydown = function (e) {
-  if (123 == e.keyCode || (e.ctrlKey && e.shiftKey && (74 === e.keyCode || 73 === e.keyCode || 67 === e.keyCode)) || (e.ctrlKey && 85 === e.keyCode)) {
+  if (123 == e.key || (e.ctrlKey && e.shiftKey && (74 === e.key || 73 === e.key || 67 === e.key)) || (e.ctrlKey && 85 === e.key)) {
     debounce(function () {
       new Vue({
         data: function () {
@@ -1612,38 +1635,38 @@ function getTerm(y, n) {
   if (n < 1 || n > 24) { return -1 }
   var _table = sTermInfo[y - 1900]
   var _info = [
-    parseInt('0x' + _table.substr(0, 5)).toString(),
-    parseInt('0x' + _table.substr(5, 5)).toString(),
-    parseInt('0x' + _table.substr(10, 5)).toString(),
-    parseInt('0x' + _table.substr(15, 5)).toString(),
-    parseInt('0x' + _table.substr(20, 5)).toString(),
-    parseInt('0x' + _table.substr(25, 5)).toString()
+    parseInt('0x' + _table.substring(0, 5)).toString(),
+    parseInt('0x' + _table.substring(5, 10)).toString(),
+    parseInt('0x' + _table.substring(10, 15)).toString(),
+    parseInt('0x' + _table.substring(15, 20)).toString(),
+    parseInt('0x' + _table.substring(20, 25)).toString(),
+    parseInt('0x' + _table.substring(25, 30)).toString()
   ]
   var _calday = [
-    _info[0].substr(0, 1),
-    _info[0].substr(1, 2),
-    _info[0].substr(3, 1),
-    _info[0].substr(4, 2),
-    _info[1].substr(0, 1),
-    _info[1].substr(1, 2),
-    _info[1].substr(3, 1),
-    _info[1].substr(4, 2),
-    _info[2].substr(0, 1),
-    _info[2].substr(1, 2),
-    _info[2].substr(3, 1),
-    _info[2].substr(4, 2),
-    _info[3].substr(0, 1),
-    _info[3].substr(1, 2),
-    _info[3].substr(3, 1),
-    _info[3].substr(4, 2),
-    _info[4].substr(0, 1),
-    _info[4].substr(1, 2),
-    _info[4].substr(3, 1),
-    _info[4].substr(4, 2),
-    _info[5].substr(0, 1),
-    _info[5].substr(1, 2),
-    _info[5].substr(3, 1),
-    _info[5].substr(4, 2)
+    _info[0].substring(0, 1),
+    _info[0].substring(1, 3),
+    _info[0].substring(3, 4),
+    _info[0].substring(4, 6),
+    _info[1].substring(0, 1),
+    _info[1].substring(1, 3),
+    _info[1].substring(3, 4),
+    _info[1].substring(4, 6),
+    _info[2].substring(0, 1),
+    _info[2].substring(1, 3),
+    _info[2].substring(3, 4),
+    _info[2].substring(4, 6),
+    _info[3].substring(0, 1),
+    _info[3].substring(1, 3),
+    _info[3].substring(3, 4),
+    _info[3].substring(4, 6),
+    _info[4].substring(0, 1),
+    _info[4].substring(1, 3),
+    _info[4].substring(3, 4),
+    _info[4].substring(4, 6),
+    _info[5].substring(0, 1),
+    _info[5].substring(1, 3),
+    _info[5].substring(3, 4),
+    _info[5].substring(4, 6)
   ]
   return parseInt(_calday[n - 1])
 }
