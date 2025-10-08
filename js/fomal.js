@@ -2774,3 +2774,214 @@ var newYear = () => {
 }
 document.addEventListener('pjax:complete', newYear);
 document.addEventListener('DOMContentLoaded', newYear);
+function initComments() {
+  const config = window.PJAX_CONFIG?.comments || {};
+  const logger = window.PJAX_LOGGER || console;
+  if (config.twikoo?.enabled && typeof twikoo !== 'undefined') {
+    const tcommentEl = document.querySelector(config.twikoo.selector);
+    if (tcommentEl) {
+      try {
+        tcommentEl.innerHTML = '';
+        const initOptions = {
+          envId: config.twikoo.envId,
+          el: tcommentEl,
+          ...config.twikoo.options
+        };
+        twikoo.init(initOptions);
+        logger.info('Twikoo 评论系统已重新初始化');
+      } catch (error) {
+        logger.error('Twikoo 初始化失败: ' + error.message);
+      }
+    }
+  }
+}
+function initMusic() {
+  const config = window.PJAX_CONFIG?.music || {};
+  const logger = window.PJAX_LOGGER || console;
+  if (config.aplayer?.enabled) {
+    try {
+      let currentState = null;
+      if (config.aplayer.preserveState && window.aplayers && window.aplayers.length > 0) {
+        const currentPlayer = window.aplayers[0];
+        if (currentPlayer && !currentPlayer.audio.paused) {
+          currentState = {
+            currentTime: currentPlayer.audio.currentTime,
+            paused: currentPlayer.audio.paused,
+            volume: currentPlayer.audio.volume
+          };
+        }
+      }
+      if (window.aplayers && window.aplayers.length > 0) {
+        window.aplayers.forEach(player => {
+          if (player && typeof player.destroy === 'function') {
+            player.destroy();
+          }
+        });
+        window.aplayers = [];
+      }
+      if (typeof loadMeting === 'function') {
+        loadMeting();
+        if (currentState && config.aplayer.preserveState) {
+          setTimeout(() => {
+            if (window.aplayers && window.aplayers.length > 0) {
+              const newPlayer = window.aplayers[0];
+              if (newPlayer) {
+                newPlayer.audio.currentTime = currentState.currentTime;
+                newPlayer.audio.volume = currentState.volume;
+                if (!currentState.paused) {
+                  newPlayer.play();
+                }
+              }
+            }
+          }, 1000);
+        }
+      } else {
+        const aplayerElements = document.querySelectorAll(config.aplayer.selector);
+        aplayerElements.forEach(element => {
+          if (!element.classList.contains('aplayer-initialized')) {
+            element.classList.add('aplayer-initialized');
+          }
+        });
+      } 
+      logger.info('APlayer 音乐播放器已重新初始化');
+    } catch (error) {
+      logger.error('APlayer 初始化失败: ' + error.message);
+    }
+  }
+}
+function initHighlight() {
+  const config = window.PJAX_CONFIG?.highlight || {};
+  const logger = window.PJAX_LOGGER || console;
+  if (!config.enabled) return; 
+  try {
+    if (typeof btf !== 'undefined' && typeof GLOBAL_CONFIG !== 'undefined') {
+      const addHighlightTool = function () {
+        const highLight = GLOBAL_CONFIG.highlight;
+        if (!highLight) return;
+        const isHighlightCopy = highLight.highlightCopy && config.features.copy;
+        const isHighlightLang = highLight.highlightLang && config.features.lang;
+        const isHighlightShrink = GLOBAL_CONFIG_SITE?.isHighlightShrink && config.features.shrink;
+        const highlightHeightLimit = highLight.highlightHeightLimit;
+        const isShowTool = isHighlightCopy || isHighlightLang || isHighlightShrink !== undefined;
+        const $figureHighlight = highLight.plugin === 'highlighjs' ? 
+          document.querySelectorAll('figure.highlight') : 
+          document.querySelectorAll('pre[class*="language-"]');
+        if (!((isShowTool || highlightHeightLimit) && $figureHighlight.length)) return;
+        $figureHighlight.forEach(item => {
+          if (!item.querySelector('.highlight-tools')) {
+            const hlTools = document.createElement('div');
+            hlTools.className = 'highlight-tools';
+            if (isHighlightCopy) {
+              const copyBtn = document.createElement('i');
+              copyBtn.className = 'fas fa-paste copy-button';
+              copyBtn.title = '复制代码';
+              hlTools.appendChild(copyBtn);
+            }
+            if (isHighlightLang) {
+              const langDiv = document.createElement('div');
+              langDiv.className = 'code-lang';
+              const lang = item.className.match(/language-(\w+)/)?.[1] || 'text';
+              langDiv.textContent = lang;
+              hlTools.appendChild(langDiv);
+            }
+            if (isHighlightShrink !== undefined) {
+              const expandBtn = document.createElement('i');
+              expandBtn.className = 'fas fa-angle-down expand';
+              hlTools.appendChild(expandBtn);
+            }
+            item.appendChild(hlTools);
+          }
+        });
+      };
+      addHighlightTool();
+    }
+    if (config.plugins.includes('prismjs') && typeof Prism !== 'undefined') {
+      Prism.highlightAll();
+      logger.debug('Prism.js 代码高亮已重新应用');
+    }
+    if (config.plugins.includes('highlightjs') && typeof hljs !== 'undefined') {
+      document.querySelectorAll('pre code').forEach((block) => {
+        hljs.highlightElement(block);
+      });
+      logger.debug('highlight.js 代码高亮已重新应用');
+    }
+    logger.info('代码高亮已重新初始化');
+  } catch (error) {
+    logger.error('代码高亮初始化失败: ' + error.message);
+  }
+}
+function initOtherFeatures() {
+  const config = window.PJAX_CONFIG?.features || {};
+  const logger = window.PJAX_LOGGER || console;
+  try {
+    if (config.tooltip?.enabled && typeof tippy !== 'undefined') {
+      const existingInstances = document.querySelectorAll('[data-tippy-content]');
+      existingInstances.forEach(el => {
+        if (el._tippy) {
+          el._tippy.destroy();
+        }
+      });
+      tippy(config.tooltip.selector);
+      logger.debug('工具提示已重新初始化');
+    }
+    if (config.fancybox?.enabled && typeof Fancybox !== 'undefined') {
+      Fancybox.destroy();
+      Fancybox.bind(config.fancybox.selector);
+      logger.debug('Fancybox 已重新初始化');
+    }
+    if (config.mediumZoom?.enabled && typeof mediumZoom !== 'undefined') {
+      if (window.mediumZoomInstance) {
+        window.mediumZoomInstance.detach();
+      }
+      window.mediumZoomInstance = mediumZoom(
+        config.mediumZoom.selector, 
+        config.mediumZoom.options
+      );
+      logger.debug('Medium Zoom 已重新初始化');
+    }
+    if (config.search?.enabled) {
+      if (config.search.type === 'local' && typeof localSearch !== 'undefined') {
+        localSearch.init();
+        logger.debug('本地搜索已重新初始化');
+      } else if (config.search.type === 'algolia' && typeof algoliaSearch !== 'undefined') {
+        algoliaSearch.init();
+        logger.debug('Algolia 搜索已重新初始化');
+      }
+    }
+    logger.info('其他功能已重新初始化');
+  } catch (error) {
+    logger.error('其他功能初始化失败: ' + error.message);
+  }
+}
+function pjaxReload() {
+  const logger = window.PJAX_LOGGER || console;
+  logger.info('开始 pjax 重新初始化...');
+  setTimeout(() => {
+    const startTime = performance.now();
+    try {
+      initComments();
+      initMusic();
+      initHighlight();
+      initOtherFeatures();
+      const endTime = performance.now();
+      logger.info(`pjax 重新初始化完成，耗时: ${(endTime - startTime).toFixed(2)}ms`);
+      const event = new CustomEvent('pjax:init:complete', {
+        detail: {
+          timestamp: Date.now(),
+          duration: endTime - startTime
+        }
+      });
+      document.dispatchEvent(event);   
+    } catch (error) {
+      logger.error('pjax 重新初始化过程中发生错误: ' + error.message);
+    }
+  }, 100);
+}
+function initialLoad() {
+  const logger = window.PJAX_LOGGER || console;
+  logger.info('页面首次加载，开始初始化...');
+  pjaxReload();
+}
+document.addEventListener('pjax:complete', pjaxReload);
+document.addEventListener('DOMContentLoaded', initialLoad);
+document.addEventListener('pjax:success', pjaxReload);
