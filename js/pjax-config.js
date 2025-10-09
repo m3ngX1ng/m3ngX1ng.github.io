@@ -46,7 +46,7 @@ window.PJAX_CONFIG = {
     search: {
       enabled: true,
       type: 'local'
-    }
+    },
   },
   debug: {
     enabled: true,
