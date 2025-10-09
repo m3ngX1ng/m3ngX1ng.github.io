@@ -47,6 +47,15 @@ window.PJAX_CONFIG = {
       enabled: true,
       type: 'local'
     },
+    flink: {
+      enabled: true,
+      selector: '.flink',
+      options: {
+        lazyLoad: true,
+        animation: true,
+        clickTracking: true
+      }
+    },
   },
   debug: {
     enabled: true,

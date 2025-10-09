@@ -2985,3 +2985,238 @@ function initialLoad() {
 document.addEventListener('pjax:complete', pjaxReload);
 document.addEventListener('DOMContentLoaded', initialLoad);
 document.addEventListener('pjax:success', pjaxReload);
+(function() {
+  'use strict';
+  const FLINK_CONFIG = {
+    selectors: {
+      container: '.flink',
+      listItem: '.flink-list-item',
+      itemIcon: '.flink-item-icon',
+      itemImage: '.flink-item-icon img',
+      itemName: '.flink-item-name',
+      itemDesc: '.flink-item-desc',
+      itemLink: '.flink-list-item a'
+    },
+    animation: {
+      duration: 300,
+      easing: 'ease-in-out'
+    },
+    lazyLoad: {
+      threshold: 0.1,
+      rootMargin: '50px'
+    },
+    errorImage: '/gulp/friend_404.gif'
+  };
+  const FlinkManager = {
+    initialized: false,
+    observers: new Map(),
+    init() {
+      if (this.initialized) {
+        this.cleanup();
+      }
+      const container = document.querySelector(FLINK_CONFIG.selectors.container);
+      if (!container) {
+        console.debug('[Flink] 友链容器未找到，跳过初始化');
+        return;
+      }
+      console.debug('[Flink] 开始初始化友链功能');
+      this.initImageLazyLoad();
+      this.initImageErrorHandler();
+      this.initHoverEffects();
+      this.initAnimations();
+      this.initialized = true;
+      console.debug('[Flink] 友链功能初始化完成');
+    },
+    cleanup() {
+      console.debug('[Flink] 清理友链资源');
+      this.observers.forEach(observer => {
+        if (observer && typeof observer.disconnect === 'function') {
+          observer.disconnect();
+        }
+      });
+      this.observers.clear();
+      const items = document.querySelectorAll(FLINK_CONFIG.selectors.listItem);
+      items.forEach(item => {
+        const newItem = item.cloneNode(true);
+        item.parentNode.replaceChild(newItem, item);
+      });
+      this.initialized = false;
+    },
+    initImageLazyLoad() {
+      if (!('IntersectionObserver' in window)) {
+        console.debug('[Flink] 浏览器不支持 IntersectionObserver，跳过懒加载');
+        return;
+      }
+      const images = document.querySelectorAll(FLINK_CONFIG.selectors.itemImage);
+      if (images.length === 0) return;
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const img = entry.target;
+            const src = img.getAttribute('data-src') || img.src;
+            if (src && !img.classList.contains('loaded')) {
+              this.loadImage(img, src);
+              observer.unobserve(img);
+            }
+          }
+        });
+      }, FLINK_CONFIG.lazyLoad);
+      images.forEach(img => {
+        if (!img.complete || img.naturalHeight === 0) {
+          observer.observe(img);
+        }
+      });
+      this.observers.set('lazyLoad', observer);
+    },
+    loadImage(img, src) {
+      return new Promise((resolve, reject) => {
+        const tempImg = new Image();
+        tempImg.onload = () => {
+          img.src = src;
+          img.classList.add('loaded');
+          this.addImageLoadAnimation(img);
+          resolve();
+        };
+        tempImg.onerror = () => {
+          this.handleImageError(img);
+          reject();
+        };
+        tempImg.src = src;
+      });
+    },
+    initImageErrorHandler() {
+      const images = document.querySelectorAll(FLINK_CONFIG.selectors.itemImage);
+      images.forEach(img => {
+        img.onerror = null;
+        img.addEventListener('error', (e) => {
+          this.handleImageError(e.target);
+        }, { once: true });
+      });
+    },
+    handleImageError(img) {
+      if (img.classList.contains('error-handled')) return;
+      img.classList.add('error-handled');
+      const errorImg = window.theme?.error_img?.flink || FLINK_CONFIG.errorImage;
+      if (img.src !== errorImg) {
+        img.src = errorImg;
+      } else {
+        img.style.display = 'none';
+        const placeholder = this.createImagePlaceholder();
+        img.parentNode.appendChild(placeholder);
+      }
+    },
+    createImagePlaceholder() {
+      const placeholder = document.createElement('div');
+      placeholder.className = 'flink-image-placeholder';
+      placeholder.innerHTML = '<i class="fas fa-user-circle"></i>';
+      placeholder.style.cssText = `
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--card-bg);
+        color: var(--font-color);
+        font-size: 2rem;
+        border-radius: 50%;
+      `;
+      return placeholder;
+    },
+    addImageLoadAnimation(img) {
+      img.style.opacity = '0';
+      img.style.transform = 'scale(0.8)';
+      img.style.transition = `opacity ${FLINK_CONFIG.animation.duration}ms ${FLINK_CONFIG.animation.easing}, transform ${FLINK_CONFIG.animation.duration}ms ${FLINK_CONFIG.animation.easing}`;
+      img.offsetHeight;
+      img.style.opacity = '1';
+      img.style.transform = 'scale(1)';
+    },
+    initHoverEffects() {
+      const items = document.querySelectorAll(FLINK_CONFIG.selectors.listItem);
+      items.forEach(item => {
+        item.addEventListener('mouseenter', (e) => {
+          this.handleItemHover(e.currentTarget, true);
+        });
+        item.addEventListener('mouseleave', (e) => {
+          this.handleItemHover(e.currentTarget, false);
+        });
+      });
+    },
+    handleItemHover(item, isEnter) {
+      const icon = item.querySelector(FLINK_CONFIG.selectors.itemIcon);
+      const name = item.querySelector(FLINK_CONFIG.selectors.itemName);
+      const desc = item.querySelector(FLINK_CONFIG.selectors.itemDesc);
+      if (isEnter) {
+        item.style.transform = 'translateY(-5px)';
+        item.style.boxShadow = '0 8px 25px rgba(0,0,0,0.15)';
+        if (icon) {
+          icon.style.transform = 'scale(1.1) rotate(5deg)';
+        }
+        if (name) {
+          name.style.color = 'var(--theme-color)';
+        }
+        if (desc) {
+          desc.style.opacity = '0.8';
+        }
+      } else {
+        item.style.transform = 'translateY(0)';
+        item.style.boxShadow = '';
+        if (icon) {
+          icon.style.transform = 'scale(1) rotate(0deg)';
+        }
+        if (name) {
+          name.style.color = '';
+        }
+        if (desc) {
+          desc.style.opacity = '';
+        }
+      }
+    },
+    addClickFeedback(element) {
+      element.style.transform = 'scale(0.95)';
+      element.style.transition = 'transform 150ms ease-out';
+      setTimeout(() => {
+        element.style.transform = '';
+      }, 150);
+    },
+    initAnimations() {
+      const items = document.querySelectorAll(FLINK_CONFIG.selectors.listItem);
+      items.forEach((item, index) => {
+        item.style.opacity = '0';
+        item.style.transform = 'translateY(30px)';
+        item.style.transition = `opacity ${FLINK_CONFIG.animation.duration}ms ${FLINK_CONFIG.animation.easing} ${index * 100}ms, transform ${FLINK_CONFIG.animation.duration}ms ${FLINK_CONFIG.animation.easing} ${index * 100}ms`;
+        setTimeout(() => {
+          item.style.opacity = '1';
+          item.style.transform = 'translateY(0)';
+        }, 50);
+      });
+    },
+    refresh() {
+      console.debug('[Flink] 刷新友链功能');
+      this.init();
+    }
+  };
+  const initFlinkPjax = () => {
+    document.addEventListener('DOMContentLoaded', () => {
+      FlinkManager.init();
+    });
+    document.addEventListener('pjax:complete', () => {
+      setTimeout(() => {
+        FlinkManager.init();
+      }, 100);
+    });
+    document.addEventListener('pjax:send', () => {
+      FlinkManager.cleanup();
+    });
+    window.addEventListener('beforeunload', () => {
+      FlinkManager.cleanup();
+    });
+  };
+  window.FlinkManager = FlinkManager;
+  if (document.readyState === 'loading') {
+    initFlinkPjax();
+  } else {
+    FlinkManager.init();
+    initFlinkPjax();
+  }
+  console.debug('[Flink] 友链 PJAX 适配模块已加载');
+})();
