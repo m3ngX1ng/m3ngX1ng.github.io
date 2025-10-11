@@ -304,6 +304,9 @@ document.addEventListener("copy", function () {
   debounce(function () {
     new Vue({
       data: function () {
+        return {};
+      },
+      mounted: function () {
         this.$notify({
           title: "哎嘿！复制成功🍬",
           message: "若要转载最好保留原文链接哦，给你一个大大的赞！",
@@ -322,6 +325,9 @@ document.onkeydown = function (e) {
     debounce(function () {
       new Vue({
         data: function () {
+          return {};
+        },
+        mounted: function () {
           this.$notify({
             title: "你已被发现😜",
             message: "小伙子，扒源记住要遵循GPL协议！",
@@ -914,6 +920,9 @@ function changeMouseMode() {
     debounce(function () {
       new Vue({
         data: function () {
+          return {};
+        },
+        mounted: function () {
           this.$notify({
             title: "切换右键模式成功🍔",
             message: "当前鼠标右键已恢复为系统默认！",
@@ -932,6 +941,9 @@ function changeMouseMode() {
     debounce(function () {
       new Vue({
         data: function () {
+          return {};
+        },
+        mounted: function () {
           this.$notify({
             title: "切换右键模式成功🍔",
             message: "当前鼠标右键已更换为网站指定样式！",
@@ -1041,6 +1053,9 @@ function switchNightMode() {
     setTimeout(() => {
       new Vue({
         data: function () {
+          return {};
+        },
+        mounted: function () {
           this.$notify({
             title: "关灯啦🌙",
             message: "当前已成功切换至夜间模式！",
@@ -1066,6 +1081,9 @@ function switchNightMode() {
     setTimeout(() => {
       new Vue({
         data: function () {
+          return {};
+        },
+        mounted: function () {
           this.$notify({
             title: "开灯啦🌞",
             message: "当前已成功切换至白天模式！",
@@ -1091,6 +1109,9 @@ function share_() {
     navigator.clipboard.writeText('梦~醒🍇的站内分享\n标题：' + subTitle + '\n链接：' + url + '\n欢迎来访！🍭🍭🍭');
     new Vue({
       data: function () {
+        return {};
+      },
+      mounted: function () {
         this.$notify({
           title: "成功复制分享信息🎉",
           message: "您现在可以通过粘贴直接跟小伙伴分享了！",
@@ -1100,7 +1121,6 @@ function share_() {
           type: "success",
           duration: 5000
         });
-        // return { visible: false }
       }
     })
   } catch (err) {
@@ -1293,6 +1313,9 @@ if (localStorage.getItem("reset_4") == undefined) {
   setTimeout(function () {
     new Vue({
       data: function () {
+        return {};
+      },
+      mounted: function () {
         this.$notify({
           title: "提示🍒",
           message: " (｡･∀･)ﾉﾞ由于网站部分设置项更新，当前已为您重置所有设置，祝您愉快！",
@@ -1513,6 +1536,9 @@ function getPicture_() {
     changeBg(link);
     new Vue({
       data: function () {
+        return {};
+      },
+      mounted: function () {
         this.$notify({
           title: "可以啦🍨",
           message: "切换自定义背景成功！",
@@ -1527,6 +1553,9 @@ function getPicture_() {
   }).catch(() => {
     new Vue({
       data: function () {
+        return {};
+      },
+      mounted: function () {
         this.$notify({
           title: "链接不对🤣",
           message: "请输入有效的图片链接！",
