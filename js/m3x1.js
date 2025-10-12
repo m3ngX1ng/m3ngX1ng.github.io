@@ -1844,18 +1844,18 @@ var newYear = () => {
       }
     }
   }
-  // jQuery(document).ready(function ($) {
-  //   if ($.fn && $.fn.wpSuperSnow) {
-  //     $('#newYear').wpSuperSnow({
-  //       flakes: ['https://tuchuang.voooe.cn/images/2023/01/02/yb1.webp', 'https://tuchuang.voooe.cn/images/2023/01/02/yb2.webp', 'https://tuchuang.voooe.cn/images/2023/01/02/yb3.webp'],
-  //       totalFlakes: '100',
-  //       zIndex: '999999',
-  //       maxSize: '30',
-  //       maxDuration: '20',
-  //       useFlakeTrans: false
-  //     });
-  //   }
-  // });
+  jQuery(document).ready(function ($) {
+    if ($.fn && $.fn.wpSuperSnow) {
+      $('#newYear').wpSuperSnow({
+        flakes: ['https://tuchuang.voooe.cn/images/2023/01/02/yb1.webp', 'https://tuchuang.voooe.cn/images/2023/01/02/yb2.webp', 'https://tuchuang.voooe.cn/images/2023/01/02/yb3.webp'],
+        totalFlakes: '100',
+        zIndex: '999999',
+        maxSize: '30',
+        maxDuration: '20',
+        useFlakeTrans: false
+      });
+    }
+  });
 }
 document.addEventListener('pjax:complete', newYear);
 document.addEventListener('DOMContentLoaded', newYear);
