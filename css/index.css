@@ -7358,13 +7358,13 @@ button#go-up:hover #percent {
   }
 }
 [data-theme="light"] #aside-content > .card-widget.card-info {
-  background-image: url(https://tuchuang.voooe.cn/images/2023/02/28/springBg.png);
+  background-image: url();
   background-repeat: no-repeat;
   background-attachment: inherit;
   background-size: 100%;
 }
 [data-theme="dark"] #aside-content > .card-widget.card-info {
-  background-image: url(https://tuchuang.voooe.cn/images/2023/02/28/aurora.webp);
+  background-image: url();
   background-repeat: no-repeat;
   background-attachment: inherit;
   background-size: 100%;
